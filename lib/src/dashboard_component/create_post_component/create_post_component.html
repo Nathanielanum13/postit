@@ -1,0 +1,425 @@
+<div class="container mt-3">
+    <div *ngIf="postAlertBool"
+         [class.alert-danger]="postAlertCode==500"
+         [class.alert-success]="postAlertCode==200"
+         class="col-auto py-2 mt-2 w-auto br-20" id="post_alert">
+        <span class="fa fa-bell mx-3"></span>
+        {{postAlert}}
+        <span (click)="dismissAlert()"
+              class="fa fa-times fa-sm mx-3 my-auto cursor-pointer" id="alert_close"></span>
+    </div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="row bg-transparent br-20 py-2">
+                    <div class="col-12">
+                        <a download="post_template.csv" href="files/post_template.csv">
+                            <button id="downloads" class="btn btn-primary border-0 br-20 px-4">
+                                <span class="fa fa-download"></span>
+                                <span class="down-text">Download template</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="row c-bordered bg-transparent br-20">
+                    <div class="col-8 mx-auto">
+                        <input type="text" class="nt-form-control br-20" [placeholder]="csvFileName">
+                        <input type="file" class="br" id="input_file" #image (change)="handleFileUpload($event)" accept="text/csv">
+                    </div>
+                    <div class="col-4 mx-auto" style="margin-top: 3px">
+                        <button class="btn btn-primary px-4 br-20" (click)="doUpload()">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-start mt-3">
+        <div class="col-md-10 col-sm-12 col-lg-5" id="create-table">
+            <div class="card shadow-c c-bordered bg-transparent box-one br-20">
+                <div class="card-body mr-auto ml-auto">
+                    <form action="#" novalidate>
+                        <div class="form-group">
+                            <div class="container mt-3 w-100">
+                                <div class="form-group">
+                                    <div class="row" style="margin-bottom: 40px">
+                                        <input (keyup.enter)="addPost()" [(ngModel)]="postMessage"
+                                               class="nt-form-control w-75 ml-auto"
+                                               id="message_box" placeholder="Write post message..."
+                                               size="50" type="text">
+                                        <span (click)="addPost()"
+                                              *ngIf="!editKey"
+                                              class="fa fa-paper-plane w-15 ml-auto my-auto text-default-four cursor-pointer">
+                                            </span>
+                                        <span (click)="updatePost()"
+                                              *ngIf="editKey"
+                                              class="fa fa-pen-alt w-15 ml-auto my-auto text-default-four cursor-pointer">
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <ul class="nav">
+                                <li class="nav-item mx-auto">
+                                    <a class="c-link text-default-four" data-toggle="tab" href="#panel1" role="tab">
+                                        <div id="pictures">
+                                            <material-icon icon="image"></material-icon>
+                                            <span class="pic-text">Upload image</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mx-auto">
+                                    <a class="c-link text-danger" data-toggle="tab" href="#panel2" role="tab">
+                                        <div id="emojis">
+                                            <material-icon icon="tag_faces"></material-icon>
+                                            <span class="emo-text">Emoji's</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mx-auto">
+                                    <a class="c-link text-primary" data-toggle="tab" href="#panel3" role="tab">
+                                        <div id="tags">
+                                            <material-icon icon="tag"></material-icon>
+                                            <span class="tag-text">Tags</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item mx-auto">
+                                    <a class="c-link text-default-one" data-toggle="tab" href="#panel3" role="tab">
+                                        <div id="priority">
+                                            <material-toggle [(checked)]="toggleState"></material-toggle>
+                                            <span class="priority-text">Priority</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- Tab panels -->
+                            <div class="tab-content mt-3">
+                                <!-- Panel 1 -->
+                                <div class="tab-pane fade in show active position-relative" id="panel1" role="tabpanel" style="overflow: hidden !important;">
+                                    <div class="panel-item">
+                                        <form>
+                                            <div class="custom-upload">
+                                                <input #image (change)="handleUpload($event)" accept="image/*"
+                                                       type="file">
+<!--                                                <input class="form-control" type="button" value="+">-->
+                                                <button type="button" class="btn btn-sm btn-dark" *ngIf="imgPath.isEmpty">+</button>
+                                                <a target="_blank" href="{{imgPath}}" class="post-image">
+                                                    <img src="{{imgPath}}" alt="{{imgPath}}">
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Panel 1 -->
+                                <!-- Panel 2 -->
+                                <div class="tab-pane fade position-relative" id="panel2" role="tabpanel">
+                                    <div class="container p-2">
+                                        <ul class="nav card-body c-bordered sticky-top py-2 br-20"
+                                            style="overflow: hidden !important; height: 50px !important; width: 100% !important; background: rgba(255,255,255,0.8) !important; border: 0; box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08) !important;">
+
+                                            <div id="emoji_carousel" class="carousel slide w-100" data-ride="carousel">
+<!--                                                <ol class="carousel-indicators">-->
+<!--                                                    <li data-target="#emoji_carousel" data-slide-to="0" class="active"></li>-->
+<!--                                                    <li data-target="#emoji_carousel" data-slide-to="1"></li>-->
+<!--                                                    <li data-target="#emoji_carousel" data-slide-to="2"></li>-->
+<!--                                                    <li data-target="#emoji_carousel" data-slide-to="3"></li>-->
+<!--                                                    <li data-target="#emoji_carousel" data-slide-to="4"></li>-->
+<!--                                                </ol>-->
+                                                <div class="carousel-inner" role="listbox">
+                                                    <div class="carousel-item active mx-auto">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-warning px-4" data-toggle="tab" href="#emo1" role="tab">
+                                                                        <span class="fa fa-smile"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-info px-4" data-toggle="tab" href="#emo2" role="tab">
+                                                                        <span class="fa fa-cat"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-success px-4" data-toggle="tab" href="#emo3" role="tab">
+                                                                        <span class="fa fa-running"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-danger px-4" data-toggle="tab" href="#emo4" role="tab">
+                                                                        <span class="fa fa-plane"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-danger px-4" data-toggle="tab" href="#emo5" role="tab">
+                                                                        <span class="fa fa-flag"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-dark px-4" data-toggle="tab" href="#emo6" role="tab">
+                                                                        <span class="fa fa-object-group"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-danger px-4" data-toggle="tab" href="#emo7" role="tab">
+                                                                        <span class="fa fa-wine-bottle"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-primary px-4" data-toggle="tab" href="#emo8" role="tab">
+                                                                        <span class="fa fa-car"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-info px-4" data-toggle="tab" href="#emo9" role="tab">
+                                                                        <span class="fa fa-people-carry"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <li class="mx-auto text-center mt-1">
+                                                                    <a class="text-dark px-4" data-toggle="tab" href="#emo10" role="tab">
+                                                                        <span class="fa fa-toolbox"></span>
+                                                                    </a>
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a class="carousel-control-prev" href="#emoji_carousel" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#emoji_carousel" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                </a>
+                                            </div>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active position-relative" id="emo1"
+                                                 role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getEmotionValue($i)"
+                                                         *ngFor="let smileyEmotion of smileyEmotions; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{smileyEmotion}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo2" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getAnimalsValue($i)"
+                                                         *ngFor="let animalNature of animalNatures; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{animalNature}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo3" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getActivitiesValue($i)"
+                                                         *ngFor="let activity of activities; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{activity}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo4" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getTravelPlacesValue($i)"
+                                                         *ngFor="let travelPlace of travelPlaces; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{travelPlace}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo5" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getFlagValue($i)"
+                                                         *ngFor="let flag of flags; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{flag}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade show active position-relative" id="emo6"
+                                                 role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getObjectsValue($i)"
+                                                         *ngFor="let object of objects; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{object}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo7" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getFoodDrinksValue($i)"
+                                                         *ngFor="let foodDrink of foodDrinks; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{foodDrink}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo8" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getComponentValue($i)"
+                                                         *ngFor="let component of components; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{component}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo9" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getPeopleBodyValue($i)"
+                                                         *ngFor="let peopleBody of peopleBodys; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{peopleBody}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade position-relative" id="emo10" role="tabpanel">
+                                                <div class="row mt-2 w-100 mr-auto ml-auto">
+                                                    <div (click)="getSymbolsValue($i)"
+                                                         *ngFor="let symbol of symbols; let $i=index"
+                                                         class="col-2 emoji p-1 mx-auto cursor-pointer">
+                                                        {{symbol}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Panel 2 -->
+                                <!-- Panel 3 -->
+                                <div class="tab-pane fade" id="panel3" role="tabpanel">
+                                    <div class="container mt-2 w-100">
+                                        <form action="" novalidate>
+                                            <div class="form-group">
+                                                <input (keyup.enter)="addTag()" [(ngModel)]="hashtag"
+                                                       class="nt-form-control br-20"
+                                                       id="hash" placeholder="Hash tags ..."
+                                                       type="text">
+                                                <button (click)="addTag()"
+                                                        [disabled]="hashtag.isEmpty || postMessage.isEmpty"
+                                                        class="btn btn-primary btn-sm br-20"
+                                                        id="tag_button"
+                                                        type="button">
+                                                    +
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="container mt-2 w-100">
+                                        <div class="row">
+                                            <material-chips>
+                                                <material-chip (remove)="removeTag($i)"
+                                                               *ngFor="let postTag of postTags; let $i = index"
+                                                               [value]="postTag" class="col-auto">
+                                                    {{postTag}}
+                                                </material-chip>
+                                            </material-chips>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Panel 3 -->
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--            <div class="card c-bordered bg-transparent box-one mt-3">-->
+            <!--                <div class="card-body">-->
+
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+
+
+        <div class="col-md-10 col-sm-12 col-lg-7 mt-sm-5 mt-md-5 mt-lg-0">
+            <div class="card shadow-c bg-transparent box-one border-0 br-20 px-2 py-4">
+                <div class="card bg-transparent px-2 border-0 post-table br-20">
+                    <div class="card-body">
+                        <div class="row c-bordered box-three sticky-top">
+                            <material-checkbox (click)="getAllIds()" [(checked)]="allIsChecked"></material-checkbox>
+                            <material-button (click)="batchDelete()" [disabled]="deleteIds.isEmpty">
+                                <material-icon icon="delete"></material-icon>
+                            </material-button>
+                        </div>
+
+                        <div *ngIf="currentPosts.isNotEmpty">
+                            <div *ngFor="let currentPost of currentPosts; let $i=index"
+                                 class="row c-bordered box-two post-row">
+                                <material-checkbox (click)="getId($i)"
+                                                   [(checked)]="currentPost.checkedState"></material-checkbox>
+                                <div class="mr-auto my-auto w-50 d-post-text">
+                                    {{currentPost.postMessage}}
+                                </div>
+                                <!--                            <material-button id="editKey" (click)="editPost($i)">-->
+                                <!--                                <material-icon icon="delete" class="text-danger"></material-icon>-->
+                                <!--                                <material-icon icon="{{editIndicator}}" class="text-primary" id="{{$i}}"></material-icon>-->
+                                <!--                            </material-button>-->
+                                <span (click)="editPost($i)" class="fa fa-edit btn my-auto text-muted cursor-pointer"
+                                      id="{{$i}}"></span>
+                                <material-icon icon="delete_outline" (click)="remove($i)" class="my-auto cursor-pointer mr-3"></material-icon>
+<!--                                <span (click)="remove($i)" class="fa fa-trash btn my-auto cursor-pointer"></span>-->
+                            </div>
+                        </div>
+
+                        <div *ngIf="currentPosts.isEmpty">
+                            <div class="nt-center text-muted">
+                                <span class="fa fa-cloud-moon-rain text-muted mr-1"></span>
+                                Nothing created yet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dialog-box" id="dialog">
+    <div class="lead">
+        <div class="text-center">
+            <strong>Dialog Box</strong>
+        </div>
+    </div>
+</div>

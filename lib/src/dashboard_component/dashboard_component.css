@@ -1,0 +1,124 @@
+:host {
+    /* This is equivalent of the 'body' selector of a page. */
+}
+[group] {
+    margin: 0 auto !important;
+}
+.header-custom{
+    /*background: #15364c !important;*/
+    background: rgba(255, 255, 255, 0.9) !important;
+    /*background: #ffffff !important;*/
+    color: #051c2d !important;
+    position: fixed;
+}
+#search {
+    height: 40px;
+    border: 1px solid #093d61;
+    padding: 2px 20px 2px 10px;
+    border-radius: 5px;
+    background: #093d61;
+    display: none !important;
+}
+#search-icon {
+    position: relative;
+    float: right;
+    margin-top: -30px;
+    margin-right: 5px;
+    display: none !important;
+}
+.w-80 {
+    width: 80% !important;
+}
+#home {
+    border-radius: 20px !important;
+    background: #e9ecef !important;
+}
+#floating-nav {
+    top: 90% !important;
+    left: 90% !important;
+}
+
+material-list-item:active,
+material-list-item:hover,
+material-list-item:focus {
+    border-radius: 20px !important;
+    background: #f5f5f5 !important;
+    color: #0c6bd0 !important;
+}
+
+material-list-item:active > material-icon {
+    color: #0c6bd0 !important;
+}
+material-list-item:focus > material-icon {
+    color: #0c6bd0 !important;
+}
+material-list-item:hover > material-icon {
+    color: #0c6bd0 !important;
+}
+[group] > material-list-item {
+    color: #6c757d !important;
+    font-weight: 700;
+}
+
+@media (max-width: 576px) {
+    #search, #search-icon {
+        display: none !important;
+    }
+}
+
+.active_side {
+    color: #45484b !important;
+    background: #e9ecef !important;
+    border-radius: 20px !important;
+}
+.active_side > material-icon{
+    color: #0766cb !important;
+}
+
+.dropdown.no-arrow .dropdown-toggle:after {
+    display:none
+}
+.show {
+    display:block
+}
+.animated--grow-in,
+.sidebar .nav-item .collapse {
+    -webkit-animation-name: growIn;
+    animation-name: growIn;
+    -webkit-animation-duration: .2s;
+    animation-duration: .2s;
+}
+@-webkit-keyframes growIn {
+    0% {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+        opacity: 0
+    } to {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+          opacity: 1
+    }
+}
+
+/*noinspection ALL*/
+#app-body {
+    margin: 0;
+    padding: 0;
+
+    /*background-image: url("img/app-bg-05.jpg");*/
+    background-position: center;
+    background-size: cover;
+
+    height: 100vh;
+}
+#app-drawer {
+    height: 100vh;
+    /*background: rgba(255, 255, 255, 0.80) url("img/side_bg.png");*/
+    margin: 10px;
+
+}
+.dropdown-toggle::after {
+    content: none !important;
+}
+
+

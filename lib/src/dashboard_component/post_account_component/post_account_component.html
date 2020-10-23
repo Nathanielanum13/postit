@@ -1,0 +1,171 @@
+<div class="container mt-3" id="body" (click)="setDefault()">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-lg-2 mb-md-3 mb-lg-5">
+            <div class="card border-0 bg-transparent box-one c-bordered br-20 shadow-c">
+                <div class="card-header bg-transparent border-0 box-one mt-0 n-mt-1 br-20">
+                    <span class="float-left ml-3">Facebook</span>
+                    <span class="float-right mr-3 fab fa-facebook text-primary mt-1"></span>
+                </div>
+                <div class="card-body m-2">
+                    <div class="text-center">
+                        <span class="float-left ml-2 mr-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-primary br-20 px-3"
+                                    (click)="showPopup('facebook')">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </span>
+                        <span class="float-right mr-2 ml-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                                    (click)="showViewPopup('facebook')">
+                                <span class="fa fa-eye"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="text-center mt-5 text-muted">4 accounts</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-lg-2 mb-md-3 mb-lg-5">
+            <div class="card border-0 bg-transparent box-one c-bordered br-20 shadow-c">
+                <div class="card-header bg-transparent border-0 box-one n-mt-1 mt-0 br-20">
+                    <span class="float-left ml-3">Twitter</span>
+                    <span class="float-right mr-3 fab fa-twitter text-primary mt-1"></span>
+                </div>
+                <div class="card-body m-2">
+                    <div class="text-center">
+                        <span class="float-left ml-2 mr-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-primary br-20 px-3"
+                                    (click)="showPopup('twitter')">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </span>
+                        <span class="float-right mr-2 ml-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                                    (click)="showViewPopup('twitter')">
+                                <span class="fa fa-eye"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="text-center mt-5 text-muted">1 accounts</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-lg-2 mb-md-3 mb-lg-5">
+            <div class="card border-0 bg-transparent box-one c-bordered br-20 shadow-c">
+                <div class="card-header bg-transparent border-0 box-one n-mt-1 mt-0 br-20">
+                    <span class="float-left ml-3">Instagram</span>
+                    <span class="float-right mr-3 fab fa-instagram text-danger mt-1"></span>
+                </div>
+                <div class="card-body m-2">
+                    <div class="text-center">
+                        <span class="float-left ml-2 mr-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-danger br-20 px-3"
+                                    (click)="showPopup('instagram')">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </span>
+                        <span class="float-right mr-2 ml-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                                    (click)="showViewPopup('instagram')">
+                                <span class="fa fa-eye"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="text-center mt-5 text-muted">3 accounts</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-lg-2 mb-md-3 mb-lg-5">
+            <div class="card border-0 bg-transparent box-one c-bordered br-20 shadow-c">
+                <div class="card-header bg-transparent border-0 box-one n-mt-1 mt-0 br-20">
+                    <span class="float-left ml-3">LinkedIn</span>
+                    <span class="float-right mr-3 fab fa-linkedin-in text-dark mt-1"></span>
+                </div>
+                <div class="card-body m-2">
+                    <div class="text-center">
+                        <span class="float-left ml-2 mr-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                                    (click)="showPopup('linkedin')">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </span>
+                        <span class="float-right mr-2 ml-1">
+                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                                    (click)="showViewPopup('linkedin')">
+                                <span class="fa fa-eye"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="text-center mt-5 text-muted">2 accounts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dialog-box card bg-transparent border-0 shadow-c br-20" id="dialog" display="false">
+    <div class="card-header bg-transparent border-0 text-center" id="media-icon">
+        <div class="nt-circle">
+            <img src="img/{{mediaIcon}}_icon.png" alt="{{mediaIcon}}-icon" width="100px" height="100px" class="nt-center img-fluid">
+<!--            <span class="nt-center fab fa-{{ mediaIcon }} {{ mediaText }} fa-6x"></span>-->
+        </div>
+    </div>
+
+    <div class="font-nyata">
+        <div class="text-center mt-4 text-muted">
+            {{ mediaName }}
+        </div>
+    </div>
+
+    <div class="my-4 px-4">
+        <form novalidate>
+            <div class="form-group">
+                <input type="text" class="nt-form-control border-0 br-20 bg-blur" placeholder="App ID">
+            </div>
+            <div class="form-group">
+                <input type="text" class="nt-form-control border-0 br-20 bg-blur" placeholder="Access Token">
+            </div>
+            <div class="form-group">
+                <span class="float-right my-3">
+                    <button type="button" class="btn btn-sm btn-white px-3 br-20 mx-2 text-muted" (click)="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2"><span class="fa fa-user-plus"></span></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="dialog-box card bg-transparent border-0 shadow-c br-20" id="view-dialog" display="false">
+
+    <div class="font-nyata">
+        <div class="text-center mt-4 text-muted">
+            {{ mediaName }} Accounts
+        </div>
+    </div>
+
+    <div class="my-4 px-4">
+        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">
+            <div class="card-body border-0 row">
+                <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
+                <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
+                    Nathaniel Rice
+                </div>
+                <span class="fa fa-trash col-3 text-muted mx-auto my-auto btn btn-sm"></span>
+            </div>
+        </div>
+        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">
+            <div class="card-body border-0 row">
+                <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
+                <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
+                    Peter Brown Lee
+                </div>
+                <span class="fa fa-trash col-3 text-muted mx-auto my-auto btn btn-sm"></span>
+            </div>
+        </div>
+        <div class="form-group">
+                <span class="float-right my-3">
+                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
+                </span>
+        </div>
+    </div>
+</div>

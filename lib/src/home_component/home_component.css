@@ -1,0 +1,48 @@
+
+@media (max-width: 568px) {
+
+}
+.display-custom {
+    font-weight: bolder;
+    font-size: 10vw;
+    font-family: Geometr415 Blk BT;
+    /*color: #0c6bd0;*/
+    color: #000;
+}
+or {
+    color: orangered;
+}
+.mt--10 {
+    margin-top: -50px;
+}
+#about {
+    cursor: pointer;
+    color: #0c85d0;
+    text-decoration: none;
+}
+#about:hover {
+    color: #0499f5;
+}
+#about:focus, #about:visited {
+    color: #1e9dec;
+}
+.nmt-5 {
+    margin-top: -5rem;
+}
+.mt-6 {
+    margin-top: 6rem;
+}
+.mb-10 {
+    margin-bottom: 11rem;
+}
+
+/*noinspection ALL*/
+#home {
+    background-image: url("img/home.png");
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.bg-c {
+    background: rgba(255, 255, 255, 0.5) !important;
+}

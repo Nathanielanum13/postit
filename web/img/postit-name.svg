@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="55mm" height="40mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 5500 4000"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <font id="FontID0" horiz-adv-x="617" font-variant="normal" style="fill-rule:nonzero" font-style="normal" font-weight="500">
+	<font-face 
+		font-family="Nyata FTR">
+	</font-face>
+   <missing-glyph><path d="M0 0z"/></missing-glyph>
+   <glyph unicode="t" horiz-adv-x="337"><path d="M302.999 108c-34.0038,-16.996 -58.9958,-22.996 -76.0036,-22.996 -28.9959,0 -51.9919,28.9959 -51.9919,69.9919l0 191.007 127.996 0 0 93.9918 -127.996 0 0 154.003 -89.9996 0 -4.00392 -154.003 -68.9997 0 0 -93.9918 58.9958 0 0 -191.007c0,-96.9917 59.0076,-164.999 142.003,-164.999 35.9999,0 79.0036,17.0078 112.003,41.0077l-22.0039 76.9958z"/></glyph>
+   <glyph unicode="s" horiz-adv-x="416"><path d="M212.999 -10.0039c97.0036,0 179.999,41.9998 179.999,142.003 0,157.995 -244.003,131.999 -244.003,193.003 0,20.9999 34.0038,32.9999 80.0076,30.992 25.996,-0.992122 73.9958,-10.996 120.992,-40.9959l23.9999 86.9997c-52.9959,34.9959 -105.992,47.9998 -166.995,47.9998 -91.9957,0 -161.999,-50.9998 -161.999,-128.999 0,-154.995 244.003,-134.999 244.003,-196.995 0,-26.0078 -43.0038,-41.9998 -95.9996,-40.0038 -53.0077,1.99606 -101.007,25.0038 -145.003,56.9998l-23.9999 -86.9997c55.0037,-50.9998 121.996,-64.0037 188.999,-64.0037z"/></glyph>
+   <glyph unicode="o" horiz-adv-x="515"><path d="M257.999 -10.0039c131.999,0 227.999,95.0075 227.999,230.007 0,134.999 -95.9996,229.995 -227.999,229.995 -131.999,0 -227.999,-94.9957 -227.999,-229.995 0,-134.999 95.9996,-230.007 227.999,-230.007zm0 100.004c-70.9958,0 -124.003,53.9998 -124.003,130.003 0,75.9918 53.0077,129.992 124.003,129.992 70.9958,0 124.003,-53.9998 124.003,-129.992 0,-76.0036 -53.0077,-130.003 -124.003,-130.003z"/></glyph>
+   <glyph unicode="i" horiz-adv-x="227"><path d="M114 550.002c38.9998,0 65.9997,26.9999 65.9997,64.9958 0,38.0077 -26.9999,65.0076 -65.9997,65.0076 -38.9998,0 -65.9997,-26.9999 -65.9997,-65.0076 0,-37.9959 26.9999,-64.9958 65.9997,-64.9958zm-52.0037 -550.002l104.007 0 0 439.994 -104.007 0 0 -439.994z"/></glyph>
+  </font>
+  <style type="text/css">
+   <![CDATA[
+    @font-face { font-family:"Nyata FTR";src:url("#FontID0") format(svg)}
+    .fil0 {fill:none}
+    .fil5 {fill:#D4641F}
+    .fil4 {fill:#0779B2}
+    .fil3 {fill:url(#id0)}
+    .fil2 {fill:url(#id1)}
+    .fil1 {fill:url(#id2)}
+    .fnt0 {font-weight:500;font-size:846.67px;font-family:'Nyata FTR'}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="1182.46" y1="670.91" x2="1319.75" y2="670.91">
+   <stop offset="0" style="stop-opacity:1; stop-color:#2D4191"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#067CB3"/>
+  </linearGradient>
+  <linearGradient id="id1" gradientUnits="userSpaceOnUse" xlink:href="#id0" x1="460.98" y1="953.32" x2="1441.37" y2="953.32">
+  </linearGradient>
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" xlink:href="#id0" x1="394.26" y1="958.22" x2="1154.88" y2="958.22">
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="3485" height="1882"/>
+  <g id="_218861816">
+   <g>
+    <path class="fil1" d="M891 1263l0 -389c0,-34 14,-51 42,-51 27,0 41,13 41,37 0,28 -18,41 -54,41l0 156 28 1c67,0 118,-17 152,-50 36,-37 55,-84 55,-142 0,-60 -21,-111 -62,-151 -41,-41 -92,-61 -152,-61 -33,0 -66,7 -97,20 -55,26 -78,58 -132,90 -107,62 -210,103 -317,157 -8,4 62,43 69,47 72,48 244,163 251,251l0 44 176 0z"/>
+    <path class="fil2" d="M1371 551l0 804c0,21 -17,38 -38,38l-764 0c-21,0 -38,-17 -38,-38l0 -306c-22,-19 -47,-30 -70,-33l0 407c0,24 20,44 44,44l893 0c24,0 43,-20 43,-44l0 -939c0,-24 -19,-44 -43,-44l-893 0c-24,0 -44,20 -44,44l0 362c22,-1 47,-11 70,-27l0 -268c0,-20 17,-37 38,-37l764 0c21,0 38,17 38,37z"/>
+    <path id="paper-plane.svg" class="fil3" d="M1300 604l-111 64c-9,6 -8,19 1,23l31 13 0 23c0,12 16,17 23,7l12 -16 30 13c2,1 3,1 5,1 2,0 4,-1 6,-2 4,-2 6,-5 7,-9l16 -104c1,-11 -10,-18 -20,-13l0 0zm-66 123l0 -18 10 4 -10 14zm57 -8l-41 -17 37 -54c3,-4 -2,-9 -6,-6l-57 49 -29 -12 112 -64 -16 104z"/>
+   </g>
+   <text x="1521" y="1311"  class="fil4 fnt0">ost</text>
+   <text x="2597" y="1311"  class="fil5 fnt0">it</text>
+  </g>
+ </g>
+</svg>

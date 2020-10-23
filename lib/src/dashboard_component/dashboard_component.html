@@ -1,0 +1,103 @@
+<!--Material Side bar-->
+<div id="app-body">
+    <material-drawer persistent #drawer="drawer"
+                     [class.custom-width]="customWidth"
+                     [attr.end]="end ? '' : null"
+                     [attr.overlay]="overlay ? '' : null"
+                     style="border: 0 !important; position: fixed !important;">
+        <material-list *deferredContent id="app-drawer">
+            <div class="text-center py-3 w-50 mx-auto">
+                <div class="card bg-light br-20 py-4 border-0">
+                    <span class="fa fa-user-circle fa-3x"></span>
+                </div>
+            </div>
+            <div class="text-center font-weight-bold text-muted mb-4">
+                Nathaniel Rice
+            </div>
+            <!-- Here is a group without a label -->
+            <div group class="p-3 border-0 font-nyata">
+                <material-list-item [routerLink]="InnerRoutePaths.dash_home.toUrl()" [routerLinkActive]="'active_side'">
+                    <material-icon icon="home"></material-icon>Home
+                </material-list-item>
+                <material-list-item [routerLink]="InnerRoutePaths.create_post.toUrl()" [routerLinkActive]="'active_side'">
+                    <material-icon icon="add_box"></material-icon>Create Post
+                </material-list-item>
+                <material-list-item [routerLink]="InnerRoutePaths.view_post.toUrl()" [routerLinkActive]="'active_side'">
+                    <material-icon icon="visibility"></material-icon>View Post
+                </material-list-item>
+                <material-list-item [routerLink]="InnerRoutePaths.manage_post.toUrl()" [routerLinkActive]="'active_side'">
+                    <material-icon icon="timer"></material-icon>Manage Post
+                </material-list-item>
+                <div label class="my-2 text-dark">Accounts</div>
+                <material-list-item [routerLink]="InnerRoutePaths.post_account.toUrl()" [routerLinkActive]="'active_side'">
+                    <material-icon icon="person"></material-icon>Post Accounts
+                </material-list-item>
+                <material-list-item [routerLink]="InnerRoutePaths.user_account.toUrl()" [routerLinkActive]="'active_side'">
+                    <material-icon icon="groups"></material-icon>User Accounts
+                </material-list-item>
+                <material-list-item [routerLink]="InnerRoutePaths.setting.toUrl()" [routerLinkActive]="'active_side'">
+                    <material-icon icon="settings"></material-icon>Settings
+                </material-list-item>
+            </div>
+            <!-- This group has a label -->
+        </material-list>
+    </material-drawer>
+    <!--/Material Side bar-->
+
+
+    <!--Page Content-->
+    <material-content>
+        <!--    Material navbar-->
+        <header class="material-header header-custom">
+            <div class="material-header-row">
+                <!-- This button will toggle (open/close) the drawer -->
+                <material-button icon
+                                 class="material-drawer-button" (trigger)="drawer.toggle()">
+                    <material-icon icon="menu"></material-icon>
+                </material-button>
+                <!-- Other header info goes here -->
+                <img src="img/postit-name.png" alt="postit-logo" class="img-fluid ml-4" width="70px">
+
+                <!--            <span class="material-header-title ml-2">Postit</span>-->
+                <div class="material-spacer"></div>
+                <nav class="material-navigation mt-0">
+                    <!--<material-input type="search" id="search"
+                                    leadingGlyph="search">
+                    </material-input>-->
+                    <input type="search" name="search" id="search" class="nt-form-control">
+                    <material-icon icon="search" id="search-icon"></material-icon>
+                </nav>
+                <nav class="material-navigation">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-target="dropdown_target">
+                                <material-icon icon="person_outline"></material-icon>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown_target">
+                                <a href="#" class="dropdown-item">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">Settings</a>
+                                <a href="#" class="dropdown-item">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+        </header>
+        <!--/Material Nav bar-->
+        <div class="container-fluid">
+            <router-outlet [routes]="InnerRoutes.all"></router-outlet>
+
+            <div class="position-fixed" id="floating-nav">
+                <button type="button" class="btn rounded-circle border-0 shadow-c" (click)="goBack()">
+                    <span class="fa fa-chevron-left text-muted"></span>
+                </button>
+                <button type="button" class="btn rounded-circle border-0 shadow-c" (click)="goForward()">
+                    <span class="fa fa-chevron-right text-muted"></span>
+                </button>
+            </div>
+        </div>
+    </material-content>
+    <!--/Page Content-->
+</div>

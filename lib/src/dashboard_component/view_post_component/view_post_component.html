@@ -1,0 +1,173 @@
+<!--<div class="container">-->
+<!--    <div class="col-md-12">-->
+<!--        <div class="card shadow-c card-body box-one my-3 p-3 br-20 border-0 c-bordered row">-->
+<!--            <form novalidate class="form-row" #postForm="ngForm" (ngSubmit)="onSubmit()">-->
+<!--                <div class="col-3 mx-auto">-->
+<!--                    <select name="filter" id="filter" class="nt-form-control br-20" [(ngModel)]="selectedFilter">-->
+<!--                        <option value="" disabled selected>Filter by:</option>-->
+<!--                        <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="col-3 mx-auto">-->
+<!--                    <select name="number" id="number" class="nt-form-control br-20" [(ngModel)]="selectedNumber">-->
+<!--                        <option value="" disabled selected>Show first:</option>-->
+<!--                        <option [value]="number" *ngFor="let number of numbers">{{number}}</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="col-auto mx-auto my-auto">-->
+<!--                    <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>-->
+<!--                </div>-->
+<!--                <div class="col-auto mx-auto align-content-end my-auto">-->
+<!--                    <button type="button" class="btn btn-danger btn-sm br-20"-->
+<!--                            [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">-->
+<!--                        <span class="fa fa-trash"></span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        <div *ngIf="filteredPosts.isNotEmpty" class="card shadow-c border-0 box-one bg-transparent px-2 py-4 br-20">-->
+<!--            <div class="card border-0 bg-transparent view-post-table w-100 br-20">-->
+<!--                <div class="card-body my-auto">-->
+<!--                    <div class="row c-bordered box-three sticky-top">-->
+<!--                        <div class="col-1 my-auto">-->
+<!--                            <material-checkbox></material-checkbox>-->
+<!--                        </div>-->
+<!--                        <div class="col-4 my-auto">-->
+<!--                            <div class="text-muted">Post message</div>-->
+<!--                        </div>-->
+<!--                        <div class="col-3 my-auto">-->
+<!--                            <div class="text-muted">Post tags</div>-->
+<!--                        </div>-->
+<!--                        <div class="col-2 my-auto">-->
+<!--                            <div class="text-muted">Post stat</div>-->
+<!--                        </div>-->
+<!--                        <div class="col-2 my-auto">-->
+<!--                            <div class="text-muted">Created on</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="row c-bordered box-two" *ngFor="let filteredPost of filteredPosts; let $i=index">-->
+<!--                        <material-checkbox [(checked)]="filteredPost.checkedState" (click)="getId($i)" class="my-auto"></material-checkbox>-->
+<!--                        <div class="d-post-text col-4 my-auto">-->
+<!--                            {{filteredPost.postMessage}}-->
+<!--                        </div>-->
+<!--                        <div class="col-3 d-post-text my-auto">-->
+<!--                            <span class="tag" *ngFor="let tag of filteredPost.postTag">{{tag}}</span>-->
+<!--                        </div>-->
+<!--                        <div class="col-2 my-auto">-->
+<!--                            Posted-->
+<!--                        </div>-->
+<!--                        <div class="col-2 d-post-text my-auto">-->
+<!--                            {{filteredPost.createdOn}}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div *ngIf="filteredPosts.isEmpty" class="card shadow-c border-0 box-one bg-transparent px-2 py-4 br-20">-->
+<!--            <div class="card border-0 bg-transparent view-post-table br-20">-->
+<!--                <div class="card-body position-relative">-->
+<!--                    <div class="nt-center text-muted">-->
+<!--                        <span class="fa fa-cloud-moon-rain text-muted mr-1"></span>-->
+<!--                        Nothing to display-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="col-auto py-2 mt-2 w-auto br-20"
+     [class.alert-success]="postAlertCode==200"
+     [class.alert-danger]="postAlertCode==500"
+     *ngIf="postAlertBool" id="post_alert">
+    <span class="fa fa-bell mx-3"></span>
+    {{postAlert}}
+    <span class="fa fa-times fa-sm mx-3 cursor-pointer"
+          id="alert_close" (click)="dismissAlert()"></span>
+</div>
+
+
+<div class="container mt-3">
+    <div class="card shadow-c border-0 bg-transparent box-one br-20">
+        <div class="card-body">
+            <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()">
+                <div class="row c-bordered box-three sticky-top mx-2 br-20">
+                    <div class="col-auto mx-auto">
+                        <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
+                            <option value="" disabled selected>Filter by:</option>
+                            <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
+                        </select>
+                    </div>
+                    <div class="col-auto mx-auto">
+                        <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
+                            <option value="" disabled selected>Show first:</option>
+                            <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
+                        </select>
+                    </div>
+                    <div class="col-auto mx-auto my-auto">
+                        <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
+                    </div>
+                    <div class="col-auto mx-auto align-content-end my-auto">
+                        <button type="button" class="btn btn-sm br-20 shadow-c"
+                                [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
+                            <span class="fa fa-trash"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-2 mr-auto ml-auto" id="view-box">
+                <div class="card border-0 box-one w-100 p-2 br-20" *ngIf="filteredPosts.isNotEmpty">
+                    <div class="card-body">
+                        <div class="row c-bordered box-three sticky-top">
+                            <div class="col-2 my-auto">
+                                <material-checkbox [(checked)]="allIsChecked" (click)="getAllIds()"></material-checkbox>
+                            </div>
+                            <div class="col-3 my-auto">
+                                <div class="text-muted">Post message</div>
+                            </div>
+                            <div class="col-3 my-auto">
+                                <div class="text-muted">Post tags</div>
+                            </div>
+                            <div class="col-2 my-auto">
+                                <div class="text-muted">Post stat</div>
+                            </div>
+                            <div class="col-2 my-auto">
+                                <div class="text-muted">Created on</div>
+                            </div>
+                        </div>
+
+                        <div class="row c-bordered box-two" *ngFor="let filteredPost of filteredPosts; let $i=index">
+                            <div class="col-2 my-auto">
+                                <material-checkbox [(checked)]="filteredPost.checkedState" (click)="getId($i)"></material-checkbox>
+                            </div>
+                            <div class="d-post-text col-3 my-auto">
+                                {{filteredPost.postMessage}}
+                            </div>
+                            <div class="col-3 d-post-text my-auto">
+                                <span class="tag" *ngFor="let tag of filteredPost.postTag">{{tag}}</span>
+                            </div>
+                            <div class="col-2 my-auto">
+                                Posted
+                            </div>
+                            <div class="col-2 d-post-text my-auto">
+                                {{filteredPost.createdOn}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="filteredPosts.isEmpty && !loading">
+                    <div class="nt-center text-muted">
+                        <span class="fa fa-cloud-moon-rain text-muted mr-1"></span>
+                        {{emptyMessage}}
+                    </div>
+                </div>
+                <div *ngIf="filteredPosts.isEmpty && loading">
+                    <div class="nt-center text-muted">
+                        <img src="img/load.gif" alt="Loading..." class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

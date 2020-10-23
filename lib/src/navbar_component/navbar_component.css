@@ -1,0 +1,11 @@
+.custom-navbar {
+    /*background-color: rgb(208, 216, 252) !important;*/
+    /*background-blend-mode: lighten !important;*/
+    background: transparent !important;
+}
+material-button {
+    color: #4e555b;
+}
+.card {
+    background: transparent !important;
+}

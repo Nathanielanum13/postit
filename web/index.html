@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      // WARNING: DO NOT set the <base href> like this in production!
+      // Details: https://webdev.dartlang.org/angular/guide/router
+      (function () {
+        var m = document.location.pathname.match(/^(\/[-\w]+)+\/web($|\/)/);
+        document.write('<base href="' + (m ? m[0] : '/') + '" />');
+      }());
+    </script>
+    <title>PostitUI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="img/postit-01.png">
+    <link rel="stylesheet" href="css/icon.css">
+
+    <script defer src="js/jquery-3.4.1.min.js"></script>
+    <script defer src="js/popper.min.js"></script>
+    <script defer src="js/bootstrap.min.js"></script>
+    <script defer src="js/main.js"></script>
+
+    <script defer src="main.dart.js"></script>
+  </head>
+  <body>
+    <my-app>
+      <img src="img/load.gif" alt="Loading...." class="loading-gif">
+    </my-app>
+  </body>
+</html>
