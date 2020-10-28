@@ -28,6 +28,10 @@ class LoginComponent {
   Login login = Login('', '');
 
   LoginComponent(this._router, this._loginService);
+
+  Future<void> gotoDashboard() async {
+   _router.navigate(RoutePaths.dashboard.toUrl());
+  }
 //  Future<void> gotoDashboard() async {
 //    login.username.trim();
 //
