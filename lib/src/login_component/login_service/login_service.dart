@@ -3,11 +3,17 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 @Injectable()
 class LoginService {
 
-  static final _headers = {'Content-type': 'application/json'};
+  static final uuid = Uuid().v4().toString();
+  static final _headers = {
+    'Content-type': 'application/json', 
+    'trace-id': uuid,
+    'tenant-namespace': 'postit'
+  };
   static const _loginUrl = 'https://postit-backend-api.herokuapp.com/login';
 
   final Client _http;

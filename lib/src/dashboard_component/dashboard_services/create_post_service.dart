@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:uuid/uuid.dart';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
@@ -7,7 +8,12 @@ import 'package:http/http.dart';
 
 @Injectable()
 class GetPostService {
-  static final _headers = {'Content-type': 'application/json'};
+  static final uuid = Uuid().v4().toString();
+  static final _headers = {
+    'Content-type': 'application/json', 
+    'trace-id': uuid,
+    'tenant-namespace': 'postit'
+  };
   static const _postUrl = 'https://postit-backend-api.herokuapp.com/posts';
   static final _scheduleUrl = 'https://postit-backend-api.herokuapp.com/schedule-post';
 
