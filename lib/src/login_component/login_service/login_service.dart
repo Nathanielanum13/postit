@@ -9,11 +9,7 @@ import 'package:uuid/uuid.dart';
 class LoginService {
 
   static final uuid = Uuid().v4().toString();
-  static final _headers = {
-    'Content-type': 'application/json', 
-    'trace-id': uuid,
-    'tenant-namespace': 'postit'
-  };
+  static final _headers = {'Content-type': 'application/json', 'trace-id': uuid,'tenant-namespace': 'postit'};
   static const _loginUrl = 'https://postit-backend-api.herokuapp.com/login';
 
   final Client _http;
@@ -21,6 +17,7 @@ class LoginService {
   LoginService(this._http);
 
   Future<String> login(String username, String password) async {
+    print(_headers);
     try {
       final response = await http.post(
           _loginUrl,
