@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class LoginService {
 
   static final _headers = {'Content-type': 'application/json'};
-  static const _loginUrl = 'http://localhost:5379/login';
+  static const _loginUrl = 'https://postit-backend-api.herokuapp.com/login';
 
   final Client _http;
 

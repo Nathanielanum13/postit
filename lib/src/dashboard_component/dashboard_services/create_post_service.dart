@@ -8,8 +8,8 @@ import 'package:http/http.dart';
 @Injectable()
 class GetPostService {
   static final _headers = {'Content-type': 'application/json'};
-  static const _postUrl = 'http://localhost:5379/posts';
-  static final _scheduleUrl = 'http://localhost:5379/schedule-post';
+  static const _postUrl = 'https://postit-backend-api.herokuapp.com/posts';
+  static final _scheduleUrl = 'https://postit-backend-api.herokuapp.com/schedule-post';
 
   final Client _http;
 
