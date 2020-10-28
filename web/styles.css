@@ -155,7 +155,7 @@ body {
   border: 1px solid red;
 }
 .box-one{
-  background: rgba(255, 255, 255, 0.58) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
   /*transition: all .15s ease;*/
 }
 
@@ -167,7 +167,7 @@ body {
   /*transition: all .15s ease;*/
 }
 .black-box {
-  background: rgba(43, 25, 61, 0.9) !important;
+  background: rgba(43, 25, 61, 0.8) !important;
 }
 
 .cursor-pointer {
@@ -197,6 +197,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(210, 210, 210, 0.82);
 }
+
 .bg-orange {
   background: #fa5c21;
 }
@@ -260,7 +261,18 @@ body {
 .bg-default-five {
   background: #c5979d!important;
 }
-
+.text-sm {
+  font-size: .875rem!important
+}
+#post_alert {
+  margin: 0px auto;
+  position: fixed;
+  transition: all 0.5s ease-in-out 0s;
+  z-index: 1080;
+  top: 70px;
+  left: 0px;
+  right: 0px;
+}
 
 
 

@@ -1,38 +1,28 @@
+<div *ngIf="postAlertBool"
+     [class.alert-danger]="postAlertCode==500"
+     [class.alert-success]="postAlertCode==200"
+     class="col-4 py-2 mt-2 w-auto br-20 text-center" id="post_alert">
+    <span class="fa fa-bell mx-3"></span>
+    {{postAlert}}
+    <span (click)="dismissAlert()"
+          class="fa fa-times fa-sm mx-3 my-auto cursor-pointer" id="alert_close"></span>
+</div>
 <div class="container mt-3">
-    <div *ngIf="postAlertBool"
-         [class.alert-danger]="postAlertCode==500"
-         [class.alert-success]="postAlertCode==200"
-         class="col-auto py-2 mt-2 w-auto br-20" id="post_alert">
-        <span class="fa fa-bell mx-3"></span>
-        {{postAlert}}
-        <span (click)="dismissAlert()"
-              class="fa fa-times fa-sm mx-3 my-auto cursor-pointer" id="alert_close"></span>
-    </div>
     <div class="container mt-3">
         <div class="row">
             <div class="col-lg-6 col-md-12">
-                <div class="row bg-transparent br-20 py-2">
+                <div class="row bg-transparent br-20 py-1">
                     <div class="col-12">
                         <a download="post_template.csv" href="files/post_template.csv">
                             <button id="downloads" class="btn btn-primary border-0 br-20 px-4">
-                                <span class="fa fa-download"></span>
+                                <material-icon icon="get_app" class="mt-1"></material-icon>
                                 <span class="down-text">Download template</span>
                             </button>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="row c-bordered bg-transparent br-20">
-                    <div class="col-8 mx-auto">
-                        <input type="text" class="nt-form-control br-20" [placeholder]="csvFileName">
-                        <input type="file" class="br" id="input_file" #image (change)="handleFileUpload($event)" accept="text/csv">
-                    </div>
-                    <div class="col-4 mx-auto" style="margin-top: 3px">
-                        <button class="btn btn-primary px-4 br-20" (click)="doUpload()">Upload</button>
-                    </div>
-                </div>
-            </div>
+            <csv-app></csv-app>
         </div>
     </div>
 
@@ -47,16 +37,20 @@
                                     <div class="row" style="margin-bottom: 40px">
                                         <input (keyup.enter)="addPost()" [(ngModel)]="postMessage"
                                                class="nt-form-control w-75 ml-auto"
+                                               (input)="getInputSelection(el)"
+                                               (click)="getInputSelection(el)"
+                                               (keyup)="getInputSelection(el)"
                                                id="message_box" placeholder="Write post message..."
-                                               size="50" type="text">
+                                               #el
+                                               size="50" type="text" style="font-size: 17px !important;">
                                         <span (click)="addPost()"
                                               *ngIf="!editKey"
                                               class="fa fa-paper-plane w-15 ml-auto my-auto text-default-four cursor-pointer">
-                                            </span>
+                                        </span>
                                         <span (click)="updatePost()"
                                               *ngIf="editKey"
                                               class="fa fa-pen-alt w-15 ml-auto my-auto text-default-four cursor-pointer">
-                                            </span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -105,8 +99,7 @@
                                             <div class="custom-upload">
                                                 <input #image (change)="handleUpload($event)" accept="image/*"
                                                        type="file">
-<!--                                                <input class="form-control" type="button" value="+">-->
-                                                <button type="button" class="btn btn-sm btn-dark" *ngIf="imgPath.isEmpty">+</button>
+                                                <material-icon icon="add_circle" class="text-muted cursor-pointer" *ngIf="imgPath.isEmpty"></material-icon>
                                                 <a target="_blank" href="{{imgPath}}" class="post-image">
                                                     <img src="{{imgPath}}" alt="{{imgPath}}">
                                                 </a>
@@ -119,7 +112,7 @@
                                 <div class="tab-pane fade position-relative" id="panel2" role="tabpanel">
                                     <div class="container p-2">
                                         <ul class="nav card-body c-bordered sticky-top py-2 br-20"
-                                            style="overflow: hidden !important; height: 50px !important; width: 100% !important; background: rgba(255,255,255,0.8) !important; border: 0; box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08) !important;">
+                                            style="overflow: hidden !important; height: 50px !important; width: 100% !important; background: rgba(251,250,250,0.97) !important; border: 0; box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08) !important;">
 
                                             <div id="emoji_carousel" class="carousel slide w-100" data-ride="carousel">
 <!--                                                <ol class="carousel-indicators">-->
@@ -131,51 +124,47 @@
 <!--                                                </ol>-->
                                                 <div class="carousel-inner" role="listbox">
                                                     <div class="carousel-item active mx-auto">
-                                                        <div class="row">
-                                                            <div class="col-6">
+                                                        <div class="row mx-2">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-warning px-4" data-toggle="tab" href="#emo1" role="tab">
                                                                         <span class="fa fa-smile"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                            <div class="col-6">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-info px-4" data-toggle="tab" href="#emo2" role="tab">
                                                                         <span class="fa fa-cat"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <div class="row">
-                                                            <div class="col-6">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-success px-4" data-toggle="tab" href="#emo3" role="tab">
                                                                         <span class="fa fa-running"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                            <div class="col-6">
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div class="row mx-2">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-danger px-4" data-toggle="tab" href="#emo4" role="tab">
                                                                         <span class="fa fa-plane"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <div class="row">
-                                                            <div class="col-6">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-danger px-4" data-toggle="tab" href="#emo5" role="tab">
                                                                         <span class="fa fa-flag"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                            <div class="col-6">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-dark px-4" data-toggle="tab" href="#emo6" role="tab">
                                                                         <span class="fa fa-object-group"></span>
@@ -185,33 +174,38 @@
                                                         </div>
                                                     </div>
                                                     <div class="carousel-item">
-                                                        <div class="row">
-                                                            <div class="col-6">
+                                                        <div class="row mx-2">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-danger px-4" data-toggle="tab" href="#emo7" role="tab">
                                                                         <span class="fa fa-wine-bottle"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                            <div class="col-6">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-primary px-4" data-toggle="tab" href="#emo8" role="tab">
                                                                         <span class="fa fa-car"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <div class="row">
-                                                            <div class="col-6">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-info px-4" data-toggle="tab" href="#emo9" role="tab">
                                                                         <span class="fa fa-people-carry"></span>
                                                                     </a>
                                                                 </li>
                                                             </div>
-                                                            <div class="col-6">
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="carousel-item">
+                                                        <div class="row">
+
+                                                        </div>
+                                                    </div>-->
+                                                    <div class="carousel-item">
+                                                        <div class="row">
+                                                            <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
                                                                     <a class="text-dark px-4" data-toggle="tab" href="#emo10" role="tab">
                                                                         <span class="fa fa-toolbox"></span>
@@ -382,6 +376,9 @@
                             <material-button (click)="batchDelete()" [disabled]="deleteIds.isEmpty">
                                 <material-icon icon="delete"></material-icon>
                             </material-button>
+                            <div class="my-auto mx-3">
+                                <span>{{deleteIds.length}}/{{currentPosts.length}}</span>
+                            </div>
                         </div>
 
                         <div *ngIf="currentPosts.isNotEmpty">

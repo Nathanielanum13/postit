@@ -77,7 +77,7 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-<div class="col-auto py-2 mt-2 w-auto br-20"
+<div class="col-4 py-2 mt-2 w-auto br-20 text-center"
      [class.alert-success]="postAlertCode==200"
      [class.alert-danger]="postAlertCode==500"
      *ngIf="postAlertBool" id="post_alert">
@@ -86,7 +86,6 @@
     <span class="fa fa-times fa-sm mx-3 cursor-pointer"
           id="alert_close" (click)="dismissAlert()"></span>
 </div>
-
 
 <div class="container mt-3">
     <div class="card shadow-c border-0 bg-transparent box-one br-20">
@@ -113,6 +112,9 @@
                                 [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
                             <span class="fa fa-trash"></span>
                         </button>
+                    </div>
+                    <div class="col-auto mx-auto my-auto">
+                        <span>{{deleteIds.length}}/{{filteredPosts.length}}</span>
                     </div>
                 </div>
             </form>

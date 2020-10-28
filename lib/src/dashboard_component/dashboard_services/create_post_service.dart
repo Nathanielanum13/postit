@@ -79,7 +79,7 @@ class GetPostService {
   }
 
   Future<PostStandardResponse> create(
-      String message, List<String> tags, List<int> image, bool priority) async {
+      String message, {List<String> tags, List<int> image, bool priority}) async {
     try {
       final response = await _http.post(_postUrl,
           headers: _headers,
@@ -256,4 +256,10 @@ class Schedule {
       id: schedule['schedule_id'],
     );
   }
+  Map toJson() => {
+    'schedule_title': title,
+    'from': from,
+    'to': to,
+    'schedule_id': id
+  };
 }

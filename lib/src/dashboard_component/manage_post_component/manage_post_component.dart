@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
@@ -51,7 +49,9 @@ class ManagePostComponent implements OnInit {
   Date startDate;
   Date finalDate;
   Date optionalDate;
-  DateRange limitToRange = DateRange(Date.today(), Date.today().add(years: 15));
+  Date fromStart = Date.today();
+  Date fromEnd = Date.today().add(years: 15);
+//  DateRange limitToRange = DateRange(Date.today(), Date.today().add(years: 15));
   List<SingleDayRange> predefinedDates;
 
   List<Schedule> scheduledPosts = <Schedule>[];
@@ -73,7 +73,7 @@ class ManagePostComponent implements OnInit {
   String postMessage = '';
   bool loading = false;
   String emptyMessage = 'Select filters to apply';
-  
+
 
   Future<void> postSchedule() async {
     print('Post schedule method');
@@ -82,10 +82,7 @@ class ManagePostComponent implements OnInit {
       inputError = false;
       String from = startDate.asUtcTime().toIso8601String();
       String to = finalDate.asUtcTime().toIso8601String();
-//    duration = finalDate.subtract(years: startDate.year, months: startDate.month, days: startDate.day).toString();
 
-      print(from);
-      print(to);
       try {
         PostStandardResponse resp = await _getPostService.createSchedule(title, from, to, postIds);
         postAlert = resp.data.message;
@@ -100,7 +97,10 @@ class ManagePostComponent implements OnInit {
           title = '';
           startDate = null;
           finalDate = null;
-          postIds.clear();
+
+          allIsChecked = false;
+          getAllIds();
+          disableUsedDate();
         }
       } catch(e) {
         postAlert = 'Could not create. Server offline';
@@ -109,18 +109,20 @@ class ManagePostComponent implements OnInit {
         Timer(Duration(seconds: 5), dismissAlert);
       }
 
-    } else if(startDate.isAfter(finalDate)) {
-      postAlert = 'from: cant be greater than to: Date';
-      postAlertCode = 500;
-      postAlertBool = true;
-      inputError = true;
-      Timer(Duration(seconds: 5), dismissAlert);
-
     } else {
-      postAlert = 'Invalid parameter. Check input fields';
-      postAlertCode = 500;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
+      if(startDate == finalDate) {
+        postAlert = 'from: should not be equal to: ';
+        postAlertCode = 500;
+        postAlertBool = true;
+        inputError = true;
+        Timer(Duration(seconds: 5), dismissAlert);
+      } else {
+        postAlert = 'Invalid parameter. Check input fields';
+        postAlertCode = 500;
+        postAlertBool = true;
+        Timer(Duration(seconds: 5), dismissAlert);
+      }
+
     }
 
   }
@@ -225,9 +227,9 @@ class ManagePostComponent implements OnInit {
       postAlertBool = true;
       Timer(Duration(seconds: 5), dismissAlert);
 
-
       if(deleteResponse.httpStatusCode == 200) {
         scheduledPosts.removeAt(index);
+        disableUsedDate();
       }
     } catch(e) {
       postAlert = 'Could not delete. Server error';
@@ -238,9 +240,24 @@ class ManagePostComponent implements OnInit {
 
   }
 
-  FutureOr<dynamic> onLoad() {
-    loading = false;
-    print('Finished successfully');
+  void disableUsedDate() {
+    Date finalTo = Date.today();
+
+    if(scheduledPosts.isNotEmpty) {
+      for(int i = 0; i < scheduledPosts.length; i++) {
+        List<String> to = scheduledPosts[i].to.split('T');
+        to.removeLast();
+
+        Date dTo = Date.fromTime(DateTime.parse(to[0]));
+
+        if(dTo.isAfter(finalTo)) {
+          finalTo = dTo;
+        }
+        fromStart = finalTo;
+      }
+    } else {
+      fromStart = Date.today();
+    }
   }
 
   @override
@@ -248,6 +265,7 @@ class ManagePostComponent implements OnInit {
     // TODO: implement ngOnInit
     posts = await _getPostService.getAllPost();
     scheduledPosts = await _getPostService.getAllScheduledPost();
+    disableUsedDate();
   }
 
 }

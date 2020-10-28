@@ -1,8 +1,8 @@
 <div class="container mt-3">
-    <div class="card shadow-c border-0 bg-transparent box-one br-20">
+    <div class="card shadow-c border-0 bg-transparent box-one br-20" style="height: 540px !important;">
         <div class="card-body">
             <div class="row mt-2 mr-auto ml-auto" id="setting_box">
-                <div class="card border-0 box-one w-100 p-2 br-20">
+                <div class="card border-0 box-one w-100 p-2 br-20" style="height: 500px !important;">
                     <div class="card-body">
                         <div class="row sticky-top">
                             <div class="col-lg-7 col-sm-auto col-md-auto mx-auto my-auto box-three c-bordered br-20 border-0 py-2 px-sm-3 px-md-5">
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
 <!--                            <div class="text-muted my-4 mx-5">User Settings</div>-->
-                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
+                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer" [routerLink]="InnerRoutePaths.user_account.toUrl()" [routerLinkActive]="'active_side'">
                                 <div class="float-left">
                                     <span class="fa fa-user ml-3 mr-5 my-auto"></span>
                                     <span class="text-muted">User Account</span>

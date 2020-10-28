@@ -53,9 +53,3 @@
     max-height: 400px;
     overflow-x: hidden;
 }
-#post_alert {
-    position: absolute;
-    margin-top: 60px;
-    margin-left: 80px;
-    z-index: 10000;
-}

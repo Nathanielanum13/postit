@@ -118,11 +118,15 @@
 
     <div class="my-4 px-4">
         <form novalidate>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <input type="text" class="nt-form-control border-0 br-20 bg-blur" placeholder="App ID">
-            </div>
+            </div>-->
             <div class="form-group">
-                <input type="text" class="nt-form-control border-0 br-20 bg-blur" placeholder="Access Token">
+                <!--<button class="btn btn-block btn-primary br-20" (click)="getFacebook()">Login with facebook</button>-->
+                <!--<input type="text" class="nt-form-control border-0 br-20 bg-blur" placeholder="Access Token">-->
+                <!--<div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width="" (click)="getFacebook()"></div>-->
+                <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div>
+                <!--<div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div>-->
             </div>
             <div class="form-group">
                 <span class="float-right my-3">
@@ -150,7 +154,7 @@
                 <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
                     Nathaniel Rice
                 </div>
-                <span class="fa fa-trash col-3 text-muted mx-auto my-auto btn btn-sm"></span>
+                <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>
             </div>
         </div>
         <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">
@@ -159,7 +163,7 @@
                 <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
                     Peter Brown Lee
                 </div>
-                <span class="fa fa-trash col-3 text-muted mx-auto my-auto btn btn-sm"></span>
+                <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>
             </div>
         </div>
         <div class="form-group">

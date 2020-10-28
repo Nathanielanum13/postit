@@ -9,18 +9,6 @@
     border: 1px solid #cbd3f8;
 }
 
-.box-one{
-    background: rgba(255, 255, 255, 0.58) !important;
-    /*transition: all .15s ease;*/
-}
-
-.box-two {
-    background: rgba(255, 255, 255, 0.26) !important;
-}
-.box-three{
-    background: rgb(255, 255, 255) !important;
-    /*transition: all .15s ease;*/
-}
 #manage_box {
     height: 300px;
     max-height: 300px;
@@ -87,12 +75,4 @@
     overflow-y: scroll;
 }
 
-#post_alert {
-    position: absolute;
-    margin-top: 60px;
-    margin-left: 80px;
-    z-index: 10000;
-}
-.n-o {
 
-}

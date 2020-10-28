@@ -3,7 +3,7 @@ import 'package:angular_app/src/dashboard_component/view_post_component/view_pos
 import 'package:angular_app/src/dashboard_component/manage_post_component/manage_post_component.template.dart' as manage_post_template;
 import 'package:angular_app/src/dashboard_component/dash_home_component/dash_home_component.template.dart' as dash_home_template;
 import 'package:angular_app/src/dashboard_component/post_account_component/post_account_component.template.dart' as post_account_template;
-import 'package:angular_app/src/dashboard_component/user_account_component/user_account_component.template.dart' as user_account_template;
+import 'package:angular_app/src/dashboard_component/setting_component/user_account_component/user_account_component.template.dart' as user_account_template;
 import 'package:angular_app/src/dashboard_component/setting_component/setting_component.template.dart' as setting_template;
 import 'package:angular_router/angular_router.dart';
 import 'inner_route_paths.dart';

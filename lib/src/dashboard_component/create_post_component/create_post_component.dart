@@ -2,9 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
-
-
 import 'package:angular/angular.dart';
+import 'package:angular_app/src/dashboard_component/create_post_component/csv_upload_component/csv_upload_component.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
 import 'package:angular_components/angular_components.dart';
@@ -29,13 +28,14 @@ import 'package:emojis/emoji.dart';
     MaterialChipComponent,
     MaterialChipsComponent,
     MaterialToggleComponent,
+    CsvUploadComponent,
   ],
   providers: [ClassProvider(GetPostService)],
 )
 class CreatePostComponent implements OnInit{
   final GetPostService _getPostService;
 
-  String postAlert = '';
+  String postAlert = ' ';
   bool postAlertBool = false;
   bool editKey = false;
   bool toggleState = false;
@@ -62,16 +62,16 @@ class CreatePostComponent implements OnInit{
   List<String> deleteIds = <String>[];
   List<Post> currentPosts = <Post>[];
   String fileName = '';
-  String csvFileName = 'Select CSV file';
   String _updatePostId = '';
   String funcCall = '';
   int _updatePostIndex;
+  int insertPosition;
   String imgPath = '';
 
 
 
-
   CreatePostComponent(this._getPostService);
+
 
   Future<void> handleUpload(Event event) async {
     event.preventDefault();
@@ -158,73 +158,84 @@ class CreatePostComponent implements OnInit{
     return deletePost;
   }
 
-  Future<void> handleFileUpload(Event event) async {
-    event.preventDefault();
 
-    File file = (event.target as FileUploadInputElement).files[0];
-    csvFileName = file.name;
+  void getInputSelection(InputElement el) {
+    var endPosition = el.selectionEnd;
+    var startPosition = el.selectionStart;
 
-    var reader = FileReader()
-    ..readAsArrayBuffer(file);
-
-    await reader.onLoadEnd.first;
-    List<int> result = reader.result;
-
-    print(result);
+    print('Start: $startPosition, End: $endPosition');
+    insertPosition =  endPosition;
   }
 
-  Future<void> doUpload() async {
-    print('Do upload here');
+  void arrangePostMessage(String emoValue) {
+    List<String> postMessageList = <String>[];
+
+    if(postMessage.isNotEmpty) {
+      for(int i = 0; i < postMessage.length; i++) {
+        postMessageList.add(postMessage[i]);
+      }
+      postMessageList.insert(insertPosition, emoValue);
+      insertPosition += 2;
+    } else {
+      postMessage = postMessage + emoValue;
+      postMessageList.add(postMessage);
+    }
+
+    postMessage = '';
+
+    for(int i = 0; i < postMessageList.length; i++) {
+      postMessage = postMessage + postMessageList[i];
+    }
   }
 
   void getEmotionValue(int index) {
     String emoValue = smileyEmotions.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getFlagValue(int index) {
     String emoValue = flags.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getTravelPlacesValue(int index) {
     String emoValue = travelPlaces.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getAnimalsValue(int index) {
     String emoValue = animalNatures.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getActivitiesValue(int index) {
     String emoValue = activities.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getObjectsValue(int index) {
     String emoValue = objects.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getFoodDrinksValue(int index) {
     String emoValue = foodDrinks.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getComponentValue(int index) {
     String emoValue = components.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getPeopleBodyValue(int index) {
     String emoValue = peopleBodys.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void getSymbolsValue(int index) {
     String emoValue = symbols.elementAt(index).toString();
-    postMessage = postMessage + emoValue;
+    arrangePostMessage(emoValue);
   }
 
   void byteToString(List<int> s) {
@@ -237,7 +248,7 @@ class CreatePostComponent implements OnInit{
       if (postMessage.isEmpty) return null;
 
       try {
-        PostStandardResponse resp = await _getPostService.create(postMessage, postTags, postImage, toggleState);
+        PostStandardResponse resp = await _getPostService.create(postMessage, tags: postTags, image: postImage, priority: toggleState);
         postAlert = resp.data.message;
         postAlertCode = resp.httpStatusCode;
         postAlertBool = true;

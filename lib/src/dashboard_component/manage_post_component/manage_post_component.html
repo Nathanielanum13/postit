@@ -1,4 +1,4 @@
-<div class="col-auto py-2 mt-2 w-auto br-20"
+<div class="col-4 py-2 mt-2 w-auto br-20 text-center"
      [class.alert-success]="postAlertCode==200"
      [class.alert-danger]="postAlertCode==500"
      *ngIf="postAlertBool" id="post_alert">
@@ -8,7 +8,7 @@
           id="alert_close" (click)="dismissAlert()"></span>
 </div>
 <div class="row container mt-3 ml-0 mr-0">
-    <div class="col-lg-4 col-md-5 col-sm-12">
+    <div class="col-lg-4 col-md-12 col-sm-12">
         <div class="card shadow-c bg-transparent box-one br-20 border-0">
             <div class="card-body">
                 <div class="text-center h6 text-default-one">Create Schedule</div>
@@ -29,8 +29,8 @@
                         <input type="text" class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger" placeholder="from" [(value)]="startDate" [class.alert-danger]="inputError">
                         <span class="fa fa-calendar float-right input-icon cursor-pointer text-default-two"></span>
                         <material-datepicker [(date)]="startDate"
-                                             [minDate]="limitToRange.start"
-                                             [maxDate]="limitToRange.end"
+                                             [minDate]="fromStart"
+                                             [maxDate]="fromEnd"
                                              [required]="true"
                                              class="dt-picker">
                         </material-datepicker>
@@ -39,8 +39,8 @@
                         <input type="text" class="nt-form-control border-0 pr-5 br-20" placeholder="to" [(value)]="finalDate" [class.alert-danger]="inputError">
                         <span class="fa fa-calendar float-right input-icon cursor-pointer text-default-two"></span>
                         <material-datepicker [(date)]="finalDate"
-                                             [minDate]="limitToRange.start"
-                                             [maxDate]="limitToRange.end"
+                                             [minDate]="startDate"
+                                             [maxDate]="fromEnd"
                                              [required]="true"
                                              class="dt-picker">
                         </material-datepicker>
@@ -59,7 +59,7 @@
                                     {{scheduledPost.title}}
                                 </span>
                             </div>
-                            <div class="col-3 my-auto">
+                            <div class="col-3 my-auto text-right">
                                 <span class="fa fa-trash px-1 br-20 cursor-pointer text-default-two" (click)="remove($i)" style="font-size: 12px !important;"></span>
                             </div>
                         </div>
@@ -83,15 +83,18 @@
                                 <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-4 col-sm-auto col-md-auto mx-auto">
+                        <div class="col-lg-3 col-sm-auto col-md-auto mx-auto">
                             <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
                                 <option value="" disabled selected>Show first:</option>
                                 <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-4 col-sm-auto col-md-auto mx-auto my-auto">
+                        <div class="col-lg-3 col-sm-auto col-md-auto mx-auto my-auto">
                             <button type="submit"
                                     class="btn btn-primary btn-sm br-20 px-3">Fetch</button>
+                        </div>
+                        <div class="col-lg-2 col-sm-auto col-md-auto mx-auto my-auto">
+                            <span>{{postIds.length}}/{{filteredPosts.length}}</span>
                         </div>
                     </div>
                 </form>
@@ -139,7 +142,7 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-auto mx-auto">
-                        <input type="text" class="nt-form-control border-0 br-20" disabled value="{{title}}" placeholder="Title">
+                        <input type="text" class="nt-form-control border-0 br-20" disabled [value]="title" placeholder="Title">
                     </div>
                     <div class="col-auto mx-auto my-auto">
                         <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3"
