@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/login_component/login_service/login_service.dart';
 import 'package:angular_app/src/routes.dart';
@@ -19,15 +17,13 @@ import 'package:angular_router/angular_router.dart';
       formDirectives
     ],
   exports: [Routes],
-  providers: [ClassProvider(LoginService)],
 )
 class LoginComponent {
   Router _router;
-  LoginService _loginService;
 
   Login login = Login('', '');
 
-  LoginComponent(this._router, this._loginService);
+  LoginComponent(this._router);
 
   Future<void> gotoDashboard() async {
    _router.navigate(RoutePaths.dashboard.toUrl());
