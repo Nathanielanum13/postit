@@ -19,7 +19,7 @@ class GetPostService {
 
   Future<List<Post>> getAllPost() async {
     try {
-      final response = await _http.get(_postUrl);
+      final response = await _http.get(_postUrl, headers: _headers);
       final posts = (_extractPostData(response) as List)
           .map((json) => Post.fromJson(json))
           .toList();
