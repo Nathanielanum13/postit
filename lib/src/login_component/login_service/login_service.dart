@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 class LoginService {
 
   static final uuid = Uuid().v4().toString();
-  static final _headers = {'Content-type': 'application/json', 'trace-id': uuid,'tenant-namespace': 'postit'};
+  static final _headers = {'Content-type': 'application/json', 'trace-id': uuid,'tenant-namespace': 'postit', 'Access-Control-Allow-Origin': '*'};
   static const _loginUrl = 'https://postit-backend-api.herokuapp.com/login';
 
   final Client _http;
