@@ -9,11 +9,7 @@ import 'package:http/http.dart';
 @Injectable()
 class GetPostService {
   static final uuid = Uuid().v4().toString();
-  static final _headers = {
-    'Content-type': 'application/json', 
-    'trace-id': uuid,
-    'tenant-namespace': 'postit'
-  };
+  static final _headers = {'Content-type': 'application/json', 'trace-id': uuid,'tenant-namespace': 'postit'};
   static const _postUrl = 'https://postit-backend-api.herokuapp.com/posts';
   static final _scheduleUrl = 'https://postit-backend-api.herokuapp.com/schedule-post';
 
@@ -154,7 +150,7 @@ class GetPostService {
   }
 
   Future<PostStandardResponse> batchDelete(List<String> ids) async {
-    final _batchDeleteUrl = 'http://localhost:5379/batch-delete';
+    final _batchDeleteUrl = 'https://postit-backend-api.herokuapp.com/batch-delete';
     try {
       final deleteResponse = await _http.post(_batchDeleteUrl,
           headers: _headers, body: json.encode({'post_ids': ids}));
