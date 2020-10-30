@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/login_component/login_service/login_service.dart';
 import 'package:angular_app/src/routes.dart';
