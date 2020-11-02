@@ -31,7 +31,7 @@ class GetPostService {
 
   Future<List<Schedule>> getAllScheduledPost() async {
     try {
-      final response = await _http.get(_scheduleUrl);
+      final response = await _http.get(_scheduleUrl, headers: _headers);
       final schedules = (_extractPostData(response) as List)
           .map((json) => Schedule.fromJson(json))
           .toList();
@@ -132,7 +132,7 @@ class GetPostService {
 
   Future<PostStandardResponse> delete(String id) async {
     try {
-      final deleteResponse = await _http.delete(_postUrl + '?post_id=' + id);
+      final deleteResponse = await _http.delete(_postUrl + '?post_id=' + id, headers: _headers);
       return _extractData(deleteResponse);
     } catch (e) {
       throw _handleError(e);
@@ -142,7 +142,7 @@ class GetPostService {
   Future<PostStandardResponse> deleteSchedule(String id) async {
     try {
       final deleteResponse =
-          await _http.delete(_scheduleUrl + '?schedule_id=' + id);
+          await _http.delete(_scheduleUrl + '?schedule_id=' + id, headers: _headers);
       return _extractData(deleteResponse);
     } catch (e) {
       throw _handleError(e);
