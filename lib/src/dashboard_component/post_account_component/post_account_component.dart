@@ -2,14 +2,17 @@ import 'dart:html';
 import 'dart:js_util';
 
 import 'package:angular/angular.dart';
+import 'package:angular_router/angular_router.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:facebook_web_sdk/facebook_web_sdk.dart';
+import 'package:angular_app/src/dashboard_component/dashboard_services/config.dart';
 
 @Component(
   selector: 'post-account',
   templateUrl: 'post_account_component.html',
   styleUrls: ['post_account_component.css'],
+  directives: [routerDirectives],
 )
 class PostAccountComponent implements OnInit {
   bool toggle = false;
@@ -18,6 +21,7 @@ class PostAccountComponent implements OnInit {
   String mediaIcon = '';
   String mediaText = '';
   bool isFinished = false;
+  var loginLinkUrl;
 
   void setDefault() {
     var a = getDocument();
@@ -120,13 +124,18 @@ class PostAccountComponent implements OnInit {
     }
   }
 
-
   @override
-  Future<void> ngOnInit() async {
+  void ngOnInit() {
     // TODO: implement ngOnInit
-    addFacebookScript();
-//    await fbAsyncInit();
-    /*init(
+    var fbConfig = config['authentication']['facebook'];
+    var appId = fbConfig['appId'];
+    var url = fbConfig['url'];
+
+    loginLinkUrl = 'https://www.facebook.com/dialog/oauth/?client_id=$appId&redirect_uri=$url&state=TEST_TOKEN&scope=email';
+  }
+   /*addFacebookScript();
+   await fbAsyncInit();
+    init(
       FbInitOption(
         appId: '643278452902822',
         cookies: true,
@@ -135,7 +144,7 @@ class PostAccountComponent implements OnInit {
       ),
     );
 
-    addFacebookScript();*/
+    addFacebookScript();
     var response = await getLoginStatus();
     if (response.status != LoginStatus.connected) {
       print(response.status);
@@ -143,5 +152,5 @@ class PostAccountComponent implements OnInit {
     }
     print(response.status);
     print(response.authResponse.accessToken);
-  }
+  }*/
 }

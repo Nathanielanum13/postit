@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/routes.dart';
-import 'package:angular_components/utils/browser/window/module.dart';
+import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_app/src/home_component/home_component.dart' deferred as home_page;
 import 'package:angular_app/src/about_component/about_component.dart' deferred as about_page;
@@ -17,7 +17,7 @@ import 'package:angular_app/src/dashboard_component/dashboard_component.dart' de
   selector: 'my-app',
   styleUrls: ['app_component.css'],
   templateUrl: 'app_component.html',
-  directives: [routerDirectives, coreDirectives],
+  directives: [routerDirectives, coreDirectives, formDirectives],
   exports: [Routes],
 )
 class AppComponent implements OnInit, OnDestroy {
@@ -32,7 +32,6 @@ class AppComponent implements OnInit, OnDestroy {
 
   @override
   void ngOnDestroy() {
-    // TODO: implement ngOnDestroy
     Storage w = window.localStorage;
     w.clear();
   }

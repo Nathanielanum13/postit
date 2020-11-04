@@ -27,4 +27,5 @@ class HomeComponent {
   Future<void> gotoAbout() async {
     _router.navigate(RoutePaths.about.toUrl());
   }
+  
 }

@@ -30,15 +30,4 @@ class LoginComponent {
   Future<void> gotoDashboard() async {
    _router.navigate(RoutePaths.dashboard.toUrl());
   }
-//  Future<void> gotoDashboard() async {
-//    login.username.trim();
-//
-//    if (login.username.isEmpty || login.password.isEmpty){
-//      return;
-//    }
-//
-//    var token = await _loginService.login(login.username, login.password);
-//    window.localStorage["token"] = token;
-//    _router.navigate(RoutePaths.dashboard.toUrl());
-//  }
 }
