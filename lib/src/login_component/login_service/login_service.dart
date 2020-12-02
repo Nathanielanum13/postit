@@ -2,39 +2,43 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:angular_app/variables.dart';
 import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
 
 @Injectable()
 class LoginService {
 
-  static final uuid = Uuid().v4().toString();
-  static final _headers = {'Content-type': 'application/json', 'trace-id': uuid,'tenant-namespace': 'postit', 'Access-Control-Allow-Origin': '*'};
-  static const _loginUrl = 'https://postit-backend-api.herokuapp.com/login';
+  static final _headers = {
+    'Content-type': 'application/json',
+    'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
+    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
+    'Authorization': 'Bearer ${window.localStorage['token']}'
+  };
+  static final _loginUrl = '${env['LOGIN_URL']}';
 
-  final Client _http;
-
-  LoginService(this._http);
-
-  Future<String> login(String username, String password) async {
-    print(_headers);
+  Future<LoginStandardResponse> login(String username, String password) async {
     try {
-      final response = await http.post(
-          _loginUrl,
-          headers: _headers,
+      final response = await http.post(_loginUrl, headers: _headers,
         body: json.encode({
           'username':username,
           'password' : password
-        })
-      );
-      final token = (_extractPostData(response) as String);
-      return token;
+        }));
+
+      window.localStorage['token'] = response.headers['token'];
+      window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
+
+      print(response.headers);
+      final loginData = _extractResponse(response);
+
+      return loginData;
     } catch (e) {
       throw _handleError(e);
     }
   }
 
-  dynamic _extractPostData(http.Response resp) => json.decode(resp.body)['token'];
+  LoginStandardResponse _extractResponse(http.Response resp) {
+    return LoginStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);
+  }
 
   Exception _handleError(dynamic e) {
     return Exception('Server error; cause: $e');
@@ -52,4 +56,11 @@ class Login {
     'username' : username,
     'password' : password,
   };
+}
+
+class LoginStandardResponse {
+  int statusCode;
+  String message;
+
+  LoginStandardResponse({this.statusCode, this.message});
 }

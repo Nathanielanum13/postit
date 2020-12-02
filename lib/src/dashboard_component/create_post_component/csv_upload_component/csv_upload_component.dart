@@ -3,20 +3,27 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
+import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 @Component(
   selector: 'csv-app',
   templateUrl: 'csv_upload_component.html',
   styleUrls: ['csv_upload_component.css'],
-  directives: [coreDirectives, formDirectives]
+  directives: [
+    coreDirectives,
+    formDirectives,
+    MaterialProgressComponent
+  ]
 )
 class CsvUploadComponent {
   GetPostService _getPostService;
 
   String postAlert = '';
   bool postAlertBool = false;
+  bool progressStatus = false;
   int postAlertCode = 0;
+  int activeProgress = 0;
 
   String csvFileName = 'Select CSV file';
   List<String> column_one = <String>[], column_two = <String>[];
@@ -54,14 +61,16 @@ class CsvUploadComponent {
 
   Future<void> doUpload() async {
     try {
+      activeProgress = 0;
+      progressStatus = true;
       if(column_one.length == column_two.length) {
         for(int i = 0; i < column_one.length; i++) {
           await _getPostService.create(column_one[i], tags: trimColumn(column_two[i]), priority:false);
+          getActiveProgress(i);
         }
-        postAlert = 'Csv file uploaded';
-        postAlertCode = 200;
-        postAlertBool = true;
         csvFileName = 'Select CSV file';
+        progressStatus = false;
+
       }
     } catch(e) {
 
@@ -79,6 +88,10 @@ class CsvUploadComponent {
     }
 
     return result;
+  }
+
+  void getActiveProgress(int i) {
+    activeProgress = ((i / (column_one.length - 1)) * 100).toInt();
   }
 
 

@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
+import 'package:angular_app/src/dashboard_component/inner_routes.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/material_datepicker/range.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
 import 'package:quiver/time.dart';
 import 'package:angular_components/material_datepicker/date_range_input.dart';
 import 'package:angular_components/material_datepicker/material_datepicker.dart';
@@ -33,6 +35,7 @@ const List<String> _numbers = [
   directives: [
     coreDirectives,
     formDirectives,
+    routerDirectives,
     MaterialCheckboxComponent,
     MaterialDatepickerComponent,
     DateRangeInputComponent
@@ -41,6 +44,7 @@ const List<String> _numbers = [
     ClassProvider(GetPostService),
     windowBindings, datepickerBindings
   ],
+  exports: [InnerRoutes, InnerRoutePaths]
 )
 class ManagePostComponent implements OnInit {
   final GetPostService _getPostService;
@@ -69,6 +73,7 @@ class ManagePostComponent implements OnInit {
   bool postAlertBool = false;
   bool allIsChecked = false;
   bool inputError = false;
+  bool createNeed = false;
   int postAlertCode = 0;
   String postMessage = '';
   bool loading = false;
@@ -169,7 +174,8 @@ class ManagePostComponent implements OnInit {
       try {
         posts = await _getPostService.getAllPost().timeout(Duration(seconds: 5));
         loading = false;
-        emptyMessage = 'Empty List';
+        emptyMessage = 'No post';
+        createNeed = true;
       } catch(e) {
         postAlert = 'Server offline. Request timeout';
         postAlertCode = 500;
@@ -179,6 +185,7 @@ class ManagePostComponent implements OnInit {
       }
     } else {
       loading = false;
+      createNeed = false;
     }
   }
 

@@ -7,26 +7,21 @@ import 'package:angular_modern_charts/angular_modern_charts.dart';
   selector: 'dash-home',
   templateUrl: 'dash_home_component.html',
   styleUrls: ['dash_home_component.css'],
-  directives: [GaugeChartComponent],
-
+  directives: [
+    GaugeChartComponent,
+    MaterialProgressComponent,
+  ],
+  pipes: [commonPipes],
   providers: [ClassProvider(GetPostService)],
 )
 class DashHomeComponent implements OnInit{
   List<Post> posts = <Post>[];
-  List<String> newPost = <String>[];
+  List<Schedule> scheduledPosts = <Schedule>[];
+  DateTime date = DateTime.now();
+  String postCreated = '';
+  String postScheduled = '';
+  int activeProgress = 10;
 
-  void getNewPost() {
-    for(int i = 0; i < posts.length; i++) {
-      List<String> createdOn = posts[i].createdOn.split('T');
-      createdOn.removeLast();
-
-      Date createdDate = Date.fromTime(DateTime.parse(createdOn[0]));
-
-      if(createdDate.isOnOrAfter(Date.today().subtract(days: 1))) {
-        newPost.add(posts[i].id);
-      }
-    }
-  }
 
   final GetPostService _getPostService;
   DashHomeComponent(this._getPostService);
@@ -35,7 +30,18 @@ class DashHomeComponent implements OnInit{
   Future<void> ngOnInit() async {
     // TODO: implement ngOnInit
     posts = await _getPostService.getAllPost();
-    getNewPost();
+    scheduledPosts = await _getPostService.getAllScheduledPost();
+
+    if(posts.length > 1) {
+      postCreated = 'Posts';
+    } else if(posts.length <= 1) {
+      postCreated = 'Post';
+    }
+    if(scheduledPosts.length > 1) {
+      postScheduled = 'Posts';
+    } else if(scheduledPosts.length <= 1) {
+      postScheduled = 'Post';
+    }
   }
 
 }

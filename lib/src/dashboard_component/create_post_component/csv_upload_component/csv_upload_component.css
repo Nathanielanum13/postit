@@ -5,3 +5,7 @@
     opacity: 0;
     filter: opacity(0);
 }
+
+.green-progress {
+    background-color: #1c7430 !important;
+}

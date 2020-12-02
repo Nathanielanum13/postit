@@ -4,5 +4,6 @@ class RoutePaths {
   static final home = RoutePath(path: 'home');
   static final about = RoutePath(path: 'about');
   static final login = RoutePath(path: 'login');
+  static final signup = RoutePath(path: 'signup');
   static final dashboard = RoutePath(path: 'dashboard');
 }

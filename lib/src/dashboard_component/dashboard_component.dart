@@ -1,7 +1,11 @@
 
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
+import 'package:angular_app/src/routes.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_router/angular_router.dart';
 
@@ -21,6 +25,7 @@ import 'inner_route_paths.dart';
   ],
   directives: [
     MaterialPersistentDrawerDirective,
+    MaterialTemporaryDrawerComponent,
     MaterialButtonComponent,
     MaterialIconComponent,
     MaterialListComponent,
@@ -31,13 +36,15 @@ import 'inner_route_paths.dart';
     coreDirectives,
     routerDirectives,
   ],
-  exports: [InnerRoutes, InnerRoutePaths],
+  exports: [InnerRoutes, InnerRoutePaths, Routes, RoutePaths],
 )
 class DashboardComponent implements OnInit {
-//  Do something here!
+
+  bool persistentDrawerType = false;
+  bool temporaryDrawerType = false;
   bool customWidth = false;
   bool end = false;
-  bool overlay = false;
+  bool overlay = true;
   Router _router;
   Location _location;
 
@@ -71,11 +78,48 @@ class DashboardComponent implements OnInit {
     _location.forward();
   }
 
+  void getScreenSize() {
+
+    var a = getDocument();
+
+    int width = a.querySelector('body').clientWidth;
+
+    if(width <= 576) {
+      print('Extra small device');
+      temporaryDrawerType = true;
+      persistentDrawerType = false;
+    } else if(width > 576 && width <= 720) {
+      print('Small device');
+      temporaryDrawerType = true;
+      persistentDrawerType = false;
+    } else if(width > 720 && width <= 900) {
+      print('Medium device');
+      temporaryDrawerType = false;
+      persistentDrawerType = true;
+    } else if(width > 900) {
+      print('Large device');
+      temporaryDrawerType = false;
+      persistentDrawerType = true;
+    }
+  }
+
   @override
   Future<void> ngOnInit() async {
-    await create_post_page.loadLibrary();
-    await view_post_page.loadLibrary();
-    await manage_post_page.loadLibrary();
-    await dash_home_page.loadLibrary();
+    if(
+        window.localStorage.containsKey('token') &&
+        window.localStorage.containsKey('tenant-namespace') &&
+        window.localStorage['token'] != null &&
+        window.localStorage['tenant-namespace'] != null &&
+        window.localStorage['token'] != '' &&
+        window.localStorage['tenant-namespace'] != ''
+    ) {
+      await create_post_page.loadLibrary();
+      await view_post_page.loadLibrary();
+      await manage_post_page.loadLibrary();
+      await dash_home_page.loadLibrary();
+      getScreenSize();
+    } else {
+      _router.navigate(RoutePaths.login.toUrl());
+    }
   }
 }

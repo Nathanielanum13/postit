@@ -1,17 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:uuid/uuid.dart';
+import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
 import 'package:http/http.dart';
+import 'package:angular_app/variables.dart';
 
 @Injectable()
 class GetPostService {
-  static final uuid = Uuid().v4().toString();
-  static final _headers = {'Content-type': 'application/json', 'trace-id': uuid,'tenant-namespace': 'postit'};
-  static const _postUrl = 'https://postit-backend-api.herokuapp.com/posts';
-  static final _scheduleUrl = 'https://postit-backend-api.herokuapp.com/schedule-post';
+  static final _headers = {
+    'Content-type': 'application/json',
+    'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
+    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
+    'Authorization': 'Bearer ${window.localStorage['token']}'
+  };
+  static final _postUrl = '${env['POST_URL']}';
+  static final _scheduleUrl = '${env['SCHEDULE_URL']}';
+  static final _batchDeleteUrl = '${env['BATCH_DELETE_URL']}';
+
 
   final Client _http;
 
@@ -150,7 +157,6 @@ class GetPostService {
   }
 
   Future<PostStandardResponse> batchDelete(List<String> ids) async {
-    final _batchDeleteUrl = 'https://postit-backend-api.herokuapp.com/batch-delete';
     try {
       final deleteResponse = await _http.post(_batchDeleteUrl,
           headers: _headers, body: json.encode({'post_ids': ids}));
@@ -170,6 +176,7 @@ class GetPostService {
 //    }
 //  }
 
+
   Future<List<Post>> getAllCurrentPost() async => await currentDBPost();
 }
 
@@ -182,6 +189,7 @@ class Post {
   String createdOn;
   bool checkedState = false;
   bool postPriority;
+  bool postStatus;
 
   Post(this.postMessage,
       {this.postTag,
@@ -189,7 +197,8 @@ class Post {
       this.id,
       this.postPic,
       this.createdOn,
-      this.postPriority});
+      this.postPriority,
+      this.postStatus});
 
   factory Post.fromJson(Map<String, dynamic> post) {
 //    post['hash_tags'] = convertLDS(post['hash_tags']);
@@ -199,6 +208,7 @@ class Post {
       postPic: post['post_image'],
       id: post['post_id'],
       createdOn: post['created_on'],
+      postStatus: post['post_status']
     );
   }
 
@@ -246,9 +256,11 @@ class Schedule {
   String id;
   String created_on;
   String updated_on;
+  List<String> postIds;
+  int duration;
 
   Schedule(this.title, this.from, this.to,
-      {this.created_on, this.updated_on, this.id});
+      {this.created_on, this.updated_on, this.id, this.postIds, this.duration});
 
   factory Schedule.fromJson(Map<String, dynamic> schedule) {
     return Schedule(
@@ -256,6 +268,7 @@ class Schedule {
       schedule['from'],
       schedule['to'],
       id: schedule['schedule_id'],
+      postIds: convertLDS(schedule['post_ids']),
     );
   }
   Map toJson() => {

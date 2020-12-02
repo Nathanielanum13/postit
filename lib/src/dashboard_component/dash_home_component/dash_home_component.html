@@ -1,36 +1,112 @@
 <div class="container">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-sm-12 col-md-4">
-                <div class="card box-one border-0 m-3 br-20">
-                    <div class="card-body text-center">
-                        <div class="nt-circle btn btn-primary mb-2 mx-auto">
-                            <span class="fa fa-envelope"></span>
+            <div class="col-md-6 col-sm-12">
+                <div class="col-12 mt-3">
+                    <span>Post Statistics</span>
+                    <span class="ml-2 text-muted" style="font-size: small">{{date | date}}</span>
+                    <span class="ml-2 fa fa-chart-pie cursor-pointer text-dark"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card box-one border-0 my-3 br-20">
+                            <div class="card-body text-center text-muted">
+                                <div class="nt-circle btn btn-primary mb-2 mx-auto">
+                                    <span class="fa fa-envelope"></span>
+                                </div>
+                                <br>
+                                {{posts.length}} {{postCreated}} Created
+                            </div>
                         </div>
-                        <br>
-                        {{posts.length}} Post created
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card box-one border-0 my-3 br-20">
+                            <div class="card-body text-center text-muted">
+                                <div class="nt-circle btn btn-success mb-2 mx-auto">
+                                    <span class="fa fa-paper-plane"></span>
+                                </div>
+                                <br>
+                                {{scheduledPosts.length}} Scheduled {{postScheduled}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-4">
-                <div class="card box-one border-0 m-3 br-20">
-                    <div class="card-body text-center">
-                        <div class="nt-circle btn btn-dark mb-2 mx-auto">
-                            <span class="fa fa-envelope-open-text"></span>
+            <div class="col-md-6 col-sm-12">
+                <div class="col-12 mt-3">
+                    <span>Post engagement</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card box-one border-0 my-3 br-20">
+                            <div class="card-body text-center text-muted">
+                                <div class="nt-circle btn btn-white mb-2 mx-auto">
+                                    <span class="fa fa-eye"></span>
+                                </div>
+                                <br>
+                                0 Viewers
+                            </div>
                         </div>
-                        <br>
-                        34 Posts posted
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="card box-one border-0 my-3 br-20">
+                            <div class="card-body text-center text-muted">
+                                <div class="nt-circle btn btn-dark mb-2 mx-auto">
+                                    <span class="fa fa-comments"></span>
+                                </div>
+                                <br>
+                                0 Engaged
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-4">
-                <div class="card box-one border-0 m-3 br-20">
-                    <div class="card-body text-center">
-                        <div class="nt-circle btn btn-danger mb-2 mx-auto">
-                            <span class="fa fa-envelope"></span>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="col-12 mt-3">
+                    <span>Post Progress</span>
+                    <span class="ml-2 text-muted" style="font-size: small">Current Schedule</span>
+                    <span class="ml-2 fa fa-chart-line cursor-pointer text-dark"></span>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card box-two border-0 my-3 br-20">
+                            <div class="card-body text-center text-muted">
+                                <material-progress [activeProgress]="activeProgress"></material-progress>
+                                <div class="row px-2">
+                                    <div class="col-4 text-left">
+                                        <span class="far fa-calendar"></span>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <span class="text-muted">10% done</span>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <span class="far fa-calendar-check text-success"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <br>
-                        {{newPost.length}} New posts
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="col-12 mt-3">
+                    <span>Post Data</span>
+                    <span class="ml-2 text-muted" style="font-size: small">Today, {{date | date}}</span>
+                    <span class="ml-2 fa fa-chart-bar cursor-pointer text-dark"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-sm-12">
+                        <div class="card box-two border-0 my-3 br-20">
+                            <div class="card-body text-center text-muted">
+                                <div class="row px-2">
+                                    Something
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

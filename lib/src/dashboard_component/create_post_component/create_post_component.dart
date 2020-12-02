@@ -40,6 +40,8 @@ class CreatePostComponent implements OnInit{
   bool editKey = false;
   bool toggleState = false;
   bool allIsChecked = false;
+  bool loading = false;
+  bool isSending = false;
   int postAlertCode = 0;
 
   String postMessage = '';
@@ -124,7 +126,9 @@ class CreatePostComponent implements OnInit{
   Future<void> batchDelete() async {
     print('Batch Delete Method');
     try {
+      loading = true; checkLoadingState(loading);
       PostStandardResponse deleteResponse = await _getPostService.batchDelete(deleteIds);
+      loading = false; checkLoadingState(loading);
       postAlert = deleteResponse.data.message;
       postAlertCode =deleteResponse.httpStatusCode;
       postAlertBool = true;
@@ -140,6 +144,7 @@ class CreatePostComponent implements OnInit{
       deleteIds.clear();
       allIsChecked = false;
     } catch(e) {
+      loading = false; checkLoadingState(loading);
       postAlert = 'Could not delete. Server offline';
       postAlertCode = 500;
       postAlertBool = true;
@@ -248,7 +253,12 @@ class CreatePostComponent implements OnInit{
       if (postMessage.isEmpty) return null;
 
       try {
+        isSending = true;
+        checkLoadingState(true);
         PostStandardResponse resp = await _getPostService.create(postMessage, tags: postTags, image: postImage, priority: toggleState);
+        checkLoadingState(false);
+        isSending = false;
+
         postAlert = resp.data.message;
         postAlertCode = resp.httpStatusCode;
         postAlertBool = true;
@@ -268,12 +278,12 @@ class CreatePostComponent implements OnInit{
           toggleState = false;
         }
       } catch(e) {
+        checkLoadingState(false);
+        isSending = false;
         postAlert = 'Could not create. Server offline';
         postAlertCode = 500;
         postAlertBool = true;
         Timer(Duration(seconds: 5), dismissAlert);
-
-
       }
   }
 
@@ -282,7 +292,12 @@ class CreatePostComponent implements OnInit{
     if (postMessage.isEmpty) return null;
 
     try {
+      isSending = true;
+      checkLoadingState(true);
       PostStandardResponse resp = await _getPostService.update(_updatePostId ,postMessage, postTags, postImage);
+      checkLoadingState(false);
+      isSending = false;
+
       postAlert = resp.data.message;
       postAlertCode = resp.httpStatusCode;
       postAlertBool = true;
@@ -307,6 +322,8 @@ class CreatePostComponent implements OnInit{
       editKey = false;
 
     } catch(e) {
+      isSending = false;
+      checkLoadingState(false);
       postAlert = 'Could not edit. Server offline';
       postAlertCode = 500;
       postAlertBool = true;
@@ -320,8 +337,9 @@ class CreatePostComponent implements OnInit{
   Future<void> remove(int index) async {
     String id = currentPosts[index].id;
     try {
+      loading = true; checkLoadingState(loading);
       PostStandardResponse deleteResponse = await _getPostService.delete(id);
-
+      loading = false; checkLoadingState(loading);
       postAlert = deleteResponse.data.message;
       postAlertCode = deleteResponse.httpStatusCode;
       postAlertBool = true;
@@ -334,11 +352,11 @@ class CreatePostComponent implements OnInit{
         currentPosts.removeAt(index);
       }
     } catch(e) {
+      loading = false; checkLoadingState(loading);
       postAlert = 'Could not delete. Server error';
       postAlertCode = 500;
       postAlertBool = true;
       Timer(Duration(seconds: 5), dismissAlert);
-
     }
 
   }
@@ -371,10 +389,14 @@ class CreatePostComponent implements OnInit{
   List<Post> fetchPost() {
     Storage ls = window.localStorage;
     List<Post> posts = <Post>[];
+    var d;
 
     for(int i = 0; i < ls.values.length; i++) {
-      var d = json.decode(ls.values.elementAt(i));
-
+      if(ls.keys.elementAt(i) == 'token' || ls.keys.elementAt(i) == 'tenant-namespace') {
+        continue;
+      } else {
+        d = json.decode(ls.values.elementAt(i));
+      }
       Post newPost = Post(
           d['post_message'],
           id: d['id'],
@@ -423,5 +445,14 @@ class CreatePostComponent implements OnInit{
   void ngOnInit() {
     // TODO: implement
     currentPosts = fetchPost();
+  }
+
+  void checkLoadingState(bool loading) {
+    var doc = getDocument();
+    if(loading) {
+      doc.querySelectorAll('.create-table-info').style.filter = 'blur(5px)';
+    } else {
+      doc.querySelectorAll('.create-table-info').style.filter = 'blur(0)';
+    }
   }
 }

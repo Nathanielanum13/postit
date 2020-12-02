@@ -14,8 +14,9 @@
                 <div class="row bg-transparent br-20 py-1">
                     <div class="col-12">
                         <a download="post_template.csv" href="files/post_template.csv">
-                            <button id="downloads" class="btn btn-primary border-0 br-20 px-4">
-                                <material-icon icon="get_app" class="mt-1"></material-icon>
+                            <button id="downloads" class="btn btn-primary border-0 br-20 px-4" style="margin-bottom: 10px">
+                                <!--<material-icon icon="get_app" class="mt-1"></material-icon>-->
+                                <span class="fa fa-download mt-1"></span>
                                 <span class="down-text">Download template</span>
                             </button>
                         </a>
@@ -27,7 +28,7 @@
     </div>
 
     <div class="row justify-content-start mt-3">
-        <div class="col-md-10 col-sm-12 col-lg-5" id="create-table">
+        <div class="col-md-10 col-sm-12 col-lg-5" id="create-table" style="margin-bottom: 20px">
             <div class="card shadow-c c-bordered bg-transparent box-one br-20">
                 <div class="card-body mr-auto ml-auto">
                     <form action="#" novalidate>
@@ -43,12 +44,19 @@
                                                id="message_box" placeholder="Write post message..."
                                                #el
                                                size="50" type="text" style="font-size: 17px !important;">
+                                        <!--<a type="button" class="btn-floating btn-comm waves-effect waves-light w-15 ml-auto my-auto" (click)="addPost()"
+                                           *ngIf="!editKey && !isSending">
+                                            <span class="fa fa-paper-plane nt-center text-white"></span>
+                                        </a>-->
                                         <span (click)="addPost()"
-                                              *ngIf="!editKey"
-                                              class="fa fa-paper-plane w-15 ml-auto my-auto text-default-four cursor-pointer">
+                                              *ngIf="!editKey && !isSending"
+                                              class="fa fa-paper-plane w-15 ml-auto my-auto text-default-six cursor-pointer">
+                                        </span>
+                                        <span *ngIf="isSending" class="w-15 ml-auto my-auto">
+                                            <img src="img/mini-loader.gif" style="width: 20px; height: auto">
                                         </span>
                                         <span (click)="updatePost()"
-                                              *ngIf="editKey"
+                                              *ngIf="editKey && !isSending"
                                               class="fa fa-pen-alt w-15 ml-auto my-auto text-default-four cursor-pointer">
                                         </span>
                                     </div>
@@ -58,9 +66,9 @@
                         <div class="form-group mt-4">
                             <ul class="nav">
                                 <li class="nav-item mx-auto">
-                                    <a class="c-link text-default-four" data-toggle="tab" href="#panel1" role="tab">
+                                    <a class="c-link text-default-six" data-toggle="tab" href="#panel1" role="tab">
                                         <div id="pictures">
-                                            <material-icon icon="image"></material-icon>
+                                            <material-icon icon="image" class="b-icon p-1"></material-icon>
                                             <span class="pic-text">Upload image</span>
                                         </div>
                                     </a>
@@ -68,7 +76,7 @@
                                 <li class="nav-item mx-auto">
                                     <a class="c-link text-danger" data-toggle="tab" href="#panel2" role="tab">
                                         <div id="emojis">
-                                            <material-icon icon="tag_faces"></material-icon>
+                                            <material-icon icon="tag_faces" class="b-icon p-1"></material-icon>
                                             <span class="emo-text">Emoji's</span>
                                         </div>
                                     </a>
@@ -76,7 +84,7 @@
                                 <li class="nav-item mx-auto">
                                     <a class="c-link text-primary" data-toggle="tab" href="#panel3" role="tab">
                                         <div id="tags">
-                                            <material-icon icon="tag"></material-icon>
+                                            <material-icon icon="tag" class="b-icon p-1"></material-icon>
                                             <span class="tag-text">Tags</span>
                                         </div>
                                     </a>
@@ -359,15 +367,8 @@
                     </form>
                 </div>
             </div>
-            <!--            <div class="card c-bordered bg-transparent box-one mt-3">-->
-            <!--                <div class="card-body">-->
-
-            <!--                </div>-->
-            <!--            </div>-->
         </div>
-
-
-        <div class="col-md-10 col-sm-12 col-lg-7 mt-sm-5 mt-md-5 mt-lg-0">
+        <div class="col-md-12 col-sm-12 col-lg-7">
             <div class="card shadow-c bg-transparent box-one border-0 br-20 px-2 py-4">
                 <div class="card bg-transparent px-2 border-0 post-table br-20">
                     <div class="card-body">
@@ -381,7 +382,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="currentPosts.isNotEmpty">
+                        <div *ngIf="currentPosts.isNotEmpty" class="create-table-info">
                             <div *ngFor="let currentPost of currentPosts; let $i=index"
                                  class="row c-bordered box-two post-row">
                                 <material-checkbox (click)="getId($i)"
@@ -389,21 +390,21 @@
                                 <div class="mr-auto my-auto w-50 d-post-text">
                                     {{currentPost.postMessage}}
                                 </div>
-                                <!--                            <material-button id="editKey" (click)="editPost($i)">-->
-                                <!--                                <material-icon icon="delete" class="text-danger"></material-icon>-->
-                                <!--                                <material-icon icon="{{editIndicator}}" class="text-primary" id="{{$i}}"></material-icon>-->
-                                <!--                            </material-button>-->
-                                <span (click)="editPost($i)" class="fa fa-edit btn my-auto text-muted cursor-pointer"
+                                <span (click)="editPost($i)" class="fa fa-edit my-auto text-muted cursor-pointer mr-3"
                                       id="{{$i}}"></span>
-                                <material-icon icon="delete_outline" (click)="remove($i)" class="my-auto cursor-pointer mr-3"></material-icon>
-<!--                                <span (click)="remove($i)" class="fa fa-trash btn my-auto cursor-pointer"></span>-->
+                                <material-icon icon="delete_outline" (click)="remove($i)" class="my-auto cursor-pointer mr-3 table-bordered" id="delete-button"></material-icon>
                             </div>
                         </div>
 
                         <div *ngIf="currentPosts.isEmpty">
                             <div class="nt-center text-muted">
-                                <span class="fa fa-cloud-moon-rain text-muted mr-1"></span>
+                                <span class="fa fa-cloud text-muted mr-1"></span>
                                 Nothing created yet
+                            </div>
+                        </div>
+                        <div *ngIf="loading">
+                            <div class="nt-center text-muted">
+                                <img src="img/load.gif" alt="Loading..." class="img-fluid" style="border-radius: 20px; background: rgba(255,255,255,0.95)">
                             </div>
                         </div>
                     </div>
