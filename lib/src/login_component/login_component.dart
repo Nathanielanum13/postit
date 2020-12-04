@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/login_component/login_service/login_service.dart';
 import 'package:angular_app/src/routes.dart';
@@ -33,7 +31,7 @@ class LoginComponent{
 
 
   Future<void> gotoDashboard() async {
-   LoginStandardResponse loginResponse;
+   LoginStandardResponse loginResponse = LoginStandardResponse(statusCode: null, message: '');
    login.username.trim();
 
    if (login.username.isEmpty || login.password.isEmpty){
