@@ -28,8 +28,8 @@ class SignupComponent {
   SignupServices _signupServices;
   List<String> companyPhoneNumbers = <String>[];
   Signup user = Signup('', '', '', '', '', '', '', '', [], '', false);
-  String passwordConfirmation;
-  String phone;
+  String passwordConfirmation = '';
+  String phone = '';
 
   SignupComponent(this._signupServices, this._router);
 

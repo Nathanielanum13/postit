@@ -32,39 +32,38 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-
+<div class="limiter">
+	<div class="container">
+		<form class="login100-form">
+			<div class="p-5">
+				<div group>
+					<material-input
+							type="text"
+							label="Username"
+							leadingGlyph="person"
+							[(ngModel)]="login.username">
+					</material-input>
+				</div>
+				<div group>
+					<material-input
+							type="password"
+							label="Password"
+							leadingGlyph="fingerprint"
+							[(ngModel)]="login.password">
+					</material-input>
+				</div>
+				<div group>
+					<material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="!isLoading">
+						Login
+					</material-button>
+					<material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="isLoading">
+						<img src="img/mini-loader.gif" style="width: 20px; height: auto">
+					</material-button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 
 
 <!--suppress ALL -->
-<div class="limiter">
-    <div class="container">
-        <form class="login100-form">
-            <div class="p-5">
-                <div group>
-                    <material-input
-                            type="text"
-                            label="Username"
-                            leadingGlyph="person"
-                            [(ngModel)]="login.username">
-                    </material-input>
-                </div>
-                <div group>
-                    <material-input
-                            type="password"
-                            label="Password"
-                            leadingGlyph="fingerprint"
-                            [(ngModel)]="login.password">
-                    </material-input>
-                </div>
-                <div group>
-                    <material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="!isLoading">
-                        Login
-                    </material-button>
-                    <material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="isLoading">
-                        <img src="img/mini-loader.gif" style="width: 20px; height: auto">
-                    </material-button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
