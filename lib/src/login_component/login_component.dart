@@ -6,54 +6,54 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_router/angular_router.dart';
 
 @Component(
-    selector: 'login-app',
-    templateUrl: 'login_component.html',
-    styleUrls: ['login_component.css'],
-    directives: [
-      /*MaterialInputComponent,
+  selector: 'login-app',
+  templateUrl: 'login_component.html',
+  styleUrls: ['login_component.css'],
+  directives: [
+    /*MaterialInputComponent,
       MaterialButtonComponent,*/
-      materialDirectives,
-      routerDirectives,
-      coreDirectives,
-      formDirectives
-    ],
-  exports: [Routes],
- providers: [ClassProvider(LoginService), materialProviders],
+    materialDirectives,
+    routerDirectives,
+    coreDirectives,
+    formDirectives
+  ],
+  exports: [Routes, RoutePaths],
+  providers: [ClassProvider(LoginService), materialProviders],
 )
 class LoginComponent{
- Router _router;
- LoginService _loginService;
- bool isLoading = false;
+  Router _router;
+  LoginService _loginService;
+  bool isLoading = false;
 
- Login login = Login('', '');
+  Login login = Login('', '');
 
- LoginComponent(this._router, this._loginService);
+  LoginComponent(this._router, this._loginService);
 
 
   Future<void> gotoDashboard() async {
-   LoginStandardResponse loginResponse = LoginStandardResponse(statusCode: null, message: '');
-   login.username.trim();
+    LoginStandardResponse loginResponse = LoginStandardResponse(statusCode: null, message: '');
+    login.username.trim();
 
-   if (login.username.isEmpty || login.password.isEmpty){
-     return;
-   }
+    if (login.username.isEmpty || login.password.isEmpty){
+      return;
+    }
 
-   try {
-     isLoading = true;
-     loginResponse = await _loginService.login(login.username, login.password);
-     isLoading = false;
-   } catch(e) {
-     isLoading = false;
-     print('Error trying to connect');
-   }
+    try {
+      isLoading = true;
+      loginResponse = await _loginService.login(login.username, login.password);
+      isLoading = false;
+    } catch(e) {
+      isLoading = false;
+      print('Error trying to connect');
+    }
 
-   print('Message: ${loginResponse.message}');
+    print('Message: ${loginResponse.message}');
 
-   if(loginResponse.statusCode != 200)  {
-     return;
-   } else {
-     _router.navigate(RoutePaths.dashboard.toUrl());
-   }
+    if(loginResponse.statusCode != 200)  {
+      return;
+    } else {
+      _router.navigate(RoutePaths.dashboard.toUrl());
+    }
   }
 
 }

@@ -45,6 +45,7 @@ class SignupComponent {
   }
 
   Future<void> signup() async {
+    SignupStandardResponse signup = SignupStandardResponse(statusCode: null, message: '');
     user.companyPhone = companyPhoneNumbers;
     if(
       user.firstname.isEmpty ||
@@ -62,9 +63,9 @@ class SignupComponent {
     } else {
       if(user.termsAndConditions && passwordConfirmation == user.password) {
         try {
-          var resp = await _signupServices.signup(user.firstname, user.lastname, user.username, user.password, user.companyName, user.companyWebsite, user.companyAddress, user.companyPhone, user.companyEmail, user.ghanaPostAddress);
+          signup = await _signupServices.signup(user.firstname, user.lastname, user.username, user.password, user.companyName, user.companyWebsite, user.companyAddress, user.companyPhone, user.companyEmail, user.ghanaPostAddress);
 
-          if(resp.statusCode != 200) {
+          if(signup.statusCode != 200) {
               return;
           } else {
             companyPhoneNumbers.clear();
@@ -82,7 +83,7 @@ class SignupComponent {
 
             _router.navigate(RoutePaths.dashboard.toUrl());
           }
-          print(resp.message);
+          print(signup.message);
         } catch(e) {
           print(e);
         }

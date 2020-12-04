@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="limiter">
+    <div class="limiter" style="z-index: 1000">
         <div class="container">
             <form class="login100-form">
                 <div class="p-5">
@@ -104,6 +104,9 @@
                         </material-input>
                     </div>
                     <div group>
+                        <div class="text-muted mb-3">I don't have an account.
+                            <span class="text-primary mx-1 cursor-pointer" [routerLink]="RoutePaths.signup.toUrl()">Sign up</span>
+                        </div>
                         <material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="!isLoading">
                             Login
                         </material-button>
