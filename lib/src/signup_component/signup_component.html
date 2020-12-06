@@ -1,3 +1,20 @@
+<div id="alert" *ngIf="showAlert"
+     [class.alert-danger]="statusCode!=200"
+     [class.alert-success]="statusCode==200"
+>
+    <div class="row" *ngIf="statusCode!=200">
+        <div class="col-2 my-auto">
+            <span class="fa fa-tice fa-2x text-danger"></span>
+        </div>
+        <div class="col-8 my-auto">
+            <span class="text-center">Signup failed</span>
+        </div>
+        <div class="col-2 my-auto">
+            <span class="fa fa-times cursor-pointer" (click)="dismissAlert()"></span>
+        </div>
+    </div>
+</div>
+
 <div class="row m-0 p-0">
     <div class="col-lg-6 col-sm-12 px-0 d-none d-lg-block">
         <img src="img/svg-bg.png" alt="home-bg" style="height: 100vh; width: inherit" class="img-fluid">
@@ -178,7 +195,10 @@
                         <material-checkbox class="mt-2" [(checked)]="user.termsAndConditions"></material-checkbox>
                         I accept the Terms of Use &amp; Privacy Policy.
                     </div>
-                    <button (click)="signup()">Signup Now</button>
+                    <button (click)="signup()" *ngIf="!isLoading">Signup Now</button>
+                    <button (click)="signup()" *ngIf="isLoading">
+                        <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                    </button>
                 </form>
                 <!--<div class="mb-2">
                     <div class="display-custom text-center">

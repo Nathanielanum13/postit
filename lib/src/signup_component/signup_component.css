@@ -106,6 +106,19 @@ button:hover:before {
     display: none;
     content: '\f00c'; }
 
+#alert {
+    position: fixed;
+    top: 20px;
+    border-radius: 20px;
+    z-index: 1001;
+    width: 300px;
+    height: 40px;
+    padding: 4px;
+    margin: 0 10vw;
+
+    text-align: center;
+}
+
 @media (max-width: 991px) {
     .inner {
         min-width: 768px; } }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/navbar_component/navbar_component.dart';
 import 'package:angular_app/src/routes.dart';
@@ -30,6 +31,9 @@ class SignupComponent {
   Signup user = Signup('', '', '', '', '', '', '', '', [], '', false);
   String passwordConfirmation = '';
   String phone = '';
+  bool isLoading = false;
+  bool showAlert = false;
+  int statusCode = 400;
 
   SignupComponent(this._signupServices, this._router);
 
@@ -42,6 +46,10 @@ class SignupComponent {
 
   void removePhone(int index) {
     companyPhoneNumbers.removeAt(index);
+  }
+
+  void dismissAlert() {
+    showAlert = false;
   }
 
   Future<void> signup() async {
@@ -63,8 +71,9 @@ class SignupComponent {
     } else {
       if(user.termsAndConditions && passwordConfirmation == user.password) {
         try {
+          isLoading = true;
           signup = await _signupServices.signup(user.firstname, user.lastname, user.username, user.password, user.companyName, user.companyWebsite, user.companyAddress, user.companyPhone, user.companyEmail, user.ghanaPostAddress);
-
+          isLoading = false;
           if(signup.statusCode != 200) {
               return;
           } else {
@@ -85,7 +94,10 @@ class SignupComponent {
           }
           print(signup.message);
         } catch(e) {
-          print(e);
+          isLoading = false;
+          showAlert = true;
+          Timer(Duration(seconds: 5), dismissAlert);
+          statusCode = signup.statusCode;
         }
       }
     }

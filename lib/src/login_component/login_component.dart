@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/login_component/login_service/login_service.dart';
 import 'package:angular_app/src/routes.dart';
@@ -24,11 +25,16 @@ class LoginComponent{
   Router _router;
   LoginService _loginService;
   bool isLoading = false;
+  bool showAlert = false;
+  int statusCode = 400;
 
   Login login = Login('', '');
 
   LoginComponent(this._router, this._loginService);
 
+  void dismissAlert() {
+    showAlert = false;
+  }
 
   Future<void> gotoDashboard() async {
     LoginStandardResponse loginResponse = LoginStandardResponse(statusCode: null, message: '');
@@ -44,6 +50,9 @@ class LoginComponent{
       isLoading = false;
     } catch(e) {
       isLoading = false;
+      showAlert = true;
+      Timer(Duration(seconds: 5), dismissAlert);
+      statusCode = loginResponse.statusCode;
       print('Error trying to connect');
     }
 

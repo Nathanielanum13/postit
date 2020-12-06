@@ -8,6 +8,19 @@ material-input {
     background: #2f2f2f;
     color: white;
 }
+#alert {
+    position: fixed;
+    top: 20px;
+    border-radius: 20px;
+    z-index: 1001;
+    width: 300px;
+    height: 40px;
+    padding: 4px;
+    margin: 0 10vw;
+
+    text-align: center;
+}
+
 .limiter {
     width: 400px;
     max-width: 400px;
