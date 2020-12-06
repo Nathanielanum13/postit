@@ -43,6 +43,8 @@ class DashboardComponent implements OnInit {
   bool persistentDrawerType = false;
   bool temporaryDrawerType = false;
   bool customWidth = false;
+  bool isLoggedIn = false;
+  bool toggle = false;
   bool end = false;
   bool overlay = true;
   Router _router;
@@ -76,6 +78,42 @@ class DashboardComponent implements OnInit {
   }
   Future<void> goForward() async {
     _location.forward();
+  }
+
+  void dismissDialog() {
+    toggle = true;
+    showDialog();
+  }
+
+  void doLogout() {
+    window.localStorage.remove('token');
+    window.localStorage.remove('tenant-namespace');
+
+    _router.navigate(RoutePaths.login.toUrl());
+  }
+
+  void showDialog() {
+    toggle = !toggle;
+    var doc = getDocument();
+    List<Element> a = doc.querySelectorAll('#html-body button');
+
+    if(toggle) {
+
+      doc.getElementById('log-dialog').setAttribute('display', 'true');
+      doc.getElementById('html-body').style.filter = 'blur(5px)';
+
+      for(int i = 0; i < a.length; i++) {
+        a[i].setAttribute('disabled', 'true');
+      }
+
+    } else {
+      doc.getElementById('log-dialog').setAttribute('display', 'false');
+      doc.getElementById('html-body').style.filter = 'blur(0px)';
+
+      for(int i = 0; i < a.length; i++) {
+        a[i].removeAttribute('disabled');
+      }
+    }
   }
 
   void getScreenSize() {
@@ -113,12 +151,14 @@ class DashboardComponent implements OnInit {
         window.localStorage['token'] != '' &&
         window.localStorage['tenant-namespace'] != ''
     ) {
+      isLoggedIn = true;
       await create_post_page.loadLibrary();
       await view_post_page.loadLibrary();
       await manage_post_page.loadLibrary();
       await dash_home_page.loadLibrary();
       getScreenSize();
     } else {
+      isLoggedIn = false;
       _router.navigate(RoutePaths.login.toUrl());
     }
   }

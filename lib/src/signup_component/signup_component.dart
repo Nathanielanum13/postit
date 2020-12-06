@@ -31,6 +31,7 @@ class SignupComponent {
   Signup user = Signup('', '', '', '', '', '', '', '', [], '', false);
   String passwordConfirmation = '';
   String phone = '';
+  String message = 'Signup failed';
   bool isLoading = false;
   bool showAlert = false;
   int statusCode = 400;
@@ -67,6 +68,9 @@ class SignupComponent {
       user.companyEmail.isEmpty ||
       user.companyPhone.isEmpty
     ) {
+      showAlert = true;
+      message = 'All input fields are required';
+      Timer(Duration(seconds: 5), dismissAlert);
       return;
     } else {
       if(user.termsAndConditions && passwordConfirmation == user.password) {
@@ -74,32 +78,49 @@ class SignupComponent {
           isLoading = true;
           signup = await _signupServices.signup(user.firstname, user.lastname, user.username, user.password, user.companyName, user.companyWebsite, user.companyAddress, user.companyPhone, user.companyEmail, user.ghanaPostAddress);
           isLoading = false;
-          if(signup.statusCode != 200) {
-              return;
-          } else {
-            companyPhoneNumbers.clear();
-            user.firstname = '';
-            user.lastname = '';
-            user.username = '';
-            user.password = '';
-            user.companyName = '';
-            user.companyAddress = '';
-            user.companyWebsite = '';
-            user.ghanaPostAddress = '';
-            user.companyEmail = '';
-            user.companyPhone = [];
-            passwordConfirmation = '';
-
-            _router.navigate(RoutePaths.dashboard.toUrl());
-          }
+          showAlert = true;
+          statusCode = signup.statusCode;
+          message = checkMessage(signup.message);
           print(signup.message);
         } catch(e) {
           isLoading = false;
           showAlert = true;
-          Timer(Duration(seconds: 5), dismissAlert);
+          message = checkMessage(signup.message);
           statusCode = signup.statusCode;
+          Timer(Duration(seconds: 5), dismissAlert);
         }
+
+        if(signup.statusCode != 200) {
+          return;
+        } else {
+          companyPhoneNumbers.clear();
+          user.firstname = '';
+          user.lastname = '';
+          user.username = '';
+          user.password = '';
+          user.companyName = '';
+          user.companyAddress = '';
+          user.companyWebsite = '';
+          user.ghanaPostAddress = '';
+          user.companyEmail = '';
+          user.companyPhone = [];
+          passwordConfirmation = '';
+
+          _router.navigate(RoutePaths.dashboard.toUrl());
+        }
+      } else {
+        showAlert = true;
+        message = 'Confirm password and agree to the terms.';
+        Timer(Duration(seconds: 5), dismissAlert);
+        return;
       }
     }
+  }
+
+  String checkMessage(String m) {
+    if(m == '') {
+      m = 'Login failed';
+    }
+    return m;
   }
 }

@@ -27,6 +27,7 @@ class LoginComponent{
   bool isLoading = false;
   bool showAlert = false;
   int statusCode = 400;
+  String message = 'Login failed';
 
   Login login = Login('', '');
 
@@ -48,11 +49,16 @@ class LoginComponent{
       isLoading = true;
       loginResponse = await _loginService.login(login.username, login.password);
       isLoading = false;
+      showAlert = true;
+      statusCode = loginResponse.statusCode;
+      message = checkMessage(loginResponse.message);
+      Timer(Duration(seconds: 5), dismissAlert);
     } catch(e) {
       isLoading = false;
       showAlert = true;
-      Timer(Duration(seconds: 5), dismissAlert);
       statusCode = loginResponse.statusCode;
+      message = checkMessage(loginResponse.message);
+      Timer(Duration(seconds: 5), dismissAlert);
       print('Error trying to connect');
     }
 
@@ -63,6 +69,13 @@ class LoginComponent{
     } else {
       _router.navigate(RoutePaths.dashboard.toUrl());
     }
+  }
+
+  String checkMessage(String m) {
+    if(m == '') {
+      m = 'Login failed';
+    }
+    return m;
   }
 
 }
