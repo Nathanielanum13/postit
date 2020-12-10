@@ -1,14 +1,19 @@
 import 'dart:html';
+// import 'dart:io' as io show HttpServer, HttpRequest, InternetAddress, ContentType;
 import 'package:angular_app/config.dart';
-import 'package:http/http.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_app/src/dashboard_component/inner_routes.dart';
+import 'package:angular_app/src/route_paths.dart';
+import 'package:angular_app/src/routes.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
-import 'package:facebook_web_sdk/facebook_web_sdk.dart';
+import 'package:angular_router/angular_router.dart';
 
 @Component(
   selector: 'post-account',
   templateUrl: 'post_account_component.html',
   styleUrls: ['post_account_component.css'],
+  directives: [routerDirectives, coreDirectives],
+  exports: [InnerRoutes, InnerRoutePaths, Routes, RoutePaths],
 )
 class PostAccountComponent implements OnInit {
   bool toggle = false;
@@ -18,12 +23,14 @@ class PostAccountComponent implements OnInit {
   String mediaText = '';
   bool isFinished = false;
   var loginLinkUrl = '';
+  Router _router;
 
-
+  PostAccountComponent(this._router);
 
   void setDefault() {
     var a = getDocument();
-    if(a.getElementById('dialog').getAttribute('display') == 'true' && isFinished) {
+    if (a.getElementById('dialog').getAttribute('display') == 'true' &&
+        isFinished) {
       print('bongo');
     } else {
       return;
@@ -41,35 +48,32 @@ class PostAccountComponent implements OnInit {
   }
 
   void showPopup(String name) {
-
     toggle = !toggle;
     var doc = getDocument();
     List<Element> a = doc.querySelectorAll('#body button');
 
-    if(toggle) {
-
+    if (toggle) {
       doc.getElementById('dialog').setAttribute('display', 'true');
       doc.getElementById('view-dialog').setAttribute('display', 'false');
       doc.getElementById('body').style.filter = 'blur(5px)';
 
-      for(int i = 0; i < a.length; i++) {
+      for (int i = 0; i < a.length; i++) {
         a[i].setAttribute('disabled', 'true');
       }
 
-
-      if(name == 'facebook') {
+      if (name == 'facebook') {
         mediaName = 'Facebook';
         mediaIcon = 'facebook';
         mediaText = 'text-primary';
-      } else if(name == 'twitter') {
+      } else if (name == 'twitter') {
         mediaName = 'Twitter';
         mediaIcon = 'twitter';
         mediaText = 'text-primary';
-      } else if(name == 'instagram') {
+      } else if (name == 'instagram') {
         mediaName = 'Instagram';
         mediaIcon = 'instagram';
         mediaText = 'text-danger';
-      } else if(name == 'linkedin') {
+      } else if (name == 'linkedin') {
         mediaName = 'LinkedIn';
         mediaIcon = 'linkedin';
         mediaText = 'text-primary';
@@ -80,35 +84,33 @@ class PostAccountComponent implements OnInit {
       doc.getElementById('body').style.filter = 'blur(0px)';
       mediaIcon = '';
 
-      for(int i = 0; i < a.length; i++) {
+      for (int i = 0; i < a.length; i++) {
         a[i].removeAttribute('disabled');
       }
     }
   }
 
   void showViewPopup(String name) {
-
     toggleView = !toggleView;
     var doc = getDocument();
     List<Element> a = doc.querySelectorAll('#body button');
 
-    if(toggleView) {
-
+    if (toggleView) {
       doc.getElementById('view-dialog').setAttribute('display', 'true');
       doc.getElementById('dialog').setAttribute('display', 'false');
       doc.getElementById('body').style.filter = 'blur(5px)';
 
-      for(int i = 0; i < a.length; i++) {
+      for (int i = 0; i < a.length; i++) {
         a[i].setAttribute('disabled', 'true');
       }
 
-      if(name == 'facebook') {
+      if (name == 'facebook') {
         mediaName = 'Facebook';
-      } else if(name == 'twitter') {
+      } else if (name == 'twitter') {
         mediaName = 'Twitter';
-      } else if(name == 'instagram') {
+      } else if (name == 'instagram') {
         mediaName = 'Instagram';
-      } else if(name == 'linkedin') {
+      } else if (name == 'linkedin') {
         mediaName = 'LinkedIn';
       }
     } else {
@@ -116,7 +118,7 @@ class PostAccountComponent implements OnInit {
       doc.getElementById('dialog').setAttribute('display', 'false');
       doc.getElementById('body').style.filter = 'blur(0px)';
 
-      for(int i = 0; i < a.length; i++) {
+      for (int i = 0; i < a.length; i++) {
         a[i].removeAttribute('disabled');
       }
     }
@@ -127,21 +129,14 @@ class PostAccountComponent implements OnInit {
     var appId = fbConfig['appId'];
     var url = fbConfig['url'];
 
-    loginLinkUrl = 'https://www.facebook.com/dialog/oauth/?client_id=$appId&redirect_uri=$url&state=TEST_TOKEN&scope=email';
-
-    /*var response = await getLoginStatus();
-    if (response.status != LoginStatus.connected) {
-      print(response.status);
-      response = await login();
-    }
-    print(response.status);
-    print(response.authResponse.accessToken);*/
+    loginLinkUrl =
+        'https://www.facebook.com/dialog/oauth/?client_id=$appId&redirect_uri=$url&state=TEST_TOKEN&scope=email';
+    // _router.navigate(
+    //     InnerRoutePaths.facebook.toUrl(parameters: {'loginurl': loginLinkUrl}));
   }
-
 
   @override
   Future<void> ngOnInit() async {
-    // TODO: implement ngOnInit
     gotoFacebook();
   }
 }
