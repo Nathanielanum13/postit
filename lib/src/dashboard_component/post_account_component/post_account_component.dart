@@ -123,7 +123,7 @@ class PostAccountComponent implements OnInit {
     var url = fbConfig['url'];
 
     loginLinkUrl =
-        'https://www.facebook.com/dialog/oauth/?client_id=$appId&redirect_uri=$url&state=TEST_TOKEN&scope=email';
+        'https://www.facebook.com/dialog/oauth/?client_id=$appId&dsplay=popup&redirect_uri=$url&state=TEST_TOKEN&scope=email';
     // _router.navigate(
     //     InnerRoutePaths.facebook.toUrl(parameters: {'loginurl': loginLinkUrl}));
   }
