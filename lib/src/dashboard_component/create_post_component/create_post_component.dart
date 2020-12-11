@@ -443,7 +443,6 @@ class CreatePostComponent implements OnInit{
 
   @override
   void ngOnInit() {
-    // TODO: implement
     currentPosts = fetchPost();
   }
 

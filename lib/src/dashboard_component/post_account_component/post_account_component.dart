@@ -2,9 +2,6 @@ import 'dart:html';
 // import 'dart:io' as io show HttpServer, HttpRequest, InternetAddress, ContentType;
 import 'package:angular_app/config.dart';
 import 'package:angular/angular.dart';
-import 'package:angular_app/src/dashboard_component/inner_routes.dart';
-import 'package:angular_app/src/route_paths.dart';
-import 'package:angular_app/src/routes.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_router/angular_router.dart';
 
@@ -13,7 +10,6 @@ import 'package:angular_router/angular_router.dart';
   templateUrl: 'post_account_component.html',
   styleUrls: ['post_account_component.css'],
   directives: [routerDirectives, coreDirectives],
-  exports: [InnerRoutes, InnerRoutePaths, Routes, RoutePaths],
 )
 class PostAccountComponent implements OnInit {
   bool toggle = false;
@@ -23,9 +19,6 @@ class PostAccountComponent implements OnInit {
   String mediaText = '';
   bool isFinished = false;
   var loginLinkUrl = '';
-  Router _router;
-
-  PostAccountComponent(this._router);
 
   void setDefault() {
     var a = getDocument();
