@@ -1,8 +1,8 @@
 var config = {
   'authentication': {
     'facebook': {
-      'appId': '643278452902822',
-      'appSecret': '8aac9cac65979d6fc95ac50f2eb2880a',
+      'appId': '825097184718982',
+      'appSecret': 'd0dc963615d9831dfeefaa412e39118d',
       'url': 'https://postit-ui.herokuapp.com/#/dashboard/facebook'
     }
   },
