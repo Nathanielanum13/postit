@@ -19,7 +19,7 @@ class InnerRoutePaths {
   static final setting =
       RoutePath(path: 'setting', parent: _parent.RoutePaths.dashboard);
   static final facebook = RoutePath(
-      path: 'facebook/?${additionalData}',
+      path: 'facebook?${additionalData}',
       parent: _parent.RoutePaths.dashboard,
       // additionalData: additionalData
   );
