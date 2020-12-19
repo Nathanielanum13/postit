@@ -55,10 +55,10 @@ class DashboardComponent implements OnInit {
   bool overlay = true;
   Router _router;
   Location _location;
-  /*Client _http;*/
+  Client _http;
   @Input() var data;
 
-  DashboardComponent(this._router, this._location/*, this._http*/);
+  DashboardComponent(this._router, this._location, this._http);
 
   Future<void> goBack() async {
     _location.back();
@@ -127,46 +127,17 @@ class DashboardComponent implements OnInit {
     }
   }
 
-  /*bool validateToken(String stringToken) {
-    bool isVerified = false;
-    final key = '';
-    try {
-      final JwtClaim decClaimSet = verifyJwtHS256Signature(stringToken, key);
-      // print(decClaimSet);
-
-      decClaimSet.validate(audience: '');
-
-      if (claimSet.jwtId != null) {
-        print(claimSet.jwtId);
-      }
-      if (claimSet.containsKey('typ')) {
-        final v = claimSet['typ'];
-        if (v is String) {
-          print(v);
-        } else {
-    ...
-    }
-    }
-
-    ...
-    } on JwtException {
-    ...
-    }
-
-    return isVerified;
-  }*/
-
   @override
   Future<void> ngOnInit() async {
-    // bool isValid = await valid(window.localStorage['token']);
+    bool isValid = await valid(window.localStorage['token']);
     if(
         window.localStorage.containsKey('token') &&
         window.localStorage.containsKey('tenant-namespace') &&
         window.localStorage['token'] != null &&
         window.localStorage['tenant-namespace'] != null &&
         window.localStorage['token'] != '' &&
-        window.localStorage['tenant-namespace'] != ''
-        /*isValid*/
+        window.localStorage['tenant-namespace'] != '' &&
+        isValid
     ) {
       isLoggedIn = true;
       await create_post_page.loadLibrary();
@@ -187,11 +158,11 @@ class DashboardComponent implements OnInit {
     print(data);
   }
 
-  /*Future<bool> valid(String token) async {
+  Future<bool> valid(String token) async {
     var resp = await _http.post(env['VALIDATE_TOKEN_URL'], headers: {'Authorization': 'Bearer $token', 'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6'});
     if(resp.statusCode == 200) {
       return true;
     }
     return false;
-  }*/
+  }
 }
