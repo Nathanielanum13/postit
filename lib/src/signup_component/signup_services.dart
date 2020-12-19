@@ -11,8 +11,6 @@ class SignupServices {
   static final _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
-    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
-    'Authorization': 'Bearer ${window.localStorage['token']}'
   };
   static final _signupUrl = '${env['SIGNUP_URL']}';
 
@@ -62,6 +60,9 @@ class Signup {
   String companyEmail;
   List<String> companyPhone;
   String ghanaPostAddress;
+  String createdAt;
+  String updatedAt;
+  String id;
 
   bool termsAndConditions;
 
@@ -77,6 +78,11 @@ class Signup {
       this.companyPhone,
       this.ghanaPostAddress,
       this.termsAndConditions,
+      {
+        this.createdAt,
+        this.updatedAt,
+        this.id,
+      }
       );
 }
 

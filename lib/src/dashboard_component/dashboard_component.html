@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="text-center font-weight-bold text-muted mb-4 cursor-pointer" id="account">
-                Nathaniel Rice
+                {{data['admin_first_name']}} {{data['admin_last_name']}}
                 <span class="ml-2 fa fa-caret-down"></span>
             </div>
             <!-- Here is a group without a label -->
@@ -80,7 +80,7 @@
             </div>
         </header>
         <!--/Material Nav bar-->
-        <div class="container-fluid" id="html-body">
+        <div class="w-100 mr-auto ml-auto" id="html-body">
             <router-outlet [routes]="InnerRoutes.all"></router-outlet>
 
             <div class="position-fixed" id="floating-nav">
@@ -97,7 +97,7 @@
 </div>
 
 <div class="dialog-box card border-0 shadow-c br-20" id="log-dialog" display="false">
-    <div class="card-header bg-danger text-center border-0 br-20 text-white">
+    <div class="card-header text-center border-0 br-20" style="background-color: rgba(0,0,0,0.12)!important; color: rgba(0,0,0,0.54)!important;">
         Logout <span class="fa fa-sign-out-alt mx-1"></span>
     </div>
     <div class="card-body border-0">

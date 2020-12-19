@@ -28,6 +28,7 @@ class DashHomeComponent implements OnInit{
 
   @override
   Future<void> ngOnInit() async {
+    // TODO: implement ngOnInit
     posts = await _getPostService.getAllPost();
     scheduledPosts = await _getPostService.getAllScheduledPost();
 

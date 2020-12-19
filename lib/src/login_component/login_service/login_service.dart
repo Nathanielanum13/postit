@@ -5,14 +5,33 @@ import 'package:angular/angular.dart';
 import 'package:angular_app/variables.dart';
 import 'package:http/http.dart' as http;
 
+// var company_data;
+
 @Injectable()
 class LoginService {
+  // UserData ud = UserData('', '', '', '', '', '', '', '', [], '');
 
+  /*UserData setUserData() {
+    ud = UserData(
+        company_data['admin_first_name'],
+        company_data['admin_last_name'],
+        company_data['username'],
+        company_data['password'],
+        company_data['company_name'],
+        company_data['company_website'],
+        company_data['company_address'],
+        company_data['company_email'],
+        [],
+        company_data['ghana_post_address'],
+        id: company_data['company_id'],
+        createdAt: company_data['created_at'],
+        updatedAt: company_data['updated_at']
+    );
+    return ud;
+  }*/
   static final _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
-    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
-    'Authorization': 'Bearer ${window.localStorage['token']}'
   };
   static final _loginUrl = '${env['LOGIN_URL']}';
 
@@ -37,12 +56,16 @@ class LoginService {
   }
 
   LoginStandardResponse _extractResponse(http.Response resp) {
+    var company_data = json.decode(resp.body)['company_data'];
+    window.localStorage['x-data'] = json.encode(company_data);
     return LoginStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);
   }
 
   Exception _handleError(dynamic e) {
     return Exception('Server error; cause: $e');
   }
+
+  // Future<UserData> getUserData() async => await setUserData();
 }
 
 
@@ -61,6 +84,7 @@ class Login {
 class LoginStandardResponse {
   int statusCode;
   String message;
-
   LoginStandardResponse({this.statusCode, this.message});
 }
+
+

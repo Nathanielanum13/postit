@@ -37,6 +37,12 @@ class LoginComponent{
     showAlert = false;
   }
 
+  void tryLogin() {
+    if(login.username.isNotEmpty && login.password.isNotEmpty) {
+      gotoDashboard();
+    } else return;
+  }
+
   Future<void> gotoDashboard() async {
     LoginStandardResponse loginResponse = LoginStandardResponse(statusCode: null, message: '');
     login.username.trim();
@@ -51,7 +57,6 @@ class LoginComponent{
       isLoading = false;
       showAlert = true;
       statusCode = loginResponse.statusCode;
-      message = checkMessage(loginResponse.message);
       Timer(Duration(seconds: 5), dismissAlert);
     } catch(e) {
       isLoading = false;
@@ -59,10 +64,7 @@ class LoginComponent{
       statusCode = loginResponse.statusCode;
       message = checkMessage(loginResponse.message);
       Timer(Duration(seconds: 5), dismissAlert);
-      print('Error trying to connect');
     }
-
-    print('Message: ${loginResponse.message}');
 
     if(loginResponse.statusCode != 200)  {
       return;
@@ -77,5 +79,4 @@ class LoginComponent{
     }
     return m;
   }
-
 }

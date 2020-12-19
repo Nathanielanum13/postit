@@ -392,7 +392,7 @@ class CreatePostComponent implements OnInit{
     var d;
 
     for(int i = 0; i < ls.values.length; i++) {
-      if(ls.keys.elementAt(i) == 'token' || ls.keys.elementAt(i) == 'tenant-namespace') {
+      if(ls.keys.elementAt(i) == 'token' || ls.keys.elementAt(i) == 'tenant-namespace' || ls.keys.elementAt(i) == 'x-data') {
         continue;
       } else {
         d = json.decode(ls.values.elementAt(i));
@@ -443,6 +443,7 @@ class CreatePostComponent implements OnInit{
 
   @override
   void ngOnInit() {
+    // TODO: implement
     currentPosts = fetchPost();
   }
 
