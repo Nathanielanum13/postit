@@ -56,7 +56,7 @@ class DashboardComponent implements OnInit {
   Router _router;
   Location _location;
   Client _http;
-  @Input() var data;
+  var data;
 
   DashboardComponent(this._router, this._location, this._http);
 
@@ -129,6 +129,7 @@ class DashboardComponent implements OnInit {
 
   @override
   Future<void> ngOnInit() async {
+    getData();
     bool isValid = await valid(window.localStorage['token']);
     if(
         window.localStorage.containsKey('token') &&
@@ -144,9 +145,6 @@ class DashboardComponent implements OnInit {
       await view_post_page.loadLibrary();
       await manage_post_page.loadLibrary();
       await dash_home_page.loadLibrary();
-      getScreenSize();
-
-      getData();
     } else {
       isLoggedIn = false;
       _router.navigate(RoutePaths.login.toUrl());

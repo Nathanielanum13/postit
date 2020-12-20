@@ -38,11 +38,20 @@ const List<String> _numbers = [
     routerDirectives,
     MaterialCheckboxComponent,
     MaterialDatepickerComponent,
-    DateRangeInputComponent
+    DateRangeInputComponent,
+    FocusListDirective,
+    MaterialIconComponent,
+    MaterialFabComponent,
+    MaterialButtonComponent,
+    MaterialExpansionPanel,
+    MaterialExpansionPanelAutoDismiss,
+    MaterialExpansionPanelSet,
+    ModalComponent,
   ],
   providers: [
     ClassProvider(GetPostService),
-    windowBindings, datepickerBindings
+    windowBindings, datepickerBindings,
+    overlayBindings
   ],
   exports: [InnerRoutes, InnerRoutePaths]
 )
@@ -73,7 +82,9 @@ class ManagePostComponent implements OnInit {
   bool postAlertBool = false;
   bool allIsChecked = false;
   bool inputError = false;
+  bool isRefresh = false;
   bool createNeed = false;
+  bool saveCancel = false;
   int postAlertCode = 0;
   String postMessage = '';
   bool loading = false;
@@ -134,6 +145,17 @@ class ManagePostComponent implements OnInit {
 
   void dismissAlert() {
     postAlertBool = false;
+  }
+
+  Future<void> autoSync() async {
+    try {
+      isRefresh = true;
+      posts = await _getPostService.getAllPost();
+      isRefresh = false;
+      onSubmit();
+    } catch(e) {
+      isRefresh = false;
+    }
   }
 
   void onSubmit() {

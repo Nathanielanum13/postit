@@ -90,7 +90,47 @@
 <div class="container mt-3">
     <div class="card shadow-c border-0 bg-transparent box-one br-20">
         <div class="card-body">
-            <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()">
+            <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-block d-md-none d-lg-none">
+                <material-expansionpanel-set flat>
+                    <material-expansionpanel [showSaveCancel]="saveCancel">
+                        <div name class="default-muted h6">
+                            Select filters here
+                            <span class="ml-2 text-primary">{{deleteIds.length}}/{{filteredPosts.length}}</span>
+                        </div>
+                        <div class="col-12 box-three m-0 br-20 py-1">
+                            <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
+                                <option value="" disabled selected>Filter by:</option>
+                                <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
+                            </select>
+                            <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
+                                <option value="" disabled selected>Show first:</option>
+                                <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
+                            </select>
+                            <div class="row col-12 my-3">
+                                <div class="col-3 my-auto">
+                                    <button type="button" class="btn btn-sm br-20 shadow-c"
+                                            [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </div>
+                                <div class="col-3 my-auto">
+                                    <button type="button" class="btn btn-sm br-20 shadow-c"
+                                            (click)="autoSync()">
+                                        <span class="fa fa-sync" *ngIf="!isRefresh"></span>
+                                        <div *ngIf="isRefresh">
+                                            <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="col-6 my-auto">
+                                    <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </material-expansionpanel>
+                </material-expansionpanel-set>
+            </form>
+            <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-none d-md-block d-lg-block">
                 <div class="row c-bordered box-three sticky-top mx-2 br-20">
                     <div class="col-auto mx-auto">
                         <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
@@ -110,7 +150,10 @@
                     <div class="col-auto mx-auto my-auto">
                         <button type="button" class="btn btn-sm br-20 shadow-c"
                                 [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
-                            <span class="fa fa-trash"></span>
+                            <span class="fa fa-trash" *ngIf="!isDeleting"></span>
+                            <div *ngIf="isDeleting">
+                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                            </div>
                         </button>
                     </div>
                     <div class="col-auto mx-auto my-auto">
@@ -127,8 +170,8 @@
                     </div>
                 </div>
             </form>
-            <div class="row mt-2 mr-auto ml-auto" id="view-box">
-                <div class="card border-0 box-one w-100 p-2 br-20" *ngIf="filteredPosts.isNotEmpty">
+            <div class="row mt-2 mx-auto" id="view-box">
+                <!--<div class="card border-0 box-one w-100 p-2 br-20" *ngIf="filteredPosts.isNotEmpty">
                     <div class="card-body">
                         <div class="row c-bordered box-three sticky-top">
                             <div class="col-2 my-auto">
@@ -170,6 +213,51 @@
                 </div>
                 <div *ngIf="filteredPosts.isEmpty && !loading">
                     <div class="nt-center text-muted">
+                        <span class="fa fa-cloud text-muted mr-1"></span>
+                        {{emptyMessage}}
+                        <button type="button" class="btn btn-sm btn-outline-primary br-20 ml-2" *ngIf="createNeed" [routerLink]="InnerRoutePaths.create_post.toUrl()">
+                            <span class="fa fa-plus-circle mr-1"></span>Create post
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="filteredPosts.isEmpty && loading">
+                    <div class="nt-center text-muted">
+                        <img src="img/load.gif" alt="Loading..." class="img-fluid">
+                    </div>
+                </div>-->
+                <div class="table" *ngIf="filteredPosts.isNotEmpty">
+                    <div class="t-row header" (click)="getAllIds()">
+                        <div class="cell">
+                            Post message
+                        </div>
+                        <div class="cell">
+                            Post tags
+                        </div>
+                        <div class="cell">
+                            Status
+                        </div>
+                        <div class="cell">
+                            Created at
+                        </div>
+                    </div>
+                    <div class="t-row" *ngFor="let filteredPost of filteredPosts; let $i=index" (click)="getId($i)" [class.selected]="filteredPost.checkedState">
+                        <div class="cell" data-title="Post Message">
+                            <span class="d-resp-text">{{filteredPost.postMessage}}</span>
+                        </div>
+                        <div class="cell" data-title="Post Tags">
+                            <span class="tag d-resp-text" *ngFor="let tag of filteredPost.postTag">{{tag}}</span>
+                        </div>
+                        <div class="cell" data-title="Status">
+                            <span class="text-success" *ngIf="filteredPost.postStatus">Posted</span>
+                            <span class="text-primary" *ngIf="!filteredPost.postStatus">Pending</span>
+                        </div>
+                        <div class="cell" data-title="Created On">
+                            <span class="d-resp-co">{{filteredPost.createdOn}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="filteredPosts.isEmpty && !loading">
+                    <div class="nt-center text-muted" style="width: max-content;">
                         <span class="fa fa-cloud text-muted mr-1"></span>
                         {{emptyMessage}}
                         <button type="button" class="btn btn-sm btn-outline-primary br-20 ml-2" *ngIf="createNeed" [routerLink]="InnerRoutePaths.create_post.toUrl()">

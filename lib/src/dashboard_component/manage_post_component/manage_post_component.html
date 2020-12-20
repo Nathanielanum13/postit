@@ -81,25 +81,67 @@
     <div class="col-lg-8 col-md-12 col-sm-12 mb-3">
         <div class="card shadow-c border-0 bg-transparent box-one br-20">
             <div class="card-body">
-                <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()">
+                <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-block d-md-none d-lg-none">
+                    <material-expansionpanel-set flat>
+                        <material-expansionpanel [showSaveCancel]="saveCancel">
+                            <div name class="default-muted h6">
+                                Select filters here
+                                <span class="ml-2 text-primary">{{postIds.length}}/{{filteredPosts.length}}</span>
+                            </div>
+                            <div class="col-12 box-three m-0 br-20 py-1">
+                                <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
+                                    <option value="" disabled selected>Filter by:</option>
+                                    <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
+                                </select>
+                                <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
+                                    <option value="" disabled selected>Show first:</option>
+                                    <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
+                                </select>
+                                <div class="row col-12 my-3">
+                                    <div class="col-3 my-auto">
+                                        <button type="button" class="btn btn-sm br-20 shadow-c"
+                                                (click)="autoSync()">
+                                            <span class="fa fa-sync" *ngIf="!isRefresh"></span>
+                                            <div *ngIf="isRefresh">
+                                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <div class="col-9 my-auto">
+                                        <button type="submit" class="btn btn-primary btn-block btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </material-expansionpanel>
+                    </material-expansionpanel-set>
+                </form>
+                <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-none d-md-block d-lg-block">
                     <div class="row c-bordered box-three sticky-top mx-2 br-20">
-                        <div class="col-lg-4 col-sm-auto col-md-auto mx-auto">
+                        <div class="col-auto mx-auto">
                             <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
                                 <option value="" disabled selected>Filter by:</option>
                                 <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-3 col-sm-auto col-md-auto mx-auto">
+                        <div class="col-auto mx-auto">
                             <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
                                 <option value="" disabled selected>Show first:</option>
                                 <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-3 col-sm-auto col-md-auto mx-auto my-auto">
-                            <button type="submit"
-                                    class="btn btn-primary btn-sm br-20 px-3">Fetch</button>
+                        <div class="col-auto mx-auto my-auto">
+                            <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
                         </div>
-                        <div class="col-lg-2 col-sm-auto col-md-auto mx-auto my-auto">
+                        <div class="col-auto mx-auto my-auto">
+                            <button type="button" class="btn btn-sm br-20 shadow-c"
+                                    (click)="autoSync()">
+                                <span class="fa fa-sync" *ngIf="!isRefresh"></span>
+                                <div *ngIf="isRefresh">
+                                    <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                </div>
+                            </button>
+                        </div>
+                        <div class="col-auto mx-auto my-auto">
                             <span>{{postIds.length}}/{{filteredPosts.length}}</span>
                         </div>
                     </div>
@@ -135,7 +177,7 @@
                         </div>
                     </div>
                     <div *ngIf="filteredPosts.isEmpty && !loading">
-                        <div class="nt-center text-muted">
+                        <div class="nt-center text-muted" style="width: max-content;">
                             <span class="fa fa-cloud text-muted mr-1"></span>
                             {{emptyMessage}}
                             <button type="button" class="btn btn-sm btn-outline-primary br-20 ml-2" *ngIf="createNeed" [routerLink]="InnerRoutePaths.create_post.toUrl()">
@@ -149,11 +191,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2 d-none d-lg-block d-md-block">
-                    <div class="col-6 mx-auto">
+                <div class="row col-md-12 mx-0 mt-2 d-none d-lg-block d-md-block">
+                    <div class="col-md-6">
                         <input type="text" class="nt-form-control border-0 br-20" disabled [value]="title" placeholder="Title">
                     </div>
-                    <div class="col-6 mx-auto my-auto">
+                    <div class="col-md-6">
                         <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3"
                                 type="button"
                                 [class.disabled]="title.isEmpty || postIds.isEmpty"

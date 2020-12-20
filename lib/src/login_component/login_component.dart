@@ -57,6 +57,7 @@ class LoginComponent{
       isLoading = false;
       showAlert = true;
       statusCode = loginResponse.statusCode;
+      message = checkMessage(loginResponse.message);
       Timer(Duration(seconds: 5), dismissAlert);
     } catch(e) {
       isLoading = false;
