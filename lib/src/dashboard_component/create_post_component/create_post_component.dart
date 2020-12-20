@@ -120,11 +120,9 @@ class CreatePostComponent implements OnInit{
     } else {
       deleteIds.remove(currentPosts[index].id);
     }
-    print(deleteIds.toString());
   }
 
   Future<void> batchDelete() async {
-    print('Batch Delete Method');
     try {
       loading = true; checkLoadingState(loading);
       PostStandardResponse deleteResponse = await _getPostService.batchDelete(deleteIds);
@@ -166,9 +164,6 @@ class CreatePostComponent implements OnInit{
 
   void getInputSelection(InputElement el) {
     var endPosition = el.selectionEnd;
-    var startPosition = el.selectionStart;
-
-    print('Start: $startPosition, End: $endPosition');
     insertPosition =  endPosition;
   }
 
@@ -244,7 +239,6 @@ class CreatePostComponent implements OnInit{
   }
 
   void byteToString(List<int> s) {
-    print(s);
     postImage = s;
   }
 
@@ -302,10 +296,6 @@ class CreatePostComponent implements OnInit{
       postAlertCode = resp.httpStatusCode;
       postAlertBool = true;
       Timer(Duration(seconds: 5), dismissAlert);
-
-
-
-      print(resp.httpStatusCode);
 
       if(resp.httpStatusCode == 200) {
         Post newPost = Post(postMessage, postTag: postTags, id: resp.data.id, postImage: postImage);
@@ -412,12 +402,10 @@ class CreatePostComponent implements OnInit{
     String s = index.toString();
 
     var a = getDocument().getElementById(s);
-    print(a.getAttribute('class'));
     String ng = '';
     for(int i = 11; i < a.getAttribute('class').length; i++) {
       ng = ng + a.getAttribute('class')[i];
     }
-    print(ng);
 
     if(a.getAttribute('class') == 'fa fa-edit $ng') {
       editKey = true;

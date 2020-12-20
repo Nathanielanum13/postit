@@ -48,42 +48,20 @@ class GetPostService {
     }
   }
 
-//  Emoji _extractEmoji(Response r) {
-//    var decodedJson = json.decode(r.body);
-//    return Emoji(
-//      emoticons: convertLDS(decodedJson['emoticons']),
-//      ding_bats: convertLDS(decodedJson['ding_bats']),
-//      transport: convertLDS(decodedJson['transport']),
-//      un_categorized: convertLDS(decodedJson['un_categorized']),
-//      enclosed_characters: convertLDS(decodedJson['enclosed_characters']),
-//    );
-//  }
-
   dynamic _extractPostData(Response resp) => json.decode(resp.body)['data'];
 
   PostStandardResponse _extractData(Response resp) {
     var httpStatusCode = resp.statusCode;
     var decodedData = json.decode(resp.body)['data'];
-//    var decodedMeta = json.decode(resp.body)['meta'];
 
     Data data = Data('', '');
-//    Meta meta = Meta(
-//        timestamp: '',
-//        transactionId: '',
-//        traceId: '',
-//        status: ''
-//    );
+
     data.id = decodedData['id'];
     data.message = decodedData['ui_message'];
-//    meta.timestamp = decodedMeta['timestamp'];
-//    meta.transactionId = decodedMeta['transaction_id'];
-//    meta.traceId = decodedMeta['trace_id'];
-//    meta.status = decodedMeta['status'];
     return PostStandardResponse(data: data, httpStatusCode: httpStatusCode);
   }
 
   Exception _handleError(dynamic e) {
-    print(e); // for demo purposes only
     return Exception('Server error; cause: $e');
   }
 
@@ -166,17 +144,6 @@ class GetPostService {
     }
   }
 
-//  Future<Emoji> getEmojis() async {
-//    final _emojisUrl = 'http://localhost:5379/emoji';
-//    try {
-//      final emojiStruct = await _http.get(_emojisUrl);
-//      return _extractEmoji(emojiStruct);
-//    } catch(e) {
-//      throw _handleError(e);
-//    }
-//  }
-
-
   Future<List<Post>> getAllCurrentPost() async => await currentDBPost();
 }
 
@@ -201,7 +168,6 @@ class Post {
       this.postStatus});
 
   factory Post.fromJson(Map<String, dynamic> post) {
-//    post['hash_tags'] = convertLDS(post['hash_tags']);
     return Post(
       post['post_message'],
       postTag: convertLDS(post['hash_tags']),
@@ -225,20 +191,9 @@ List<Post> currentDBPost() {
   return dbPost;
 }
 
-//class Emoji {
-//  List<String> emoticons;
-//  List<String> ding_bats;
-//  List<String> transport;
-//  List<String> un_categorized;
-//  List<String> enclosed_characters;
-//
-//  Emoji({this.emoticons, this.ding_bats, this.transport, this.un_categorized, this.enclosed_characters});
-//}
-
 List<String> convertLDS(List<dynamic> dyn) {
   List<String> converted = <String>[];
   try {
-    print(dyn.length);
     for (int i = 0; i < dyn.length; i++) {
       converted.add(dyn.elementAt(i).toString());
     }

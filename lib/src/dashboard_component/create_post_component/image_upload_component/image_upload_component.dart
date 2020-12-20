@@ -15,7 +15,6 @@ class ImageUploadComponent {
     event.preventDefault();
 
     File pic = (event.target as FileUploadInputElement).files[0];
-    print(pic.name);
 
     var reader = FileReader()
       ..readAsArrayBuffer(pic);

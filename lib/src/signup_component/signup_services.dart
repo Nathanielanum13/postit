@@ -40,12 +40,16 @@ class SignupServices {
 
       return _extractResponse(response);
     } catch(e) {
-      print('Error: $e');
+      throw _handleError(e);
     }
   }
 
   SignupStandardResponse _extractResponse(Response resp) {
     return SignupStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);
+  }
+
+  Exception _handleError(dynamic e) {
+    return Exception('Server error; cause: $e');
   }
 }
 class Signup {

@@ -81,7 +81,6 @@ class SignupComponent {
           showAlert = true;
           statusCode = signup.statusCode;
           message = checkMessage(signup.message);
-          print(signup.message);
         } catch(e) {
           isLoading = false;
           showAlert = true;

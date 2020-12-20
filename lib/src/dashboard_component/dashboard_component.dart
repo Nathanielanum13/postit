@@ -109,19 +109,15 @@ class DashboardComponent implements OnInit {
     int width = a.querySelector('body').clientWidth;
 
     if(width <= 576) {
-      print('Extra small device');
       temporaryDrawerType = true;
       persistentDrawerType = false;
     } else if(width > 576 && width <= 720) {
-      print('Small device');
       temporaryDrawerType = true;
       persistentDrawerType = false;
     } else if(width > 720 && width <= 900) {
-      print('Medium device');
       temporaryDrawerType = false;
       persistentDrawerType = true;
     } else if(width > 900) {
-      print('Large device');
       temporaryDrawerType = false;
       persistentDrawerType = true;
     }
@@ -153,7 +149,6 @@ class DashboardComponent implements OnInit {
 
   void getData() {
     data = json.decode(window.localStorage['x-data']);
-    print(data);
   }
 
   Future<bool> valid(String token) async {

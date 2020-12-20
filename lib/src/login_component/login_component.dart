@@ -11,8 +11,6 @@ import 'package:angular_router/angular_router.dart';
   templateUrl: 'login_component.html',
   styleUrls: ['login_component.css'],
   directives: [
-    /*MaterialInputComponent,
-      MaterialButtonComponent,*/
     materialDirectives,
     routerDirectives,
     coreDirectives,

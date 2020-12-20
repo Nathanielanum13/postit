@@ -5,30 +5,9 @@ import 'package:angular/angular.dart';
 import 'package:angular_app/variables.dart';
 import 'package:http/http.dart' as http;
 
-// var company_data;
 
 @Injectable()
 class LoginService {
-  // UserData ud = UserData('', '', '', '', '', '', '', '', [], '');
-
-  /*UserData setUserData() {
-    ud = UserData(
-        company_data['admin_first_name'],
-        company_data['admin_last_name'],
-        company_data['username'],
-        company_data['password'],
-        company_data['company_name'],
-        company_data['company_website'],
-        company_data['company_address'],
-        company_data['company_email'],
-        [],
-        company_data['ghana_post_address'],
-        id: company_data['company_id'],
-        createdAt: company_data['created_at'],
-        updatedAt: company_data['updated_at']
-    );
-    return ud;
-  }*/
   static final _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
@@ -45,8 +24,6 @@ class LoginService {
 
       window.localStorage['token'] = response.headers['token'];
       window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
-
-      print(response.headers);
       final loginData = _extractResponse(response);
 
       return loginData;
@@ -64,8 +41,6 @@ class LoginService {
   Exception _handleError(dynamic e) {
     return Exception('Server error; cause: $e');
   }
-
-  // Future<UserData> getUserData() async => await setUserData();
 }
 
 

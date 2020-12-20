@@ -17,7 +17,6 @@ import 'dart:async';
   exports: [Routes],
 )
 class AboutComponent {
-//  Do something here
 
   Router _router;
   AboutComponent(this._router);

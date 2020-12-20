@@ -64,7 +64,6 @@ class ManagePostComponent implements OnInit {
   Date optionalDate;
   Date fromStart = Date.today();
   Date fromEnd = Date.today().add(years: 15);
-//  DateRange limitToRange = DateRange(Date.today(), Date.today().add(years: 15));
   List<SingleDayRange> predefinedDates;
 
   List<Schedule> scheduledPosts = <Schedule>[];
@@ -81,6 +80,7 @@ class ManagePostComponent implements OnInit {
   String postAlert = '';
   bool postAlertBool = false;
   bool allIsChecked = false;
+  bool isPosting = false;
   bool inputError = false;
   bool isRefresh = false;
   bool createNeed = false;
@@ -92,7 +92,6 @@ class ManagePostComponent implements OnInit {
 
 
   Future<void> postSchedule() async {
-    print('Post schedule method');
 
     if(startDate.isBefore(finalDate) && postIds.isNotEmpty && title.isNotEmpty) {
       inputError = false;
@@ -160,11 +159,9 @@ class ManagePostComponent implements OnInit {
 
   void onSubmit() {
     if((selectedFilter == 'All' && selectedNumber.isEmpty) || (selectedFilter == 'All' && selectedNumber == '100+')) {
-      print('Statement 1');
       checkPostStatus();
       filteredPosts = posts;
     } else if(selectedFilter == 'All' && selectedNumber == '20') {
-      print('Statement 2');
       checkPostStatus();
       if(posts.length < 20) {
         filteredPosts = posts;
@@ -172,7 +169,6 @@ class ManagePostComponent implements OnInit {
         filteredPosts = posts.getRange(0, 20).toList();
       }
     } else if(selectedFilter == 'All' && selectedNumber == '50') {
-      print('Statement 3');
       checkPostStatus();
       if(posts.length < 50) {
         filteredPosts = posts;
@@ -180,7 +176,6 @@ class ManagePostComponent implements OnInit {
         filteredPosts = posts.getRange(0, 50).toList();
       }
     } else if(selectedFilter == 'All' && selectedNumber == '100') {
-      print('Statement 4');
       checkPostStatus();
       if(posts.length < 100) {
         filteredPosts = posts;
@@ -229,13 +224,10 @@ class ManagePostComponent implements OnInit {
 
   void getId(int index) {
     if(filteredPosts[index].checkedState) {
-      print('getId method - if block');
       postIds.add(posts[index].id);
     } else {
-      print('getId method - else block');
       postIds.remove(posts[index].id);
     }
-    print(postIds.toString());
   }
 
   MaterialDatepickerDemoComponent() {

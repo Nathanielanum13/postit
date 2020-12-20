@@ -110,7 +110,10 @@
                                 <div class="col-3 my-auto">
                                     <button type="button" class="btn btn-sm br-20 shadow-c"
                                             [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
-                                        <span class="fa fa-trash"></span>
+                                        <span class="fa fa-trash" *ngIf="!isDeleting"></span>
+                                        <div *ngIf="isDeleting">
+                                            <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                        </div>
                                     </button>
                                 </div>
                                 <div class="col-3 my-auto">
