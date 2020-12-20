@@ -21,6 +21,7 @@ import 'package:angular_router/angular_router.dart';
   exports: [Routes, RoutePaths],
   providers: [ClassProvider(LoginService), materialProviders],
 )
+
 class LoginComponent{
   Router _router;
   LoginService _loginService;

@@ -1,8 +1,6 @@
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_app/src/route_paths.dart' as _parent;
 
-const additionalData = 'code';
-
 class InnerRoutePaths {
   static final dash_home =
       RoutePath(path: 'dash_home', parent: _parent.RoutePaths.dashboard);
@@ -18,9 +16,6 @@ class InnerRoutePaths {
       RoutePath(path: 'user_account', parent: _parent.RoutePaths.dashboard);
   static final setting =
       RoutePath(path: 'setting', parent: _parent.RoutePaths.dashboard);
-  static final facebook = RoutePath(
-      path: 'facebook?${additionalData}',
-      parent: _parent.RoutePaths.dashboard,
-      // additionalData: additionalData
-  );
+  static final facebook = 
+      RoutePath(path: 'facebook', parent: _parent.RoutePaths.dashboard);
 }
