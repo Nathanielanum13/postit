@@ -7,93 +7,141 @@
     <span class="fa fa-times fa-sm mx-3 cursor-pointer"
           id="alert_close" (click)="dismissAlert()"></span>
 </div>
-<div class="row container mt-3 ml-0 mr-0">
-    <div class="col-lg-4 col-md-12 col-sm-12">
-        <div class="card shadow-c bg-transparent box-one br-20 border-0">
-            <div class="card-body">
-                <div class="text-center h6 text-muted">Create Schedule</div>
-                <form novalidate>
-                    <div class="form-group">
-                        <input type="text"
-                               class="nt-form-control border-0 br-20"
-                               placeholder="Schedule title" [(ngModel)]="title">
+<div class="row mt-3 ml-0 mr-0">
+    <div class="col-lg-4 col-md-12 col-sm-12 mb-md-3 mb-0">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-12">
+                <div class="card shadow-c bg-transparent box-one br-20 border-0">
+                    <div class="card-body">
+                        <div class="text-center h6 text-muted">Create Schedule</div>
+                        <form novalidate>
+                            <div class="form-group">
+                                <input type="text"
+                                       class="nt-form-control border-0 br-20"
+                                       placeholder="Schedule title" [(ngModel)]="title">
+                            </div>
+                            <!--<div class="form-group">
+                                <material-date-range-picker class="simplified-example"
+                                                            [(range)]="rangeSimplified"
+                                                            [supportsComparison]="false"
+                                                            [showNextPrevButtons]="false">
+                                </material-date-range-picker>
+                            </div>-->
+                            <div class="form-group">
+                                <input type="text" class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger" placeholder="from" [(value)]="startDate" [class.alert-danger]="inputError">
+                                <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
+                                <material-datepicker [(date)]="startDate"
+                                                     [minDate]="fromStart"
+                                                     [maxDate]="fromEnd"
+                                                     [required]="true"
+                                                     class="dt-picker">
+                                </material-datepicker>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="nt-form-control border-0 pr-5 br-20" placeholder="to" [(value)]="finalDate" [class.alert-danger]="inputError">
+                                <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
+                                <material-datepicker [(date)]="finalDate"
+                                                     [minDate]="startDate"
+                                                     [maxDate]="fromEnd"
+                                                     [required]="true"
+                                                     class="dt-picker">
+                                </material-datepicker>
+                            </div>
+                        </form>
                     </div>
-                    <!--<div class="form-group">
-                        <material-date-range-picker class="simplified-example"
-                                                    [(range)]="rangeSimplified"
-                                                    [supportsComparison]="false"
-                                                    [showNextPrevButtons]="false">
-                        </material-date-range-picker>
-                    </div>-->
-                    <div class="form-group">
-                        <input type="text" class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger" placeholder="from" [(value)]="startDate" [class.alert-danger]="inputError">
-                        <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
-                        <material-datepicker [(date)]="startDate"
-                                             [minDate]="fromStart"
-                                             [maxDate]="fromEnd"
-                                             [required]="true"
-                                             class="dt-picker">
-                        </material-datepicker>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="nt-form-control border-0 pr-5 br-20" placeholder="to" [(value)]="finalDate" [class.alert-danger]="inputError">
-                        <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
-                        <material-datepicker [(date)]="finalDate"
-                                             [minDate]="startDate"
-                                             [maxDate]="fromEnd"
-                                             [required]="true"
-                                             class="dt-picker">
-                        </material-datepicker>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-        <div class="card shadow-c bg-transparent box-one br-20 border-0 py-3 mt-5 my-3">
-            <div class="card bg-transparent br-20 border-0 mx-0" id="scheduled-posts">
-                <div class="card-body">
-                    <div class="text-center h6 text-muted mb-3">Scheduled Posts</div>
-                    <div *ngIf="scheduledPosts.isNotEmpty" class="px-3">
-                        <div *ngFor="let scheduledPost of scheduledPosts; let $i = index" class="row py-1 bg-light br-20 mb-2">
-                            <div class="col-9">
+            <div class="col-sm-12 col-md-6 col-lg-12">
+                <div class="card shadow-c bg-transparent box-one br-20 border-0 py-3 mt-3 my-3">
+                    <div class="card bg-transparent br-20 border-0 mx-0" id="scheduled-posts">
+                        <div class="card-body">
+                            <div class="text-center h6 text-muted mb-3">Scheduled Posts</div>
+                            <div *ngIf="scheduledPosts.isNotEmpty" class="px-3">
+                                <div *ngFor="let scheduledPost of scheduledPosts; let $i = index" class="row py-1 bg-light br-20 mb-2">
+                                    <div class="col-9">
                                 <span class="text-muted d-post-text py-1">
                                     {{scheduledPost.title}}
                                 </span>
+                                    </div>
+                                    <div class="col-3 my-auto text-right">
+                                        <span class="fa fa-trash px-1 br-20 cursor-pointer" (click)="remove($i)" style="font-size: 12px !important;"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-3 my-auto text-right">
-                                <span class="fa fa-trash px-1 br-20 cursor-pointer" (click)="remove($i)" style="font-size: 12px !important;"></span>
+
+                            <div class="mt-5 text-muted text-center" *ngIf="scheduledPosts.isEmpty">
+                                No schedule created
                             </div>
                         </div>
-                    </div>
-
-                    <div class="mt-5 text-muted text-center" *ngIf="scheduledPosts.isEmpty">
-                        No schedule created
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-md-12 col-sm-12">
+    <div class="col-lg-8 col-md-12 col-sm-12 mb-3">
         <div class="card shadow-c border-0 bg-transparent box-one br-20">
             <div class="card-body">
-                <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()">
+                <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-block d-md-none d-lg-none">
+                    <material-expansionpanel-set flat>
+                        <material-expansionpanel [showSaveCancel]="saveCancel">
+                            <div name class="default-muted h6">
+                                Select filters here
+                                <span class="ml-2 text-primary">{{postIds.length}}/{{filteredPosts.length}}</span>
+                            </div>
+                            <div class="col-12 box-three m-0 br-20 py-1">
+                                <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
+                                    <option value="" disabled selected>Filter by:</option>
+                                    <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
+                                </select>
+                                <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
+                                    <option value="" disabled selected>Show first:</option>
+                                    <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
+                                </select>
+                                <div class="row col-12 my-3">
+                                    <div class="col-3 my-auto">
+                                        <button type="button" class="btn btn-sm br-20 shadow-c"
+                                                (click)="autoSync()">
+                                            <span class="fa fa-sync" *ngIf="!isRefresh"></span>
+                                            <div *ngIf="isRefresh">
+                                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <div class="col-9 my-auto">
+                                        <button type="submit" class="btn btn-primary btn-block btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </material-expansionpanel>
+                    </material-expansionpanel-set>
+                </form>
+                <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-none d-md-block d-lg-block">
                     <div class="row c-bordered box-three sticky-top mx-2 br-20">
-                        <div class="col-lg-4 col-sm-auto col-md-auto mx-auto">
+                        <div class="col-auto mx-auto">
                             <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
                                 <option value="" disabled selected>Filter by:</option>
                                 <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-3 col-sm-auto col-md-auto mx-auto">
+                        <div class="col-auto mx-auto">
                             <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
                                 <option value="" disabled selected>Show first:</option>
                                 <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
                             </select>
                         </div>
-                        <div class="col-lg-3 col-sm-auto col-md-auto mx-auto my-auto">
-                            <button type="submit"
-                                    class="btn btn-primary btn-sm br-20 px-3">Fetch</button>
+                        <div class="col-auto mx-auto my-auto">
+                            <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
                         </div>
-                        <div class="col-lg-2 col-sm-auto col-md-auto mx-auto my-auto">
+                        <div class="col-auto mx-auto my-auto">
+                            <button type="button" class="btn btn-sm br-20 shadow-c"
+                                    (click)="autoSync()">
+                                <span class="fa fa-sync" *ngIf="!isRefresh"></span>
+                                <div *ngIf="isRefresh">
+                                    <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                </div>
+                            </button>
+                        </div>
+                        <div class="col-auto mx-auto my-auto">
                             <span>{{postIds.length}}/{{filteredPosts.length}}</span>
                         </div>
                     </div>
@@ -129,7 +177,7 @@
                         </div>
                     </div>
                     <div *ngIf="filteredPosts.isEmpty && !loading">
-                        <div class="nt-center text-muted">
+                        <div class="nt-center text-muted" style="width: max-content;">
                             <span class="fa fa-cloud text-muted mr-1"></span>
                             {{emptyMessage}}
                             <button type="button" class="btn btn-sm btn-outline-primary br-20 ml-2" *ngIf="createNeed" [routerLink]="InnerRoutePaths.create_post.toUrl()">
@@ -143,15 +191,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-auto mx-auto">
+                <div class="row col-lg-12 mx-0 mt-2 d-none d-lg-block d-md-block">
+                    <div class="col-lg-6 col-md-6">
                         <input type="text" class="nt-form-control border-0 br-20" disabled [value]="title" placeholder="Title">
                     </div>
-                    <div class="col-auto mx-auto my-auto">
+                    <div class="col-lg-6 col-md-6">
                         <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3"
                                 type="button"
                                 [class.disabled]="title.isEmpty || postIds.isEmpty"
-                                (click)="postSchedule()">Post Schedule</button>
+                                (click)="postSchedule()">
+                            <span *ngIf="!isPosting">Post Schedule</span>
+                            <div *ngIf="isPosting">
+                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="row col-md-12 mx-0 mt-2 d-block d-lg-none d-md-none">
+                    <div class="col-md-6">
+                        <input type="text" class="nt-form-control border-0 br-20" disabled [value]="title" placeholder="Title">
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3"
+                                type="button"
+                                [class.disabled]="title.isEmpty || postIds.isEmpty"
+                                (click)="postSchedule()">
+                            <span class="fa fa-paper-plane" *ngIf="!isPosting"></span>
+                            <div *ngIf="isPosting">
+                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>

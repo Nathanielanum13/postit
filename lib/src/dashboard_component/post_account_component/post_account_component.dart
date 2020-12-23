@@ -1,6 +1,4 @@
 import 'dart:html';
-// import 'dart:io' as io show HttpServer, HttpRequest, InternetAddress, ContentType;
-import 'package:angular_app/config.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
@@ -10,8 +8,6 @@ import 'package:angular_router/angular_router.dart';
   selector: 'post-account',
   templateUrl: 'post_account_component.html',
   styleUrls: ['post_account_component.css'],
-  directives: [routerDirectives, coreDirectives],
-  exports: [InnerRoutePaths, InnerRoutes]
 )
 class PostAccountComponent implements OnInit {
   bool toggle = false;
@@ -121,21 +117,12 @@ class PostAccountComponent implements OnInit {
     }
   }
 
-  Future<void> gFb() async {
-    _router.navigate(InnerRoutePaths.facebook.toUrl(queryParameters: {'code': 'jhfjkvhfdjdhjdkvhjd'}));
+  Future<void> gotoFacebook() async {
+    _router.navigate(InnerRoutePaths.facebook.toUrl(), NavigationParams(queryParameters: {'code':'jkldfhdjklfbjkdfjkdsjkfsdfkd'}));
   }
-
-  // Future<void> gotoFacebook() async {
-  //   var fbConfig = config['authentication']['facebook'];
-  //   var appId = fbConfig['appId'];
-  //   var url = fbConfig['url'];
-
-  //   loginLinkUrl =
-  //       'https://www.facebook.com/dialog/oauth/?client_id=$appId&display=popup&redirect_uri=$url&state={token,code}&scope=email';
-  // }
 
   @override
   Future<void> ngOnInit() async {
-    // gotoFacebook();
+    // TODO: implement ngOnInit
   }
 }

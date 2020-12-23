@@ -20,7 +20,6 @@ import 'dart:async';
   exports: [Routes],
 )
 class HomeComponent {
-//  Do something here!
   Router _router;
   HomeComponent(this._router);
 

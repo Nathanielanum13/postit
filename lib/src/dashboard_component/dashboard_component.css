@@ -150,10 +150,11 @@ material-list-item:hover > material-icon {
 .material-header-row {
     position: fixed !important;
     width: 100% !important;
-    background: rgba(255, 255, 255, 0.99) !important;
+    background: rgb(255, 255, 255) !important;
     /*background: #ffffff !important;*/
     color: #051c2d !important;
     margin: 0 !important;
+    border-bottom: 1px solid #d6d5d5;
 }
 #user-icon {
     position: fixed !important;

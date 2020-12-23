@@ -5,14 +5,12 @@ import 'package:angular/angular.dart';
 import 'package:angular_app/variables.dart';
 import 'package:http/http.dart' as http;
 
+
 @Injectable()
 class LoginService {
-
   static final _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
-    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
-    'Authorization': 'Bearer ${window.localStorage['token']}'
   };
   static final _loginUrl = '${env['LOGIN_URL']}';
 
@@ -26,8 +24,6 @@ class LoginService {
 
       window.localStorage['token'] = response.headers['token'];
       window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
-
-      print(response.headers);
       final loginData = _extractResponse(response);
 
       return loginData;
@@ -37,6 +33,8 @@ class LoginService {
   }
 
   LoginStandardResponse _extractResponse(http.Response resp) {
+    var company_data = json.decode(resp.body)['company_data'];
+    window.localStorage['x-data'] = json.encode(company_data);
     return LoginStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);
   }
 
@@ -61,6 +59,7 @@ class Login {
 class LoginStandardResponse {
   int statusCode;
   String message;
-
   LoginStandardResponse({this.statusCode, this.message});
 }
+
+

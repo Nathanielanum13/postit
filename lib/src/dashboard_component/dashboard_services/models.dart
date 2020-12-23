@@ -1,8 +1,5 @@
-
-
 class PostStandardResponse {
   Data data;
-//  Meta meta;
   int httpStatusCode;
 
 
@@ -16,11 +13,3 @@ class Data {
   Data(this.id, this.message);
 }
 
-//class Meta {
-//  String timestamp;
-//  String transactionId;
-//  String traceId;
-//  String status;
-//
-//  Meta({this.timestamp, this.transactionId, this.traceId, this.status});
-//}

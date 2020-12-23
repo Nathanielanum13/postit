@@ -11,8 +11,6 @@ import 'package:angular_router/angular_router.dart';
   templateUrl: 'login_component.html',
   styleUrls: ['login_component.css'],
   directives: [
-    /*MaterialInputComponent,
-      MaterialButtonComponent,*/
     materialDirectives,
     routerDirectives,
     coreDirectives,
@@ -21,8 +19,7 @@ import 'package:angular_router/angular_router.dart';
   exports: [Routes, RoutePaths],
   providers: [ClassProvider(LoginService), materialProviders],
 )
-
-class LoginComponent{
+class LoginComponent implements CanReuse {
   Router _router;
   LoginService _loginService;
   bool isLoading = false;
@@ -38,11 +35,19 @@ class LoginComponent{
     showAlert = false;
   }
 
+  void tryLogin() {
+    if (login.username.isNotEmpty && login.password.isNotEmpty) {
+      gotoDashboard();
+    } else
+      return;
+  }
+
   Future<void> gotoDashboard() async {
-    LoginStandardResponse loginResponse = LoginStandardResponse(statusCode: null, message: '');
+    LoginStandardResponse loginResponse =
+        LoginStandardResponse(statusCode: null, message: '');
     login.username.trim();
 
-    if (login.username.isEmpty || login.password.isEmpty){
+    if (login.username.isEmpty || login.password.isEmpty) {
       return;
     }
 
@@ -54,18 +59,15 @@ class LoginComponent{
       statusCode = loginResponse.statusCode;
       message = checkMessage(loginResponse.message);
       Timer(Duration(seconds: 5), dismissAlert);
-    } catch(e) {
+    } catch (e) {
       isLoading = false;
       showAlert = true;
       statusCode = loginResponse.statusCode;
       message = checkMessage(loginResponse.message);
       Timer(Duration(seconds: 5), dismissAlert);
-      print('Error trying to connect');
     }
 
-    print('Message: ${loginResponse.message}');
-
-    if(loginResponse.statusCode != 200)  {
+    if (loginResponse.statusCode != 200) {
       return;
     } else {
       _router.navigate(RoutePaths.dashboard.toUrl());
@@ -73,10 +75,14 @@ class LoginComponent{
   }
 
   String checkMessage(String m) {
-    if(m == '') {
+    if (m == '') {
       m = 'Login failed';
     }
     return m;
   }
 
+  @override
+  Future<bool> canReuse(RouterState current, RouterState next) async {
+    return true;
+  }
 }

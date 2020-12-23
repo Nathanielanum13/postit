@@ -31,9 +31,17 @@ const List<String> _numbers = [
     coreDirectives,
     formDirectives,
     MaterialCheckboxComponent,
-    routerDirectives
+    routerDirectives,
+    FocusListDirective,
+    MaterialIconComponent,
+    MaterialFabComponent,
+    MaterialButtonComponent,
+    MaterialExpansionPanel,
+    MaterialExpansionPanelAutoDismiss,
+    MaterialExpansionPanelSet,
+    ModalComponent,
   ],
-  providers: [ClassProvider(GetPostService)],
+  providers: [ClassProvider(GetPostService), overlayBindings],
   exports: [InnerRoutes, InnerRoutePaths]
 )
 class ViewPostComponent implements OnInit {
@@ -51,9 +59,11 @@ class ViewPostComponent implements OnInit {
 
   bool allIsChecked = false;
   bool createNeed = false;
+  bool saveCancel = false;
   int postAlertCode = 0;
   bool loading = false;
   bool isRefresh = false;
+  bool isDeleting = false;
   String postAlert = '';
   bool postAlertBool = false;
   String emptyMessage = 'Select filters to apply';
@@ -214,6 +224,7 @@ class ViewPostComponent implements OnInit {
 
   void getAllIds() {
     deleteIds.clear();
+    allIsChecked = !allIsChecked;
     if(allIsChecked) {
       for(int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = true;
@@ -229,6 +240,7 @@ class ViewPostComponent implements OnInit {
   }
 
   void getId(int index) {
+    filteredPosts[index].checkedState = !filteredPosts[index].checkedState;
     if(filteredPosts[index].checkedState) {
       deleteIds.add(posts[index].id);
     } else {
@@ -250,7 +262,9 @@ class ViewPostComponent implements OnInit {
 
   Future<void> batchDelete() async {
     try {
+      isDeleting = true;
       PostStandardResponse deleteResponse = await _getPostService.batchDelete(deleteIds);
+      isDeleting = false;
 
       if(deleteResponse.httpStatusCode == 200) {
         for(int i = 0; i < deleteIds.length; i++) {
@@ -262,7 +276,7 @@ class ViewPostComponent implements OnInit {
       deleteIds.clear();
       allIsChecked = false;
     } catch(e) {
-      print(e);
+      isDeleting = false;
     }
 
   }

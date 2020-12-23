@@ -49,7 +49,7 @@
     </div>
 </div>
 <div class="m-0">
-    <div  style="width: 100vw; height: 100vh">
+    <div style="width: 100vw; height: 100vh">
         <div class="arrow arrow--top">
             <svg xmlns="http://www.w3.org/2000/svg" width="270.11" height="649.9" overflow="visible">
                 <style>
@@ -108,7 +108,8 @@
                                 type="text"
                                 label="Username"
                                 leadingGlyph="person"
-                                [(ngModel)]="login.username">
+                                [(ngModel)]="login.username"
+                                (keyup.enter)="tryLogin()">
                         </material-input>
                     </div>
                     <div group>
@@ -116,7 +117,8 @@
                                 type="password"
                                 label="Password"
                                 leadingGlyph="fingerprint"
-                                [(ngModel)]="login.password">
+                                [(ngModel)]="login.password"
+                                (keyup.enter)="tryLogin()">
                         </material-input>
                     </div>
                     <div group>
