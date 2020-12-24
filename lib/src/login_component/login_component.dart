@@ -19,12 +19,10 @@ import 'package:angular_router/angular_router.dart';
   exports: [Routes, RoutePaths],
   providers: [
     ClassProvider(LoginService), 
-    materialProviders, 
-    routerProviders, 
-    ValueProvider<String>.forToken(appBaseHref, '/')
+    materialProviders,
   ],
 )
-class LoginComponent implements CanReuse {
+class LoginComponent{
   Router _router;
   LoginService _loginService;
   bool isLoading = false;
@@ -84,10 +82,5 @@ class LoginComponent implements CanReuse {
       m = 'Login failed';
     }
     return m;
-  }
-
-  @override
-  Future<bool> canReuse(RouterState current, RouterState next) async {
-    return true;
   }
 }
