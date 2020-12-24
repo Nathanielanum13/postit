@@ -17,7 +17,11 @@ import 'package:angular_router/angular_router.dart';
     formDirectives
   ],
   exports: [Routes, RoutePaths],
-  providers: [ClassProvider(LoginService), materialProviders, routerProviders],
+  providers: [
+    ClassProvider(LoginService), 
+    materialProviders, 
+    ValueProvider<String>.forToken(appBaseHref, '/')
+  ],
 )
 class LoginComponent implements CanReuse {
   Router _router;
