@@ -43,8 +43,6 @@ import 'inner_route_paths.dart';
   exports: [InnerRoutes, InnerRoutePaths, Routes, RoutePaths],
   providers: [
     ClassProvider(LoginService),
-    routerProviders, 
-    ValueProvider<String>.forToken(appBaseHref, '/'),
   ],
 )
 class DashboardComponent implements OnInit {

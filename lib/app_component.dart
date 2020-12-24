@@ -15,8 +15,7 @@ import 'package:angular_app/src/dashboard_component/dashboard_component.dart' de
   styleUrls: ['app_component.css'],
   templateUrl: 'app_component.html',
   directives: [routerDirectives, coreDirectives],
-  exports: [Routes],
-  providers: [routerProviders, ValueProvider<String>.forToken(appBaseHref, '/')],
+  exports: [Routes]
 )
 class AppComponent implements OnInit, OnDestroy {
   @override

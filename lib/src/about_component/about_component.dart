@@ -14,8 +14,7 @@ import 'dart:async';
     NavbarComponent,
     MaterialIconComponent,
   ],
-  exports: [Routes],
-  providers: [routerProviders, ValueProvider<String>.forToken(appBaseHref, '/')]
+  exports: [Routes]
 )
 class AboutComponent {
 
