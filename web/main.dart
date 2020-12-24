@@ -11,6 +11,7 @@ import 'main.template.dart' as self;
   routerProviders,
   ClassProvider(Client, useClass: BrowserClient),
   ClassProvider(Router, useClass: RoutePaths),
+  ValueProvider.forToken(appBaseHref, '/', multi: true),
 ])
 final InjectorFactory injector = self.injector$Injector;
 

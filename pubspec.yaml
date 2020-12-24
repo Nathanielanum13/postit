@@ -8,7 +8,7 @@ environment:
 dependencies:
   angular: ^6.0.0-alpha
   angular_forms: ^3.0.0
-  angular_router: ^2.0.0-alpha
+  angular_router: ^2.0.0-alpha+24
   http: ^0.12.0
   stream_transform: ^0.0.19
   angular_components: ^1.0.1
