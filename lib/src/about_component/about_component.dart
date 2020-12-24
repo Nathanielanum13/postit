@@ -15,6 +15,7 @@ import 'dart:async';
     MaterialIconComponent,
   ],
   exports: [Routes],
+  providers: [routerProviders, ValueProvider<String>.forToken(appBaseHref, '/')]
 )
 class AboutComponent {
 

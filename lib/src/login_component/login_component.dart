@@ -20,6 +20,7 @@ import 'package:angular_router/angular_router.dart';
   providers: [
     ClassProvider(LoginService), 
     materialProviders, 
+    routerProviders, 
     ValueProvider<String>.forToken(appBaseHref, '/')
   ],
 )

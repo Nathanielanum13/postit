@@ -21,7 +21,10 @@ import 'package:angular_router/angular_router.dart';
     MaterialChipsComponent,
     MaterialChipComponent,
   ],
-  providers: [ClassProvider(SignupServices)],
+  providers: [ClassProvider(SignupServices),
+    routerProviders,
+    ValueProvider<String>.forToken(appBaseHref, '/')
+  ],
   exports: [Routes]
 )
 class SignupComponent {
