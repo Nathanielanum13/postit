@@ -3,6 +3,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_router/angular_router.dart';
+import 'package:angular_app/config.dart';
 
 @Component(
   selector: 'post-account',
@@ -118,11 +119,16 @@ class PostAccountComponent implements OnInit {
   }
 
   Future<void> gotoFacebook() async {
-    _router.navigate(InnerRoutePaths.facebook.toUrl(), NavigationParams(queryParameters: {'code':'jkldfhdjklfbjkdfjkdsjkfsdfkd'}));
+    var fbConfig = config['authentication']['facebook'];
+    var appId = fbConfig['appId'];
+    var url = fbConfig['url'];
+
+    loginLinkUrl = 'https://www.facebook.com/dialog/oauth/?client_id=$appId&redirect_uri=$url&state=TEST_TOKEN&scope=email';
+//    _router.navigate(InnerRoutePaths.facebook.toUrl(), NavigationParams(queryParameters: {'code':'jkldfhdjklfbjkdfjkdsjkfsdfkd'}));
   }
 
   @override
   Future<void> ngOnInit() async {
-    // TODO: implement ngOnInit
+    gotoFacebook();
   }
 }

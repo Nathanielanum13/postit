@@ -8,7 +8,7 @@ import 'package:angel_static/angel_static.dart';
 import 'package:file/local.dart';
 import 'package:logging/logging.dart';
 
-void main(List<String> args) {
+void main() {
 
   var app = Angel();
   var http = AngelHttp(app);

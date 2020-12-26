@@ -15,10 +15,6 @@ dependencies:
   emojis: ^0.9.3
   archive: ^2.0.13
   angular_modern_charts: ^0.2.0
-  facebook_web_sdk: ^0.0.9
-  # essential_components: ^1.9.18
-  shelf: ^0.7.9
-  http_server: ^0.9.8+3
   angel_static: ^2.0.0-alpha
 
 dev_dependencies:

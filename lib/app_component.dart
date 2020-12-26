@@ -11,7 +11,7 @@ import 'package:angular_app/src/dashboard_component/dashboard_component.dart' de
 
 
 @Component(
-  selector: 'my-app',
+  selector: 'postit-app',
   styleUrls: ['app_component.css'],
   templateUrl: 'app_component.html',
   directives: [routerDirectives, coreDirectives],
