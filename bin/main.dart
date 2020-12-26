@@ -10,7 +10,7 @@ Future<void> main() async {
   var pathToBuild = join(dirname(Platform.script.toFilePath()), '..', 'build');
   var staticFiles = VirtualDirectory(pathToBuild);
 
-  staticFiles.followLinks = true;
+//  staticFiles.followLinks = true;
   staticFiles.allowDirectoryListing = true;
   staticFiles.directoryHandler = (dir, req) {
     var indexUri = Uri.file(dir.path).resolve('index.html');
