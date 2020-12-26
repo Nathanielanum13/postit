@@ -17,7 +17,7 @@ import 'package:angular_app/src/dashboard_component/dashboard_component.dart' de
   directives: [routerDirectives, coreDirectives],
   exports: [Routes]
 )
-class AppComponent implements OnInit, OnDestroy {
+class AppComponent implements OnInit {
   @override
   Future<void> ngOnInit() async {
     await home_page.loadLibrary();
@@ -25,12 +25,6 @@ class AppComponent implements OnInit, OnDestroy {
     await login_page.loadLibrary();
     await signup_page.loadLibrary();
     await dashboard_page.loadLibrary();
-  }
-
-
-  @override
-  void ngOnDestroy() {
-    window.localStorage.clear();
   }
 }
 
