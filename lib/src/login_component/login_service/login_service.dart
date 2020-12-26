@@ -32,6 +32,33 @@ class LoginService {
     }
   }
 
+  Future<bool> validateLogin() async {
+    bool isValid = await valid(window.localStorage['token']);
+    if(
+        window.localStorage.containsKey('token') &&
+        window.localStorage.containsKey('x-data') &&
+        window.localStorage.containsKey('tenant-namespace') &&
+        window.localStorage['token'] != null &&
+        window.localStorage['x-data'] != null &&
+        window.localStorage['tenant-namespace'] != null &&
+        window.localStorage['token'] != '' &&
+        window.localStorage['x-data'] != '' &&
+        window.localStorage['tenant-namespace'] != '' &&
+        isValid
+    ) {
+      return true;
+    }
+      return false;
+  }
+
+  Future<bool> valid(String token) async {
+    var resp = await http.post(env['VALIDATE_TOKEN_URL'], headers: {'Authorization': 'Bearer $token', 'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6'});
+    if(resp.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
   LoginStandardResponse _extractResponse(http.Response resp) {
     var company_data = json.decode(resp.body)['company_data'];
     window.localStorage['x-data'] = json.encode(company_data);

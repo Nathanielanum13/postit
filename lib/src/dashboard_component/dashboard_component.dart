@@ -45,7 +45,7 @@ import 'inner_route_paths.dart';
     ClassProvider(LoginService),
   ],
 )
-class DashboardComponent implements OnInit {
+class DashboardComponent implements OnInit, CanActivate {
 
   bool persistentDrawerType = false;
   bool temporaryDrawerType = false;
@@ -57,10 +57,10 @@ class DashboardComponent implements OnInit {
   bool overlay = true;
   Router _router;
   Location _location;
-  Client _http;
+  LoginService _loginService;
   var data;
 
-  DashboardComponent(this._router, this._location, this._http);
+  DashboardComponent(this._router, this._location, this._loginService);
 
   Future<void> goBack() async {
     _location.back();
@@ -127,37 +127,20 @@ class DashboardComponent implements OnInit {
 
   @override
   Future<void> ngOnInit() async {
+    isLoggedIn = true;
     getData();
-    bool isValid = await valid(window.localStorage['token']);
-    if(
-        window.localStorage.containsKey('token') &&
-        window.localStorage.containsKey('tenant-namespace') &&
-        window.localStorage['token'] != null &&
-        window.localStorage['tenant-namespace'] != null &&
-        window.localStorage['token'] != '' &&
-        window.localStorage['tenant-namespace'] != '' &&
-        isValid
-    ) {
-      isLoggedIn = true;
-      await create_post_page.loadLibrary();
-      await view_post_page.loadLibrary();
-      await manage_post_page.loadLibrary();
-      await dash_home_page.loadLibrary();
-    } else {
-      isLoggedIn = false;
-      _router.navigate(RoutePaths.login.toUrl());
-    }
+    await create_post_page.loadLibrary();
+    await view_post_page.loadLibrary();
+    await manage_post_page.loadLibrary();
+    await dash_home_page.loadLibrary();
   }
-
   void getData() {
     data = json.decode(window.localStorage['x-data']);
   }
 
-  Future<bool> valid(String token) async {
-    var resp = await _http.post(env['VALIDATE_TOKEN_URL'], headers: {'Authorization': 'Bearer $token', 'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6'});
-    if(resp.statusCode == 200) {
-      return true;
-    }
-    return false;
+  @override
+  Future<bool> canActivate(RouterState current, _) async {
+    bool isValidated = await _loginService.validateLogin();
+    return isValidated;
   }
 }
