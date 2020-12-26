@@ -17,10 +17,7 @@ class PostAccountComponent implements OnInit {
   String mediaIcon = '';
   String mediaText = '';
   bool isFinished = false;
-  var loginLinkUrl = '';
-  Router _router;
-
-  PostAccountComponent(this._router);
+  String loginLinkUrl = '';
 
   void setDefault() {
     var a = getDocument();

@@ -45,7 +45,7 @@ import 'inner_route_paths.dart';
     ClassProvider(LoginService),
   ],
 )
-class DashboardComponent implements OnInit {
+class DashboardComponent implements OnInit, CanActivate {
 
   bool persistentDrawerType = false;
   bool temporaryDrawerType = false;
@@ -128,25 +128,10 @@ class DashboardComponent implements OnInit {
   @override
   Future<void> ngOnInit() async {
     getData();
-    bool isValid = await valid(window.localStorage['token']);
-    if(
-        window.localStorage.containsKey('token') &&
-        window.localStorage.containsKey('tenant-namespace') &&
-        window.localStorage['token'] != null &&
-        window.localStorage['tenant-namespace'] != null &&
-        window.localStorage['token'] != '' &&
-        window.localStorage['tenant-namespace'] != '' &&
-        isValid
-    ) {
-      isLoggedIn = true;
-      await create_post_page.loadLibrary();
-      await view_post_page.loadLibrary();
-      await manage_post_page.loadLibrary();
-      await dash_home_page.loadLibrary();
-    } else {
-      isLoggedIn = false;
-      _router.navigate(RoutePaths.login.toUrl());
-    }
+    await create_post_page.loadLibrary();
+    await view_post_page.loadLibrary();
+    await manage_post_page.loadLibrary();
+    await dash_home_page.loadLibrary();
   }
 
   void getData() {
@@ -160,4 +145,26 @@ class DashboardComponent implements OnInit {
     }
     return false;
   }
+
+  @override
+  Future<bool> canActivate(RouterState current, RouterState next) async {
+    bool isValid = await valid(window.localStorage['token']);
+    if(
+        window.localStorage.containsKey('token') &&
+        window.localStorage.containsKey('tenant-namespace') &&
+        window.localStorage['token'] != null &&
+        window.localStorage['tenant-namespace'] != null &&
+        window.localStorage['token'] != '' &&
+        window.localStorage['tenant-namespace'] != '' &&
+        isValid
+    ) {
+      isLoggedIn = true;
+      return true;
+    } else {
+      isLoggedIn = false;
+//      _router.navigate(RoutePaths.login.toUrl());
+      return false;
+    }
+  }
+
 }

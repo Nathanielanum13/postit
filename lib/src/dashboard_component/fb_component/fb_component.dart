@@ -9,10 +9,14 @@ import 'package:angular_router/angular_router.dart';
   exports: [InnerRoutePaths, InnerRoutes]
 )
 class FbComponent extends OnActivate {
+  String code = '';
   @override
   void onActivate(_, RouterState current) {
-    print("Found fb component");
-    var code = current.queryParameters['code'];
+    if (current.queryParameters['code'] == '') {
+      print('Somethig went wrong');
+      return;
+    }
+    code = current.queryParameters['code'];
     print('Code: ${code}');
   }
 }
