@@ -45,7 +45,7 @@ import 'inner_route_paths.dart';
     ClassProvider(LoginService),
   ],
 )
-class DashboardComponent implements OnInit, CanActivate {
+class DashboardComponent implements OnInit, CanNavigate {
 
   bool persistentDrawerType = false;
   bool temporaryDrawerType = false;
@@ -139,7 +139,7 @@ class DashboardComponent implements OnInit, CanActivate {
   }
 
   @override
-  Future<bool> canActivate(RouterState current, _) async {
+  Future<bool> canNavigate() async {
     bool isValidated = await _loginService.validateLogin();
     return isValidated;
   }
