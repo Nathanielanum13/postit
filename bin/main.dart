@@ -5,12 +5,12 @@ import 'package:path/path.dart' show join, dirname;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf/shelf.dart' as shelf;
 
-Future<void> main() async {
+void main() {
 
   var pathToBuild = join(dirname(Platform.script.toFilePath()), '..', 'build');
   var staticFiles = VirtualDirectory(pathToBuild);
 
-//  staticFiles.followLinks = true;
+  staticFiles.followLinks = true;
   staticFiles.allowDirectoryListing = true;
   staticFiles.directoryHandler = (dir, req) {
     var indexUri = Uri.file(dir.path).resolve('index.html');
@@ -20,7 +20,9 @@ Future<void> main() async {
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 9939 : int.parse(portEnv);
 
-  var server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
-  print('Serving on ${server.address.host}:${server.port}');
-  await server.forEach(staticFiles.serveRequest);
+  runZoned(() async {
+    var server = await HttpServer.bind('0.0.0.0', port);
+    print('Serving on ${server.address.host}:${server.port}');
+    await server.forEach(staticFiles.serveRequest);
+  }, onError: (e, stackTrace) => print('Oh noes! $e $stackTrace'));
 }
