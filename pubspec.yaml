@@ -19,6 +19,7 @@ dependencies:
   # essential_components: ^1.9.18
   shelf: ^0.7.9
   http_server: ^0.9.8+3
+  angel_static: ^2.0.0-alpha
 
 dev_dependencies:
   angular_test: ^2.3.1
