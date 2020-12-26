@@ -1,20 +1,26 @@
-import 'dart:io' show Platform;
-import 'dart:async' show runZoned;
+import 'dart:io' show File, HttpServer, InternetAddress, Platform;
+import 'dart:async';
+import 'package:http_server/http_server.dart';
 import 'package:path/path.dart' show join, dirname;
 import 'package:shelf/shelf_io.dart' as io;
-import 'package:shelf_static/shelf_static.dart';
+import 'package:shelf/shelf.dart' as shelf;
 
-void main() {
-  // Assumes the server lives in bin/ and that `webdev build` ran
+Future<void> main() async {
+
   var pathToBuild = join(dirname(Platform.script.toFilePath()), '..', 'build');
+  var staticFiles = VirtualDirectory(pathToBuild);
 
-  var handler = createStaticHandler(pathToBuild, defaultDocument: 'index.html');
+  staticFiles.followLinks = true;
+  staticFiles.allowDirectoryListing = true;
+  staticFiles.directoryHandler = (dir, req) {
+    var indexUri = Uri.file(dir.path).resolve('index.html');
+    staticFiles.serveFile(File(indexUri.toFilePath()), req);
+  };
 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 9939 : int.parse(portEnv);
 
-  runZoned(() {
-    io.serve(handler, '0.0.0.0', port);
-    print("Serving $pathToBuild on port $port");
-  }, onError: (e, stackTrace) => print('Oh noes! $e $stackTrace'));
+  var server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
+  print('Serving on ${server.address.host}:${server.port}');
+  await server.forEach(staticFiles.serveRequest);
 }
