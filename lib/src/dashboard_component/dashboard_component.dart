@@ -162,7 +162,7 @@ class DashboardComponent implements OnInit, CanActivate {
       return true;
     } else {
       isLoggedIn = false;
-//      _router.navigate(RoutePaths.login.toUrl());
+      _router.navigate(RoutePaths.login.toUrl());
       return false;
     }
   }
