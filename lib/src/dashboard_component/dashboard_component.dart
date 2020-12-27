@@ -57,10 +57,10 @@ class DashboardComponent implements OnInit, CanActivate {
   bool overlay = true;
   Router _router;
   Location _location;
-  Client _http;
+  LoginService _loginService;
   var data;
 
-  DashboardComponent(this._router, this._location, this._http);
+  DashboardComponent(this._router, this._location, this._loginService);
 
   Future<void> goBack() async {
     _location.back();
@@ -127,6 +127,7 @@ class DashboardComponent implements OnInit, CanActivate {
 
   @override
   Future<void> ngOnInit() async {
+    isLoggedIn = true;
     getData();
     await create_post_page.loadLibrary();
     await view_post_page.loadLibrary();
