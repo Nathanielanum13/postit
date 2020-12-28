@@ -12,12 +12,12 @@ import 'package:angular_app/src/dashboard_component/dashboard_component.dart' de
 
 @Component(
   selector: 'postit-app',
-  styleUrls: ['app_component.css'],
-  templateUrl: 'app_component.html',
+  styleUrls: ['post_it_app_component.css'],
+  templateUrl: 'post_it_app_component.html',
   directives: [routerDirectives, coreDirectives],
   exports: [Routes]
 )
-class AppComponent implements OnInit {
+class PostItAppComponent implements OnInit {
   @override
   Future<void> ngOnInit() async {
     await home_page.loadLibrary();
