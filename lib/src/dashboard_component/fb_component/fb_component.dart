@@ -49,6 +49,12 @@ class FbComponent extends OnActivate {
       var uri = Uri.splitQueryString(value);
       var acc = uri['access_token'];
       print(acc);
+
+      http.read('https://graph.facebook.com/me?access_token=$acc').then((contents) {
+        var user =json.decode(contents);
+
+        print(user); // Logged in as this user.
+      });
     });
 
     _router.navigate(InnerRoutePaths.post_account.toUrl());
