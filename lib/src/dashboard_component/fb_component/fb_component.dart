@@ -39,23 +39,23 @@ class FbComponent extends OnActivate {
 
     print('Json Response Body: ${json.decode(response.body)}');
 
-    var fbConfig = config['authentication']['facebook'];
-    var appId = fbConfig['appId'];
-    var url = fbConfig['url'];
-    var appSecret = fbConfig['appSecret'];
-
-    var link = 'https://graph.facebook.com/oauth/access_token?client_id=$appId&redirect_uri=$url&client_secret=$appSecret&code=$_code';
-    http.read(link).then((value) {
-      var uri = Uri.splitQueryString(value);
-      var acc = uri['access_token'];
-      print(acc);
-
-      http.read('https://graph.facebook.com/me?access_token=$acc').then((contents) {
-        var user =json.decode(contents);
-
-        print(user); // Logged in as this user.
-      });
-    });
+//    var fbConfig = config['authentication']['facebook'];
+//    var appId = fbConfig['appId'];
+//    var url = fbConfig['url'];
+//    var appSecret = fbConfig['appSecret'];
+//
+//    var link = 'https://graph.facebook.com/oauth/access_token?client_id=$appId&redirect_uri=$url&client_secret=$appSecret&code=$_code';
+//    http.read(link).then((value) {
+//      var uri = Uri.splitQueryString(value);
+//      var acc = uri['access_token'];
+//      print(acc);
+//
+//      http.read('https://graph.facebook.com/me?access_token=$acc').then((contents) {
+//        var user =json.decode(contents);
+//
+//        print(user); // Logged in as this user.
+//      });
+//    });
 
     _router.navigate(InnerRoutePaths.post_account.toUrl());
 
