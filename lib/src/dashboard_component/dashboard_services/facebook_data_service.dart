@@ -7,6 +7,10 @@ import 'package:http/http.dart';
 
 @Injectable()
 class FacebookDataService {
+
+  final Client _http;
+
+  //   Set the headers to be used by the class
   static final _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
@@ -14,16 +18,19 @@ class FacebookDataService {
     'Authorization': 'Bearer ${window.localStorage['token']}'
   };
 
+  FacebookDataService(this._http);
+
+  // Get the facebook url from the env file
   static final _facebookUrl = '${env['FACEBOOK_URL']}';
 
-
   Future<Response> sendCodeToApi(String code) async {
+    print('Received code: $code');
+    // Store the code in a map
     Map FacebookRequestObject = {
       'code': code,
     };
-
-    Response response = await post(_facebookUrl, headers: _headers, body: json.encode(FacebookRequestObject));
-
+    // Send the code data to the backend
+    final Response response = await _http.post(_facebookUrl, headers: _headers, body: json.encode(FacebookRequestObject));
     return response;
   }
 }
