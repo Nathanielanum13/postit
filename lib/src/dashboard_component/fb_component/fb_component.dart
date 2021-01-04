@@ -13,7 +13,7 @@ import 'package:angular_router/angular_router.dart';
   providers: [ClassProvider(FacebookDataService)],
 )
 class FbComponent extends OnActivate {
-  String _code;
+  String code;
   final Router _router;
   final FacebookDataService _facebookDataService;
 
@@ -27,10 +27,10 @@ class FbComponent extends OnActivate {
       return;
     }
 
-    _code = current.queryParameters['code'];
-    print('Code: ${_code}');
+    code = current.queryParameters['code'];
+    print('Code: ${code}');
 
-    var response = await _facebookDataService.sendCodeToApi(_code);
+    var response = await _facebookDataService.sendCodeToApi(code);
     if (response.statusCode != 200) {
       return;
     }

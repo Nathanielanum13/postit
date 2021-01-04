@@ -113,17 +113,16 @@ class PostAccountComponent implements OnInit {
     }
   }
 
-  Future<void> gotoFacebook() async {
+  void gotoFacebook() {
     var fbConfig = config['authentication']['facebook'];
     var appId = fbConfig['appId'];
     var url = fbConfig['url'];
 
-    loginLinkUrl = 'https://www.facebook.com/dialog/oauth/?client_id=$appId&redirect_uri=$url&state=TEST_TOKEN&scope=email';
-//    _router.navigate(InnerRoutePaths.facebook.toUrl(), NavigationParams(queryParameters: {'code':'jkldfhdjklfbjkdfjkdsjkfsdfkd'}));
+    loginLinkUrl = 'https://www.facebook.com/dialog/oauth/?client_id=$appId&display=popup&redirect_uri=$url&state=access_token&scope=email,name';
   }
 
   @override
   Future<void> ngOnInit() async {
-    gotoFacebook();
+    await gotoFacebook();
   }
 }
