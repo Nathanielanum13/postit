@@ -33,4 +33,12 @@ class FacebookDataService {
     final Response response = await _http.post(_facebookUrl, headers: _headers, body: json.encode(FacebookRequestObject));
     return response;
   }
+
+  Future<Response> getAllFacebookData() async {
+    final Response resp = await _http.get(_facebookUrl, headers: _headers);
+
+    var body = json.decode(resp.body);
+    print(body);
+    return resp;
+  }
 }

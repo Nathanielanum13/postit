@@ -16,6 +16,10 @@ import 'package:angular_app/src/dashboard_component/create_post_component/create
 import 'package:angular_app/src/dashboard_component/view_post_component/view_post_component.dart' deferred as view_post_page;
 import 'package:angular_app/src/dashboard_component/manage_post_component/manage_post_component.dart' deferred as manage_post_page;
 import 'package:angular_app/src/dashboard_component/dash_home_component/dash_home_component.dart' deferred as dash_home_page;
+import 'package:angular_app/src/dashboard_component/post_account_component/post_account_component.dart' deferred as post_account;
+import 'package:angular_app/src/dashboard_component/setting_component/setting_component.dart' deferred as settings;
+import 'package:angular_app/src/dashboard_component/fb_component/fb_component.dart' deferred as fb;
+import 'package:angular_app/src/dashboard_component/user_account_component/user_account_component.dart' deferred as user;
 
 import 'package:angular_app/variables.dart';
 import 'inner_route_paths.dart';
@@ -45,6 +49,7 @@ import 'inner_route_paths.dart';
     ClassProvider(LoginService),
   ],
 )
+
 class DashboardComponent implements OnInit, CanActivate {
 
   bool persistentDrawerType = false;
@@ -65,6 +70,7 @@ class DashboardComponent implements OnInit, CanActivate {
   Future<void> goBack() async {
     _location.back();
   }
+
   Future<void> goForward() async {
     _location.forward();
   }
@@ -127,11 +133,16 @@ class DashboardComponent implements OnInit, CanActivate {
 
   @override
   Future<void> ngOnInit() async {
+    isLoggedIn = true;
     getData();
     await create_post_page.loadLibrary();
     await view_post_page.loadLibrary();
     await manage_post_page.loadLibrary();
     await dash_home_page.loadLibrary();
+    await post_account.loadLibrary();
+    await user.loadLibrary();
+    await fb.loadLibrary();
+    await settings.loadLibrary();
   }
 
   void getData() {

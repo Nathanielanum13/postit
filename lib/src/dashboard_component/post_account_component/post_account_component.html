@@ -21,7 +21,7 @@
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 text-muted">4 accounts</div>
+                    <div class="text-center mt-5 text-muted">{{ accountCount }} accounts</div>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 text-muted">1 accounts</div>
+                    <div class="text-center mt-5 text-muted">{{ accountCount }} accounts</div>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 text-muted">3 accounts</div>
+                    <div class="text-center mt-5 text-muted">{{ accountCount }} accounts</div>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 text-muted">2 accounts</div>
+                    <div class="text-center mt-5 text-muted">{{ accountCount }} accounts</div>
                 </div>
             </div>
         </div>
@@ -118,22 +118,13 @@
 
     <div class="my-4 px-4">
         <form novalidate>
-            <!--<div class="form-group">
-                <input type="text" class="nt-form-control border-0 br-20 bg-blur" placeholder="App ID">
-            </div>-->
             <div class="form-group">
-                <!--<button class="btn btn-block btn-primary br-20" (click)="getFacebook()">Login with facebook</button>-->
-                <!--<input type="text" class="nt-form-control border-0 br-20 bg-blur" placeholder="Access Token">-->
-                <!--<div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width="" (click)="getFacebook()"></div>-->
-<!--                <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div>-->
-                <!--<div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div>-->
-                <!--<button class="btn btn-primary btn-sm btn-block btn-outline-primary br-20">login in with facebook</button>-->
                 <a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with facebook</a>
             </div>
             <div class="form-group">
                 <span class="float-right my-3">
                     <button type="button" class="btn btn-sm btn-white px-3 br-20 mx-2 text-muted" (click)="cancel()">Cancel</button>
-                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2"><span class="fa fa-user-plus"></span></button>
+<!--                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2"><span class="fa fa-user-plus"></span></button>-->
                 </span>
             </div>
         </form>
@@ -150,24 +141,24 @@
     </div>
 
     <div class="my-4 px-4">
-        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">
-            <div class="card-body border-0 row">
+        <div *ngIf="!accountEmails.isNotEmpty" class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">
+            <div *ngFor="let email of accountEmails; let $i=index" class="card-body border-0 row">
                 <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
                 <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
-                    Nathaniel Rice
+                    {{ email }}
                 </div>
                 <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>
             </div>
         </div>
-        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">
-            <div class="card-body border-0 row">
-                <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
-                <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
-                    Peter Brown Lee
-                </div>
-                <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>
-            </div>
-        </div>
+<!--        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">-->
+<!--            <div class="card-body border-0 row">-->
+<!--                <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>-->
+<!--                <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">-->
+<!--                    Peter Brown Lee-->
+<!--                </div>-->
+<!--                <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="form-group">
                 <span class="float-right my-3">
                     <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>

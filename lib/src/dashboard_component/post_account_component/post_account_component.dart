@@ -1,12 +1,19 @@
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:angular_app/src/dashboard_component/dashboard_services/facebook_data_service.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_app/config.dart';
+import 'package:angular_router/angular_router.dart';
 
 @Component(
   selector: 'post-account',
   templateUrl: 'post_account_component.html',
   styleUrls: ['post_account_component.css'],
+  directives: [
+    coreDirectives,
+    routerDirectives,
+  ],
+  providers: [ClassProvider(FacebookDataService)],
 )
 class PostAccountComponent implements OnInit {
   bool toggle = false;
@@ -16,6 +23,11 @@ class PostAccountComponent implements OnInit {
   String mediaText = '';
   bool isFinished = false;
   String loginLinkUrl = '';
+  int accountCount = 0;
+  List<String> accountEmails = <String>[];
+  final FacebookDataService _facebookDataService;
+
+  PostAccountComponent(this._facebookDataService);
 
   void setDefault() {
     var a = getDocument();
@@ -124,5 +136,6 @@ class PostAccountComponent implements OnInit {
   @override
   Future<void> ngOnInit() async {
     await gotoFacebook();
+    var resp = await _facebookDataService.getAllFacebookData();
   }
 }
