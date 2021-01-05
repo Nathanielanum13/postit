@@ -16,4 +16,5 @@ Map env = const {
   'SIGNUP_URL': 'https://postit-auth.herokuapp.com/signup',
   'VALIDATE_TOKEN_URL': 'https://postit-auth.herokuapp.com/validate',
   'FACEBOOK_URL': 'https://postit-backend-api.herokuapp.com/fb/code'
- };
+};
+

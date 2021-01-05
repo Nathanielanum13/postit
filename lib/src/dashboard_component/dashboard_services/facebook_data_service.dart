@@ -34,11 +34,26 @@ class FacebookDataService {
     return response;
   }
 
-  Future<Response> getAllFacebookData() async {
+  Future<List<String>> getAllFacebookData() async {
     final Response resp = await _http.get(_facebookUrl, headers: _headers);
 
-    var body = json.decode(resp.body);
+    var body = json.decode(resp.body)['data'];
     print(body);
-    return resp;
+    List<String> usernames = convertLDS(body);
+    print('usernames: $usernames');
+    return usernames;
+  }
+
+  List<String> convertLDS(List<dynamic> dyn) {
+    List<String> converted = <String>[];
+    try {
+      for (int i = 0; i < dyn.length; i++) {
+        converted.add(dyn.elementAt(i).toString());
+      }
+      return converted;
+    } catch (e) {
+      converted = ['No Account'];
+      return converted;
+    }
   }
 }

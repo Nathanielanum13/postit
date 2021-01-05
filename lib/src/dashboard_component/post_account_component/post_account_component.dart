@@ -136,6 +136,13 @@ class PostAccountComponent implements OnInit {
   @override
   Future<void> ngOnInit() async {
     await gotoFacebook();
-    var resp = await _facebookDataService.getAllFacebookData();
+    try {
+      List<String> usernames = await _facebookDataService.getAllFacebookData();
+      accountEmails = usernames;
+      print('Account Emails: $accountEmails');
+      accountCount = accountEmails.length;
+    } catch (e){
+      print('An error has occurred');
+    }
   }
 }
