@@ -13,7 +13,7 @@ import 'package:angular_router/angular_router.dart';
   providers: [ClassProvider(FacebookDataService)],
 )
 class FbComponent extends OnActivate {
-  String token;
+  String code;
   final Router _router;
   final FacebookDataService _facebookDataService;
 
@@ -23,23 +23,22 @@ class FbComponent extends OnActivate {
   Future<void> onActivate(RouterState previous, RouterState current) async {
 
     // Make sure the code parameter is not empty
-    if (current.parameters['access_token'] == '' && current.parameters['expires_in'] == '') {
+    if (current.queryParameters['code'] == '') {
       print('Something went wrong');
       return;
     }
 
     // If it isn't empty store it in the code variable
-    token = current.parameters['access_token'];
-//    expiresIn = current.queryParameters['expires_in'];
-    print('Token: ${token}');
+    code = current.queryParameters['code'];
+    print('Code: ${code}');
 
     // Send the code to the service to send the data
-//    var response = await _facebookDataService.sendCodeToApi(code);
-//    if (response.statusCode != 200) {
-//      return;
-//    }
+    var response = await _facebookDataService.sendCodeToApi(code);
+    if (response.statusCode != 200) {
+      return;
+    }
 
-//    print('Json Response Body: ${json.decode(response.body)}');
+    print('Json Response Body: ${json.decode(response.body)}');
 //    var fbConfig = config['authentication']['facebook'];
 //    var appId = fbConfig['appId'];
 //    var url = fbConfig['url'];
@@ -57,7 +56,7 @@ class FbComponent extends OnActivate {
 //        print(user); // Logged in as this user.
 //      });
 //    });
-//    _router.navigate(InnerRoutePaths.post_account.toUrl());
+    _router.navigate(InnerRoutePaths.post_account.toUrl());
 
   }
 }
