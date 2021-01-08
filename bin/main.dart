@@ -13,12 +13,12 @@ void main() {
   var app = Angel();
   var http = AngelHttp(app);
   var fs = const LocalFileSystem();
-  var vDir = CachingVirtualDirectory(
+  var vDir = VirtualDirectory(
     app,
     fs,
     allowDirectoryListing: true,
-    source: fs.directory('./build') /*args.isEmpty ? fs.currentDirectory : fs.directory(args[0])*/,
-    maxAge: const Duration(days: 24).inSeconds,
+    source: fs.directory('./build'),
+//    maxAge: const Duration(days: 1).inSeconds,
   );
 
   app.mimeTypeResolver
@@ -28,7 +28,6 @@ void main() {
     ..addExtension('markdown', 'text/plain')
     ..addExtension('md', 'text/plain')
     ..addExtension('yaml', 'text/plain');
-//    ..addEx
 
   app.logger = Logger('server.log')
     ..onRecord.listen((rec) {
@@ -39,7 +38,6 @@ void main() {
 
   app.fallback(vDir.handleRequest);
   app.fallback(vDir.pushState('index.html'));
-
 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 9939 : int.parse(portEnv);
