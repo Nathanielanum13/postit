@@ -23,13 +23,13 @@ class FbComponent extends OnActivate {
   Future<void> onActivate(RouterState previous, RouterState current) async {
 
     // Make sure the code parameter is not empty
-    if (current.queryParameters['access_token'] == '' && current.queryParameters['expires_in'] == '') {
+    if (current.parameters['access_token'] == '' && current.parameters['expires_in'] == '') {
       print('Something went wrong');
       return;
     }
 
     // If it isn't empty store it in the code variable
-    token = current.queryParameters['access_token'];
+    token = current.parameters['access_token'];
 //    expiresIn = current.queryParameters['expires_in'];
     print('Token: ${token}');
 
