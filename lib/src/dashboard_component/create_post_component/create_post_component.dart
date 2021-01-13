@@ -93,6 +93,7 @@ class CreatePostComponent implements OnInit{
 
     await r.onLoadEnd.first;
     List<int> result = r.result;
+    // print(result);
 
     byteToString(result);
 

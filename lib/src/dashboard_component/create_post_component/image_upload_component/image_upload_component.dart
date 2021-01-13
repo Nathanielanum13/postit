@@ -21,6 +21,6 @@ class ImageUploadComponent {
 
     await reader.onLoadEnd.first;
     List<int> result = reader.result;
-
+    print(result);
   }
 }

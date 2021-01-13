@@ -18,7 +18,6 @@ void main() {
     fs,
     allowDirectoryListing: true,
     source: fs.directory('./build'),
-//    maxAge: const Duration(days: 1).inSeconds,
   );
 
   app.mimeTypeResolver
