@@ -61,7 +61,7 @@ class DashboardComponent implements OnInit, CanActivate {
   Location _location;
   var data;
 
-  DashboardComponent(this._router, this._location, this._http);
+  DashboardComponent(this._router, this._location);
 
   Future<void> goBack() async {
     _location.back();
