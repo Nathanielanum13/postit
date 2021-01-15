@@ -80,6 +80,7 @@
                                ngControl = "password"
                         >
                         <div [hidden] = "password.valid || password.pristine" class="invalid-feedback">Password field required</div>
+                        <div [hidden] = "user.password.length >= 6 || password.pristine" class="invalid-feedback">Password is too short</div>
                     </div>
                     <div class="form-wrapper">
                         <label>Confirm Password</label>
@@ -89,7 +90,7 @@
                                #confirmedPassword="ngForm"
                                ngControl = "confirmedPassword"
                         >
-                        <div [hidden] = "user.password == passwordConfirmation" class="invalid-feedback">Passwords do not match</div>
+                        <div [hidden] = "user.password == passwordConfirmation || confirmedPassword.pristine" class="invalid-feedback">Passwords do not match</div>
                     </div>
 
                     <div class="px-1 py-2 row my-3" style="color: #05356e !important;">
@@ -169,9 +170,10 @@
                         <input type="text" class="nt-form-control border-0 br-20"
                                [(ngModel)]="phone"
                                (keyup.enter)="addPhone()"
+                               #phoneNumber="ngForm"
                                required
                         >
-                        <div [hidden] = "companyPhoneNumbers.isNotEmpty" class="invalid-feedback">Enter at least one phone no.</div>
+                        <div [hidden] = "companyPhoneNumbers.isNotEmpty || phoneNumber.pristine" class="invalid-feedback">Enter at least one phone no.</div>
                         <div class="mt-1">
                             <div class="col-auto">
                                 <material-chips class="row">

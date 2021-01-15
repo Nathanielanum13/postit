@@ -30,7 +30,9 @@ class LoginComponent{
   LoginService _loginService;
   bool isLoading = false;
   bool showAlert = false;
+  bool isEye = false;
   int statusCode = 400;
+  String type = 'password';
   String message = 'Login failed';
   Client _http;
 
@@ -47,6 +49,10 @@ class LoginComponent{
       gotoDashboard();
     } else
       return;
+  }
+
+  void show() {
+    isEye = !isEye;
   }
 
   Future<void> gotoDashboard() async {

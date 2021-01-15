@@ -118,8 +118,17 @@
                                 label="Password"
                                 leadingGlyph="fingerprint"
                                 [(ngModel)]="login.password"
-                                (keyup.enter)="tryLogin()">
+                                (keyup.enter)="tryLogin()" *ngIf="!isEye">
                         </material-input>
+                        <material-input
+                                type="text"
+                                label="Password"
+                                leadingGlyph="fingerprint"
+                                [(ngModel)]="login.password"
+                                (keyup.enter)="tryLogin()" *ngIf="isEye">
+                        </material-input>
+                        <span *ngIf="isEye" class="fa fa-eye see" (click)="show()"></span>
+                        <span *ngIf="!isEye" class="fa fa-eye-slash see" (click)="show()"></span>
                     </div>
                     <div group>
                         <div class="text-muted mb-3">I don't have an account.
