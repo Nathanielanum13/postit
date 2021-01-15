@@ -1,7 +1,6 @@
 
 import 'dart:convert';
 import 'dart:html';
-import 'package:http/http.dart';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
@@ -20,8 +19,6 @@ import 'package:angular_app/src/dashboard_component/post_account_component/post_
 import 'package:angular_app/src/dashboard_component/setting_component/setting_component.dart' deferred as settings;
 import 'package:angular_app/src/dashboard_component/fb_component/fb_component.dart' deferred as fb;
 import 'package:angular_app/src/dashboard_component/user_account_component/user_account_component.dart' deferred as user;
-
-import 'package:angular_app/variables.dart';
 import 'inner_route_paths.dart';
 
 @Component(
@@ -62,7 +59,6 @@ class DashboardComponent implements OnInit, CanActivate {
   bool overlay = true;
   Router _router;
   Location _location;
-  Client _http;
   var data;
 
   DashboardComponent(this._router, this._location, this._http);
@@ -149,25 +145,15 @@ class DashboardComponent implements OnInit, CanActivate {
     data = json.decode(window.localStorage['x-data']);
   }
 
-  Future<bool> valid(String token) async {
-    var resp = await _http.post(env['VALIDATE_TOKEN_URL'], headers: {'Authorization': 'Bearer $token', 'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6'});
-    if(resp.statusCode == 200) {
-      return true;
-    }
-    return false;
-  }
-
   @override
   Future<bool> canActivate(RouterState current, RouterState next) async {
-    bool isValid = await valid(window.localStorage['token']);
     if(
         window.localStorage.containsKey('token') &&
         window.localStorage.containsKey('tenant-namespace') &&
         window.localStorage['token'] != null &&
         window.localStorage['tenant-namespace'] != null &&
         window.localStorage['token'] != '' &&
-        window.localStorage['tenant-namespace'] != '' &&
-        isValid
+        window.localStorage['tenant-namespace'] != ''
     ) {
       isLoggedIn = true;
       return true;
