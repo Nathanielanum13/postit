@@ -83,12 +83,13 @@ class GetPostService {
   }
 
   Future<PostStandardResponse> createSchedule(
-      String title, String from, String to, List<String> postIds) async {
+      String title, bool postToFeed, String from, String to, List<String> postIds) async {
     try {
       final response = await _http.post(_scheduleUrl,
           headers: _headers,
           body: json.encode({
             'schedule_title': title,
+            'post_to_feed': postToFeed,
             'from': from,
             'to': to,
             'post_ids': postIds,

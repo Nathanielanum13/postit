@@ -99,7 +99,7 @@ class ManagePostComponent implements OnInit {
       String to = finalDate.asUtcTime().toIso8601String();
 
       try {
-        PostStandardResponse resp = await _getPostService.createSchedule(title, from, to, postIds);
+        PostStandardResponse resp = await _getPostService.createSchedule(title, true, from, to, postIds);
         postAlert = resp.data.message;
         postAlertCode = resp.httpStatusCode;
         postAlertBool = true;
