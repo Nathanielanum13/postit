@@ -38,13 +38,18 @@ class SignupServices {
       window.localStorage['token'] = response.headers['token'];
       window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
 
-      return _extractResponse(response);
+      final signUpData = _extractResponse(response);
+
+      return signUpData;
     } catch(e) {
       throw _handleError(e);
     }
   }
 
   SignupStandardResponse _extractResponse(Response resp) {
+    /*return SignupStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);*/
+    var company_data = json.decode(resp.body)['company_data'];
+    window.localStorage['x-data'] = json.encode(company_data);
     return SignupStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);
   }
 
