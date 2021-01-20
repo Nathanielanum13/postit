@@ -11,12 +11,34 @@
                     <span class="fa fa-user-circle fa-3x"></span>
                 </div>
             </div>
-            <div class="text-center font-weight-bold text-muted mb-4 cursor-pointer" id="account">
-                {{data['admin_first_name']}} {{data['admin_last_name']}}
-                <span class="ml-2 fa fa-caret-down"></span>
+            <div class="dropdwn">
+                <div class="dropdwn-text text-center font-weight-bold text-muted cursor-pointer" id="account">
+                    {{data['admin_first_name']}} {{data['admin_last_name']}}
+                    <span class="ml-2 fa fa-caret-down"></span>
+                </div>
+                <div class="dropdwn-content px-3 pt-3 pb-1 br-20">
+                    <ul class="list-unstyled">
+                        <li class="n-list-item1 px-2 py-1">
+                            <a href="#" class="nav-link text-muted">Profile</a>
+                            <span class="fa fa-user float-right d-icon text-muted"></span>
+                        </li>
+                        <li class="n-list-item1 px-2 py-1">
+                            <a href="#" class="nav-link text-muted">Settings</a>
+                            <span class="fa fa-screwdriver float-right d-icon text-muted"></span>
+                        </li>
+                        <li class="n-list-item1 px-2 py-1">
+                            <a href="#" class="nav-link text-muted">Accounts</a>
+                            <span class="fa fa-user-friends float-right d-icon text-muted"></span>
+                        </li>
+                        <li class="n-list-item1 px-2 py-1">
+                            <a href="#" class="nav-link text-muted">Logout</a>
+                            <span class="fa fa-sign-out-alt float-right d-icon text-muted"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <!-- Here is a group without a label -->
-            <div group class="p-3 border-0 font-nyata">
+            <div group class="p-3 border-0 font-nyata mt-4">
                 <material-list-item [routerLink]="InnerRoutePaths.dash_home.toUrl()" [routerLinkActive]="'active_side'">
                     <material-icon icon="home"></material-icon>Home
                 </material-list-item>

@@ -38,6 +38,54 @@
     left: 90% !important;
 }
 
+.dropdwn-content {
+    display: none;
+    /*position: absolute;*/
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+
+    /*left: 35px;*/
+    margin: 15px;
+
+    text-align: center;
+}
+.dropdwn:hover .dropdwn-content {
+    display: block;
+}
+
+.n-list-item1:hover {
+    border-radius: 20px !important;
+    background: #f5f5f5 !important;
+    color: #0c6bd0 !important;
+    animation-name: shift;
+    animation-delay: 50ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+}
+.d-icon {
+    display: none;
+    margin-top: -27px;
+    padding-right: 10px;
+}
+.n-list-item1:hover .d-icon {
+    display: block;
+}
+
+@keyframes shift {
+    from {
+        text-align: center;
+    }
+    to {
+        text-align: left;
+    }
+}
+
+.n-list-item:active,
+.n-list-item:hover,
+.n-list-item:focus,
 material-list-item:active,
 material-list-item:hover,
 material-list-item:focus {
