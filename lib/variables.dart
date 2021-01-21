@@ -15,5 +15,5 @@ Map env = const {
  'LOGIN_URL': 'https://postit-auth.herokuapp.com/login',
  'SIGNUP_URL': 'https://postit-auth.herokuapp.com/signup',
  'VALIDATE_TOKEN_URL': 'https://postit-auth.herokuapp.com/validate',
- 'FACEBOOK_URL': 'https://postit-backend-api.herokuapp.com/fb/code'
+ 'FACEBOOK_URL': 'http://localhost:5379/fb/code'
 };
