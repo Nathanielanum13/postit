@@ -26,7 +26,7 @@ class GetPostService {
   GetPostService(this._http);
 
   String getTenantNamespace() {
-    String namespace = window.localStorage[tenant-namespace]
+    String namespace = window.localStorage['tenant-namespace'];
     return namespace;
   }
 
