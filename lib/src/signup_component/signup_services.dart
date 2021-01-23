@@ -34,7 +34,7 @@ class SignupServices {
             'company_email' : companyEmail,
             'ghana_post_address' : ghanaPostAddress,
           }));
-
+      window.localStorage.clear();
       window.localStorage['token'] = response.headers['token'];
       window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
 

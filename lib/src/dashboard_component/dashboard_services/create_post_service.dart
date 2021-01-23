@@ -9,7 +9,7 @@ import 'package:angular_app/variables.dart';
 
 @Injectable()
 class GetPostService {
-  static final _headers = {
+  var _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
     'tenant-namespace': '${window.localStorage['tenant-namespace']}',

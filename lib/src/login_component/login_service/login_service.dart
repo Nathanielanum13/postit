@@ -21,7 +21,7 @@ class LoginService {
           'username':username,
           'password' : password
         }));
-
+      window.localStorage.clear();
       window.localStorage['token'] = response.headers['token'];
       window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
       final loginData = _extractResponse(response);
