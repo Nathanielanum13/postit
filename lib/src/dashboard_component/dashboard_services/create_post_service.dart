@@ -9,10 +9,11 @@ import 'package:angular_app/variables.dart';
 
 @Injectable()
 class GetPostService {
+  var namespace = getTenantNamespace();
   static final _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
-    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
+    'tenant-namespace': '${namespace}',
     'Authorization': 'Bearer ${window.localStorage['token']}'
   };
   static final _postUrl = '${env['POST_URL']}';
@@ -23,6 +24,11 @@ class GetPostService {
   final Client _http;
 
   GetPostService(this._http);
+
+  String getTenantNamespace() {
+    String namespace = window.localStorage[tenant-namespace]
+    return namespace;
+  }
 
   Future<List<Post>> getAllPost() async {
     try {
