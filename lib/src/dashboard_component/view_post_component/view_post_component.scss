@@ -1,3 +1,5 @@
+@import 'package:angular_components/material_expansionpanel/material_expansionpanel.scss';
+
 .d-resp-text {
     display: block;
     white-space: nowrap;
@@ -86,9 +88,6 @@
     display: table;
     margin: 0;
 }
-.panel {
-    border-radius: 20px !important;
-}
 
 @media screen and (max-width: 768px) {
     .table {
@@ -97,13 +96,15 @@
 }
 
 .t-row {
-    display: table-row;
+    display: table;
     background: #fff;
+    border-radius: 20px;
 }
 
 .t-row.header {
     color: #ffffff;
     background: #192635;
+    text-align: center;
 }
 
 @media screen and (max-width: 768px) {

@@ -99,7 +99,9 @@ class ManagePostComponent implements OnInit {
       String to = finalDate.asUtcTime().toIso8601String();
 
       try {
+        isPosting = true;
         PostStandardResponse resp = await _getPostService.createSchedule(title, true, from, to, postIds);
+        isPosting = false;
         postAlert = resp.data.message;
         postAlertCode = resp.httpStatusCode;
         postAlertBool = true;
@@ -121,6 +123,7 @@ class ManagePostComponent implements OnInit {
         postAlert = 'Could not create. Server offline';
         postAlertCode = 500;
         postAlertBool = true;
+        isPosting = false;
         Timer(Duration(seconds: 5), dismissAlert);
       }
 

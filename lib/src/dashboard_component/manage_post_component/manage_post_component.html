@@ -191,32 +191,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-lg-12 mx-0 mt-2 d-none d-lg-block d-md-block">
-                    <div class="col-lg-6 col-md-6">
+                <div class="row col-12 mx-0 mt-2" style="display: inline-flex !important;">
+                    <div class="col-6">
                         <input type="text" class="nt-form-control border-0 br-20" disabled [value]="title" placeholder="Title">
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3"
+                    <div class="col-6 my-auto">
+                        <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3 py-2"
                                 type="button"
                                 [class.disabled]="title.isEmpty || postIds.isEmpty"
                                 (click)="postSchedule()">
-                            <span *ngIf="!isPosting">Post Schedule</span>
-                            <div *ngIf="isPosting">
-                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
-                            </div>
-                        </button>
-                    </div>
-                </div>
-                <div class="row col-md-12 mx-0 mt-2 d-block d-lg-none d-md-none">
-                    <div class="col-md-6">
-                        <input type="text" class="nt-form-control border-0 br-20" disabled [value]="title" placeholder="Title">
-                    </div>
-                    <div class="col-md-6">
-                        <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3"
-                                type="button"
-                                [class.disabled]="title.isEmpty || postIds.isEmpty"
-                                (click)="postSchedule()">
-                            <span class="fa fa-paper-plane" *ngIf="!isPosting"></span>
+                            <span *ngIf="!isPosting">
+                                <span class="d-none d-md-block">Post Schedule</span>
+                                <span class="fa fa-paper-plane d-block d-md-none"></span>
+                            </span>
                             <div *ngIf="isPosting">
                                 <img src="img/mini-loader.gif" style="width: 20px; height: auto">
                             </div>
