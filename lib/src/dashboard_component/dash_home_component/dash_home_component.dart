@@ -7,6 +7,8 @@ import 'package:angular_modern_charts/angular_modern_charts.dart';
 import 'package:angular_app/variables.dart';
 import 'dart:html';
 
+import 'package:angular_router/angular_router.dart';
+
 @Component(
   selector: 'dash-home',
   templateUrl: 'dash_home_component.html',
@@ -14,11 +16,12 @@ import 'dart:html';
   directives: [
     GaugeChartComponent,
     MaterialProgressComponent,
+    routerDirectives,
   ],
   pipes: [commonPipes],
   providers: [ClassProvider(GetPostService)],
 )
-class DashHomeComponent implements OnInit, OnDestroy{
+class DashHomeComponent implements OnInit, CanNavigate{
   DateTime date = DateTime.now();
   String postCreated = 'Post';
   String postScheduled = 'Post';
@@ -71,11 +74,13 @@ class DashHomeComponent implements OnInit, OnDestroy{
   }
 
   @override
-  void ngOnDestroy() {
+  Future<bool> canNavigate() async {
     /* close the connection to avoid being connected irrespective of the
     * dashboard component  one is operating in. */
-    print("Destroying dashhome");
-    webSocket.close();
+    print("leaving dashhome");
+    await webSocket.close();
+    print("disconnected from websocket");
+    return true;
   }
 
 }
