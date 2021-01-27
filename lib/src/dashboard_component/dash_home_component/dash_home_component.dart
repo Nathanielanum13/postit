@@ -37,6 +37,15 @@ class DashHomeComponent implements OnInit{
 
     var webSocket = WebSocket('${env['SCHEDULE_STATUS_WEBSOCKET']}');
 
+    Map userData;
+    webSocket.onOpen.first.then((value) => {
+      userData = {
+        'tenant-namespace': '${window.localStorage['tenant-namespace']}',
+        'auth-token': '${window.localStorage['token']}'
+      },
+      webSocket.send(userData)
+    });
+
     // This code doesn't work so u can delete it if u want
     if (webSocket != null && webSocket.readyState == WebSocket.OPEN){
       print("connected to websocket");
