@@ -74,6 +74,7 @@ class DashHomeComponent implements OnInit, OnDestroy{
   void ngOnDestroy() {
     /* close the connection to avoid being connected irrespective of the
     * dashboard component  one is operating in. */
+    print("Destroying dashhome");
     webSocket.close();
   }
 
