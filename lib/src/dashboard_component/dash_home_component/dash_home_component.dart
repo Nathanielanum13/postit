@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_components/angular_components.dart';
@@ -38,12 +40,14 @@ class DashHomeComponent implements OnInit{
     var webSocket = WebSocket('${env['SCHEDULE_STATUS_WEBSOCKET']}');
 
     Map userData;
-    webSocket.onOpen.first.then((value) => {
+    String data;
+    webSocket.onOpen.first.then((_) => {
       userData = {
         'tenant-namespace': '${window.localStorage['tenant-namespace']}',
         'auth-token': '${window.localStorage['token']}'
       },
-      webSocket.send(userData)
+      data = json.encode(userData),
+      webSocket.send(data)
     });
 
     // This code doesn't work so u can delete it if u want
