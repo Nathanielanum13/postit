@@ -50,8 +50,8 @@ class DashHomeComponent implements OnInit, OnDestroy{
     /* send websocket handshake data when connection opens */
     webSocket.onOpen.first.then((_) => {
       userData = {
-        'tenant-namespace': '${window.localStorage['tenant-namespace']}',
-        'auth-token': '${window.localStorage['token']}'
+        'tenant_namespace': '${window.localStorage['tenant-namespace']}',
+        'auth_token': '${window.localStorage['token']}'
       },
       data = json.encode(userData),
       webSocket.send(data)
