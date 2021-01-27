@@ -7,7 +7,7 @@
     <span class="fa fa-times fa-sm mx-3 cursor-pointer"
           id="alert_close" (click)="dismissAlert()"></span>
 </div>
-<div class="row mt-3 ml-0 mr-0">
+<div class="row mt-3 ml-0 mr-0 mx-2">
     <div class="col-lg-4 col-md-12 col-sm-12 mb-md-3 mb-0">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-12">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-12">
-                <div class="card shadow-c bg-transparent box-one br-20 border-0 py-3 mt-3 my-3">
+                <div class="card shadow-c bg-transparent box-one br-20 border-0 py-3 mt-3 my-3" style="height: 220px">
                     <div class="card bg-transparent br-20 border-0 mx-0" id="scheduled-posts">
                         <div class="card-body">
                             <div class="text-center h6 text-muted mb-3">Scheduled Posts</div>
@@ -101,7 +101,7 @@
                                     <div class="col-3 my-auto">
                                         <button type="button" class="btn btn-sm br-20 shadow-c"
                                                 (click)="autoSync()">
-                                            <span class="fa fa-sync" *ngIf="!isRefresh"></span>
+                                            <span class="fa fa-refresh" *ngIf="!isRefresh"></span>
                                             <div *ngIf="isRefresh">
                                                 <img src="img/mini-loader.gif" style="width: 20px; height: auto">
                                             </div>
@@ -135,7 +135,7 @@
                         <div class="col-auto mx-auto my-auto">
                             <button type="button" class="btn btn-sm br-20 shadow-c"
                                     (click)="autoSync()">
-                                <span class="fa fa-sync" *ngIf="!isRefresh"></span>
+                                <span class="fa fa-refresh" *ngIf="!isRefresh"></span>
                                 <div *ngIf="isRefresh">
                                     <img src="img/mini-loader.gif" style="width: 20px; height: auto">
                                 </div>

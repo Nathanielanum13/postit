@@ -16,26 +16,63 @@
                     {{data['admin_first_name']}} {{data['admin_last_name']}}
                     <span class="ml-2 fa fa-caret-down"></span>
                 </div>
-                <!--<div class="dropdwn-content px-3 pt-3 pb-1 br-20">
+                <div class="dropdwn-content pb-0 mb-0 br-20">
                     <ul class="list-unstyled">
-                        <li class="n-list-item1 px-2 py-1">
-                            <a href="#" class="nav-link text-muted">Profile</a>
-                            <span class="fa fa-user float-right d-icon text-muted"></span>
-                        </li>
-                        <li class="n-list-item1 px-2 py-1">
-                            <a href="#" class="nav-link text-muted">Settings</a>
-                            <span class="fa fa-screwdriver float-right d-icon text-muted"></span>
-                        </li>
-                        <li class="n-list-item1 px-2 py-1">
-                            <a href="#" class="nav-link text-muted">Accounts</a>
-                            <span class="fa fa-user-friends float-right d-icon text-muted"></span>
-                        </li>
-                        <li class="n-list-item1 px-2 py-1">
-                            <a href="#" class="nav-link text-muted">Logout</a>
-                            <span class="fa fa-sign-out-alt float-right d-icon text-muted"></span>
-                        </li>
+                        <div class="px-3 pt-3">
+                            <li class="pr-1">
+                                <div class="row mx-0">
+                                    <div class="col-4 pr-0">
+                                        <div class="icon-circle">
+                                            <span class="text-center fa fa-user"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 px-0">
+                                        <a href="#" class="nav-link text-muted my-auto small">Profile</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li class="pr-1 mb-2">
+                                <div class="row mx-0">
+                                    <div class="col-4 pr-0">
+                                        <div class="icon-circle bg-gradient-green">
+                                            <span class="text-center fa fa-gears"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 px-0">
+                                        <a href="#" class="nav-link text-muted my-auto small">Settings</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="pr-1">
+                                <div class="row mx-0">
+                                    <div class="col-4 pr-0">
+                                        <div class="icon-circle">
+                                            <span class="text-center fa fa-users"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 px-0">
+                                        <a href="#" class="nav-link text-muted my-auto small">Accounts</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li class="pr-1">
+                                <div class="row mx-0">
+                                    <div class="col-4 pr-0">
+                                        <div class="icon-circle bg-gradient-danger">
+                                            <span class="text-center fa fa-sign-out"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 px-0">
+                                        <a href="#" class="nav-link text-muted my-auto small">Logout</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </div>
+                        <li class="mt-3 mx-0 p-0 w-100 background"></li>
                     </ul>
-                </div>-->
+                </div>
             </div>
             <!-- Here is a group without a label -->
             <div group class="p-3 border-0 font-nyata mt-4">
@@ -79,10 +116,14 @@
 
                 <!--            <span class="material-header-title ml-2">Postit</span>-->
 
-                <nav class="material-navigation ml-auto" id="user-icon">
-                    <material-icon id="power-button" icon="power_settings_new" class="mt-1 p-1 cursor-pointer br-5" [class.login]="isLoggedIn" (click)="showDialog()"></material-icon>
-                    <span class="log-text" *ngIf="isLoggedIn">logged in</span>
-                    <span class="log-text" *ngIf="!isLoggedIn">logged out</span>
+                <nav class="material-navigation ml-auto">
+                    <div class="font-weight-bold text-muted cursor-pointer mr-2">
+                        <span class="fa fa-question-circle"></span>
+                        Support
+                    </div>
+                    <!--<material-icon id="power-button" icon="power_settings_new" class="mt-1 p-1 cursor-pointer br-5" [class.login]="isLoggedIn" (click)="showDialog()"></material-icon>-->
+                    <!--<span class="log-text" *ngIf="isLoggedIn">logged in</span>
+                    <span class="log-text" *ngIf="!isLoggedIn">logged out</span>-->
                 </nav>
             </div>
         </header>

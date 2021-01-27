@@ -2,14 +2,14 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 /*noinspection CssUnknownTarget*/
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
+@import url(css/font-awesome.css);
 @import url(css/bootstrap.min.css);
-@import url(css/all.min.css);
 /*@import url(css/argon.min.css);*/
 
 /*noinspection ALL*/
 @font-face {
   font-family: Gilroy;
-  src: url(font/Gilroy/Gilroy-Light\ 300.otf)
+  src: url(fonts/Gilroy/Gilroy-Light\ 300.otf)
   format('opentype');
   font-weight: 100;
 }
@@ -17,25 +17,25 @@
 /*noinspection ALL*/
 @font-face {
   font-family: Gilroy-bold;
-  src: url(font/Gilroy/Gilroy-ExtraBold\ 800.otf)
+  src: url(fonts/Gilroy/Gilroy-ExtraBold\ 800.otf)
   format('opentype');
   font-weight: 100;
 }
 @font-face {
   font-family: Nyata;
-  src: url(font/Nyata/NyataFTR-Regular.otf)
+  src: url(fonts/Nyata/NyataFTR-Regular.otf)
   format('opentype');
   font-weight: 100;
 }
 @font-face {
   font-family: Nexa-light;
-  src: url(font/Nexa/NexaLight350.otf)
+  src: url(fonts/Nexa/NexaLight350.otf)
   format('opentype');
   font-weight: 100;
 }
 @font-face {
   font-family: Google-Sans;
-  src: url(font/Google/ProductSans-Light.ttf)
+  src: url(fonts/Google/ProductSans-Light.ttf)
   format('truetype');
   font-weight: 100;
 }
@@ -323,7 +323,120 @@ body {
 .btn-white:not(:disabled):not(.disabled).active:focus,.btn-white:not(:disabled):not(.disabled):active:focus,.show>.btn-white.dropdown-toggle:focus {
   box-shadow: 0 0 0 0 rgba(255,255,255,.5);
 }
+.bg-gradient-primary {
+  background: linear-gradient(35deg, #5e72e4 0, #825ee4 100%) !important;
+}
 
+.bg-gradient-secondary {
+  background: linear-gradient(35deg, #f4f5f7 0, #f4f4f7 100%) !important;
+}
+
+.bg-gradient-success {
+  background: linear-gradient(35deg, #2dce89 0, #2dcecc 100%) !important;
+}
+
+.bg-gradient-info {
+  background: linear-gradient(35deg, #11cdef 0, #1171ef 100%) !important;
+}
+
+.bg-gradient-warning {
+  background: linear-gradient(35deg, #fb6340 0, #fbb140 100%) !important;
+}
+
+.bg-gradient-danger {
+  background: linear-gradient(35deg, #f5365c 0, #f56036 100%) !important;
+}
+
+.bg-gradient-light {
+  background: linear-gradient(35deg, #adb5bd 0, #adaebd 100%) !important;
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(35deg, #212529 0, #212229 100%) !important;
+}
+
+.bg-gradient-default {
+  background: linear-gradient(35deg, #172b4d 0, #1a174d 100%) !important;
+}
+
+.bg-gradient-white {
+  background: linear-gradient(35deg, #fff 0, white 100%) !important;
+}
+
+.bg-gradient-neutral {
+  background: linear-gradient(35deg, #fff 0, white 100%) !important;
+}
+
+.bg-gradient-darker {
+  background: linear-gradient(35deg, black 0, black 100%) !important;
+}
+
+.bg-gradient-blue {
+  background: linear-gradient(35deg, #5e72e4 0, #825ee4 100%) !important;
+}
+
+.bg-gradient-indigo {
+  background: linear-gradient(35deg, #5603ad 0, #9d03ad 100%) !important;
+}
+
+.bg-gradient-purple {
+  background: linear-gradient(35deg, #8965e0 0, #bc65e0 100%) !important;
+}
+
+.bg-gradient-pink {
+  background: linear-gradient(35deg, #f3a4b5 0, #f3b4a4 100%) !important;
+}
+
+.bg-gradient-red {
+  background: linear-gradient(35deg, #f5365c 0, #f56036 100%) !important;
+}
+
+.bg-gradient-orange {
+  background: linear-gradient(35deg, #fb6340 0, #fbb140 100%) !important;
+}
+
+.bg-gradient-yellow {
+  background: linear-gradient(35deg, #ffd600 0, #beff00 100%) !important;
+}
+
+.bg-gradient-green {
+  background: linear-gradient(35deg, #2dce89 0, #2dcecc 100%) !important;
+}
+
+.bg-gradient-teal {
+  background: linear-gradient(35deg, #11cdef 0, #1171ef 100%) !important;
+}
+
+.bg-gradient-cyan {
+  background: linear-gradient(35deg, #2bffc6 0, #2be0ff 100%) !important;
+}
+
+.bg-gradient-white {
+  background: linear-gradient(35deg, #fff 0, white 100%) !important;
+}
+
+.bg-gradient-gray {
+  background: linear-gradient(35deg, #8898aa 0, #888aaa 100%) !important;
+}
+
+.bg-gradient-gray-dark {
+  background: linear-gradient(35deg, #32325d 0, #44325d 100%) !important;
+}
+
+.bg-gradient-light {
+  background: linear-gradient(35deg, #ced4da 0, #cecfda 100%) !important;
+}
+
+.bg-gradient-lighter {
+  background: linear-gradient(35deg, #e9ecef 0, #e9eaef 100%) !important;
+}
+
+.bg-translucent-primary {
+  background-color: rgba(63, 87, 223, 0.6) !important;
+}
+.shadow--hover:hover {
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07) !important;
+}
 @media screen and (max-width: 576px) {
   #post_alert {
     position: fixed;

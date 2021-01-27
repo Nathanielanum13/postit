@@ -2,6 +2,8 @@ import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_modern_charts/angular_modern_charts.dart';
+import 'package:angular_app/variables.dart';
+import 'dart:html';
 
 @Component(
   selector: 'dash-home',
@@ -15,12 +17,14 @@ import 'package:angular_modern_charts/angular_modern_charts.dart';
   providers: [ClassProvider(GetPostService)],
 )
 class DashHomeComponent implements OnInit{
-  List<Post> posts = <Post>[];
-  List<Schedule> scheduledPosts = <Schedule>[];
   DateTime date = DateTime.now();
-  String postCreated = '';
-  String postScheduled = '';
+  String postCreated = 'Post';
+  String postScheduled = 'Post';
   int activeProgress = 10;
+
+  int postCount = 0;
+  int scheduleCount = 0;
+  List<SchedulePost> socketArray = <SchedulePost>[];
 
 
   final GetPostService _getPostService;
@@ -28,19 +32,35 @@ class DashHomeComponent implements OnInit{
 
   @override
   Future<void> ngOnInit() async {
-    posts = await _getPostService.getAllPost();
-    scheduledPosts = await _getPostService.getAllScheduledPost();
+    postCount = await _getPostService.getPostCount();
+    scheduleCount = await _getPostService.getScheduleCount();
 
-    if(posts.length > 1) {
-      postCreated = 'Posts';
-    } else if(posts.length <= 1) {
-      postCreated = 'Post';
-    }
-    if(scheduledPosts.length > 1) {
-      postScheduled = 'Posts';
-    } else if(scheduledPosts.length <= 1) {
-      postScheduled = 'Post';
-    }
+    var webSocket = WebSocket('${env['SCHEDULE_STATUS_WEBSOCKET']}');
+    webSocket.onOpen.first.then((value) => {
+      print('Connected to web socket successfully')
+    });
+    webSocket.onMessage.listen((event) {
+      print(event.data);
+    });
   }
 
+}
+class SchedulePost {
+  String scheduleId;
+  String scheduleTitle;
+  String from;
+  String to;
+  List<String> postIds;
+  List<Post> posts;
+  int postCount;
+
+  SchedulePost(
+      this.scheduleId,
+      this.scheduleTitle,
+      this.from,
+      this.to,
+      this.postIds,
+      this.posts,
+      this.postCount
+      );
 }

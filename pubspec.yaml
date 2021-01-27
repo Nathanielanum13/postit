@@ -16,6 +16,7 @@ dependencies:
   archive: ^2.0.13
   angular_modern_charts: ^0.2.0
   angel_static: ^2.0.0-alpha
+  websok: ^2.1.2
 
 dev_dependencies:
   angular_test: ^2.3.1
