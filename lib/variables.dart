@@ -5,7 +5,10 @@
    'LOGIN_URL': 'http://localhost:3576/login',
    'SIGNUP_URL': 'http://localhost:3576/signup',
    'VALIDATE_TOKEN_URL': 'http://localhost:3576/validate',
-   'FACEBOOK_URL': 'http://localhost:5379/fb/code'
+   'FACEBOOK_URL': 'http://localhost:5379/fb/code',
+   'POST_COUNT_URL': 'http://localhost:5379/count/post',
+   'SCHEDULE_COUNT_URL': 'http://localhost:5379/count/schedule',
+   'SCHEDULE_STATUS_WEBSOCKET': 'ws://localhost:5379/pws/schedule-status'
 };*/
 
 Map env = const {
@@ -18,5 +21,5 @@ Map env = const {
  'FACEBOOK_URL': 'https://postit-backend-api.herokuapp.com/fb/code',
  'POST_COUNT_URL': 'https://postit-backend-api.herokuapp.com/count/post',
  'SCHEDULE_COUNT_URL': 'https://postit-backend-api.herokuapp.com/count/schedule',
- 'SCHEDULE_STATUS_WEBSOCKET': 'postit-backend-api.herokuapp.com/pws/schedule-status'
+ 'SCHEDULE_STATUS_WEBSOCKET': 'wss://postit-backend-api.herokuapp.com/pws/schedule-status'
 };

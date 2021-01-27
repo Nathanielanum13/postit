@@ -36,10 +36,12 @@ class DashHomeComponent implements OnInit{
     scheduleCount = await _getPostService.getScheduleCount();
 
     var webSocket = WebSocket('${env['SCHEDULE_STATUS_WEBSOCKET']}');
-    webSocket.onOpen.first.then((value) => {
-      print('Connected to web socket successfully')
-    });
-    webSocket.onMessage.listen((event) {
+
+    if (webSocket != null && webSocket.readyState == WebSocket.OPEN){
+      print("connected to websocket");
+    }
+
+    webSocket.onMessage.listen((MessageEvent event) {
       print(event.data);
     });
   }
