@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
+import 'package:angular_app/src/dashboard_component/dashboard_services/websocket_service.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_modern_charts/angular_modern_charts.dart';
 import 'package:angular_app/variables.dart';
 import 'dart:html';
-
-import 'package:angular_router/angular_router.dart';
 
 @Component(
   selector: 'dash-home',
@@ -16,90 +14,38 @@ import 'package:angular_router/angular_router.dart';
   directives: [
     GaugeChartComponent,
     MaterialProgressComponent,
-    routerDirectives,
+    formDirectives,
+    coreDirectives
   ],
   pipes: [commonPipes],
-  providers: [ClassProvider(GetPostService)],
+  providers: [ClassProvider(GetPostService), ClassProvider(GetWebSocketData)],
 )
-class DashHomeComponent implements OnInit, CanNavigate{
+class DashHomeComponent implements OnInit{
   DateTime date = DateTime.now();
-  String postCreated = 'Post';
-  String postScheduled = 'Post';
+
+  String currentSchedule = 'Current Schedule';
+  List<Post> sentPosts = [];
   int activeProgress = 10;
 
   int postCount = 0;
   int scheduleCount = 0;
-  List<SchedulePost> socketArray = <SchedulePost>[];
-  /* create vars for [webSocket] and [scheduleStatus] */
-  WebSocket webSocket;
-  var scheduleStatus;
+  List<SocketData> data = [];
 
 
   final GetPostService _getPostService;
-  DashHomeComponent(this._getPostService);
+  final GetWebSocketData _getWebSocketData;
+  DashHomeComponent(this._getPostService, this._getWebSocketData);
+
+  void postData(int index) {
+    currentSchedule = data[index].scheduleTitle;
+    sentPosts = data[index].postedPosts;
+  }
 
   @override
   Future<void> ngOnInit() async {
+    data = await _getWebSocketData.GetSocketData();
     postCount = await _getPostService.getPostCount();
     scheduleCount = await _getPostService.getScheduleCount();
-
-    /*init [webSocket] var with [WebSocket] object*/
-    webSocket = WebSocket('${env['SCHEDULE_STATUS_WEBSOCKET']}');
-
-    /* variable to store unencoded data for websocket handshake */
-    Map userData;
-    /* variable to store json encoded websocket handshake data */
-    String data;
-    /* send websocket handshake data when connection opens */
-    webSocket.onOpen.first.then((_) => {
-      userData = {
-        'tenant_namespace': '${window.localStorage['tenant-namespace']}',
-        'auth_token': '${window.localStorage['token']}'
-      },
-      data = json.encode(userData),
-      webSocket.send(data)
-    });
-
-    // This code doesn't work so u can delete it if u want
-    if (webSocket != null && webSocket.readyState == WebSocket.OPEN){
-      print("connected to websocket");
-    }
-
-    /* listen for messages on the websocket */
-    webSocket.onMessage.listen((MessageEvent event) {
-      print(event.data);
-      scheduleStatus = json.decode(event.data);
-      print("schedule status");
-    });
   }
 
-  @override
-  Future<bool> canNavigate() async {
-    /* close the connection to avoid being connected irrespective of the
-    * dashboard component  one is operating in. */
-    print("leaving dashhome");
-    await webSocket.close();
-    print("disconnected from websocket");
-    return true;
-  }
-
-}
-class SchedulePost {
-  String scheduleId;
-  String scheduleTitle;
-  String from;
-  String to;
-  List<String> postIds;
-  List<Post> posts;
-  int postCount;
-
-  SchedulePost(
-      this.scheduleId,
-      this.scheduleTitle,
-      this.from,
-      this.to,
-      this.postIds,
-      this.posts,
-      this.postCount
-      );
 }
