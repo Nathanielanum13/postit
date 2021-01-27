@@ -37,6 +37,7 @@ class DashHomeComponent implements OnInit{
 
     var webSocket = WebSocket('${env['SCHEDULE_STATUS_WEBSOCKET']}');
 
+    // This code doesn't work so u can delete it if u want
     if (webSocket != null && webSocket.readyState == WebSocket.OPEN){
       print("connected to websocket");
     }
