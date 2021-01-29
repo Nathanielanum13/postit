@@ -16,7 +16,7 @@
                                     <span class="small text-white">Created Posts</span>
                                 </div>
                                 <div>
-                                    <span class="text-white font-weight-bolder h5">{{postCount}}</span>
+                                    <span class="text-white font-weight-bolder h5">{{counters.postCount}}</span>
                                 </div>
                                 <span class="small text-white">+23</span>
                             </div>
@@ -30,7 +30,7 @@
                                     <span class="small text-white">Scheduled Posts</span>
                                 </div>
                                 <div>
-                                    <span class="text-white font-weight-bolder h5">{{scheduleCount}}</span>
+                                    <span class="text-white font-weight-bolder h5">{{counters.scheduleCount}}</span>
                                 </div>
                                 <span class="small text-white">+23</span>
                             </div>
@@ -44,7 +44,7 @@
                                     <span class="small text-white">Accounts</span>
                                 </div>
                                 <div>
-                                    <span class="text-white font-weight-bolder h5">100</span>
+                                    <span class="text-white font-weight-bolder h5">{{counters.accountCount}}</span>
                                 </div>
                                 <span class="small text-white">+23</span>
                             </div>
@@ -85,11 +85,11 @@
                 </div>
                 <div class="row br-20 card border-0 box-two p-3 mt-3" style="height: 263px">
                     <div class="col-12">
-                        <div class="text-center nt-center" *ngIf="data.isEmpty">
+                        <div class="text-center nt-center" *ngIf="datas.isEmpty">
                             No schedule due
                         </div>
-                        <div *ngIf="data.isNotEmpty" style="height: 227px; overflow-y: scroll; overflow-x: hidden">
-                            <div class="card border-0 br-20 shadow mt-2" *ngFor="let d of data; let $i=index">
+                        <div *ngIf="datas.isNotEmpty" style="height: 227px; overflow-y: scroll; overflow-x: hidden">
+                            <div class="card border-0 br-20 shadow mt-2" *ngFor="let d of datas; let $i=index">
                                 <div class="card-body m-0 px-4">
                                     <material-progress [activeProgress]="activeProgress"></material-progress>
                                     <div class="row my-0 mx-auto">
@@ -100,9 +100,7 @@
                                             <span>10%</span>
                                         </div>
                                         <div class="col-4 my-auto">
-                                            <button class="btn btn-primary br-20 float-right" (click)="postData($i)">
-                                                <span class="fa fa-eye"></span>
-                                            </button>
+                                            <span class="float-right fa fa-eye cursor-pointer text-primary" (click)="postData($i)"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -117,10 +115,10 @@
                     <span class="ml-1 text-muted" style="font-size: small">for {{currentSchedule}}</span>
                     <span class="ml-2 fa fa-chart-bar cursor-pointer text-dark"></span>
                 </div>
-                <div class="row br-20 card border-0 box-one p-3 mt-3 mx-2" style="height: 263px">
+                <div class="row br-20 card border-0 box-one p-3 mt-3 mx-md-4 mb-4" style="height: 263px">
                     <div class="col-md-12 mx-auto">
-                        <div class="text-center nt-center" *ngIf="sentPosts.isEmpty">
-                            Nothing to display
+                        <div class="post-data" *ngIf="sentPosts.isEmpty">
+                            <span class="text-center nt-center">Nothing to display</span>
                         </div>
                         <div *ngIf="sentPosts.isNotEmpty" class="post-data">
                             <div class="nav-wrapper">

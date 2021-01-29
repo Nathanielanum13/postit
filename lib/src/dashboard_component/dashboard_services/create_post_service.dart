@@ -18,8 +18,6 @@ class GetPostService {
   static final _postUrl = '${env['POST_URL']}';
   static final _scheduleUrl = '${env['SCHEDULE_URL']}';
   static final _batchDeleteUrl = '${env['BATCH_DELETE_URL']}';
-  static final _postCountUrl = '${env['POST_COUNT_URL']}';
-  static final _scheduleCountUrl = '${env['SCHEDULE_COUNT_URL']}';
 
 
   final Client _http;
@@ -46,25 +44,6 @@ class GetPostService {
           .toList();
       return schedules;
     } catch (e) {
-      throw _handleError(e);
-    }
-  }
-  Future<int> getPostCount() async {
-    try {
-      final resp = await _http.get(_postCountUrl, headers: _headers);
-      int data = json.decode(resp.body)['count'];
-      return data;
-    } catch(e) {
-      throw _handleError(e);
-    }
-  }
-
-  Future<int> getScheduleCount() async {
-    try {
-      final resp = await _http.get(_scheduleCountUrl, headers: _headers);
-      int data = json.decode(resp.body)['count'];
-      return data;
-    } catch(e) {
       throw _handleError(e);
     }
   }

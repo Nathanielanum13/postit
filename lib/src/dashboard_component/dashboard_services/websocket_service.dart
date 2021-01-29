@@ -1,11 +1,87 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
+import 'package:angular_app/variables.dart';
+import 'package:http/http.dart';
 
 @Injectable()
 class GetWebSocketData {
-  Future<List<SocketData>> GetSocketData() async {
-    return Data();
+  var _headers = {
+    'Content-type': 'application/json',
+    'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
+    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
+    'Authorization': 'Bearer ${window.localStorage['token']}'
+  };
+
+  static final _countUrl = '${env['COUNT_URL']}';
+
+  Client _http;
+  List<SocketData> finalSocket = <SocketData>[];
+  GetWebSocketData(this._http);
+
+  List<SocketData> extractSocketData(List<dynamic> data) {
+    List<SocketData> finalData = <SocketData>[];
+
+    for(int i = 0; i < data.length; i++) {
+      finalData.add(
+        SocketData(
+          data[i]['schedule_id'],
+          data[i]['schedule_title'],
+          data[i]['from'],
+          data[i]['to'],
+          /*data[i]['total_posts'],*/0,
+          data[i]['post_count'],
+          /*convertDynamicToListOfPost(data[i]['posts'])*/
+          <Post>[]
+        )
+      );
+    }
+
+    return finalData;
+  }
+  Future<CountDataType> getCountData() async {
+    try {
+      final resp = await _http.get(_countUrl, headers: _headers);
+      return _extractCountData(resp);
+
+    } catch(e) {
+      throw _handleError(e);
+    }
+  }
+
+  CountDataType _extractCountData(Response resp) {
+    var data = json.decode(resp.body);
+    return CountDataType(data['post_count'], data['schedule_count'], data['account_count']);
+  }
+
+  Exception _handleError(dynamic e) {
+    return Exception('Server error; cause: $e');
+  }
+
+  List<Post> convertDynamicToListOfPost(List<dynamic> allPosts) {
+    List<Post> finalPost = [];
+    for(int i = 0; i < allPosts.length; i++) {
+      finalPost.add(
+        Post(
+            allPosts[i]['post_message'],
+            postTag: convertLDS(allPosts[i]['hash_tags']),
+            postImage: convertDynamicToListOfInt(allPosts[i]['post_image']),
+            id: allPosts[i]['post_id'],
+            postStatus: allPosts[i]['post_status']
+        )
+      );
+    }
+    return finalPost;
+  }
+
+  List<int> convertDynamicToListOfInt(List<dynamic> imageBytes) {
+    List<int> finalImageBytes = [];
+    for(int i = 0; i < imageBytes.length; i++) {
+      finalImageBytes.add(imageBytes[i]);
+    }
+    return finalImageBytes;
   }
 }
 class SocketData {
@@ -16,7 +92,6 @@ class SocketData {
   int totalPosts;
   int postCount;
   List<Post> postedPosts;
-  bool isSelected = false;
 
   SocketData(
       this.scheduleId,
@@ -25,39 +100,18 @@ class SocketData {
       this.to,
       this.totalPosts,
       this.postCount,
-      this.postedPosts,
-      this.isSelected
+      this.postedPosts
       );
 }
-List<SocketData> Data() {
-  return [
-    SocketData(
-      '1',
-      'A',
-      '12-02-21',
-      '13-02-21',
-      10,
-      12,
-      [
-        Post('post 1'),
-        Post('Wow'),
-        Post('post 2')
-      ],
-      false
-    ),
-    SocketData(
-      '2',
-      'B',
-      '12-02-21',
-      '13-02-21',
-      1,
-      2,
-        [
-          Post('post a1'),
-          Post('Wow a'),
-          Post('post a2')
-        ],
-      false
-    )
-  ];
+
+class CountDataType {
+  int postCount;
+  int scheduleCount;
+  int accountCount;
+
+  CountDataType(
+      this.postCount,
+      this.scheduleCount,
+      this.accountCount
+      );
 }
