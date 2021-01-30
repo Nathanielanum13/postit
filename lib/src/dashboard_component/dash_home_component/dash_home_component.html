@@ -91,13 +91,13 @@
                         <div *ngIf="datas.isNotEmpty" style="height: 227px; overflow-y: scroll; overflow-x: hidden">
                             <div class="card border-0 br-20 shadow mt-2" *ngFor="let d of datas; let $i=index">
                                 <div class="card-body m-0 px-4">
-                                    <material-progress [activeProgress]="activeProgress"></material-progress>
+                                    <material-progress activeProgress="{{(d.postCount/d.totalPosts)*100}}"></material-progress>
                                     <div class="row my-0 mx-auto">
                                         <div class="col-4 my-auto">
                                             <div class="text-muted">{{d.scheduleTitle}}</div>
                                         </div>
                                         <div class="col-4 my-auto text-center">
-                                            <span>10%</span>
+                                            <span>{{(d.postCount/d.totalPosts)*100}}</span>
                                         </div>
                                         <div class="col-4 my-auto">
                                             <span class="float-right fa fa-eye cursor-pointer text-primary" (click)="postData($i)"></span>

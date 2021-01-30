@@ -31,10 +31,9 @@ class GetWebSocketData {
           data[i]['schedule_title'],
           data[i]['from'],
           data[i]['to'],
-          /*data[i]['total_posts'],*/0,
+          data[i]['total_post'],
           data[i]['post_count'],
-          /*convertDynamicToListOfPost(data[i]['posts'])*/
-          <Post>[]
+          convertDynamicToListOfPost(data[i]['posts'])
         )
       );
     }
@@ -62,24 +61,32 @@ class GetWebSocketData {
 
   List<Post> convertDynamicToListOfPost(List<dynamic> allPosts) {
     List<Post> finalPost = [];
-    for(int i = 0; i < allPosts.length; i++) {
-      finalPost.add(
-        Post(
-            allPosts[i]['post_message'],
-            postTag: convertLDS(allPosts[i]['hash_tags']),
-            postImage: convertDynamicToListOfInt(allPosts[i]['post_image']),
-            id: allPosts[i]['post_id'],
-            postStatus: allPosts[i]['post_status']
-        )
-      );
+    if(allPosts != 'null') {
+      for(int i = 0; i < allPosts.length; i++) {
+        finalPost.add(
+            Post(
+                allPosts[i]['post_message'],
+                postTag: convertLDS(allPosts[i]['hash_tags']),
+                postImage: convertDynamicToListOfInt(allPosts[i]['post_image']),
+                id: allPosts[i]['post_id'],
+                postStatus: allPosts[i]['post_status']
+            )
+        );
+      }
+    } else {
+      return finalPost;
     }
     return finalPost;
   }
 
   List<int> convertDynamicToListOfInt(List<dynamic> imageBytes) {
     List<int> finalImageBytes = [];
-    for(int i = 0; i < imageBytes.length; i++) {
-      finalImageBytes.add(imageBytes[i]);
+    if(imageBytes.isNotEmpty) {
+      for(int i = 0; i < imageBytes.length; i++) {
+        finalImageBytes.add(imageBytes[i]);
+      }
+    } else {
+      return finalImageBytes;
     }
     return finalImageBytes;
   }

@@ -77,7 +77,12 @@ class DashHomeComponent implements OnInit{
     /* listen for messages on the websocket */
     webSocket.onMessage.listen((MessageEvent event) {
       print(event.data);
-      datas = _getWebSocketData.extractSocketData(json.decode(event.data));
+
+      if(event.data == null) {
+        webSocket.close();
+      } else {
+        datas = _getWebSocketData.extractSocketData(json.decode(event.data));
+      }
     }
     );
   }
