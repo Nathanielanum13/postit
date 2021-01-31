@@ -20,6 +20,21 @@ material-input {
     text-align: center;
 }
 
+.login-background {
+    margin: 0;
+    padding: 0;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url("img/postit_background.png");
+
+    filter: brightness(0.5);
+
+    width: 100%;
+    height: 100vh;
+}
+
 .limiter {
     width: 100%;
     max-width: 400px;

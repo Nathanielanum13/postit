@@ -48,9 +48,8 @@
         </div>
     </div>
 </div>
-<div class="m-0">
-    <div style="width: 100vw; height: 100vh">
-        <div class="arrow arrow--top">
+<div class="m-0 login-background"><!--<div style="width: 100vw; height: 100vh">
+        <div class="arrow arrow&#45;&#45;top">
             <svg xmlns="http://www.w3.org/2000/svg" width="270.11" height="649.9" overflow="visible">
                 <style>
                     .geo-arrow {
@@ -71,7 +70,7 @@
                 </g>
             </svg>
         </div>
-        <div class="arrow arrow--bottom">
+        <div class="arrow arrow&#45;&#45;bottom">
             <svg xmlns="http://www.w3.org/2000/svg" width="31.35" height="649.9" overflow="visible">
                 <style>
                     .geo-arrow {
@@ -98,54 +97,52 @@
                 </svg>
             </div>
         </div>
-    </div>
-    <div class="limiter" style="z-index: 1000">
-        <div class="container">
-            <form class="login100-form">
-                <div class="p-5">
-                    <div group>
-                        <material-input
-                                type="text"
-                                label="Username"
-                                leadingGlyph="person"
-                                [(ngModel)]="login.username"
-                                (keyup.enter)="tryLogin()">
-                        </material-input>
-                    </div>
-                    <div group>
-                        <material-input
-                                type="password"
-                                label="Password"
-                                leadingGlyph="fingerprint"
-                                [(ngModel)]="login.password"
-                                (keyup.enter)="tryLogin()" *ngIf="!isEye">
-                        </material-input>
-                        <material-input
-                                type="text"
-                                label="Password"
-                                leadingGlyph="fingerprint"
-                                [(ngModel)]="login.password"
-                                (keyup.enter)="tryLogin()" *ngIf="isEye">
-                        </material-input>
-                        <span *ngIf="isEye" class="fa fa-eye see" (click)="show()"></span>
-                        <span *ngIf="!isEye" class="fa fa-eye-slash see" (click)="show()"></span>
-                    </div>
-                    <div group>
-                        <div class="text-muted mb-3">I don't have an account.
-                            <span class="text-primary mx-1 cursor-pointer" [routerLink]="RoutePaths.signup.toUrl()">Sign up</span>
-                        </div>
-                        <material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="!isLoading">
-                            Login
-                        </material-button>
-                        <material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="isLoading">
-                            <img src="img/mini-loader.gif" style="width: 20px; height: auto">
-                        </material-button>
-                    </div>
+    </div>--></div>
+<div class="limiter" style="z-index: 1000">
+    <div class="container">
+        <form class="login100-form">
+            <div class="p-5">
+                <div group>
+                    <material-input
+                            type="text"
+                            label="Username"
+                            leadingGlyph="person"
+                            [(ngModel)]="login.username"
+                            (keyup.enter)="tryLogin()">
+                    </material-input>
                 </div>
-            </form>
-        </div>
+                <div group>
+                    <material-input
+                            type="password"
+                            label="Password"
+                            leadingGlyph="fingerprint"
+                            [(ngModel)]="login.password"
+                            (keyup.enter)="tryLogin()" *ngIf="!isEye">
+                    </material-input>
+                    <material-input
+                            type="text"
+                            label="Password"
+                            leadingGlyph="fingerprint"
+                            [(ngModel)]="login.password"
+                            (keyup.enter)="tryLogin()" *ngIf="isEye">
+                    </material-input>
+                    <span *ngIf="isEye" class="fa fa-eye see" (click)="show()"></span>
+                    <span *ngIf="!isEye" class="fa fa-eye-slash see" (click)="show()"></span>
+                </div>
+                <div group>
+                    <div class="text-muted mb-3">I don't have an account.
+                        <span class="text-primary mx-1 cursor-pointer" [routerLink]="RoutePaths.signup.toUrl()">Sign up</span>
+                    </div>
+                    <material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="!isLoading">
+                        Login
+                    </material-button>
+                    <material-button id="login-button" class="br-20 px-3" (click)="gotoDashboard()" *ngIf="isLoading">
+                        <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                    </material-button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-
 
 <!--suppress ALL -->

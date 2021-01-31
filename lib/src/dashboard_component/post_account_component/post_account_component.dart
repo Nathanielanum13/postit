@@ -24,7 +24,7 @@ class PostAccountComponent implements OnInit {
   bool isFinished = false;
   String loginLinkUrl = '';
   int accountCount = 0;
-  List<String> accountEmails = <String>[];
+  List<FacebookResponseData> accountEmails = <FacebookResponseData>[];
   final FacebookDataService _facebookDataService;
 
   PostAccountComponent(this._facebookDataService);
@@ -48,10 +48,15 @@ class PostAccountComponent implements OnInit {
     showViewPopup('');
   }
 
+  Future<void> deleteFacebookAccount(int index) async {
+    var resp = await _facebookDataService.deleteFacebookAccount(accountEmails[index].userId);
+  }
+
   void showPopup(String name) {
     toggle = !toggle;
     var doc = getDocument();
     List<Element> a = doc.querySelectorAll('#body button');
+    List<Element> x = doc.querySelectorAll('#fb button');
 
     if (toggle) {
       doc.getElementById('dialog').setAttribute('display', 'true');
@@ -85,8 +90,8 @@ class PostAccountComponent implements OnInit {
       doc.getElementById('body').style.filter = 'blur(0px)';
       mediaIcon = '';
 
-      for (int i = 0; i < a.length; i++) {
-        a[i].removeAttribute('disabled');
+      for (int i = 0; i < x.length; i++) {
+        x[i].removeAttribute('disabled');
       }
     }
   }
@@ -137,10 +142,7 @@ class PostAccountComponent implements OnInit {
   Future<void> ngOnInit() async {
     await gotoFacebook();
     try {
-      List<String> usernames = await _facebookDataService.getAllFacebookData();
-      accountEmails = usernames;
-      print('Account Emails: $accountEmails');
-      accountCount = accountEmails.length;
+      accountEmails = await _facebookDataService.getAllFacebookData();
     } catch (e){
       print('An error has occurred');
     }

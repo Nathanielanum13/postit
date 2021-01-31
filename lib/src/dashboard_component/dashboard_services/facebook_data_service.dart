@@ -22,6 +22,8 @@ class FacebookDataService {
 
   // Get the facebook url from the env file
   static final _facebookUrl = '${env['FACEBOOK_URL']}';
+  static final _deleteFacebookAccountUrl = '${env['DELETE_FACEBOOK_ACCOUNT_URL']}';
+
 
   Future<Response> sendCodeToApi(String code) async {
     print('Received code: $code');
@@ -34,14 +36,24 @@ class FacebookDataService {
     return response;
   }
 
-  Future<List<String>> getAllFacebookData() async {
+  Future<List<FacebookResponseData>> getAllFacebookData() async {
     final Response resp = await _http.get(_facebookUrl, headers: _headers);
+    List<FacebookResponseData> fb = <FacebookResponseData>[];
+    var body = json.decode(resp.body);
+    List<dynamic> a = body;
+    for(int i = 0; i < a.length; i++) {
+      fb.add(
+        FacebookResponseData(body['username'], body['user_id']),
+      );
+    }
+    return fb;
+  }
 
-    var body = json.decode(resp.body)['data'];
-    print(body);
-    List<String> usernames = convertLDS(body);
-    print('usernames: $usernames');
-    return usernames;
+  Future<void> deleteFacebookAccount(String userId) async {
+    final resp = await _http.delete(_deleteFacebookAccountUrl+ '?app_id=' + userId, headers: _headers);
+    if(resp.statusCode != 200) {
+      return;
+    }
   }
 
   List<String> convertLDS(List<dynamic> dyn) {
@@ -52,8 +64,13 @@ class FacebookDataService {
       }
       return converted;
     } catch (e) {
-      converted = ['No Account'];
       return converted;
     }
   }
+}
+class FacebookResponseData {
+  String username;
+  String userId;
+
+  FacebookResponseData(this.username, this.userId);
 }

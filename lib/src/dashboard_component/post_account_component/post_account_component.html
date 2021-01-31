@@ -1,6 +1,6 @@
 <div class="container mt-3" id="body" (click)="setDefault()">
     <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mb-sm-3">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mb-sm-3" id="fb">
             <div class="card border-0 bg-transparent box-one c-bordered br-20 shadow-c">
                 <div class="card-header bg-transparent border-0 box-one mt-0 n-mt-1 br-20">
                     <span class="float-left ml-3">Facebook</span>
@@ -34,19 +34,19 @@
                 <div class="card-body m-2">
                     <div class="text-center">
                         <span class="float-left ml-2 mr-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-primary br-20 px-3"
+                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-primary br-20 px-3"
                                     (click)="showPopup('twitter')">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
                         <span class="float-right mr-2 ml-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
                                     (click)="showViewPopup('twitter')">
                                 <span class="fa fa-eye"></span>
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 text-muted">{{ accountCount }} accounts</div>
+                    <div class="text-center mt-5 text-muted">0 accounts</div>
                 </div>
             </div>
         </div>
@@ -59,19 +59,19 @@
                 <div class="card-body m-2">
                     <div class="text-center">
                         <span class="float-left ml-2 mr-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-danger br-20 px-3"
+                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-danger br-20 px-3"
                                     (click)="showPopup('instagram')">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
                         <span class="float-right mr-2 ml-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
                                     (click)="showViewPopup('instagram')">
                                 <span class="fa fa-eye"></span>
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 text-muted">{{ accountCount }} accounts</div>
+                    <div class="text-center mt-5 text-muted">0 accounts</div>
                 </div>
             </div>
         </div>
@@ -84,19 +84,19 @@
                 <div class="card-body m-2">
                     <div class="text-center">
                         <span class="float-left ml-2 mr-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
                                     (click)="showPopup('linkedin')">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
                         <span class="float-right mr-2 ml-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
+                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
                                     (click)="showViewPopup('linkedin')">
                                 <span class="fa fa-eye"></span>
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 text-muted">{{ accountCount }} accounts</div>
+                    <div class="text-center mt-5 text-muted">0 accounts</div>
                 </div>
             </div>
         </div>
@@ -140,16 +140,84 @@
         </div>
     </div>
 
-    <div class="my-4 px-4">
-        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20">
+    <div class="my-4 px-2" *ngIf="mediaName=='Facebook'">
+        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isNotEmpty">
             <div *ngFor="let email of accountEmails; let $i=index" class="card-body border-0 row">
                 <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
                 <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
-                    {{ email }}
+                    {{ email.username }}
+                </div>
+                <span class="fa fa-trash col-3 text-muted mx-auto my-auto" (click)="deleteFacebookAccount($i)"></span>
+            </div>
+        </div>
+        <div class="mb-1 p-3 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isEmpty">
+            <div class="nt-center">
+                <div class="text-center">No account added</div>
+            </div>
+        </div>
+        <div class="form-group">
+                <span class="float-right my-3">
+                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
+                </span>
+        </div>
+    </div>
+    <div class="my-4 px-4" disabled="true" *ngIf="mediaName=='Twitter'">
+        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isNotEmpty">
+            <div class="card-body border-0 row">
+                <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
+                <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
+                    Nothing
                 </div>
                 <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>
             </div>
         </div>
+        <!--<div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isEmpty">
+            <div class="nt-center">
+                <div class="text-center">No account added</div>
+            </div>
+        </div>-->
+        <div class="form-group">
+                <span class="float-right my-3">
+                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
+                </span>
+        </div>
+    </div>
+    <div class="my-4 px-4" disabled="true" *ngIf="mediaName=='Instagram'">
+        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isNotEmpty">
+            <div class="card-body border-0 row">
+                <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
+                <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
+                    Nothing
+                </div>
+                <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>
+            </div>
+        </div>
+        <!--<div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isEmpty">
+            <div class="nt-center">
+                <div class="text-center">No account added</div>
+            </div>
+        </div>-->
+        <div class="form-group">
+                <span class="float-right my-3">
+                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
+                </span>
+        </div>
+    </div>
+    <div class="my-4 px-4" disabled="true" *ngIf="mediaName=='LinkedIn'">
+        <div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isNotEmpty">
+            <div class="card-body border-0 row">
+                <span class="fa fa-user-circle col-3 mx-auto fa-2x text-muted my-auto"></span>
+                <div class="text-muted col-6 text-sm-left mx-auto my-auto d-post-text">
+                    Nothing
+                </div>
+                <span class="fa fa-trash col-3 text-muted mx-auto my-auto"></span>
+            </div>
+        </div>
+        <!--<div class="card bg-transparent box-one mb-1 border-0 c-bordered border-0 br-20" *ngIf="accountEmails.isEmpty">
+            <div class="nt-center">
+                <div class="text-center">No account added</div>
+            </div>
+        </div>-->
         <div class="form-group">
                 <span class="float-right my-3">
                     <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>

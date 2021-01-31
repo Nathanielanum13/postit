@@ -37,7 +37,6 @@ class GetWebSocketData {
         )
       );
     }
-
     return finalData;
   }
   Future<CountDataType> getCountData() async {
@@ -61,7 +60,7 @@ class GetWebSocketData {
 
   List<Post> convertDynamicToListOfPost(List<dynamic> allPosts) {
     List<Post> finalPost = [];
-    if(allPosts != 'null') {
+    if(allPosts != null) {
       for(int i = 0; i < allPosts.length; i++) {
         finalPost.add(
             Post(

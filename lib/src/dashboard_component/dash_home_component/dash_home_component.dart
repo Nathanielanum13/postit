@@ -28,12 +28,21 @@ class DashHomeComponent implements OnInit{
 
   WebSocket webSocket;
   String currentSchedule = 'Current Schedule';
-  List<Post> sentPosts = <Post>[];
+  List<Post> sentPosts = <Post>[
+    Post(
+      'This is the first message',
+      postTag: ['wow', 'great', 'messy'],
+    ),
+    Post(
+      'This is the second message',
+      postTag: ['wow', 'great', 'messy'],
+    ),
+  ];
   CountDataType counters = CountDataType(0, 0, 0);
-  int activeProgress = 10;
 
   int postCount = 0;
   int scheduleCount = 0;
+  List<int> active = <int>[];
   List<SocketData> datas = <SocketData>[];
 
   final GetWebSocketData _getWebSocketData;
@@ -41,11 +50,11 @@ class DashHomeComponent implements OnInit{
 
   void postData(int index) {
     currentSchedule = datas[index].scheduleTitle;
-    sentPosts = datas[index].postedPosts;
+    /*sentPosts = datas[index].postedPosts;*/
   }
 
-  void see() {
-    print('God is Good ${datas.toString()}');
+  void calculateProgress(int total, int posted) {
+    active.add(((posted/total)*100).toInt());
   }
 
   @override
@@ -82,6 +91,9 @@ class DashHomeComponent implements OnInit{
         webSocket.close();
       } else {
         datas = _getWebSocketData.extractSocketData(json.decode(event.data));
+        for(int i = 0; i < datas.length; i++) {
+          calculateProgress(datas[i].totalPosts, datas[i].postCount);
+        }
       }
     }
     );
