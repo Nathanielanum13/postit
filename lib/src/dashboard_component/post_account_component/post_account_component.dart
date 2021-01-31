@@ -100,6 +100,7 @@ class PostAccountComponent implements OnInit {
     toggleView = !toggleView;
     var doc = getDocument();
     List<Element> a = doc.querySelectorAll('#body button');
+    List<Element> x = doc.querySelectorAll('#fb button');
 
     if (toggleView) {
       doc.getElementById('view-dialog').setAttribute('display', 'true');
@@ -124,8 +125,8 @@ class PostAccountComponent implements OnInit {
       doc.getElementById('dialog').setAttribute('display', 'false');
       doc.getElementById('body').style.filter = 'blur(0px)';
 
-      for (int i = 0; i < a.length; i++) {
-        a[i].removeAttribute('disabled');
+      for (int i = 0; i < x.length; i++) {
+        x[i].removeAttribute('disabled');
       }
     }
   }
