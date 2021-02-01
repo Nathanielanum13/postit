@@ -39,11 +39,11 @@ class FacebookDataService {
   Future<List<FacebookResponseData>> getAllFacebookData() async {
     final Response resp = await _http.get(_facebookUrl, headers: _headers);
     List<FacebookResponseData> fb = <FacebookResponseData>[];
-    var body = json.decode(resp.body);
+    var body = json.decode(resp.body)['data'];
     List<dynamic> a = body;
     for(int i = 0; i < a.length; i++) {
       fb.add(
-        FacebookResponseData(body['username'], body['user_id']),
+        FacebookResponseData(body['username'], body['user_id'], body['access_token']),
       );
     }
     return fb;
@@ -71,6 +71,7 @@ class FacebookDataService {
 class FacebookResponseData {
   String username;
   String userId;
+  String accessToken;
 
-  FacebookResponseData(this.username, this.userId);
+  FacebookResponseData(this.username, this.userId, this.accessToken);
 }

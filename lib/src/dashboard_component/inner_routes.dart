@@ -6,6 +6,7 @@ import 'package:angular_app/src/dashboard_component/post_account_component/post_
 import 'package:angular_app/src/dashboard_component/setting_component/user_account_component/user_account_component.template.dart' as user_account_template;
 import 'package:angular_app/src/dashboard_component/setting_component/setting_component.template.dart' as setting_template;
 import 'package:angular_app/src/dashboard_component/fb_component/fb_component.template.dart' as facebook_template;
+import 'package:angular_app/src/dashboard_component/fb_delete_component/fb_delete_component.template.dart' as facebook_logout_template;
 import 'package:angular_router/angular_router.dart';
 import 'inner_route_paths.dart';
 export 'inner_route_paths.dart';
@@ -45,6 +46,11 @@ class InnerRoutes {
     component: facebook_template.FbComponentNgFactory,
   );
 
+  static final facebook_logout = RouteDefinition(
+    routePath: InnerRoutePaths.facebook_logout,
+    component: facebook_logout_template.FbDeleteComponentNgFactory,
+  );
+
   static final all = <RouteDefinition>[
     dash_home,
     create_post,
@@ -54,5 +60,6 @@ class InnerRoutes {
     user_account,
     setting,
     facebook,
+    facebook_logout,
   ];
 }

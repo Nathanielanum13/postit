@@ -24,18 +24,22 @@ class GetWebSocketData {
   List<SocketData> extractSocketData(List<dynamic> data) {
     List<SocketData> finalData = <SocketData>[];
 
-    for(int i = 0; i < data.length; i++) {
-      finalData.add(
-        SocketData(
-          data[i]['schedule_id'],
-          data[i]['schedule_title'],
-          data[i]['from'],
-          data[i]['to'],
-          data[i]['total_post'],
-          data[i]['post_count'],
-          convertDynamicToListOfPost(data[i]['posts'])
-        )
-      );
+    try {
+      for(int i = 0; i < data.length; i++) {
+        finalData.add(
+            SocketData(
+                data[i]['schedule_id'],
+                data[i]['schedule_title'],
+                data[i]['from'],
+                data[i]['to'],
+                data[i]['total_post'],
+                data[i]['post_count'],
+                convertDynamicToListOfPost(data[i]['posts'])
+            )
+        );
+      }
+    } catch (e){
+      return finalData;
     }
     return finalData;
   }

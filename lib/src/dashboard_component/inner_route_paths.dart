@@ -10,4 +10,5 @@ class InnerRoutePaths {
   static final user_account = RoutePath(path: 'user_account', parent: _parent.RoutePaths.dashboard);
   static final setting = RoutePath(path: 'setting', parent: _parent.RoutePaths.dashboard);
   static final facebook = RoutePath(path: 'facebook', parent: _parent.RoutePaths.dashboard);
+  static final facebook_logout = RoutePath(path: 'facebook/logout', parent: _parent.RoutePaths.dashboard);
 }

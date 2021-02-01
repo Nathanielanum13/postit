@@ -7,3 +7,6 @@ var config = {
     }
   },
 };
+var logout = {
+  'next': 'https://postit-ui.herokuapp.com/dashboard/facebook/logout',
+};

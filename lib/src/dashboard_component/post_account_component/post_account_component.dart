@@ -49,7 +49,10 @@ class PostAccountComponent implements OnInit {
   }
 
   Future<void> deleteFacebookAccount(int index) async {
-    var resp = await _facebookDataService.deleteFacebookAccount(accountEmails[index].userId);
+//    var resp = await _facebookDataService.deleteFacebookAccount(accountEmails[index].userId);
+    var next = logout['next'];
+    var accessToken = accountEmails[index].accessToken;
+
   }
 
   void showPopup(String name) {
@@ -142,6 +145,7 @@ class PostAccountComponent implements OnInit {
   @override
   Future<void> ngOnInit() async {
     await gotoFacebook();
+
     try {
       accountEmails = await _facebookDataService.getAllFacebookData();
     } catch (e){
