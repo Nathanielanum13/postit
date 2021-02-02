@@ -50,10 +50,10 @@ class PostAccountComponent implements OnInit {
 
   Future<void> deleteFacebookAccount(int index) async {
     await _facebookDataService.deleteFacebookAccount(accountEmails[index].userId);
-    var userId = accountEmails[index].userId;
+//    var userId = accountEmails[index].userId;
     var next = logout['next'];
     var accessToken = accountEmails[index].accessToken;
-    var fbUrl = 'https://www.facebook.com/logout.php?confirm=1&client_id=$userId&next=$next&access_token=$accessToken';
+    var fbUrl = 'https://www.facebook.com/logout.php?confirm=1&next=$next&access_token=$accessToken';
 
     window.location.assign(fbUrl);
   }
