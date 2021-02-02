@@ -9,6 +9,7 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_modern_charts/angular_modern_charts.dart';
 
 import 'package:angular_app/variables.dart';
+import 'package:angular_router/angular_router.dart';
 
 @Component(
   selector: 'dash-home',
@@ -23,7 +24,7 @@ import 'package:angular_app/variables.dart';
   pipes: [commonPipes],
   providers: [ClassProvider(GetWebSocketData)],
 )
-class DashHomeComponent implements OnInit{
+class DashHomeComponent implements OnInit, CanNavigate{
   DateTime date = DateTime.now();
 
   WebSocket webSocket;
@@ -86,7 +87,6 @@ class DashHomeComponent implements OnInit{
     /* listen for messages on the websocket */
     webSocket.onMessage.listen((MessageEvent event) {
       print(event.data);
-
       if(event.data == null) {
         webSocket.close();
       } else {
@@ -95,8 +95,14 @@ class DashHomeComponent implements OnInit{
           calculateProgress(datas[i].totalPosts, datas[i].postCount);
         }
       }
-    }
-    );
+    });
   }
 
+  @override
+  Future<bool> canNavigate() async {
+    print('closing socket ...');
+    await webSocket.close();
+    print('socket closed!');
+    return true;
+  }
 }
