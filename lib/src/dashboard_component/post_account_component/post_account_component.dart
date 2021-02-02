@@ -11,7 +11,7 @@ import 'package:angular_router/angular_router.dart';
   styleUrls: ['post_account_component.css'],
   directives: [
     coreDirectives,
-    routerDirectives,
+    routerDirectives
   ],
   providers: [ClassProvider(FacebookDataService)],
 )
@@ -49,10 +49,12 @@ class PostAccountComponent implements OnInit {
   }
 
   Future<void> deleteFacebookAccount(int index) async {
-//    var resp = await _facebookDataService.deleteFacebookAccount(accountEmails[index].userId);
+    await _facebookDataService.deleteFacebookAccount(accountEmails[index].userId);
     var next = logout['next'];
     var accessToken = accountEmails[index].accessToken;
+    var fbUrl = 'https://www.facebook.com/logout.php?next=$next&access_token=$accessToken';
 
+    window.location.assign(fbUrl);
   }
 
   void showPopup(String name) {
@@ -151,5 +153,7 @@ class PostAccountComponent implements OnInit {
     } catch (e){
       print('An error has occurred');
     }
+
+    accountCount = accountEmails.length;
   }
 }
