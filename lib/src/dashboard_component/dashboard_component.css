@@ -242,8 +242,6 @@ material-list-item:hover > material-icon {
 
     background: rgb(255, 255, 255) !important;
     filter: blur(0px) !important;
-
-
 }
 div[display="false"] {
     display: none !important;

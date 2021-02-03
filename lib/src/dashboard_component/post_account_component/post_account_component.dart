@@ -15,6 +15,7 @@ import 'package:angular_router/angular_router.dart';
   ],
   providers: [ClassProvider(FacebookDataService)],
 )
+
 class PostAccountComponent implements OnInit {
   bool toggle = false;
   bool toggleView = false;
@@ -157,4 +158,5 @@ class PostAccountComponent implements OnInit {
 
     accountCount = accountEmails.length;
   }
+
 }

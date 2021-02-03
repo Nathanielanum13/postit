@@ -3,6 +3,7 @@ import 'package:angular_app/src/dashboard_component/view_post_component/view_pos
 import 'package:angular_app/src/dashboard_component/manage_post_component/manage_post_component.template.dart' as manage_post_template;
 import 'package:angular_app/src/dashboard_component/dash_home_component/dash_home_component.template.dart' as dash_home_template;
 import 'package:angular_app/src/dashboard_component/post_account_component/post_account_component.template.dart' as post_account_template;
+import 'package:angular_app/src/dashboard_component/post_engagement_component/post_engagement_component.template.dart' as post_engagement_template;
 import 'package:angular_app/src/dashboard_component/setting_component/user_account_component/user_account_component.template.dart' as user_account_template;
 import 'package:angular_app/src/dashboard_component/setting_component/setting_component.template.dart' as setting_template;
 import 'package:angular_app/src/dashboard_component/fb_component/fb_component.template.dart' as facebook_template;
@@ -33,6 +34,10 @@ class InnerRoutes {
     routePath: InnerRoutePaths.post_account,
     component: post_account_template.PostAccountComponentNgFactory,
   );
+  static final post_engagement = RouteDefinition(
+    routePath: InnerRoutePaths.post_engagement,
+    component: post_engagement_template.PostEngagementComponentNgFactory,
+  );
   static final user_account = RouteDefinition(
     routePath: InnerRoutePaths.user_account,
     component: user_account_template.UserAccountComponentNgFactory,
@@ -57,6 +62,7 @@ class InnerRoutes {
     view_post,
     manage_post,
     post_account,
+    post_engagement,
     user_account,
     setting,
     facebook,

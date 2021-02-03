@@ -24,18 +24,23 @@ import 'package:angular_router/angular_router.dart';
   pipes: [commonPipes],
   providers: [ClassProvider(GetWebSocketData)],
 )
-class DashHomeComponent implements OnInit, CanNavigate{
+
+class DashHomeComponent implements OnInit, CanNavigate {
   DateTime date = DateTime.now();
 
   WebSocket webSocket;
   String currentSchedule = 'Current Schedule';
   List<Post> sentPosts = <Post>[
     Post(
-      'This is the first message',
+      'This is the first message, I love this message soo much',
       postTag: ['wow', 'great', 'messy'],
     ),
     Post(
-      'This is the second message',
+      'This is the second message, I love this message soo much',
+      postTag: ['wow', 'great', 'messy'],
+    ),
+    Post(
+      'This is the third message, I love this message soo much',
       postTag: ['wow', 'great', 'messy'],
     ),
   ];
@@ -80,7 +85,7 @@ class DashHomeComponent implements OnInit, CanNavigate{
     });
 
     // This code doesn't work so u can delete it if u want
-    if (webSocket != null && webSocket.readyState == WebSocket.OPEN){
+    if (webSocket != null && webSocket.readyState == WebSocket.OPEN) {
       print("connected to websocket");
     }
 
@@ -100,9 +105,15 @@ class DashHomeComponent implements OnInit, CanNavigate{
 
   @override
   Future<bool> canNavigate() async {
-    print('closing socket ...');
-    await webSocket.close();
-    print('socket closed!');
+    try{
+      print('closing socket ...');
+      await webSocket.close();
+      print('socket closed!');
+    } catch (e) {
+      print(e);
+      return true;
+    }
     return true;
   }
+
 }
