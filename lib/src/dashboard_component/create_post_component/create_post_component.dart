@@ -74,30 +74,48 @@ class CreatePostComponent implements OnInit{
 
   CreatePostComponent(this._getPostService);
 
+  void handleUpload(form) {
+    var formData = FormData(form);
+    final request = HttpRequest();
 
-  Future<void> handleUpload(Event event) async {
-    event.preventDefault();
+    request.open("POST", "http://localhost:5379/file/upload");
+    request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
+    request.setRequestHeader('tenant-namespace', '${window.localStorage['tenant-namespace']}');
+    request.setRequestHeader('Authorization', 'Bearer ${window.localStorage['token']}');
+    request.upload.onProgress.listen((ProgressEvent progress){
+      print((progress.loaded*100~/progress.total).toString() + '%');
+    });
 
-    File pic = (event.target as FileUploadInputElement).files[0];
-    fileName = pic.name;
+    request.onLoad.listen((e) {
+      print('Uploaded');
+    });
 
-    var reader = FileReader()
-      ..readAsDataUrl(pic);
-
-    await reader.onLoadEnd.first;
-    imgPath = reader.result;
-
-
-    var r = FileReader()
-      ..readAsArrayBuffer(pic);
-
-    await r.onLoadEnd.first;
-    List<int> result = r.result;
-    // print(result);
-
-    byteToString(result);
-
+    request.send(formData);
   }
+
+//  Future<void> handleUpload(Event event) async {
+//    event.preventDefault();
+//
+//    File pic = (event.target as FileUploadInputElement).files[0];
+//    fileName = pic.name;
+//
+//    var reader = FileReader()
+//      ..readAsDataUrl(pic);
+//
+//    await reader.onLoadEnd.first;
+//    imgPath = reader.result;
+//
+//
+//    var r = FileReader()
+//      ..readAsArrayBuffer(pic);
+//
+//    await r.onLoadEnd.first;
+//    List<int> result = r.result;
+//    // print(result);
+//
+//    byteToString(result);
+//
+//  }
 
   void getAllIds() {
     deleteIds.clear();
