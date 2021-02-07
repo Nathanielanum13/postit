@@ -18,6 +18,7 @@ import 'package:angular_app/src/dashboard_component/post_account_component/post_
 import 'package:angular_app/src/dashboard_component/setting_component/setting_component.dart' deferred as settings;
 import 'package:angular_app/src/dashboard_component/fb_component/fb_component.dart' deferred as fb;
 import 'package:angular_app/src/dashboard_component/user_account_component/user_account_component.dart' deferred as user;
+import 'package:angular_app/src/login_component/login_component.dart' deferred as login;
 import 'inner_route_paths.dart';
 
 @Component(
@@ -86,9 +87,10 @@ class DashboardComponent implements OnInit, CanActivate {
     showDialog();
   }
 
-  void doLogout() {
+  void doLogout() async {
     window.localStorage.clear();
 
+    await login.loadLibrary();
     _router.navigate(RoutePaths.login.toUrl());
   }
 
@@ -141,14 +143,6 @@ class DashboardComponent implements OnInit, CanActivate {
   Future<void> ngOnInit() async {
     isLoggedIn = true;
     getData();
-    await create_post_page.loadLibrary();
-    await view_post_page.loadLibrary();
-    await manage_post_page.loadLibrary();
-    await dash_home_page.loadLibrary();
-    await post_account.loadLibrary();
-    await user.loadLibrary();
-    await fb.loadLibrary();
-    await settings.loadLibrary();
   }
 
   void getData() {

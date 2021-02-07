@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
+import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart' show GetPostService, Post, Schedule;
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';

@@ -54,28 +54,22 @@ class GetPostService {
     var httpStatusCode = resp.statusCode;
     var decodedData = json.decode(resp.body)['data'];
 
-    Data data = Data('', '');
-
-    data.id = decodedData['id'];
-    data.message = decodedData['ui_message'];
+    Data data = Data(decodedData['id'], decodedData['ui_message']);
     return PostStandardResponse(data: data, httpStatusCode: httpStatusCode);
   }
 
-  Exception _handleError(dynamic e) {
-    return Exception('Server error; cause: $e');
+  Exception _handleError(ExceptionHandler e) {
+    return Exception('Server error; cause: ${e.toString()}');
   }
 
   Future<PostStandardResponse> create(
       String message, {List<String> tags, List<int> image, bool priority}) async {
     try {
+      Post po = Post(message, postTag: tags, postPriority: priority);
+
       final response = await _http.post(_postUrl,
           headers: _headers,
-          body: json.encode({
-            'post_message': message,
-            'hash_tags': tags,
-            'post_image': image,
-            'post_priority': priority,
-          }));
+          body: json.encode(po.toJson()));
       return _extractData(response);
     } catch (e) {
       throw _handleError(e);
@@ -85,15 +79,10 @@ class GetPostService {
   Future<PostStandardResponse> createSchedule(
       String title, bool postToFeed, String from, String to, List<String> postIds) async {
     try {
+      Schedule schedule = Schedule(title, from, to);
       final response = await _http.post(_scheduleUrl,
           headers: _headers,
-          body: json.encode({
-            'schedule_title': title,
-            'post_to_feed': postToFeed,
-            'from': from,
-            'to': to,
-            'post_ids': postIds,
-          }));
+          body: json.encode(schedule.toJson()));
       return _extractData(response);
     } catch (e) {
       throw _handleError(e);
@@ -103,13 +92,10 @@ class GetPostService {
   Future<PostStandardResponse> update(
       String id, String message, List<String> tags, List<int> image) async {
     try {
+      Post po = Post(message, postTag: tags);
       final update_response = await _http.put(_postUrl + '?post_id=' + id,
           headers: _headers,
-          body: json.encode({
-            'post_message': message,
-            'hash_tags': tags,
-            'post_image': image,
-          }));
+          body: json.encode(po.toJson()));
       return _extractData(update_response);
     } catch (e) {
       throw _handleError(e);
@@ -169,7 +155,7 @@ class Post {
       this.postStatus});
 
   factory Post.fromJson(Map<String, dynamic> post) {
-    return Post(
+    return Post (
       post['post_message'],
       postTag: convertLDS(post['hash_tags']),
       postPic: post['post_image'],
@@ -180,11 +166,9 @@ class Post {
   }
 
   Map toJson() => {
-        'post_message': postMessage,
-        'hash_tags': postTag,
-        'post_image': postImage,
-        'id': id
-      };
+    'post_message': postMessage,
+    'hash_tags': postTag,
+  };
 }
 
 List<Post> currentDBPost() {
@@ -210,13 +194,14 @@ class Schedule {
   String from;
   String to;
   String id;
+  bool postToFeed;
   String created_on;
   String updated_on;
   List<String> postIds;
   int duration;
 
   Schedule(this.title, this.from, this.to,
-      {this.created_on, this.updated_on, this.id, this.postIds, this.duration});
+      {this.created_on, this.postToFeed, this.updated_on, this.id, this.postIds, this.duration});
 
   factory Schedule.fromJson(Map<String, dynamic> schedule) {
     return Schedule(
@@ -227,10 +212,13 @@ class Schedule {
       postIds: convertLDS(schedule['post_ids']),
     );
   }
+
   Map toJson() => {
     'schedule_title': title,
+    'post_to_feed': postToFeed,
     'from': from,
     'to': to,
-    'schedule_id': id
+    'post_ids': postIds,
   };
+
 }

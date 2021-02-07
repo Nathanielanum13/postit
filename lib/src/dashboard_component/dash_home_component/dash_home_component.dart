@@ -56,7 +56,6 @@ class DashHomeComponent implements OnInit, CanNavigate {
 
   void postData(int index) {
     currentSchedule = datas[index].scheduleTitle;
-    /*sentPosts = datas[index].postedPosts;*/
   }
 
   void calculateProgress(int total, int posted) {

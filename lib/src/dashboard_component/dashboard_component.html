@@ -76,7 +76,7 @@
             </div>
             <!-- Here is a group without a label -->
             <div group class="p-3 border-0 font-nyata mt-4">
-                <material-list-item [routerLink]="InnerRoutePaths.dash_home.toUrl()" [routerLinkActive]="'active_side'">
+                <material-list-item @deferred [routerLink]="InnerRoutePaths.dash_home.toUrl()" [routerLinkActive]="'active_side'">
                     <material-icon icon="home"></material-icon>Home
                 </material-list-item>
                 <material-list-item [routerLink]="InnerRoutePaths.create_post.toUrl()" [routerLinkActive]="'active_side'">

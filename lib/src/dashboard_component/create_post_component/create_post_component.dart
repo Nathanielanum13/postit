@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
-
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/create_post_component/csv_upload_component/csv_upload_component.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
@@ -10,6 +9,7 @@ import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:emojis/emoji.dart';
+import 'package:angular_app/variables.dart';
 
 
 @Component(
@@ -71,9 +71,7 @@ class CreatePostComponent implements OnInit{
   String imgPath = '';
   int counter = -1;
   List<String> imgPaths = <String>[];
-  List<int> imagesProgress = <int>[4];
-
-
+  List<int> imagesProgress = <int>[0, 0, 0, 0, 0, 0, 0];
 
   CreatePostComponent(this._getPostService);
 
@@ -83,7 +81,7 @@ class CreatePostComponent implements OnInit{
 
     counter += 1;
 
-    request.open("POST", "http://postit-backend-api.herokuapp.com/file/upload");
+    request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
     request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
     request.setRequestHeader('tenant-namespace', '${window.localStorage['tenant-namespace']}');
     request.setRequestHeader('Authorization', 'Bearer ${window.localStorage['token']}');
