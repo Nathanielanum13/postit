@@ -69,21 +69,29 @@ class CreatePostComponent implements OnInit{
   int _updatePostIndex;
   int insertPosition;
   String imgPath = '';
+  int counter = -1;
+  List<String> imgPaths = <String>[];
+  List<int> imagesProgress = <int>[4];
 
 
 
   CreatePostComponent(this._getPostService);
 
-  void handleUpload(form) {
+  Future<void> handleUpload(form, Event event) async {
     var formData = FormData(form);
     final request = HttpRequest();
 
-    request.open("POST", "http://localhost:5379/file/upload");
+    counter += 1;
+
+    request.open("POST", "http://postit-backend-api.herokuapp.com/file/upload");
     request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
     request.setRequestHeader('tenant-namespace', '${window.localStorage['tenant-namespace']}');
     request.setRequestHeader('Authorization', 'Bearer ${window.localStorage['token']}');
     request.upload.onProgress.listen((ProgressEvent progress){
-      print((progress.loaded*100~/progress.total).toString() + '%');
+      imagesProgress.insert(counter, progress.loaded*100~/progress.total);
+      if(imagesProgress[counter] == 100) {
+        getDocument().getElementById('checked').innerHtml = '<span class="fa fa-check-circle text-success my-auto"></span>';
+      }
     });
 
     request.onLoad.listen((e) {
@@ -91,6 +99,18 @@ class CreatePostComponent implements OnInit{
     });
 
     request.send(formData);
+
+
+    event.preventDefault();
+    File pic = (event.target as FileUploadInputElement).files[0];
+    fileName = pic.name;
+
+    var reader = FileReader()
+      ..readAsDataUrl(pic);
+
+    await reader.onLoadEnd.first;
+    imgPaths.add(reader.result);
+
   }
 
 //  Future<void> handleUpload(Event event) async {
@@ -104,7 +124,7 @@ class CreatePostComponent implements OnInit{
 //
 //    await reader.onLoadEnd.first;
 //    imgPath = reader.result;
-//
+
 //
 //    var r = FileReader()
 //      ..readAsArrayBuffer(pic);

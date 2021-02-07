@@ -65,6 +65,12 @@ body {
   font-family: Google-Sans;
   font-weight: 400;
 }
+.img-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .loading-gif {
   position: absolute;
   left: 0;
@@ -85,9 +91,10 @@ body {
 .nt-circle {
   /*font-size: .75rem;*/
   font-size: 14px;
-  font-weight: 600;display:inline-flex;
+  font-weight: 600;
+  display:inline-flex;
   width: 2.25rem;
-  height: 2.50rem;
+  height: 2.25rem;
   padding: 0!important;
   text-align: center;
   border-radius: 50%;

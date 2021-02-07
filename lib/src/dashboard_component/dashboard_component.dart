@@ -56,6 +56,7 @@ class DashboardComponent implements OnInit, CanActivate {
   bool toggle = false;
   bool end = false;
   bool overlay = true;
+  bool dropdown = false;
   Router _router;
   Location _location;
   var data;
@@ -68,6 +69,16 @@ class DashboardComponent implements OnInit, CanActivate {
 
   Future<void> goForward() async {
     _location.forward();
+  }
+
+  void toggleDropdwn() {
+    dropdown = !dropdown;
+    var drop = getDocument();
+    if(dropdown) {
+      drop.getElementById('dropdwn-content').style.display = 'block';
+    } else {
+      drop.getElementById('dropdwn-content').style.display = 'none';
+    }
   }
 
   void dismissDialog() {

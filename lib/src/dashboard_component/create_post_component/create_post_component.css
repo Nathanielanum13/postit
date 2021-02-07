@@ -53,6 +53,12 @@
     max-height: max-content !important;
     height: max-content;
 }
+.add-button {
+    opacity: 0.8 !important;
+}
+.add-button:hover {
+    opacity: 1 !important;
+}
 
 .w-c-max {
     width: max-content !important;
@@ -98,6 +104,28 @@
 
 .mt--5 {
     /*margin-top: -2rem !important;*/
+}
+.blur {
+    filter: blur(1px);
+}
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.fill > a > img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+.progress-div {
+    width: 0%;
+    height: 5px;
+    border: 2px solid green;
+    border-radius: 20px;
+
+    background-color: green;
 }
 
 [id*="panel"] {

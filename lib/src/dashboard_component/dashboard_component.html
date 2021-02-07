@@ -5,18 +5,18 @@
                      [attr.end]="end ? '' : null"
                      [attr.overlay]="overlay ? '' : null"
                      style="border: 0 !important; position: fixed !important;" id="persistentDrawer">
-        <material-list *deferredContent id="app-drawer">
+        <material-list *deferredContent id="app-drawer" style="overflow-x: hidden; overflow-y: scroll;">
             <div class="text-center py-3 w-50 mx-auto">
                 <div class="card bg-light br-20 py-4 border-0">
                     <span class="fa fa-user-circle fa-3x"></span>
                 </div>
             </div>
             <div class="dropdwn">
-                <div class="dropdwn-text text-center font-weight-bold text-muted cursor-pointer" id="account">
+                <div class="text-center font-weight-bold text-muted cursor-pointer" id="account" (click)="toggleDropdwn()">
                     {{data['admin_first_name']}} {{data['admin_last_name']}}
                     <span class="ml-2 fa fa-caret-down"></span>
                 </div>
-                <div class="dropdwn-content pb-0 mb-0 br-20">
+                <div class="dropdwn-content pb-0 mb-0 br-20" id="dropdwn-content">
                     <ul class="list-unstyled">
                         <div class="px-3 pt-3">
                             <li class="pr-1">
@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
                                     <div class="col-8 px-0">
-                                        <a href="#" class="nav-link text-muted my-auto small">Profile</a>
+                                        <a href="#" class="nav-link text-muted my-auto small font-weight-bold">Profile</a>
                                     </div>
                                 </div>
                             </li>
@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="col-8 px-0">
-                                        <a href="#" class="nav-link text-muted my-auto small">Settings</a>
+                                        <a href="#" class="nav-link text-muted my-auto small font-weight-bold">Settings</a>
                                     </div>
                                 </div>
                             </li>
@@ -52,7 +52,7 @@
                                         </div>
                                     </div>
                                     <div class="col-8 px-0">
-                                        <a href="#" class="nav-link text-muted my-auto small">Accounts</a>
+                                        <a href="#" class="nav-link text-muted my-auto small font-weight-bold">Accounts</a>
                                     </div>
                                 </div>
                             </li>
@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
                                     <div class="col-8 px-0">
-                                        <a class="nav-link text-muted my-auto small">Logout</a>
+                                        <a class="nav-link text-muted my-auto small font-weight-bold">Logout</a>
                                     </div>
                                 </div>
                             </li>
@@ -107,7 +107,7 @@
     <!--Page Content-->
     <material-content>
         <!--    Material navbar-->
-        <header class="material-header header-custom">
+        <header class="material-header header-custom" style="z-index: 1030 !important;">
             <div class="material-header-row">
                 <!-- This button will toggle (open/close) the drawer -->
                 <material-button icon
