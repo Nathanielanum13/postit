@@ -36,14 +36,27 @@
                             <div class="container mt-3 w-100">
                                 <div class="form-group">
                                     <div class="row" style="margin-bottom: 40px">
-                                        <input (keyup.enter)="addPost()" [(ngModel)]="postMessage"
+                                        <!--<input (keyup.enter)="addPost()" [(ngModel)]="postMessage"
                                                class="nt-form-control w-75 ml-auto"
                                                (input)="getInputSelection(el)"
                                                (click)="getInputSelection(el)"
                                                (keyup)="getInputSelection(el)"
                                                id="message_box" placeholder="Write post message..."
                                                #el
-                                               size="50" type="text" style="font-size: 17px !important;">
+                                               size="50" type="text" style="font-size: 17px !important;">-->
+                                        <textarea name="message"
+                                                  id="message_box"
+                                                  cols="50" rows="1"
+                                                  class="nt-form-control w-75 ml-auto br-20"
+                                                  #el
+                                                  (input)="getInputSelection(el)"
+                                                  (click)="getInputSelection(el)"
+                                                  (keyup)="getInputSelection(el)"
+                                                  placeholder="Write post message..."
+                                                  [(ngModel)]="postMessage"
+                                                  style="font-size: 17px !important;">
+                                            <!--(keyup.enter)="addPost()"-->
+                                        </textarea>
                                         <!--<a type="button" class="btn-floating btn-comm waves-effect waves-light w-15 ml-auto my-auto" (click)="addPost()"
                                            *ngIf="!editKey && !isSending">
                                             <span class="fa fa-paper-plane nt-center text-white"></span>
@@ -118,6 +131,11 @@
                                     <div class="m-0 p-2">
                                         <div class="card-columns">
                                             <div class="card p-2" *ngFor="let imgPath of imgPaths; let $i = index" style="border-radius: 10px">
+                                                <div class="nt-center">
+                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px">
+                                                        <span class="fa fa-times small text-white"></span>
+                                                    </div>
+                                                </div>
                                                 <a target="_blank" href="{{imgPath}}" class="post-image img-center">
                                                     <div class="row mx-0 w-100 my-2" *ngIf="imagesProgress[$i] != 100">
                                                         <div class="col-sm-12 mx-auto">

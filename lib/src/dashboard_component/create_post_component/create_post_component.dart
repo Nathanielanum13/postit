@@ -201,7 +201,7 @@ class CreatePostComponent implements OnInit{
   }
 
 
-  void getInputSelection(InputElement el) {
+  void getInputSelection(TextAreaElement el) {
     var endPosition = el.selectionEnd;
     insertPosition =  endPosition;
   }

@@ -158,12 +158,6 @@
     margin-top: -2.3rem;
     margin-right: .5rem;
 }
-
-#message_box {
-    /*margin-top: 20px !important;*/
-    border-radius: 50px !important;
-}
-
 .panel-item {
     position: absolute;
     top: 50%;
