@@ -71,7 +71,7 @@ class CreatePostComponent implements OnInit{
   String imgPath = '';
   int counter = -1;
   List<String> imgPaths = <String>[];
-  List<int> imagesProgress = <int>[0, 0, 0, 0, 0, 0, 0];
+  List<int> imagesProgress = <int>[0, 0, 0, 0, 0, 0];
 
   CreatePostComponent(this._getPostService);
 
@@ -81,34 +81,38 @@ class CreatePostComponent implements OnInit{
 
     counter += 1;
 
-    request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
-    request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
-    request.setRequestHeader('tenant-namespace', '${window.localStorage['tenant-namespace']}');
-    request.setRequestHeader('Authorization', 'Bearer ${window.localStorage['token']}');
-    request.upload.onProgress.listen((ProgressEvent progress){
-      imagesProgress.insert(counter, progress.loaded*100~/progress.total);
-      if(imagesProgress[counter] == 100) {
-        getDocument().getElementById('checked').innerHtml = '<span class="fa fa-check-circle text-success my-auto"></span>';
-      }
-    });
+    if(counter > 5) {
+      postAlertBool = true;
+      postAlert = 'Post images limit has been reached';
+      postAlertCode = 400;
 
-    request.onLoad.listen((e) {
-      print('Uploaded');
-    });
+      Timer(Duration(seconds: 5), dismissAlert);
+      return;
+    } else {
+      request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
+      request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
+      request.setRequestHeader('tenant-namespace', '${window.localStorage['tenant-namespace']}');
+      request.setRequestHeader('Authorization', 'Bearer ${window.localStorage['token']}');
+      request.upload.onProgress.listen((ProgressEvent progress){
+        imagesProgress.insert(counter, progress.loaded*100~/progress.total);
+      });
 
-    request.send(formData);
+      request.onLoad.listen((e) {
+        print('Uploaded');
+      });
 
+      request.send(formData);
 
-    event.preventDefault();
-    File pic = (event.target as FileUploadInputElement).files[0];
-    fileName = pic.name;
+      event.preventDefault();
+      File pic = (event.target as FileUploadInputElement).files[0];
+      fileName = pic.name;
 
-    var reader = FileReader()
-      ..readAsDataUrl(pic);
+      var reader = FileReader()
+        ..readAsDataUrl(pic);
 
-    await reader.onLoadEnd.first;
-    imgPaths.add(reader.result);
-
+      await reader.onLoadEnd.first;
+      imgPaths.add(reader.result);
+    }
   }
 
 //  Future<void> handleUpload(Event event) async {
@@ -199,7 +203,7 @@ class CreatePostComponent implements OnInit{
   }
 
 
-  void getInputSelection(InputElement el) {
+  void getInputSelection(TextAreaElement el) {
     var endPosition = el.selectionEnd;
     insertPosition =  endPosition;
   }

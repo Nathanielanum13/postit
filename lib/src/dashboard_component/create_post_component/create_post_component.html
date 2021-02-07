@@ -1,7 +1,7 @@
 <div *ngIf="postAlertBool"
-     [class.alert-danger]="postAlertCode==500"
+     [class.alert-danger]="postAlertCode!=200"
      [class.alert-success]="postAlertCode==200"
-     class="col-4 py-2 mt-2 w-auto br-20 text-center" id="post_alert">
+     class="py-2 mt-2 w-auto text-center" id="post_alert">
     <span class="fa fa-bell mx-3"></span>
     {{postAlert}}
     <span (click)="dismissAlert()"
@@ -36,14 +36,27 @@
                             <div class="container mt-3 w-100">
                                 <div class="form-group">
                                     <div class="row" style="margin-bottom: 40px">
-                                        <input (keyup.enter)="addPost()" [(ngModel)]="postMessage"
+                                        <!--<input (keyup.enter)="addPost()" [(ngModel)]="postMessage"
                                                class="nt-form-control w-75 ml-auto"
                                                (input)="getInputSelection(el)"
                                                (click)="getInputSelection(el)"
                                                (keyup)="getInputSelection(el)"
                                                id="message_box" placeholder="Write post message..."
                                                #el
-                                               size="50" type="text" style="font-size: 17px !important;">
+                                               size="50" type="text" style="font-size: 17px !important;">-->
+                                        <textarea name="message"
+                                                  id="message_box"
+                                                  cols="50" rows="1"
+                                                  class="nt-form-control w-75 ml-auto br-20"
+                                                  #el
+                                                  (input)="getInputSelection(el)"
+                                                  (click)="getInputSelection(el)"
+                                                  (keyup)="getInputSelection(el)"
+                                                  placeholder="Write post message..."
+                                                  [(ngModel)]="postMessage"
+                                                  style="font-size: 17px !important;">
+                                            <!--(keyup.enter)="addPost()"-->
+                                        </textarea>
                                         <!--<a type="button" class="btn-floating btn-comm waves-effect waves-light w-15 ml-auto my-auto" (click)="addPost()"
                                            *ngIf="!editKey && !isSending">
                                             <span class="fa fa-paper-plane nt-center text-white"></span>
@@ -103,7 +116,7 @@
                                 <!-- Panel 1 -->
                                 <div class="tab-pane fade in show active position-relative" id="panel1" role="tabpanel" style="overflow-y: scroll !important;">
                                     <!--<div class="text-muted cursor-pointer text-center br-20 small" *ngIf="imgPaths.isEmpty">Click to + to add image</div>-->
-                                    <div class="row m-0 w-100">
+                                    <!--<div class="row m-0 w-100">
                                         <div class="col-auto mx-auto py-2" *ngFor="let imgPath of imgPaths; let $i = index">
                                             <a target="_blank" href="{{imgPath}}" class="post-image img-center">
                                                 <div class="row mx-0 w-100 my-2" *ngIf="imagesProgress[$i] != 100">
@@ -113,6 +126,25 @@
                                                 </div>
                                                 <img src="{{imgPath}}" alt="{{imgPath}}" width="120" class="img-fluid img-center br-20" [class.blur]="imagesProgress[$i] != 100">
                                             </a>
+                                        </div>
+                                    </div>-->
+                                    <div class="m-0 p-2">
+                                        <div class="card-columns">
+                                            <div class="card p-2" *ngFor="let imgPath of imgPaths; let $i = index" style="border-radius: 10px">
+                                                <div class="nt-center">
+                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px">
+                                                        <span class="fa fa-times small text-white"></span>
+                                                    </div>
+                                                </div>
+                                                <a target="_blank" href="{{imgPath}}" class="post-image img-center">
+                                                    <div class="row mx-0 w-100 my-1" *ngIf="imagesProgress[$i] != 100">
+                                                        <div class="col-sm-12 m-0 p-0">
+                                                            <div class="progress-div" style="width: {{imagesProgress[$i]}}%;"></div>
+                                                        </div>
+                                                    </div>
+                                                    <img src="{{imgPath}}" alt="{{imgPath}}" width="100" class="img-fluid img-center" [class.blur]="imagesProgress[$i] != 100">
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="nt-center">
