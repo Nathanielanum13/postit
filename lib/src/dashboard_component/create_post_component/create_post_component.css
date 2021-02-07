@@ -207,11 +207,6 @@ material-chip {
     background: rgba(0, 0, 0, 0.81);
 }
 
-.w-auto {
-    width: max-content !important;
-}
-
-
 .cursor-pointer {
     cursor: pointer !important;
 }

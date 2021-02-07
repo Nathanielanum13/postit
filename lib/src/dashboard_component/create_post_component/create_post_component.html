@@ -1,7 +1,7 @@
 <div *ngIf="postAlertBool"
-     [class.alert-danger]="postAlertCode==500"
+     [class.alert-danger]="postAlertCode!=200"
      [class.alert-success]="postAlertCode==200"
-     class="col-4 py-2 mt-2 w-auto br-20 text-center" id="post_alert">
+     class="py-2 mt-2 w-auto text-center" id="post_alert">
     <span class="fa fa-bell mx-3"></span>
     {{postAlert}}
     <span (click)="dismissAlert()"
