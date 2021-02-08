@@ -76,8 +76,8 @@ class DashHomeComponent implements OnInit, CanNavigate {
     /* send websocket handshake data when connection opens */
     webSocket.onOpen.first.then((_) => {
       userData = {
-        'tenant_namespace': '${window.localStorage['tenant-namespace']}',
-        'auth_token': '${window.localStorage['token']}'
+        'tenant_namespace': '${window.sessionStorage['tenant-namespace']}',
+        'auth_token': '${window.sessionStorage['token']}'
       },
       data =  json.encode(userData),
       webSocket.send(data)
