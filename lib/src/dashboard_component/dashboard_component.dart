@@ -88,7 +88,7 @@ class DashboardComponent implements OnInit, CanActivate {
   }
 
   void doLogout() async {
-    window.localStorage.clear();
+    window.sessionStorage.clear();
 
     await login.loadLibrary();
     _router.navigate(RoutePaths.login.toUrl());
@@ -146,18 +146,18 @@ class DashboardComponent implements OnInit, CanActivate {
   }
 
   void getData() {
-    data = json.decode(window.localStorage['x-data']);
+    data = json.decode(window.sessionStorage['x-data']);
   }
 
   @override
   Future<bool> canActivate(RouterState current, RouterState next) async {
     if(
-        window.localStorage.containsKey('token') &&
-        window.localStorage.containsKey('tenant-namespace') &&
-        window.localStorage['token'] != null &&
-        window.localStorage['tenant-namespace'] != null &&
-        window.localStorage['token'] != '' &&
-        window.localStorage['tenant-namespace'] != ''
+        window.sessionStorage.containsKey('token') &&
+        window.sessionStorage.containsKey('tenant-namespace') &&
+        window.sessionStorage['token'] != null &&
+        window.sessionStorage['tenant-namespace'] != null &&
+        window.sessionStorage['token'] != '' &&
+        window.sessionStorage['tenant-namespace'] != ''
     ) {
       isLoggedIn = true;
       return true;

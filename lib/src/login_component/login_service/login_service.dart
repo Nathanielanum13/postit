@@ -21,9 +21,9 @@ class LoginService {
           'username':username,
           'password' : password
         }));
-      window.localStorage.clear();
-      window.localStorage['token'] = response.headers['token'];
-      window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
+      window.sessionStorage.clear();
+      window.sessionStorage['token'] = response.headers['token'];
+      window.sessionStorage['tenant-namespace'] = response.headers['tenant-namespace'];
       final loginData = _extractResponse(response);
 
       return loginData;
@@ -33,17 +33,17 @@ class LoginService {
   }
 
   Future<bool> validateLogin() async {
-    bool isValid = await valid(window.localStorage['token']);
+    bool isValid = await valid(window.sessionStorage['token']);
     if(
-        window.localStorage.containsKey('token') &&
-        window.localStorage.containsKey('x-data') &&
-        window.localStorage.containsKey('tenant-namespace') &&
-        window.localStorage['token'] != null &&
-        window.localStorage['x-data'] != null &&
-        window.localStorage['tenant-namespace'] != null &&
-        window.localStorage['token'] != '' &&
-        window.localStorage['x-data'] != '' &&
-        window.localStorage['tenant-namespace'] != '' &&
+        window.sessionStorage.containsKey('token') &&
+        window.sessionStorage.containsKey('x-data') &&
+        window.sessionStorage.containsKey('tenant-namespace') &&
+        window.sessionStorage['token'] != null &&
+        window.sessionStorage['x-data'] != null &&
+        window.sessionStorage['tenant-namespace'] != null &&
+        window.sessionStorage['token'] != '' &&
+        window.sessionStorage['x-data'] != '' &&
+        window.sessionStorage['tenant-namespace'] != '' &&
         isValid
     ) {
       return true;
@@ -61,7 +61,7 @@ class LoginService {
 
   LoginStandardResponse _extractResponse(http.Response resp) {
     var company_data = json.decode(resp.body)['company_data'];
-    window.localStorage['x-data'] = json.encode(company_data);
+    window.sessionStorage['x-data'] = json.encode(company_data);
     return LoginStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);
   }
 

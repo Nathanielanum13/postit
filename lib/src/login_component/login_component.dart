@@ -83,7 +83,7 @@ class LoginComponent{
     if (loginResponse.statusCode != 200) {
       return;
     } else {
-      bool isValid = await valid(window.localStorage['token']);
+      bool isValid = await valid(window.sessionStorage['token']);
 
       if(isValid) {
       _router.navigate(RoutePaths.dashboard.toUrl());

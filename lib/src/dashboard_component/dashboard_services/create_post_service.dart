@@ -12,8 +12,8 @@ class GetPostService {
   var _headers = {
     'Content-type': 'application/json',
     'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
-    'tenant-namespace': '${window.localStorage['tenant-namespace']}',
-    'Authorization': 'Bearer ${window.localStorage['token']}'
+    'tenant-namespace': '${window.sessionStorage['tenant-namespace']}',
+    'Authorization': 'Bearer ${window.sessionStorage['token']}'
   };
   static final _postUrl = '${env['POST_URL']}';
   static final _scheduleUrl = '${env['SCHEDULE_URL']}';

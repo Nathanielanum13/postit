@@ -91,8 +91,8 @@ class CreatePostComponent implements OnInit{
     } else {
       request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
       request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
-      request.setRequestHeader('tenant-namespace', '${window.localStorage['tenant-namespace']}');
-      request.setRequestHeader('Authorization', 'Bearer ${window.localStorage['token']}');
+      request.setRequestHeader('tenant-namespace', '${window.sessionStorage['tenant-namespace']}');
+      request.setRequestHeader('Authorization', 'Bearer ${window.sessionStorage['token']}');
       request.upload.onProgress.listen((ProgressEvent progress){
         imagesProgress.insert(counter, progress.loaded*100~/progress.total);
       });
@@ -176,7 +176,7 @@ class CreatePostComponent implements OnInit{
 
       if(deleteResponse.httpStatusCode == 200) {
         for(int i = 0; i < deleteIds.length; i++) {
-          window.localStorage.remove(deleteIds[i]);
+          window.sessionStorage.remove(deleteIds[i]);
           currentPosts.remove(stringToPost(deleteIds[i]));
         }
       }
@@ -379,7 +379,7 @@ class CreatePostComponent implements OnInit{
 
 
       if(deleteResponse.httpStatusCode == 200) {
-        window.localStorage.remove(id);
+        window.sessionStorage.remove(id);
         currentPosts.removeAt(index);
       }
     } catch(e) {
@@ -404,7 +404,7 @@ class CreatePostComponent implements OnInit{
   }
 
   void savePost(Post new_post) {
-    Storage localStorage = window.localStorage;
+    Storage sessionStorage = window.sessionStorage;
     var keyId = new_post.id;
 
     var post = {
@@ -414,11 +414,11 @@ class CreatePostComponent implements OnInit{
       'post_image' : new_post.postPic,
       'post_priority' : new_post.postPriority,
     };
-    localStorage['$keyId'] = json.encode(post);
+    sessionStorage['$keyId'] = json.encode(post);
   }
 
   List<Post> fetchPost() {
-    Storage ls = window.localStorage;
+    Storage ls = window.sessionStorage;
     List<Post> posts = <Post>[];
     var d;
 
@@ -457,7 +457,7 @@ class CreatePostComponent implements OnInit{
     }
 
     var post_id = currentPosts[index].id;
-    Storage editLocal = window.localStorage;
+    Storage editLocal = window.sessionStorage;
     var decodedJson = json.decode(editLocal['$post_id']);
 
     postMessage = decodedJson['post_message'];
