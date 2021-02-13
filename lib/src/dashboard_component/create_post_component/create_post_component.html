@@ -70,7 +70,7 @@
                                         </span>
                                         <span (click)="updatePost()"
                                               *ngIf="editKey && !isSending"
-                                              class="fa fa-pen-alt w-15 ml-auto my-auto text-default-four cursor-pointer">
+                                              class="fa fa-pencil w-15 ml-auto my-auto text-default-four cursor-pointer">
                                         </span>
                                     </div>
                                 </div>
@@ -130,20 +130,23 @@
                                     </div>-->
                                     <div class="m-0 p-2">
                                         <div class="card-columns">
-                                            <div class="card p-2" *ngFor="let imgPath of imgPaths; let $i = index" style="border-radius: 10px">
-                                                <div class="nt-center">
-                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px">
-                                                        <span class="fa fa-times small text-white"></span>
-                                                    </div>
-                                                </div>
+                                            <div class="card bg-transparent p-2 border-0" *ngFor="let imgPath of imgPaths; let $i = index" style="border-radius: 10px">
                                                 <a target="_blank" href="{{imgPath}}" class="post-image img-center">
-                                                    <div class="row mx-0 w-100 my-1" *ngIf="imagesProgress[$i] != 100">
+                                                    <div class="row mx-0 w-100 my-1" *ngIf="imagesProgress[$i] != 100 && !failed">
                                                         <div class="col-sm-12 m-0 p-0">
                                                             <div class="progress-div" style="width: {{imagesProgress[$i]}}%;"></div>
                                                         </div>
                                                     </div>
-                                                    <img src="{{imgPath}}" alt="{{imgPath}}" width="100" class="img-fluid img-center" [class.blur]="imagesProgress[$i] != 100">
+                                                    <img src="{{imgPath}}" alt="{{imgPath}}" width="100" class="img-fluid img-center" [class.blur]="imagesProgress[$i] != 100" style="border-radius: 10px">
                                                 </a>
+                                                <div class="nt-center">
+                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="!failed">
+                                                        <span class="fa fa-times small text-white"></span>
+                                                    </div>
+                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="failed">
+                                                        <span class="fa fa-refresh small text-white"></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -436,9 +439,11 @@
                                 <div class="mr-auto my-auto w-50 d-post-text">
                                     {{currentPost.postMessage}}
                                 </div>
-                                <span (click)="editPost($i)" class="fa fa-edit my-auto text-muted cursor-pointer mr-3"
-                                      id="{{$i}}"></span>
-                                <material-icon icon="delete_outline" (click)="remove($i)" class="my-auto cursor-pointer mr-3 table-bordered" id="delete-button"></material-icon>
+                                <div class="nt-circle light-button cursor-pointer mr-3 my-auto" (click)="editPost($i)">
+                                    <span class="fa fa-edit font-weight-bold" *ngIf="editKeys[$i] == false"></span>
+                                    <span class="fa fa-close font-weight-bold" *ngIf="editKeys[$i] == true"></span>
+                                </div>
+                                <material-icon icon="delete_outline" (click)="remove($i)" class="my-auto cursor-pointer mr-3"></material-icon>
                             </div>
                         </div>
 

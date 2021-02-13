@@ -53,12 +53,6 @@
     max-height: max-content !important;
     height: max-content;
 }
-.add-button {
-    opacity: 0.8 !important;
-}
-.add-button:hover {
-    opacity: 1 !important;
-}
 
 .w-c-max {
     width: max-content !important;

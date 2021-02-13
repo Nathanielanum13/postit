@@ -23,5 +23,5 @@ Map env = const {
  'DELETE_FACEBOOK_ACCOUNT_URL': 'https://postit-backend-api.herokuapp.com/fb/code',
  'COUNT_URL': 'https://postit-backend-api.herokuapp.com/count/data',
  'SCHEDULE_STATUS_WEBSOCKET': 'wss://postit-backend-api.herokuapp.com/pws/schedule-status',
-'MEDIA_UPLOAD_URL': 'https://postit-backend-api.herokuapp.com/file/upload'
+ 'MEDIA_UPLOAD_URL': 'https://postit-backend-api.herokuapp.com/file/upload'
 };

@@ -144,6 +144,7 @@ class Post {
   bool checkedState = false;
   bool postPriority;
   bool postStatus;
+  bool edit = false;
 
   Post(this.postMessage,
       {this.postTag,
