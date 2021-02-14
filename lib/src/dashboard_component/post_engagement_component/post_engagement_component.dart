@@ -50,6 +50,9 @@ class PostEngagementComponent implements OnInit{
   void autoScroll() {
     var element = getDocument().getElementById('chat-box');
     element.scrollTop = element.scrollHeight;
+
+    var element1 = getDocument().getElementById('chat-box-mob');
+    element1.scrollTop = element1.scrollHeight;
   }
 
   @override
