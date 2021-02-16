@@ -308,6 +308,22 @@ body {
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
 }
+.add-button {
+  opacity: 0.8 !important;
+}
+.add-button:hover {
+  opacity: 1 !important;
+}
+
+.light-button {
+  /*opacity: 0.2 !important;*/
+  background: #eeeeee;
+}
+.light-button:hover {
+  /*opacity: 0.3 !important;*/
+  background: #e5e5e5;
+}
+
 .w-auto {
   width: max-content !important;
 }

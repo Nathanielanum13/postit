@@ -42,6 +42,7 @@ class CreatePostComponent implements OnInit{
   bool allIsChecked = false;
   bool loading = false;
   bool isSending = false;
+  bool failed = false;
   int postAlertCode = 0;
 
   String postMessage = '';
@@ -72,12 +73,14 @@ class CreatePostComponent implements OnInit{
   int counter = -1;
   List<String> imgPaths = <String>[];
   List<int> imagesProgress = <int>[0, 0, 0, 0, 0, 0];
+  List<bool> editKeys = <bool>[];
 
   CreatePostComponent(this._getPostService);
 
   Future<void> handleUpload(form, Event event) async {
     var formData = FormData(form);
     final request = HttpRequest();
+    var doc = getDocument();
 
     counter += 1;
 
@@ -99,6 +102,10 @@ class CreatePostComponent implements OnInit{
 
       request.onLoad.listen((e) {
         print('Uploaded');
+      });
+
+      request.onError.listen((event) {
+        failed = true;
       });
 
       request.send(formData);
@@ -307,9 +314,11 @@ class CreatePostComponent implements OnInit{
 
           currentPosts.add(newPost);
           savePost(newPost);
+          editKeys.add(newPost.edit);
 
           postMessage = '';
           postTags.clear();
+          imgPaths.clear();
           toggleState = false;
         }
       } catch(e) {
@@ -435,25 +444,25 @@ class CreatePostComponent implements OnInit{
           postPic: d['post_image']
       );
       posts.add(newPost);
+      editKeys.add(newPost.edit);
     }
     return posts;
   }
 
   void editPost(int index) {
-    String s = index.toString();
+    editKeys[index] = !editKeys[index];
 
-    var a = getDocument().getElementById(s);
-    String ng = '';
-    for(int i = 11; i < a.getAttribute('class').length; i++) {
-      ng = ng + a.getAttribute('class')[i];
-    }
-
-    if(a.getAttribute('class') == 'fa fa-edit $ng') {
+    if(editKeys[index]) {
       editKey = true;
-      a.setAttribute('class', 'fa fa-tice $ng');
-    } else if(a.getAttribute('class') == 'fa fa-tice $ng') {
+      for(int i = 0; i < editKeys.length; i++) {
+        if(i == index) {
+          continue;
+        } else {
+          editKeys[i] = false;
+        }
+      }
+    } else {
       editKey = false;
-      a.setAttribute('class', 'fa fa-edit $ng');
     }
 
     var post_id = currentPosts[index].id;

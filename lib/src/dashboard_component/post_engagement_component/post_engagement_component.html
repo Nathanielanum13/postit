@@ -1,14 +1,13 @@
 <div class="container">
     <h6 class="small text-center my-2">Read and reply to all your comments in this section</h6>
-    <div class="row m-0 p-0 main-container c-bordered br-20">
-        <div class="col-sm-12 col-md-5 post-container m-0 p-0">
+    <div class="row m-0 p-0 main-container c-bordered br-20 d-block d-lg-none d-md-none">
+        <div class="col-sm-12 col-md-5 post-container m-0 p-0" *ngIf="!chatShow">
             <div class="w-100 text-center p-2 box-three br-20 mb-2">
-                <span class="font-weight-bold">Commented Posts</span>
-                <span class="fa fa-comment mx-2"></span>
-                <sapn class="font-weight-bold">4</sapn>
+                <span class="fa fa-commenting mx-2 text-primary"></span>
+                <span class="font-weight-bold">Comments <small>from</small> All</span>
             </div>
             <div class="w-100 p-2 post-card-container">
-                <div class="card w-100 mb-2 br-10">
+                <div class="card w-100 mb-2 br-10 cursor-pointer" *ngFor="let allPostEngagement of allPostEngagements; let $i = index" (click)="showChat($i)">
                     <div class="card-body">
                         <div class="row w-100 m-0">
                             <div class="col-3 my-auto">
@@ -17,9 +16,7 @@
                                 </div>
                             </div>
                             <div class="col-9 small">
-                                Lorem ipsum dolor sit amet
-                                consectetur adipisicing elit.
-                                Optio animi deserunt rerum magni
+                                {{allPostEngagement.postMessage}}
                             </div>
                         </div>
                         <div class="card-footer mt-2">
@@ -27,114 +24,15 @@
                                 <div class="col-3 m-auto p-0"></div>
                                 <div class="col-3 m-auto p-0 text-center">
                                     <span class="fa fa-thumbs-up text-primary"></span>
-                                    <span class="small">3</span>
+                                    <span class="small">{{allPostEngagement.likes}}</span>
                                 </div>
                                 <div class="col-3 m-auto p-0 text-center">
                                     <span class="fa fa-heart text-danger"></span>
-                                    <span class="small">5</span>
+                                    <span class="small">{{allPostEngagement.loves}}</span>
                                 </div>
                                 <div class="col-3 m-auto p-0 text-center">
                                     <span class="fa fa-comment-o"></span>
-                                    <span class="small">10</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card w-100 mb-2 br-10">
-                    <div class="card-body">
-                        <div class="row w-100 m-0">
-                            <div class="col-3 my-auto">
-                                <div class="post-image">
-                                    <img src="../img/postit_background.png" alt="post-image" class="img-fluid br-10">
-                                </div>
-                            </div>
-                            <div class="col-9 small">
-                                Lorem ipsum dolor sit amet
-                                consectetur adipisicing elit.
-                                Optio animi deserunt rerum magni
-                            </div>
-                        </div>
-                        <div class="card-footer mt-2">
-                            <div class="row w-100 m-0">
-                                <div class="col-3 m-auto p-0"></div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-thumbs-up text-primary"></span>
-                                    <span class="small">3</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-heart text-danger"></span>
-                                    <span class="small">5</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-comment-o"></span>
-                                    <span class="small">10</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card w-100 mb-2 br-10">
-                    <div class="card-body">
-                        <div class="row w-100 m-0">
-                            <div class="col-3 my-auto">
-                                <div class="post-image">
-                                    <img src="../img/postit_background.png" alt="post-image" class="img-fluid br-10">
-                                </div>
-                            </div>
-                            <div class="col-9 small">
-                                Lorem ipsum dolor sit amet
-                                consectetur adipisicing elit.
-                                Optio animi deserunt rerum magni
-                            </div>
-                        </div>
-                        <div class="card-footer mt-2">
-                            <div class="row w-100 m-0">
-                                <div class="col-3 m-auto p-0"></div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-thumbs-up text-primary"></span>
-                                    <span class="small">3</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-heart text-danger"></span>
-                                    <span class="small">5</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-comment-o"></span>
-                                    <span class="small">10</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card w-100 mb-2 br-10">
-                    <div class="card-body">
-                        <div class="row w-100 m-0">
-                            <div class="col-3 my-auto">
-                                <div class="post-image">
-                                    <img src="../img/postit_background.png" alt="post-image" class="img-fluid br-10">
-                                </div>
-                            </div>
-                            <div class="col-9 small">
-                                Lorem ipsum dolor sit amet
-                                consectetur adipisicing elit.
-                                Optio animi deserunt rerum magni
-                            </div>
-                        </div>
-                        <div class="card-footer mt-2">
-                            <div class="row w-100 m-0">
-                                <div class="col-3 m-auto p-0"></div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-thumbs-up text-primary"></span>
-                                    <span class="small">3</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-heart text-danger"></span>
-                                    <span class="small">5</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-comment-o"></span>
-                                    <span class="small">10</span>
+                                    <span class="small">{{allPostEngagement.comments}}</span>
                                 </div>
                             </div>
                         </div>
@@ -142,6 +40,155 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-7 chat-container"></div>
+        <div class="col-sm-12 col-md-7 chat-container m-0 p-0" *ngIf="chatShow">
+            <div class="w-100 text-center p-2 box-three br-20 my-auto">
+                <span class="fa fa-chevron-left text-primary mx-2 float-left pt-1" (click)="hideChat()"></span>
+                <span class="font-weight-bold">Engagement Room</span>
+                <span class="fa fa-home mx-2 text-primary"></span>
+            </div>
+            <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isEmpty">
+                <div class="nt-center">
+                    <span class="text-center text-muted font-weight-bold fa fa-cloud"></span>
+                </div>
+            </div>
+            <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isNotEmpty" id="chat-box-mob">
+                <div class="text-center w-100" style="height: max-content;">
+                    <span class="table-bordered p-2 small see-older-messages">See older comments</span>
+                </div>
+                <div class="w-100 m-0 px-2" style="padding-bottom: 100px">
+                    <div *ngFor="let chat of chats; let $i = index">
+                        <div class="{{chat.status}} px-3 py-2 mt-5">
+                            <div class="nt-center forward-call">
+                                <div class="nt-circle bg-dark" style="cursor: pointer;">
+                                    <span class="fa fa-reply text-white"></span>
+                                </div>
+                            </div>
+                            <div class="name small font-weight-bold issuer">{{chat.issuer}}</div>
+                            <div class="comment" style="font-size: 14px;">{{chat.message}}</div>
+                            <div class="date text-left text-dark font-weight-bold mt-2 w-auto" style="font-size: 9px;">{{chat.date}}</div>
+                        </div>
+                    </div>
+                    <!--<div class="sender ml-auto px-3 py-2 mt-5">
+                        <div class="nt-center forward-call">
+                            <div class="nt-circle bg-dark" style="cursor: pointer;">
+                                <span class="fa fa-reply text-white"></span>
+                            </div>
+                        </div>
+                        <div class="r-comment" style="font-size: 14px;">Great product right there!</div>
+                        <div class="s-date text-right text-dark font-weight-bold mt-3" style="font-size: 9px; position: absolute; right: 0; top: auto;">10 Feb 2020 - 12:00am</div>
+                    </div>-->
+                </div>
+            </div>
+            <div class="w-100 chat-engine p-2 bg-light br-20">
+                <div class="row m-0">
+                    <div class="col-2 m-auto p-0 text-center">
+                        <span class="fa fa-smile-o fa-2x mx-2"></span>
+                    </div>
+                    <div class="col-8 m-auto p-0">
+                        <input type="text" class="nt-form-control" [(ngModel)]="message" (keyup.enter)="sendComment()" style="border-radius: 20px;" placeholder="Type your message here ...">
+                    </div>
+                    <div class="col-2 m-auto p-0 text-center">
+                        <div class="nt-circle bg-success cursor-pointer" (click)="sendComment()" style="width: 2.25rem !important; height: 2.25rem !important;">
+                            <span class="fa fa-paper-plane text-white"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-0 p-0 main-container br-20 d-none d-md-flex d-lg-flex">
+        <div class="col-sm-12 col-md-5 post-container m-0 p-0">
+            <div class="w-100 text-center p-2 box-three br-20 mb-2">
+                <span class="fa fa-commenting mx-2 text-primary"></span>
+                <span class="font-weight-bold">Comments <small>from</small> All</span>
+            </div>
+            <div class="w-100 p-2 post-card-container">
+                <div class="card w-100 mb-2 br-10 cursor-pointer" *ngFor="let allPostEngagement of allPostEngagements; let $i = index" (click)="loadChat($i)">
+                    <div class="card-body">
+                        <div class="row w-100 m-0">
+                            <div class="col-3 my-auto">
+                                <div class="post-image">
+                                    <img src="../img/postit_background.png" alt="post-image" class="img-fluid br-10">
+                                </div>
+                            </div>
+                            <div class="col-9 small">
+                                {{allPostEngagement.postMessage}}
+                            </div>
+                        </div>
+                        <div class="card-footer mt-2">
+                            <div class="row w-100 m-0">
+                                <div class="col-3 m-auto p-0"></div>
+                                <div class="col-3 m-auto p-0 text-center">
+                                    <span class="fa fa-thumbs-up text-primary"></span>
+                                    <span class="small">{{allPostEngagement.likes}}</span>
+                                </div>
+                                <div class="col-3 m-auto p-0 text-center">
+                                    <span class="fa fa-heart text-danger"></span>
+                                    <span class="small">{{allPostEngagement.loves}}</span>
+                                </div>
+                                <div class="col-3 m-auto p-0 text-center">
+                                    <span class="fa fa-comment-o"></span>
+                                    <span class="small">{{allPostEngagement.comments}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7 chat-container m-0 p-0 box-two br-20">
+            <div class="w-100 text-center p-2 box-three br-20 shadow my-auto">
+                <span class="font-weight-bold">Engagement Room</span>
+                <span class="fa fa-home mx-2 text-primary"></span>
+            </div>
+            <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isEmpty">
+                <div class="nt-center">
+                    <span class="text-center text-muted font-weight-bold fa fa-cloud"></span>
+                </div>
+            </div>
+            <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isNotEmpty" id="chat-box">
+                <div class="text-center w-100" style="height: max-content;">
+                    <span class="table-bordered p-2 small see-older-messages">See older comments</span>
+                </div>
+                <div class="w-100 m-0 px-2" style="padding-bottom: 100px">
+                    <div *ngFor="let chat of chats; let $i = index">
+                        <div class="{{chat.status}} px-3 py-2 mt-5">
+                            <div class="nt-center forward-call">
+                                <div class="nt-circle bg-dark" style="cursor: pointer;">
+                                    <span class="fa fa-reply text-white"></span>
+                                </div>
+                            </div>
+                            <div class="name small font-weight-bold issuer">{{chat.issuer}}</div>
+                            <div class="comment" style="font-size: 14px;">{{chat.message}}</div>
+                            <div class="date text-left text-dark font-weight-bold mt-2 w-auto" style="font-size: 9px;">{{chat.date}}</div>
+                        </div>
+                    </div>
+                    <!--<div class="sender ml-auto px-3 py-2 mt-5">
+                        <div class="nt-center forward-call">
+                            <div class="nt-circle bg-dark" style="cursor: pointer;">
+                                <span class="fa fa-reply text-white"></span>
+                            </div>
+                        </div>
+                        <div class="r-comment" style="font-size: 14px;">Great product right there!</div>
+                        <div class="s-date text-right text-dark font-weight-bold mt-3" style="font-size: 9px; position: absolute; right: 0; top: auto;">10 Feb 2020 - 12:00am</div>
+                    </div>-->
+                </div>
+            </div>
+            <div class="w-100 chat-engine p-2 bg-light br-20">
+                <div class="row m-0">
+                    <div class="col-2 m-auto p-0 text-center">
+                        <span class="fa fa-smile-o fa-2x mx-2"></span>
+                    </div>
+                    <div class="col-8 m-auto p-0">
+                        <input type="text" class="nt-form-control" [(ngModel)]="message" (keyup.enter)="sendComment()" style="border-radius: 20px;" placeholder="Type your message here ...">
+                    </div>
+                    <div class="col-2 m-auto p-0 text-center">
+                        <div class="nt-circle bg-success cursor-pointer" (click)="sendComment()" style="width: 2.25rem !important; height: 2.25rem !important;">
+                            <span class="fa fa-paper-plane text-white"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
