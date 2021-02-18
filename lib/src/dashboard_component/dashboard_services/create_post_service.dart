@@ -79,7 +79,7 @@ class GetPostService {
   Future<PostStandardResponse> createSchedule(
       String title, bool postToFeed, String from, String to, List<String> postIds) async {
     try {
-      Schedule schedule = Schedule(title, from, to);
+      Schedule schedule = Schedule(title, from, to, postIds: postIds);
       final response = await _http.post(_scheduleUrl,
           headers: _headers,
           body: json.encode(schedule.toJson()));
