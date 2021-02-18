@@ -19,7 +19,8 @@ import 'package:angular_router/angular_router.dart';
     GaugeChartComponent,
     MaterialProgressComponent,
     formDirectives,
-    coreDirectives
+    coreDirectives,
+    PieChartComponent,
   ],
   pipes: [commonPipes],
   providers: [ClassProvider(GetWebSocketData)],

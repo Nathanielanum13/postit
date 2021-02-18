@@ -68,7 +68,7 @@
     border: 1px solid #ececec;
 }
 .forward-call {
-    opacity: 0.7;
+    opacity: 0.85;
     display: none;
 }
 .receiver:hover > .forward-call,

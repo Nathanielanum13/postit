@@ -158,12 +158,12 @@ material-list-item:hover > material-icon {
     margin: 0;
     padding: 0;
 
-    background: url("img/app-bg-01.jpg") no-repeat center center fixed;
+    /*background: url("img/app-bg-01.jpg") no-repeat center center fixed;*/
 
-    -webkit-background-size: cover;
+    /*-webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover;*/
 
     width: 100%;
     height: 100vh;

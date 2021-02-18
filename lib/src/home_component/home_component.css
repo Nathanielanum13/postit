@@ -46,3 +46,11 @@ or {
 .bg-c {
     background: rgba(255, 255, 255, 0.5) !important;
 }
+.first {
+    border-left: 1px solid #ababab;
+}
+@media screen and (max-width: 567px) {
+    .first {
+        border-left: none !important;
+    }
+}

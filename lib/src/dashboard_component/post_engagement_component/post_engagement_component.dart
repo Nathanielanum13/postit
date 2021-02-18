@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/post_engagement_services.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
@@ -45,6 +47,13 @@ class PostEngagementComponent implements OnInit{
 
     message = '';
     autoScroll();
+  }
+  void replyComment(int index) {
+    message = '@' + chats[index].issuer + ' ';
+    getDocument().getElementById('chat-area').focus();
+  }
+  void like(Element element) {
+    element.setAttribute('class', 'fa fa-thumbs-up text-primary');
   }
 
   void autoScroll() {

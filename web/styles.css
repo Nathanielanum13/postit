@@ -39,15 +39,24 @@
   format('truetype');
   font-weight: 100;
 }
-
+html {
+  margin: 0;
+  padding: 0;
+}
 
 body {
   margin: 0;
   padding: 0;
   /*background: #d8defa;*/
   /*background: #f2f7ff;*/
-  background: rgba(230, 232, 234, 0.89);
+  /*background: rgba(230, 232, 234, 0.89);*/
   /*background: #f2f6f9;*/
+  background: url("img/postit-ui-bg.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
   width: 100vw;
   height: 100vh;
 }
@@ -464,6 +473,9 @@ body {
   background-color: rgba(63, 87, 223, 0.6) !important;
 }
 .shadow--hover:hover {
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07) !important;
+}
+.shadow {
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07) !important;
 }
 @media screen and (max-width: 576px) {

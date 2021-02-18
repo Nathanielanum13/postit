@@ -88,7 +88,11 @@
     display: table;
     margin: 0;
 }
-
+@media screen and (max-width: 567px){
+    .cont {
+        height: 70vh;
+    }
+}
 @media screen and (max-width: 768px) {
     .table {
         display: block;
