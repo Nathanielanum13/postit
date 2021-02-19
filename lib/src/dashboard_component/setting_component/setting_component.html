@@ -1,3 +1,4 @@
+<!--
 <div class="container mt-3">
     <div class="card shadow-c border-0 bg-transparent box-one br-20" style="height: 540px !important;">
         <div class="card-body">
@@ -16,24 +17,24 @@
                         </div>
 
                         <div class="row mt-3 setting-row">
-                            <!--Setting goes here-->
-<!--                            <div class="text-muted my-4 mx-5">Post Settings</div>-->
+                            &lt;!&ndash;Setting goes here&ndash;&gt;
+&lt;!&ndash;                            <div class="text-muted my-4 mx-5">Post Settings</div>&ndash;&gt;
                             <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
                                 <div class="float-left">
                                     <span class="fa fa-paper-plane ml-3 mr-5 my-auto"></span>
                                     <span class="text-muted">Post Settings</span>
                                 </div>
                             </div>
-<!--                            <div class="text-muted my-4 mx-5">User Settings</div>-->
+&lt;!&ndash;                            <div class="text-muted my-4 mx-5">User Settings</div>&ndash;&gt;
                             <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer" [routerLink]="InnerRoutePaths.user_account.toUrl()" [routerLinkActive]="'active_side'">
                                 <div class="float-left">
                                     <span class="fa fa-user ml-3 mr-5 my-auto"></span>
                                     <span class="text-muted">User Account</span>
-<!--                                    <span class="fa fa-chevron-right ml-5 pl-5 mr-3 my-auto"></span>-->
+&lt;!&ndash;                                    <span class="fa fa-chevron-right ml-5 pl-5 mr-3 my-auto"></span>&ndash;&gt;
                                 </div>
                             </div>
 
-<!--                            <div class="text-muted my-4 mx-5"><span class="mx-2 fa fa-palette"></span>Appearance</div>-->
+&lt;!&ndash;                            <div class="text-muted my-4 mx-5"><span class="mx-2 fa fa-palette"></span>Appearance</div>&ndash;&gt;
                             <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
                                 <div class="float-left">
                                     <span class="fa fa-palette ml-3 mr-5 my-auto"></span>
@@ -52,7 +53,7 @@
                                     <span class="text-muted">Navigation Settings</span>
                                 </div>
                             </div>
-<!--                            <div class="text-muted my-4 mx-5"><span class="mx-2 fa fa-question-circle"></span>Help & Support</div>-->
+&lt;!&ndash;                            <div class="text-muted my-4 mx-5"><span class="mx-2 fa fa-question-circle"></span>Help & Support</div>&ndash;&gt;
                             <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
                                 <div class="float-left">
                                     <span class="fa fa-video ml-3 mr-5 my-auto"></span>
@@ -60,6 +61,124 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<div class="m-0 p-0 w-100">
+    <div class="row m-0 my-3 p-0">
+        <div class="col-8 col-md-6 m-auto text-center">
+            <div class="nt-center" *ngIf="search">
+                <input type="search" class="nt-form-control br-20" placeholder="Search setting here..." style="width: fit-content !important;">
+            </div>
+            <h5 class="font-weight-bold text-muted">
+                <span class="fa fa-gears mx-2"></span>
+                Settings
+            </h5>
+        </div>
+        <div class="col-2 col-md-6 m-auto text-center px-5">
+            <div class="row w-100 m-0 p-0 d-none d-sm-none d-md-block d-lg-block">
+                <div class="col-8 d-inline-flex">
+                    <input type="search" class="nt-form-control br-20" placeholder="Search setting here...">
+                </div>
+                <div class="col-4" style="display: contents">
+                    <button class="btn btn-sm btn-primary br-20">
+                        <span class="fa fa-search"></span>
+                    </button>
+                </div>
+            </div>
+            <span class="fa fa-search text-muted font-weight-bold d-block d-sm-block d-md-none d-lg-none" (click)="displaySearch()"></span>
+        </div>
+    </div>
+    <div class="row m-0 p-0">
+        <div class="col-sm-12 col-md-4 mb-4">
+            <div class="card br-20 shadow">
+                <div class="card-body py-3 px-4">
+                    <div class="nt-circle bg-dark">
+                        <span class="fa fa-user text-white font-weight-bold"></span>
+                    </div>
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #us (click)="gotoUserSettings(us)">
+                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
+                    </div>
+                    <div class="card-title my-3 font-weight-bold">User Settings</div>
+                    <hr>
+                    <div class="card-text figure-caption py-2">
+                        View admin account info. Change username, login details and
+                        password. Update profile image and info etc.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 mb-4">
+            <div class="card br-20 shadow">
+                <div class="card-body py-3 px-4">
+                    <div class="nt-circle bg-warning">
+                        <span class="fa fa-users text-white font-weight-bold"></span>
+                    </div>
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
+                    </div>
+                    <div class="card-title my-3 font-weight-bold">Post Account Settings</div>
+                    <hr>
+                    <div class="card-text figure-caption py-2">
+                        Manage all added accounts from here. Choose target accounts, Disable or remove
+                        specific accounts.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 mb-4">
+            <div class="card br-20 shadow">
+                <div class="card-body py-3 px-4">
+                    <div class="nt-circle bg-success">
+                        <span class="fa fa-paint-brush text-white font-weight-bold"></span>
+                    </div>
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
+                    </div>
+                    <div class="card-title my-3 font-weight-bold">Theme</div>
+                    <hr>
+                    <div class="card-text figure-caption py-2">
+                        Choose from a wide range of color themes that will
+                        spice up your app to your taste.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 mb-4">
+            <div class="card br-20 shadow">
+                <div class="card-body py-3 px-4">
+                    <div class="nt-circle bg-info">
+                        <span class="fa fa-image text-white font-weight-bold"></span>
+                    </div>
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
+                    </div>
+                    <div class="card-title my-3 font-weight-bold">App Background</div>
+                    <hr>
+                    <div class="card-text figure-caption py-2">
+                        Choose and apply a background photo to your app.
+                        You can also add custom backgrounds
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 mb-4">
+            <div class="card br-20 shadow">
+                <div class="card-body py-3 px-4">
+                    <div class="nt-circle bg-danger">
+                        <span class="fa fa-navicon text-white font-weight-bold"></span>
+                    </div>
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
+                    </div>
+                    <div class="card-title my-3 font-weight-bold">Navigation Settings</div>
+                    <hr>
+                    <div class="card-text figure-caption py-2">
+                        Customize the navbar and sidebar by applying different themes,
+                        changing positions, colors etc.
                     </div>
                 </div>
             </div>

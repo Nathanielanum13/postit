@@ -3,6 +3,7 @@ import 'package:angular_app/src/dashboard_component/dashboard_component.template
 import 'package:angular_app/src/about_component/about_component.template.dart' as about_template;
 import 'package:angular_app/src/login_component/login_component.template.dart' as login_template;
 import 'package:angular_app/src/signup_component/signup_component.template.dart' as signup_template;
+import 'package:angular_app/src/not_found_component/not_found_component.template.dart' as not_found_template;
 import 'package:angular_router/angular_router.dart';
 import 'route_paths.dart' as rp;
 export 'route_paths.dart';
@@ -38,5 +39,9 @@ class Routes {
     login,
     dashboard,
     signup,
+    RouteDefinition(
+      path: '.+',
+      component: not_found_template.NotFoundComponentNgFactory,
+    ),
   ];
 }

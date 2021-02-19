@@ -1,9 +1,29 @@
-#setting_box {
-    /*height: 300px;*/
-    /*max-height: 300px;*/
-    overflow-x: hidden;
+[animation-explode] {
+
 }
-.setting-row > .card:hover {
-    background: rgba(12, 107, 208, 0.01) !important;
-    color: rgba(0, 0, 0, 0.62) !important;
+[animation-explode="false"] {
+    animation: none;
+}
+[animation-explode="true"] {
+    position: absolute;
+    animation-name: explode;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-duration: 500ms;
+
+    width: inherit;
+    height: inherit;
+}
+[animation-explode="true"] > span {
+    /*display: none !important;*/
+}
+@keyframes explode {
+    from {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+    to {
+        width: 500rem;
+        height: 500rem;
+    }
 }

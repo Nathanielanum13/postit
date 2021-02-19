@@ -1,5 +1,5 @@
 <!--Material Side bar-->
-<div id="app-body">
+<div id="app-body" class="box-two">
     <material-drawer #drawer="drawer" temporary
                      [class.custom-width]="customWidth"
                      [attr.end]="end ? '' : null"
@@ -130,7 +130,7 @@
             </div>
         </header>
         <!--/Material Nav bar-->
-        <div class="w-100 mr-auto ml-auto" id="html-body">
+        <div class="w-100 m-0 p-0" id="html-body">
             <router-outlet [routes]="InnerRoutes.all"></router-outlet>
 
             <!--<div class="position-fixed" id="floating-nav">
