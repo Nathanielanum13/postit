@@ -49,13 +49,13 @@ body {
   padding: 0;
   /*background: #d8defa;*/
   /*background: #f2f7ff;*/
-  /*background: rgba(230, 232, 234, 0.89);*/
+  background: rgba(230, 232, 234, 0.89);
   /*background: #f2f6f9;*/
-  background: url("img/postit-ui-bg.png") no-repeat center center fixed;
+  /*background: url("img/postit-ui-bg.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: cover;*/
 
   width: 100vw;
   height: 100vh;
@@ -318,10 +318,10 @@ body {
   border-bottom-left-radius: 20px;
 }
 .add-button {
-  opacity: 0.8 !important;
+  opacity: 0.8;
 }
 .add-button:hover {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .light-button {
@@ -477,6 +477,131 @@ body {
 }
 .shadow {
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07) !important;
+}
+.preview-box {
+  width: 100%;
+  height: max-content;
+  border-radius: 5px;
+  background-color: rgba(230, 232, 234, 0.4);
+  border: 1px solid #eeeeee;
+}
+.p-nav {
+  width: 100%;
+  height: 30px;
+  background-color: rgba(230, 232, 234, 0.8);
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+}
+.p-side {
+  width: 30%;
+  height: 200px;
+  background-color: rgb(230, 232, 234);
+  border: 1px solid #eeeeee;
+  border-bottom-left-radius: 5px;
+}
+.theme-holder {
+  width: 3.5rem !important;
+  height: 3.5rem !important;
+  border-radius: 20px;
+}
+.bg-antiquewhite {
+  background-color: antiquewhite !important;
+}
+.bg-antiquewhite-one {
+  background-color: rgba(250, 235, 215, 0.8) !important;
+}
+.bg-antiquewhite-two {
+   background-color: rgba(250, 235, 215, 0.4) !important;
+ }
+.bg-aqua {
+  background-color: aqua !important;
+}
+.bg-aqua-one {
+  background-color: rgba(0, 255, 255, 0.8) !important;
+}
+.bg-aqua-two {
+  background-color: rgba(0, 255, 255, 0.4) !important;
+}
+.bg-pink {
+  background-color: pink !important;
+}
+.bg-pink-one {
+  background-color: rgba(255, 192, 203, 0.8) !important;
+}
+.bg-pink-two {
+  background-color: rgba(255, 192, 203, 0.4) !important;
+}
+.bg-skyblue {
+  background-color: skyblue !important;
+}
+.bg-skyblue-one {
+  background-color: rgba(135, 206, 235, 0.8) !important;
+}
+.bg-skyblue-two {
+   background-color: rgba(135, 206, 235, 0.4) !important;
+ }
+.bg-navy {
+  background-color: navy !important;
+}
+.bg-navy-one {
+  background-color: rgba(0, 0, 128, 0.8) !important;
+}
+.bg-navy-two {
+  background-color: rgba(0, 0, 128, 0.4) !important;
+}
+.bg-primary-one {
+  background-color: rgba(0, 123, 255, 0.8) !important;
+}
+.bg-primary-two {
+  background-color: rgba(0, 123, 255, 0.4) !important;
+}
+.bg-warning-one {
+  background-color: rgba(255, 193, 7, 0.8) !important;
+}
+.bg-warning-two {
+  background-color: rgba(255, 193, 7, 0.4) !important;
+}
+.bg-danger-one {
+  background-color: rgba(220, 53, 69, 0.8) !important;
+}
+.bg-danger-two {
+  background-color: rgba(220, 53, 69, 0.4) !important;
+}
+.bg-info-one {
+  background-color: rgba(23, 162, 184, 0.8) !important;
+}
+.bg-info-two {
+  background-color: rgba(23, 162, 184, 0.4) !important;
+}
+.bg-postit {
+  background-color: rgb(255, 255, 255) !important;
+}
+.bg-postit-one {
+  background-color: rgb(255, 255, 255) !important;
+}
+.bg-postit-two {
+  background-color: rgba(230, 232, 234, 0.4) !important;
+}
+.bg-light-one {
+  background-color: rgba(248, 249, 250, 0.8) !important;
+}
+.bg-light-two {
+  background-color: rgba(248, 249, 250, 0.4) !important;
+}
+.bg-dark-one {
+  background-color: rgba(52, 58, 64, 0.8) !important;
+}
+.bg-dark-two {
+  background-color: rgba(52, 58, 64, 0.4) !important;
+}
+.bg-success-one {
+  background-color: rgba(40, 167, 69, 0.8) !important;
+}
+.bg-success-two {
+  background-color: rgba(40, 167, 69, 0.4) !important;
+}
+.dark-text-muted {
+  color: #e7e7e7 !important
 }
 @media screen and (max-width: 576px) {
   /*#post_alert {

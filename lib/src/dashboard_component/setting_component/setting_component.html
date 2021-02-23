@@ -73,7 +73,7 @@
             <div class="nt-center" *ngIf="search">
                 <input type="search" class="nt-form-control br-20" placeholder="Search setting here..." style="width: fit-content !important;">
             </div>
-            <h5 class="font-weight-bold text-muted">
+            <h5 class="font-weight-bold {{appTheme['text-muted']}}">
                 <span class="fa fa-gears mx-2"></span>
                 Settings
             </h5>
@@ -89,7 +89,7 @@
                     </button>
                 </div>
             </div>
-            <span class="fa fa-search text-muted font-weight-bold d-block d-sm-block d-md-none d-lg-none" (click)="displaySearch()"></span>
+            <span class="fa fa-search {{appTheme['text-muted']}} font-weight-bold d-block d-sm-block d-md-none d-lg-none" (click)="displaySearch()"></span>
         </div>
     </div>
     <div class="row m-0 p-0">
@@ -99,7 +99,7 @@
                     <div class="nt-circle bg-dark">
                         <span class="fa fa-user text-white font-weight-bold"></span>
                     </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #us (click)="gotoUserSettings(us)">
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #us (click)="gotoSettings(us)" id="user-settings">
                         <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
                     </div>
                     <div class="card-title my-3 font-weight-bold">User Settings</div>
@@ -117,7 +117,7 @@
                     <div class="nt-circle bg-warning">
                         <span class="fa fa-users text-white font-weight-bold"></span>
                     </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #pas (click)="gotoSettings(pas)" id="post-account-settings">
                         <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
                     </div>
                     <div class="card-title my-3 font-weight-bold">Post Account Settings</div>
@@ -135,7 +135,7 @@
                     <div class="nt-circle bg-success">
                         <span class="fa fa-paint-brush text-white font-weight-bold"></span>
                     </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #t (click)="gotoSettings(t)" id="theme">
                         <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
                     </div>
                     <div class="card-title my-3 font-weight-bold">Theme</div>
@@ -153,7 +153,7 @@
                     <div class="nt-circle bg-info">
                         <span class="fa fa-image text-white font-weight-bold"></span>
                     </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #ab (click)="gotoSettings(ab)" id="app-background">
                         <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
                     </div>
                     <div class="card-title my-3 font-weight-bold">App Background</div>
@@ -171,7 +171,7 @@
                     <div class="nt-circle bg-danger">
                         <span class="fa fa-navicon text-white font-weight-bold"></span>
                     </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right">
+                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #ns (click)="gotoSettings(ns)" id="navigation-settings">
                         <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
                     </div>
                     <div class="card-title my-3 font-weight-bold">Navigation Settings</div>

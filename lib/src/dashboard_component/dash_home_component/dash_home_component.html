@@ -5,7 +5,7 @@
                 <div class="col-12 my-3">
                     <span>Post Statistics</span>
                     <span class="ml-2 text-muted" style="font-size: small">{{date | date}}</span>
-                    <span class="ml-2 fa fa-chart-pie cursor-pointer text-dark"></span>
+                    <span class="ml-2 fa fa-pie-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-sm-6 mb-3 mb-md-0">
@@ -81,11 +81,11 @@
                 <div class="col-12 mt-3">
                     <span>Post Progress</span>
                     <span class="ml-2 text-muted" style="font-size: small">Current Schedule</span>
-                    <span class="ml-2 fa fa-chart-line cursor-pointer text-dark"></span>
+                    <span class="ml-2 fa fa-line-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
-                <div class="row br-20 card border-0 box-two p-3 mt-3" style="height: 263px">
+                <div class="row br-20 card border-0 {{appTheme['box-two']}} p-3 mt-3" style="height: 263px">
                     <div class="col-12">
-                        <div class="text-center nt-center" *ngIf="datas.isEmpty">
+                        <div class="text-center nt-center {{appTheme['text-colour']}}" *ngIf="datas.isEmpty">
                             No schedule due
                         </div>
                         <div *ngIf="datas.isNotEmpty" style="height: 227px; overflow-y: scroll; overflow-x: hidden">
@@ -113,9 +113,9 @@
                 <div class="col-12 mt-3">
                     <span>Post Data</span>
                     <span class="ml-1 text-muted" style="font-size: small">for {{currentSchedule}}</span>
-                    <span class="ml-2 fa fa-chart-bar cursor-pointer text-dark"></span>
+                    <span class="ml-2 fa fa-bar-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
-                <div class="row br-20 card border-0 box-one p-3 mt-3 mx-md-4 mb-4" style="height: 263px">
+                <div class="row br-20 card border-0 {{appTheme['box-one']}} p-3 mt-3 mx-md-4 mb-4" style="height: 263px">
                     <div class="col-md-12 mx-auto p-0">
                         <div class="post-data" *ngIf="sentPosts.isEmpty">
                             <span class="text-center nt-center">Nothing to display</span>
@@ -124,17 +124,17 @@
                             <div class="nav-wrapper">
                                 <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">
+                                        <a class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}} active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">
                                             <span class="fa fa-table mr-2"></span>Table
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">
+                                        <a class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}}" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">
                                             <span class="fa fa-pie-chart mr-2"></span>Pie
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">
+                                        <a class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}}" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">
                                             <span class="fa fa-line-chart mr-2"></span>Line
                                         </a>
                                     </li>

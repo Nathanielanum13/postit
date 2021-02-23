@@ -74,6 +74,7 @@ class CreatePostComponent implements OnInit{
   List<String> imgPaths = <String>[];
   List<int> imagesProgress = <int>[0, 0, 0, 0, 0, 0];
   List<bool> editKeys = <bool>[];
+  var appTheme;
 
   CreatePostComponent(this._getPostService);
 
@@ -481,6 +482,7 @@ class CreatePostComponent implements OnInit{
 
   @override
   void ngOnInit() {
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
     currentPosts = fetchPost();
   }
 

@@ -1,0 +1,37 @@
+<div class="w-100 m-0 p-0">
+	<div class="container mt-3 mt-md-2">
+		<h4 class="text-center font-weight-bold {{appTheme['text-muted']}} mt-4">Themes</h4>
+		<div class="figure-caption text-center {{appTheme['text-colour']}}">Select, preview and then apply</div>
+		<div class="row m-0 p-0 mt-4">
+			<div class="col-sm-12 col-md-6">
+				<div class="card br-20 mb-3 border-0 shadow">
+					<div class="card-header m-0 br-20 box-two border-0">
+						<span class="font-weight-bold text-muted">Preview</span>
+					</div>
+					<div class="card-body p-3">
+						<div class="preview-box" id="preview-box">
+							<div class="p-nav" id="p-nav"></div>
+							<div class="p-side mt-2" id="p-side"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-6">
+				<div class="card br-20 border-0 mb-3 shadow">
+					<div class="card-header bg-light border-0 m-0 br-20">
+						<span class="font-weight-bold text-muted">Color theme</span>
+					</div>
+					<div class="card-body p-4">
+						<div class="row">
+							<div class="col-auto my-2 mx-auto br-20 py-2 {{theme.classNameTwo}}" *ngFor="let theme of themes; let $i = index">
+								<div class="{{theme.className}} theme-holder cursor-pointer" (click)="preview($i)"></div>
+								<span class="theme-name">{{theme.themeName}}</span>
+							</div>
+						</div>
+						<button class="mt-3 btn btn-sm px-3 py-2 btn-primary br-20" (click)="applyTheme()">Apply theme</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

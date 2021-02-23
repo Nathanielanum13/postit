@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
@@ -89,6 +90,7 @@ class ManagePostComponent implements OnInit {
   String postMessage = '';
   bool loading = false;
   String emptyMessage = 'Select filters to apply';
+  var appTheme;
 
 
   Future<void> postSchedule() async {
@@ -286,6 +288,7 @@ class ManagePostComponent implements OnInit {
 
   @override
   Future<void> ngOnInit() async {
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
     posts = await _getPostService.getAllPost();
     scheduledPosts = await _getPostService.getAllScheduledPost();
     disableUsedDate();

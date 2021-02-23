@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'dart:convert';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/facebook_data_service.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
@@ -25,6 +26,7 @@ class PostAccountComponent implements OnInit {
   bool isFinished = false;
   String loginLinkUrl = '';
   int accountCount = 0;
+  var appTheme;
   List<FacebookResponseData> accountEmails = <FacebookResponseData>[];
   final FacebookDataService _facebookDataService;
 
@@ -148,6 +150,7 @@ class PostAccountComponent implements OnInit {
 
   @override
   Future<void> ngOnInit() async {
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
     await gotoFacebook();
 
     try {

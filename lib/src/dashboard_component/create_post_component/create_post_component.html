@@ -29,7 +29,7 @@
 
     <div class="row justify-content-start mt-3">
         <div class="col-md-10 col-sm-12 col-lg-5" id="create-table" style="margin-bottom: 20px">
-            <div class="card shadow-c c-bordered bg-transparent box-one br-20">
+            <div class="card shadow-c c-bordered bg-transparent {{appTheme['box-one']}} br-20">
                 <div class="card-body mr-auto ml-auto">
                     <form action="#" novalidate>
                         <div class="form-group">
@@ -223,7 +223,7 @@
                                                             </div>
                                                             <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
-                                                                    <a class="text-dark px-4" data-toggle="tab" href="#emo6" role="tab">
+                                                                    <a class="{{appTheme['text-colour']}} px-4" data-toggle="tab" href="#emo6" role="tab">
                                                                         <span class="fa fa-object-group"></span>
                                                                     </a>
                                                                 </li>
@@ -264,7 +264,7 @@
                                                         <div class="row">
                                                             <div class="mx-auto">
                                                                 <li class="mx-auto text-center mt-1">
-                                                                    <a class="text-dark px-4" data-toggle="tab" href="#emo10" role="tab">
+                                                                    <a class="{{appTheme['text-colour']}} px-4" data-toggle="tab" href="#emo10" role="tab">
                                                                         <span class="fa fa-toolbox"></span>
                                                                     </a>
                                                                 </li>
@@ -418,7 +418,7 @@
             </div>
         </div>
         <div class="col-md-12 col-sm-12 col-lg-7">
-            <div class="card shadow-c bg-transparent box-one border-0 br-20 px-2 py-4 mb-3">
+            <div class="card shadow-c bg-transparent {{appTheme['box-one']}} br-20 px-2 py-4 mb-3 c-bordered">
                 <div class="card bg-transparent px-2 border-0 post-table br-20">
                     <div class="card-body">
                         <div class="row c-bordered box-three sticky-top">
@@ -433,7 +433,7 @@
 
                         <div *ngIf="currentPosts.isNotEmpty" class="create-table-info">
                             <div *ngFor="let currentPost of currentPosts; let $i=index"
-                                 class="row c-bordered box-two post-row">
+                                 class="row c-bordered {{appTheme['box-two']}} post-row">
                                 <material-checkbox (click)="getId($i)"
                                                    [(checked)]="currentPost.checkedState"></material-checkbox>
                                 <div class="mr-auto my-auto w-50 d-post-text">
@@ -448,12 +448,12 @@
                         </div>
 
                         <div *ngIf="currentPosts.isEmpty">
-                            <div class="nt-center text-muted" style="width: max-content;">
+                            <div class="nt-center {{appTheme['text-muted']}}" style="width: max-content;">
                                 <img src="img/no-data.png" alt="no-data" class="img-fluid mt-2" width="200">
                             </div>
                         </div>
                         <div *ngIf="loading">
-                            <div class="nt-center text-muted">
+                            <div class="nt-center {{appTheme['text-muted']}}">
                                 <img src="img/load.gif" alt="Loading..." class="img-fluid" style="border-radius: 20px; background: rgba(255,255,255,0.95)">
                             </div>
                         </div>

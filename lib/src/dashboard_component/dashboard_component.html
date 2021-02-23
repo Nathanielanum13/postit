@@ -1,11 +1,12 @@
 <!--Material Side bar-->
-<div id="app-body" class="box-two">
+<div id="app-body" class="{{appTheme['box-two']}}">
     <material-drawer #drawer="drawer" temporary
                      [class.custom-width]="customWidth"
                      [attr.end]="end ? '' : null"
                      [attr.overlay]="overlay ? '' : null"
+                     class=""
                      style="border: 0 !important; position: fixed !important;" id="persistentDrawer">
-        <material-list *deferredContent id="app-drawer" style="overflow-x: hidden; overflow-y: scroll;">
+        <material-list *deferredContent id="app-drawer" class="{{appTheme['box']}}" style="overflow-x: hidden; overflow-y: scroll;">
             <div class="text-center py-3 w-50 mx-auto">
                 <div class="card bg-light br-20 py-4 border-0">
                     <span class="fa fa-user-circle fa-3x"></span>
@@ -77,26 +78,26 @@
             <!-- Here is a group without a label -->
             <div group class="p-3 border-0 font-nyata mt-4">
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.dash_home.toUrl()" [routerLinkActive]="'active_side'">
-                    <material-icon icon="home"></material-icon>Home
+                    <material-icon icon="home" class="{{appTheme['text-muted']}}"></material-icon>Home
                 </material-list-item>
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.create_post.toUrl()" [routerLinkActive]="'active_side'">
-                    <material-icon icon="add_circle"></material-icon>Create Post
+                    <material-icon icon="add_circle" class="{{appTheme['text-muted']}}"></material-icon>Create Post
                 </material-list-item>
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.view_post.toUrl()" [routerLinkActive]="'active_side'">
-                    <material-icon icon="visibility"></material-icon>View Post
+                    <material-icon icon="visibility" class="{{appTheme['text-muted']}}"></material-icon>View Post
                 </material-list-item>
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.manage_post.toUrl()" [routerLinkActive]="'active_side'">
-                    <material-icon icon="timer"></material-icon>Manage Post
+                    <material-icon icon="timer" class="{{appTheme['text-muted']}}"></material-icon>Manage Post
                 </material-list-item>
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.post_engagement.toUrl()" [routerLinkActive]="'active_side'">
-                    <material-icon icon="chat"></material-icon>Engagement
+                    <material-icon icon="chat" class="{{appTheme['text-muted']}}"></material-icon>Engagement
                 </material-list-item>
-                <div label class="my-2 text-dark">Accounts</div>
+                <div label class="my-2 {{appTheme['text-colour']}}">Accounts</div>
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.post_account.toUrl()" [routerLinkActive]="'active_side'">
-                    <material-icon icon="person"></material-icon>Post Accounts
+                    <material-icon icon="person" class="{{appTheme['text-muted']}}"></material-icon>Post Accounts
                 </material-list-item>
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.setting.toUrl()" [routerLinkActive]="'active_side'">
-                    <material-icon icon="settings"></material-icon>Settings
+                    <material-icon icon="settings" class="{{appTheme['text-muted']}}"></material-icon>Settings
                 </material-list-item>
             </div>
             <!-- This group has a label -->
@@ -107,7 +108,7 @@
     <material-content>
         <!--    Material navbar-->
         <header class="material-header header-custom" style="z-index: 1030 !important;">
-            <div class="material-header-row">
+            <div class="material-header-row {{appTheme['box']}} {{appTheme['text-colour']}}">
                 <!-- This button will toggle (open/close) the drawer -->
                 <material-button icon
                                  class="material-drawer-button" (trigger)="drawer.toggle()">
@@ -119,7 +120,7 @@
                 <!--            <span class="material-header-title ml-2">Postit</span>-->
 
                 <nav class="material-navigation ml-auto">
-                    <div class="font-weight-bold text-muted cursor-pointer mr-2">
+                    <div class="font-weight-bold {{appTheme['text-muted']}} cursor-pointer mr-2">
                         <span class="fa fa-question-circle"></span>
                         Support
                     </div>

@@ -9,7 +9,7 @@
 </div>
 
 <div class="container mt-3">
-    <div class="card shadow-c border-0 bg-transparent box-one br-20">
+    <div class="card shadow-c border-0 bg-transparent {{appTheme['box-one']}} br-20">
         <div class="card-body">
             <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-block d-md-none d-lg-none">
                 <material-expansionpanel-set flat class="br-20">
@@ -94,7 +94,7 @@
                     </div>
                 </div>
             </form>
-            <div class="row mt-2 mx-auto" id="view-box">
+            <div class="row mt-2 mx-auto" id="view-box" style="overflow-x: hidden;">
                 <div class="table" *ngIf="filteredPosts.isNotEmpty">
                     <div class="t-row header" (click)="getAllIds()">
                         <div class="cell text-left">
@@ -127,8 +127,8 @@
                     </div>
                 </div>
                 <div *ngIf="filteredPosts.isEmpty && !loading">
-                    <div class="nt-center text-muted" style="width: max-content;">
-                        <span class="fa fa-cloud text-muted mr-1"></span>
+                    <div class="nt-center {{appTheme['text-muted']}}" style="width: max-content;">
+                        <span class="fa fa-cloud {{appTheme['text-muted']}} mr-1"></span>
                         {{emptyMessage}}
                         <button type="button" class="btn btn-sm btn-outline-primary br-20 ml-2" *ngIf="createNeed" [routerLink]="InnerRoutePaths.create_post.toUrl()">
                             <span class="fa fa-plus-circle mr-1"></span>Create post
@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div *ngIf="filteredPosts.isEmpty && loading">
-                    <div class="nt-center text-muted">
+                    <div class="nt-center {{appTheme['text-muted']}}">
                         <img src="img/load.gif" alt="Loading..." class="img-fluid">
                     </div>
                 </div>

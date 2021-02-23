@@ -51,6 +51,7 @@ class DashHomeComponent implements OnInit, CanNavigate {
   int scheduleCount = 0;
   List<int> active = <int>[];
   List<SocketData> datas = <SocketData>[];
+  var appTheme;
 
   final GetWebSocketData _getWebSocketData;
   DashHomeComponent(this._getWebSocketData);
@@ -65,6 +66,7 @@ class DashHomeComponent implements OnInit, CanNavigate {
 
   @override
   Future<void> ngOnInit() async {
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
     counters = await _getWebSocketData.getCountData();
 
     /*init [webSocket] var with [WebSocket] object*/

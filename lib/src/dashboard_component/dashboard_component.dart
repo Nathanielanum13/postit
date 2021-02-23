@@ -17,7 +17,7 @@ import 'package:angular_app/src/dashboard_component/dash_home_component/dash_hom
 import 'package:angular_app/src/dashboard_component/post_account_component/post_account_component.dart' deferred as post_account;
 import 'package:angular_app/src/dashboard_component/setting_component/setting_component.dart' deferred as settings;
 import 'package:angular_app/src/dashboard_component/fb_component/fb_component.dart' deferred as fb;
-import 'package:angular_app/src/dashboard_component/user_account_component/user_account_component.dart' deferred as user;
+import 'package:angular_app/src/dashboard_component/setting_component/user_account_component/user_account_component.dart' deferred as user;
 import 'package:angular_app/src/login_component/login_component.dart' deferred as login;
 import 'inner_route_paths.dart';
 
@@ -61,6 +61,7 @@ class DashboardComponent implements OnInit, CanActivate {
   Router _router;
   Location _location;
   var data;
+  var appTheme;
 
   DashboardComponent(this._router, this._location);
 
@@ -147,6 +148,7 @@ class DashboardComponent implements OnInit, CanActivate {
 
   void getData() {
     data = json.decode(window.sessionStorage['x-data']);
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
   }
 
   @override

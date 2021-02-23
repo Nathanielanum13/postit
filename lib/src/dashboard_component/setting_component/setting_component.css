@@ -1,5 +1,6 @@
 [animation-explode] {
-
+    border: none;
+    z-index: unset;
 }
 [animation-explode="false"] {
     animation: none;
@@ -11,19 +12,18 @@
     animation-fill-mode: forwards;
     animation-duration: 500ms;
 
-    width: inherit;
-    height: inherit;
+    z-index: 2000;
+
+    border: none;
 }
 [animation-explode="true"] > span {
     /*display: none !important;*/
 }
 @keyframes explode {
     from {
-        width: 2.25rem;
-        height: 2.25rem;
+        transform: scale(0);
     }
     to {
-        width: 500rem;
-        height: 500rem;
+        transform: scale(100);
     }
 }

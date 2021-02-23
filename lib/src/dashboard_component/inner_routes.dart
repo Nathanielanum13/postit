@@ -4,6 +4,10 @@ import 'package:angular_app/src/dashboard_component/manage_post_component/manage
 import 'package:angular_app/src/dashboard_component/dash_home_component/dash_home_component.template.dart' as dash_home_template;
 import 'package:angular_app/src/dashboard_component/post_account_component/post_account_component.template.dart' as post_account_template;
 import 'package:angular_app/src/dashboard_component/post_engagement_component/post_engagement_component.template.dart' as post_engagement_template;
+import 'package:angular_app/src/dashboard_component/setting_component/app_background_component/app_background_component.template.dart' as app_background_template;
+import 'package:angular_app/src/dashboard_component/setting_component/navigation_component/navigation_component.template.dart' as navigation_template;
+import 'package:angular_app/src/dashboard_component/setting_component/post_account_component/post_account_component.template.dart' as posts_account_template;
+import 'package:angular_app/src/dashboard_component/setting_component/theme_component/theme_component.template.dart' as theme_template;
 import 'package:angular_app/src/dashboard_component/setting_component/user_account_component/user_account_component.template.dart' as user_account_template;
 import 'package:angular_app/src/dashboard_component/setting_component/setting_component.template.dart' as setting_template;
 import 'package:angular_app/src/dashboard_component/fb_component/fb_component.template.dart' as facebook_template;
@@ -46,6 +50,22 @@ class InnerRoutes {
     routePath: InnerRoutePaths.setting,
     component: setting_template.SettingComponentNgFactory,
   );
+  static final app_background = RouteDefinition(
+    routePath: InnerRoutePaths.app_background,
+    component: app_background_template.AppBackgroundComponentNgFactory,
+  );
+  static final navigation = RouteDefinition(
+    routePath: InnerRoutePaths.navigation_settings,
+    component: navigation_template.NavigationComponentNgFactory,
+  );
+  static final post_account_settings = RouteDefinition(
+    routePath: InnerRoutePaths.post_account_settings,
+    component: posts_account_template.PostAccountComponentNgFactory,
+  );
+  static final theme = RouteDefinition(
+    routePath: InnerRoutePaths.theme,
+    component: theme_template.ThemeComponentNgFactory,
+  );
   static final facebook = RouteDefinition(
     routePath: InnerRoutePaths.facebook,
     component: facebook_template.FbComponentNgFactory,
@@ -63,8 +83,12 @@ class InnerRoutes {
     manage_post,
     post_account,
     post_engagement,
-    user_account,
     setting,
+    user_account,
+    app_background,
+    navigation,
+    post_account_settings,
+    theme,
     facebook,
     facebook_logout,
   ];

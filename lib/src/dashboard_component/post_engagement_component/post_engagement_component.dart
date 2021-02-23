@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'dart:convert';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/post_engagement_services.dart';
@@ -22,6 +23,7 @@ class PostEngagementComponent implements OnInit{
   List<PostEngagement> allPostEngagements = <PostEngagement>[];
   List<Comment> chats = <Comment>[];
   String message = '';
+  var appTheme;
 
   PostEngagementComponent(this._getPostEngagementServices);
   void showChat(int index) {
@@ -67,6 +69,7 @@ class PostEngagementComponent implements OnInit{
   @override
   Future<void> ngOnInit() async {
     // TODO: implement ngOnInit
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
     engagements = await _getPostEngagementServices.getAllEngagements();
     allPostEngagements = engagements.postEngagement;
   }

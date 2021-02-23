@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html';
+import 'dart:convert';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart' show GetPostService, Post, Schedule;
@@ -67,7 +68,7 @@ class ViewPostComponent implements OnInit {
   String postAlert = '';
   bool postAlertBool = false;
   String emptyMessage = 'Select filters to apply';
-
+  var appTheme;
 
   ViewPostComponent(this._getPostService);
 
@@ -297,6 +298,7 @@ class ViewPostComponent implements OnInit {
 
   @override
   Future<void> ngOnInit() async {
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
     posts = await _getPostService.getAllPost();
     schedule = await _getPostService.getAllScheduledPost();
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html';
+import 'dart:convert';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/inner_route_paths.dart';
@@ -18,9 +19,10 @@ import 'package:angular_router/angular_router.dart';
   ],
   exports: [InnerRoutePaths, InnerRoutes]
 )
-class SettingComponent {
+class SettingComponent implements OnInit{
   Router _router;
   bool search = false;
+  var appTheme;
 
   SettingComponent(this._router);
   void displaySearch() {
@@ -30,11 +32,36 @@ class SettingComponent {
   void routeToUserSettings() {
     _router.navigate(InnerRoutePaths.user_account.toUrl());
   }
+  void routeToPostAccountSettings() {
+    _router.navigate(InnerRoutePaths.post_account_settings.toUrl());
+  }
+  void routeToTheme() {
+    _router.navigate(InnerRoutePaths.theme.toUrl());
+  }
+  void routeToAppbackground() {
+    _router.navigate(InnerRoutePaths.app_background.toUrl());
+  }
+  void routeToNavigationSettings() {
+    _router.navigate(InnerRoutePaths.navigation_settings.toUrl());
+  }
 
-  void gotoUserSettings(Element element) {
+  void gotoSettings(Element element) {
     element.setAttribute('animation-explode', 'true');
-    print(element.getAttribute('animation-explode'));
 
-    Timer(Duration(milliseconds: 450), routeToUserSettings);
+    String item = element.getAttribute('id');
+
+    switch(item) {
+      case 'user-settings' : Timer(Duration(milliseconds: 350), routeToUserSettings); break;
+      case 'post-account-settings': Timer(Duration(milliseconds: 350), routeToPostAccountSettings); break;
+      case 'theme': Timer(Duration(milliseconds: 350), routeToTheme); break;
+      case 'app-background': Timer(Duration(milliseconds: 350), routeToAppbackground); break;
+      case 'navigation-settings': Timer(Duration(milliseconds: 350), routeToNavigationSettings); break;
+    }
+  }
+
+  @override
+  void ngOnInit() {
+    // TODO: implement ngOnInit
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
   }
 }

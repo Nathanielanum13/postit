@@ -1,0 +1,24 @@
+.theme-name {
+    display: none;
+}
+.theme-holder:hover + .theme-name {
+    display: block;
+    position: absolute;
+
+    width: max-content;
+    margin-top: 20px;
+    /*margin-right: 20px;*/
+
+    font-size: 12px;
+    text-transform: capitalize;
+    padding: 5px 10px;
+
+    background: white;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08) !important;
+
+    transition: cubic-bezier(0.4, 0.9, -0.9, -0.4);
+
+    border-radius: 5px;
+    color: #4e555b;
+    z-index: 10000;
+}

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
@@ -14,7 +15,30 @@ import 'package:angular_router/angular_router.dart';
 class PostItAppComponent implements OnInit {
   @override
   Future<void> ngOnInit() async {
+    var defaultAppTheme = AppTheme('bg-postit', 'bg-postit-one', 'bg-postit-two', 'text-muted', 'text-dark');
+    if(window.localStorage.containsKey('x-user-preference-theme')) {
+      print('Welcome Back');
+    } else {
+      window.localStorage['x-user-preference-theme'] = json.encode(
+        {
+          'box' : defaultAppTheme.box,
+          'box-one' : defaultAppTheme.boxOne,
+          'box-two' : defaultAppTheme.boxTwo,
+          'text-muted' : defaultAppTheme.mutedColor,
+          'text-colour' : defaultAppTheme.textColour,
+        }
+      );
+    }
     print("Thank you for using POSTIT");
   }
+}
+class AppTheme {
+  String box;
+  String boxOne;
+  String boxTwo;
+  String mutedColor;
+  String textColour;
+
+  AppTheme(this.box, this.boxOne, this.boxTwo, this.mutedColor, this.textColour);
 }
 
