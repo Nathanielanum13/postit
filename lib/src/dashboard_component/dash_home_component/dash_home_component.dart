@@ -26,38 +26,39 @@ import 'package:angular_router/angular_router.dart';
   providers: [ClassProvider(GetWebSocketData)],
 )
 
-class DashHomeComponent implements OnInit, CanNavigate {
+class DashHomeComponent implements OnInit, CanNavigate, AfterViewInit {
+  List<ChartDataGauge> chartData = <ChartDataGauge>[
+    ChartDataGauge(10.toDouble(), 90.toDouble())
+  ];
   DateTime date = DateTime.now();
+
+  var gaugeData;
+  var gaugeProperties;
 
   WebSocket webSocket;
   String currentSchedule = 'Current Schedule';
-  List<Post> sentPosts = <Post>[
-    Post(
-      'This is the first message, I love this message soo much',
-      postTag: ['wow', 'great', 'messy'],
-    ),
-    Post(
-      'This is the second message, I love this message soo much',
-      postTag: ['wow', 'great', 'messy'],
-    ),
-    Post(
-      'This is the third message, I love this message soo much',
-      postTag: ['wow', 'great', 'messy'],
-    ),
-  ];
+  List<Post> sentPosts = <Post>[];
   CountDataType counters = CountDataType(0, 0, 0);
 
   int postCount = 0;
   int scheduleCount = 0;
-  List<int> active = <int>[];
-  List<SocketData> datas = <SocketData>[];
+  List<int> active = <int>[20];
+  List<SocketData> datas = <SocketData>[
+    SocketData('01', 'January', '23-02-2021', '24-02-2021', 25, 15, [
+      Post('Indeed, Shiftr is Great', postTag: ['ShiftrGh', 'PostitForReal']),
+      Post('We build and test business solutions', postTag: ['ShiftrGh', 'PostitForReal']),
+      Post('Call us on 0505265215 or 0509131631', postTag: ['ShiftrGh', 'PostitForReal']),
+    ])
+  ];
   var appTheme;
 
   final GetWebSocketData _getWebSocketData;
   DashHomeComponent(this._getWebSocketData);
 
+
   void postData(int index) {
     currentSchedule = datas[index].scheduleTitle;
+    sentPosts = datas[index].postedPosts;
   }
 
   void calculateProgress(int total, int posted) {
@@ -118,4 +119,19 @@ class DashHomeComponent implements OnInit, CanNavigate {
     return true;
   }
 
+  @override
+  void ngAfterViewInit() {
+    gaugeData = GaugeChartData(
+      [
+        GaugeChartColumnData('Posted', chartData[0].posted),
+        GaugeChartColumnData('Pending', chartData[0].pending),
+      ]
+    );
+    gaugeProperties = GaugeChartProperties()..height = '170px';
+  }
+}
+class ChartDataGauge{
+  double posted;
+  double pending;
+  ChartDataGauge(this.posted, this.pending);
 }

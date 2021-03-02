@@ -1,5 +1,8 @@
+@import 'package:angular_components/app_layout/mixins';
+
 :host {
     /* This is equivalent of the 'body' selector of a page. */
+  @include mat-drawer-list-items;
 }
 [group] {
     margin: 0 auto !important;
@@ -11,7 +14,43 @@
     /*color: #051c2d !important;*/
     /*position: fixed;*/
 }
+material-drawer {
+  position: fixed !important;
+}
 
+material-drawer[persistent].small-drawer {
+  @include mat-drawer-width(56px);
+}
+material-drawer[permanent].small-drawer {
+    @include mat-drawer-width(56px);
+}
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item > .side-text,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item > .side-text {
+  display: none;
+}
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item:hover > .side-text,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item:hover > .side-text {
+    display: block;
+    position: fixed;
+
+    width: max-content;
+    margin-top: 0;
+    margin-left: 40px;
+    /*margin-right: 20px;*/
+
+    font-size: 12px;
+    text-transform: capitalize;
+    padding: 5px 10px;
+
+    background: white;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08) !important;
+
+    transition: cubic-bezier(0.4, 0.9, -0.9, -0.4);
+
+    border-radius: 5px;
+    color: #4e555b;
+    z-index: 3025;
+}
 #search {
     height: 40px;
     border: 1px solid #093d61;
@@ -112,6 +151,12 @@ material-list-item:hover > material-icon {
 [group] > material-list-item {
     color: #6c757d !important;
     font-weight: 700;
+}
+material-drawer[permanent] > material-list > [group] > material-list-item > .side-text,
+material-drawer[persistent] > material-list > [group] > material-list-item > .side-text {
+    color: #6c757d !important;
+    font-weight: 700;
+    font-family: Nyata !important;
 }
 
 .active_side {
@@ -254,6 +299,36 @@ div[display="false"] {
 
 div[display="true"] {
     display: block !important;
+}
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item:active,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item:active,
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item:hover,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item:hover,
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item:focus,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item:focus {
+    border-radius: 0 !important;
+    background: none !important;
+    border-left: 3px solid #0c6bd0 !important;
+    color: #0c6bd0 !important;
+}
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item:active > material-icon,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item:active > material-icon {
+    color: #0c6bd0 !important;
+}
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item:hover > material-icon,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item:hover > material-icon {
+    color: #0c6bd0 !important;
+}
+material-drawer[permanent].small-drawer > material-list > div[group] material-list-item:focus > material-icon,
+material-drawer[persistent].small-drawer > material-list > div[group] material-list-item:focus > material-icon {
+    color: #0c6bd0 !important;
+}
+material-drawer[permanent].small-drawer > material-list > div[group] > .active_side,
+material-drawer[persistent].small-drawer > material-list > div[group] > .active_side {
+    color: #0c6bd0 !important;
+    background: none !important;
+    border-radius: 0 !important;
+    border-left: 3px solid #0c6bd0;
 }
 
 @media screen and (max-width: 576px) {

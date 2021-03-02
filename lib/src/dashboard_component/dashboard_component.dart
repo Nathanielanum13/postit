@@ -58,6 +58,8 @@ class DashboardComponent implements OnInit, CanActivate {
   bool end = false;
   bool overlay = true;
   bool dropdown = false;
+  bool isExpanded = false;
+  bool isPerExpanded = false;
   Router _router;
   Location _location;
   var data;
@@ -86,6 +88,25 @@ class DashboardComponent implements OnInit, CanActivate {
   void dismissDialog() {
     toggle = true;
     showDialog();
+  }
+
+  void toggleWidth() {
+    isExpanded = !isExpanded;
+
+    if(isExpanded) {
+      getDocument().getElementById('persistent-expandable-drawer').classes.remove('small-drawer');
+    } else {
+      getDocument().getElementById('persistent-expandable-drawer').classes.add('small-drawer');
+    }
+  }
+  void togglePerWidth() {
+    isPerExpanded = !isPerExpanded;
+
+    if(isPerExpanded) {
+      getDocument().getElementById('permanent-expandable-drawer').classes.remove('small-drawer');
+    } else {
+      getDocument().getElementById('permanent-expandable-drawer').classes.add('small-drawer');
+    }
   }
 
   void doLogout() async {

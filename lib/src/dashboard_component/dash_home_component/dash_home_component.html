@@ -1,7 +1,7 @@
 <div class="container">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-9 col-sm-6">
+            <div class="col-md-9 col-sm-12">
                 <div class="col-12 my-3">
                     <span>Post Statistics</span>
                     <span class="ml-2 text-muted" style="font-size: small">{{date | date}}</span>
@@ -130,12 +130,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}}" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">
-                                            <span class="fa fa-pie-chart mr-2"></span>Pie
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}}" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">
-                                            <span class="fa fa-line-chart mr-2"></span>Line
+                                            <span class="fa fa-pie-chart mr-2"></span>Gauge
                                         </a>
                                     </li>
                                 </ul>
@@ -163,9 +158,10 @@
                                                             </thead>
                                                             <tbody>
                                                             <tr *ngFor="let sentPost of sentPosts">
-                                                                <td>
+                                                                <td class="text-center">
                                                                     <div class="image-thumbnail">
-                                                                        <img src="img/dropdown-1.png" alt="dropdown-1" class="img-fluid thumbnail">
+                                                                        <!--<img src="img/dropdown-1.png" alt="dropdown-1" class="img-fluid thumbnail">-->
+                                                                        <span class="fa fa-picture-o text-muted fa-2x"></span>
                                                                     </div>
                                                                 </td>
                                                                 <td>{{sentPost.postMessage}}</td>
@@ -178,13 +174,9 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                            <div class="nt-center">
-
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                                            <div class="nt-center">
-
+                                            <div style="width:100% !important; height: 185px;" class="text-center" *ngIf="chartData.isNotEmpty">
+                                                <gaugechart [chartData]="gaugeData"
+                                                          [chartProperties]="gaugeProperties" #chart></gaugechart>
                                             </div>
                                         </div>
                                     </div>
