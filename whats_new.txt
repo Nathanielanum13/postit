@@ -17,3 +17,7 @@
 
 0.0.3:
 - Fixed blurring issue
+
+0.0.4:
+- Post engagement emojis section now scrolls
+  to the bottom on clicked

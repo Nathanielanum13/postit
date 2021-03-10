@@ -76,7 +76,7 @@ class PostEngagementComponent implements OnInit{
     if(isEmojiClicked) {
       emojiElement.style.display = 'block';
       chatElement.style.position = 'relative';
-      emojiElement.scrollTop = emojiElement.scrollHeight;
+      window.scroll(0, getDocument().getElementById('postit-body').scrollHeight);
     } else {
       emojiElement.style.display = 'none';
       chatElement.style.position = 'fixed';
