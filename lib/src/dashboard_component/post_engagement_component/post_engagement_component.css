@@ -35,6 +35,13 @@
 .post-container {
     height: inherit;
 }
+.emojis {
+    display: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 300px !important;
+    background: #fdfbf7;
+}
 .chat-container {
     max-height: inherit;
 }
@@ -152,6 +159,11 @@
     }
     .chat-engine {
         position: fixed;
+        bottom: 0;
+    }
+    .emojis {
+        display: none;
+        position: relative;
         bottom: 0;
     }
 }

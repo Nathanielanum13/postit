@@ -11,3 +11,6 @@
 - UI redesign for post_engagement component.
 - Refactored create post component.
 - Separated emojis to its component.
+
+0.0.2:
+- Added emoji component to post engagement

@@ -164,10 +164,10 @@
                     </div>
                 </div>
             </div>
-            <div class="w-100 chat-engine p-2 bg-light">
+            <div class="w-100 chat-engine p-2 bg-light" id="chat-engine">
                 <div class="row m-0">
                     <div class="col-2 m-auto p-0 text-center">
-                        <span class="fa fa-smile-o fa-2x mx-2"></span>
+                        <span class="fa fa-smile-o fa-2x mx-2" (click)="toggleEmojiContainer()"></span>
                     </div>
                     <div class="col-8 m-auto p-0">
                         <input type="text" class="nt-form-control" [(ngModel)]="message" (keyup.enter)="sendComment()" style="border-radius: 20px;" placeholder="Type your message here ..." id="chat-area">
@@ -178,6 +178,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="emojis w-100" id="emojis">
+                <emoji-app></emoji-app>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/post_engagement_services.dart';
+import 'package:angular_app/src/dashboard_component/widgets/emojis_component/emojis_component.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
 
@@ -13,6 +14,7 @@ import 'package:angular_forms/angular_forms.dart';
   directives: [
     coreDirectives,
     formDirectives,
+    EmojisComponent,
   ],
   providers: [ClassProvider(GetPostEngagementServices)],
 )
@@ -23,6 +25,7 @@ class PostEngagementComponent implements OnInit{
   List<PostEngagement> allPostEngagements = <PostEngagement>[];
   List<Comment> chats = <Comment>[];
   String message = '';
+  bool isEmojiClicked = false;
   var appTheme;
 
   PostEngagementComponent(this._getPostEngagementServices);
@@ -64,6 +67,20 @@ class PostEngagementComponent implements OnInit{
 
     var element1 = getDocument().getElementById('chat-box-mob');
     element1.scrollTop = element1.scrollHeight;
+  }
+
+  void toggleEmojiContainer() {
+    isEmojiClicked = !isEmojiClicked;
+    var emojiElement = getDocument().getElementById('emojis');
+    var chatElement = getDocument().getElementById('chat-engine');
+    if(isEmojiClicked) {
+      emojiElement.style.display = 'block';
+      chatElement.style.position = 'relative';
+      emojiElement.scrollTop = emojiElement.scrollHeight;
+    } else {
+      emojiElement.style.display = 'none';
+      chatElement.style.position = 'fixed';
+    }
   }
 
   @override
