@@ -1,0 +1,13 @@
++++++++++++++++++++++++++++
+++ Changes Track Records ++
++++++++++++++++++++++++++++
+
+0.0.1:
+- Refactored the dashboard header to be more responsive.
+- Side drawer is now smaller when you expand.
+- Minimized side drawer captions are now perfectly fine.
+- UI redesign made to user_account component. Omitting user profiling.
+- Removed app background and navigation settings components.
+- UI redesign for post_engagement component.
+- Refactored create post component.
+- Separated emojis to its component.

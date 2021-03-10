@@ -1,0 +1,8 @@
+.emoji {
+    font-size: 24px;
+    text-align: center;
+    border-radius: 5px;
+}
+.emoji:hover {
+    background: rgba(78, 85, 91, 0.3);
+}

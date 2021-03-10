@@ -22,6 +22,7 @@
 .gray-bg {
     background-color: #ececec;
 }
+.br-10-pic,
 .br-10 {
     border-radius: 10px;
 }
@@ -117,9 +118,10 @@
 @media screen and (max-width: 567px) {
     .main-container {
         height: 85vh;
+        border: none !important;
     }
     .post-card-container {
-        height: 75vh;
+        height: calc(100% - 60px);
     }
     .chat-box {
         height: 70vh;
@@ -133,6 +135,8 @@
         animation-fill-mode: forwards;
         animation-duration: 200ms;
         position: relative;
+
+        height: inherit;
     }
     .post-container {
         animation-name: slide-in;
@@ -140,6 +144,15 @@
         animation-fill-mode: forwards;
         animation-duration: 200ms;
         position: relative;
+
+        height: calc(100vh - 64px);
+    }
+    .br-10 {
+        border-radius: 0 !important;
+    }
+    .chat-engine {
+        position: fixed;
+        bottom: 0;
     }
 }
 @media screen and (max-width: 768px) {

@@ -17,7 +17,9 @@
 material-drawer {
   position: fixed !important;
 }
-
+material-drawer[persistent].large-drawer {
+    @include mat-drawer-width(230px);
+}
 material-drawer[persistent].small-drawer {
   @include mat-drawer-width(56px);
 }
@@ -49,7 +51,6 @@ material-drawer[persistent].small-drawer > material-list > div[group] material-l
 
     border-radius: 5px;
     color: #4e555b;
-    z-index: 3025;
 }
 #search {
     height: 40px;
@@ -253,10 +254,14 @@ material-drawer[persistent] > material-list > [group] > material-list-item > .si
 .dropdown-toggle::after {
     content: none !important;
 }
-.material-header-row {
-    position: fixed !important;
+material-drawer {
+    z-index: 1040;
+}
+.material-header {
+    position: sticky !important;
     width: 100% !important;
     margin: 0 !important;
+    top: 0;
     border-bottom: 1px solid rgba(214, 213, 213, .4);
 }
 #user-icon {

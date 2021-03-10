@@ -1,0 +1,5 @@
+@media screen and (max-width: 567px) {
+    .user-section {
+        border-radius: 0 !important;
+    }
+}

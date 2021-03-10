@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'package:angular/angular.dart';
-import 'package:angular_app/src/dashboard_component/create_post_component/csv_upload_component/csv_upload_component.dart';
+import 'package:angular_app/src/dashboard_component/widgets/csv_upload_component/csv_upload_component.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
+import 'package:angular_app/src/dashboard_component/widgets/emojis_component/emojis_component.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
-import 'package:emojis/emoji.dart';
 import 'package:angular_app/variables.dart';
 
 
@@ -29,6 +29,7 @@ import 'package:angular_app/variables.dart';
     MaterialChipsComponent,
     MaterialToggleComponent,
     CsvUploadComponent,
+    EmojisComponent
   ],
   providers: [ClassProvider(GetPostService)],
 )
@@ -51,16 +52,7 @@ class CreatePostComponent implements OnInit{
   List<int> postImage;
 
   List<String> postTags = <String>[];
-  Iterable<Emoji> smileyEmotions = Emoji.byGroup(EmojiGroup.smileysEmotion);
-  Iterable<Emoji> travelPlaces = Emoji.byGroup(EmojiGroup.travelPlaces);
-  Iterable<Emoji> animalNatures = Emoji.byGroup(EmojiGroup.animalsNature);
-  Iterable<Emoji> activities = Emoji.byGroup(EmojiGroup.activities);
-  Iterable<Emoji> components = Emoji.byGroup(EmojiGroup.component);
-  Iterable<Emoji> flags = Emoji.byGroup(EmojiGroup.flags);
-  Iterable<Emoji> foodDrinks = Emoji.byGroup(EmojiGroup.foodDrink);
-  Iterable<Emoji> objects = Emoji.byGroup(EmojiGroup.objects);
-  Iterable<Emoji> peopleBodys = Emoji.byGroup(EmojiGroup.peopleBody);
-  Iterable<Emoji> symbols = Emoji.byGroup(EmojiGroup.symbols);
+
 
   List<String> deleteIds = <String>[];
   List<Post> currentPosts = <Post>[];
@@ -215,6 +207,9 @@ class CreatePostComponent implements OnInit{
     var endPosition = el.selectionEnd;
     insertPosition =  endPosition;
   }
+  void setData(data) {
+    arrangePostMessage(data);
+  }
 
   void arrangePostMessage(String emoValue) {
     List<String> postMessageList = <String>[];
@@ -237,55 +232,6 @@ class CreatePostComponent implements OnInit{
     }
   }
 
-  void getEmotionValue(int index) {
-    String emoValue = smileyEmotions.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getFlagValue(int index) {
-    String emoValue = flags.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getTravelPlacesValue(int index) {
-    String emoValue = travelPlaces.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getAnimalsValue(int index) {
-    String emoValue = animalNatures.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getActivitiesValue(int index) {
-    String emoValue = activities.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getObjectsValue(int index) {
-    String emoValue = objects.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getFoodDrinksValue(int index) {
-    String emoValue = foodDrinks.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getComponentValue(int index) {
-    String emoValue = components.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getPeopleBodyValue(int index) {
-    String emoValue = peopleBodys.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
-
-  void getSymbolsValue(int index) {
-    String emoValue = symbols.elementAt(index).toString();
-    arrangePostMessage(emoValue);
-  }
 
   void byteToString(List<int> s) {
     postImage = s;

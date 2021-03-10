@@ -19,11 +19,55 @@
 [animation-explode="true"] > span {
     /*display: none !important;*/
 }
+.card:hover {
+    box-shadow: none !important;
+}
+@media screen and (max-width: 567px) {
+    [animation-explode="true"] {
+        position: absolute;
+        animation-name: pop-and-fill;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-duration: 500ms;
+    }
+}
 @keyframes explode {
     from {
         transform: scale(0);
     }
     to {
         transform: scale(100);
+    }
+}
+@keyframes slide-in {
+    from {
+        left: -500px;
+    }
+    to {
+        left: 0;
+    }
+}
+@keyframes slide-out {
+    from {
+        right: -500px;
+    }
+    to {
+        right: 0;
+    }
+}
+@-webkit-keyframes slide-in {
+    from {
+        left: -500px;
+    }
+    to {
+        left: 0;
+    }
+}
+@-webkit-keyframes slide-out {
+    from {
+        right: -500px;
+    }
+    to {
+        right: 0;
     }
 }

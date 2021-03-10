@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
@@ -67,6 +68,7 @@ class DashboardComponent implements OnInit, CanActivate {
 
   DashboardComponent(this._router, this._location);
 
+
   Future<void> goBack() async {
     _location.back();
   }
@@ -95,8 +97,10 @@ class DashboardComponent implements OnInit, CanActivate {
 
     if(isExpanded) {
       getDocument().getElementById('persistent-expandable-drawer').classes.remove('small-drawer');
+      getDocument().getElementById('persistent-expandable-drawer').classes.add('large-drawer');
     } else {
       getDocument().getElementById('persistent-expandable-drawer').classes.add('small-drawer');
+      getDocument().getElementById('persistent-expandable-drawer').classes.remove('large-drawer');
     }
   }
   void togglePerWidth() {
@@ -141,12 +145,9 @@ class DashboardComponent implements OnInit, CanActivate {
   }
 
   void getScreenSize() {
+    print('about to go down');
 
-    var a = getDocument();
-
-    int width = a.querySelector('body').clientWidth;
-
-    if(width <= 576) {
+    /*if(width <= 576) {
       temporaryDrawerType = true;
       persistentDrawerType = false;
     } else if(width > 576 && width <= 720) {
@@ -158,13 +159,13 @@ class DashboardComponent implements OnInit, CanActivate {
     } else if(width > 900) {
       temporaryDrawerType = false;
       persistentDrawerType = true;
-    }
+    }*/
   }
 
   @override
   Future<void> ngOnInit() async {
-    isLoggedIn = true;
     getData();
+    getScreenSize();
   }
 
   void getData() {
@@ -190,5 +191,4 @@ class DashboardComponent implements OnInit, CanActivate {
       return false;
     }
   }
-
 }

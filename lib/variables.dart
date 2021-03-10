@@ -11,17 +11,18 @@
    'SCHEDULE_STATUS_WEBSOCKET': 'ws://localhost:5379/pws/schedule-status',
    'MEDIA_UPLOAD_URL': 'http://localhost:5379/file/upload'
 };*/
-
+const base_url = 'postit-backend-api.herokuapp.com';
+const base_auth_url = 'postit-auth.herokuapp.com';
 Map env = const {
- 'POST_URL': 'https://postit-backend-api.herokuapp.com/posts',
- 'SCHEDULE_URL': 'https://postit-backend-api.herokuapp.com/schedule-post',
- 'BATCH_DELETE_URL': 'https://postit-backend-api.herokuapp.com/batch-delete',
- 'LOGIN_URL': 'https://postit-auth.herokuapp.com/login',
- 'SIGNUP_URL': 'https://postit-auth.herokuapp.com/signup',
- 'VALIDATE_TOKEN_URL': 'https://postit-auth.herokuapp.com/validate',
- 'FACEBOOK_URL': 'https://postit-backend-api.herokuapp.com/fb/code',
- 'DELETE_FACEBOOK_ACCOUNT_URL': 'https://postit-backend-api.herokuapp.com/fb/code',
- 'COUNT_URL': 'https://postit-backend-api.herokuapp.com/count/data',
- 'SCHEDULE_STATUS_WEBSOCKET': 'wss://postit-backend-api.herokuapp.com/pws/schedule-status',
- 'MEDIA_UPLOAD_URL': 'https://postit-backend-api.herokuapp.com/file/upload'
+ 'POST_URL': 'https://$base_url/posts',
+ 'SCHEDULE_URL': 'https://$base_url/schedule-post',
+ 'BATCH_DELETE_URL': 'https://$base_url/batch-delete',
+ 'LOGIN_URL': 'https://$base_auth_url/login',
+ 'SIGNUP_URL': 'https://$base_auth_url/signup',
+ 'VALIDATE_TOKEN_URL': 'https://$base_auth_url/validate',
+ 'FACEBOOK_URL': 'https://$base_url/fb/code',
+ 'DELETE_FACEBOOK_ACCOUNT_URL': 'https://$base_url/fb/code',
+ 'COUNT_URL': 'https://$base_url/count/data',
+ 'SCHEDULE_STATUS_WEBSOCKET': 'wss://$base_url/pws/schedule-status',
+ 'MEDIA_UPLOAD_URL': 'https://$base_url/file/upload'
 };
