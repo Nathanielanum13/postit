@@ -14,3 +14,6 @@
 
 0.0.2:
 - Added emoji component to post engagement
+
+0.0.3:
+- Fixed blurring issue
