@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/inner_route_paths.dart';
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_router/angular_router.dart';
 
@@ -16,24 +18,32 @@ import 'package:angular_router/angular_router.dart';
     routerDirectives,
     coreDirectives,
     formDirectives,
+    AlertComponent,
   ],
-  exports: [InnerRoutePaths, InnerRoutes]
+  exports: [InnerRoutePaths, InnerRoutes],
 )
 class SettingComponent implements OnInit{
   Router _router;
   bool search = false;
   var appTheme;
+  Alert setAlert;
 
   SettingComponent(this._router);
   void displaySearch() {
     search = !search;
   }
 
+  void resetAlert() {
+    setAlert = null;
+  }
+
   void routeToUserSettings() {
-    _router.navigate(InnerRoutePaths.user_account.toUrl());
+    /*_router.navigate(InnerRoutePaths.user_account.toUrl());*/
+    setAlert = Alert('Route Initializing', 200);
+    Timer(Duration(seconds: 5), resetAlert);
   }
   void routeToPostAccountSettings() {
-    _router.navigate(InnerRoutePaths.post_account_settings.toUrl());
+    /*_router.navigate(InnerRoutePaths.post_account_settings.toUrl());*/
   }
   void routeToTheme() {
     _router.navigate(InnerRoutePaths.theme.toUrl());
@@ -46,7 +56,7 @@ class SettingComponent implements OnInit{
   }
 
   void gotoSettings(Element element) {
-    element.setAttribute('animation-explode', 'true');
+    element.setAttribute('animation-explode', 'false');
 
     String item = element.getAttribute('id');
 

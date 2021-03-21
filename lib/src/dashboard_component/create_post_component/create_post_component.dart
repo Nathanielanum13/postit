@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
 import 'package:angular_app/src/dashboard_component/widgets/csv_upload_component/csv_upload_component.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
@@ -10,6 +12,7 @@ import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_app/variables.dart';
+import 'package:http/http.dart';
 
 
 @Component(
@@ -29,14 +32,16 @@ import 'package:angular_app/variables.dart';
     MaterialChipsComponent,
     MaterialToggleComponent,
     CsvUploadComponent,
-    EmojisComponent
+    EmojisComponent,
+    AlertComponent,
   ],
   providers: [ClassProvider(GetPostService)],
 )
 class CreatePostComponent implements OnInit{
   final GetPostService _getPostService;
 
-  String postAlert = ' ';
+  Alert setAlert;
+  String postAlert = '';
   bool postAlertBool = false;
   bool editKey = false;
   bool toggleState = false;
@@ -56,11 +61,12 @@ class CreatePostComponent implements OnInit{
 
   List<String> deleteIds = <String>[];
   List<Post> currentPosts = <Post>[];
+  List<String> fileNames = <String>[];
   String fileName = '';
   String _updatePostId = '';
   String funcCall = '';
   int _updatePostIndex;
-  int insertPosition;
+  int insertPosition = 0;
   String imgPath = '';
   int counter = -1;
   List<String> imgPaths = <String>[];
@@ -71,73 +77,60 @@ class CreatePostComponent implements OnInit{
   CreatePostComponent(this._getPostService);
 
   Future<void> handleUpload(form, Event event) async {
+    event.preventDefault();
     var formData = FormData(form);
     final request = HttpRequest();
-    var doc = getDocument();
 
-    counter += 1;
+    for(int i = 0; i < (event.target as FileUploadInputElement).files.length; i++) {
+      counter += 1;
+      if(i < 6 && counter < 6) {
+        File pic = (event.target as FileUploadInputElement).files[i];
+        fileNames.add(pic.name);
 
-    if(counter > 5) {
-      postAlertBool = true;
-      postAlert = 'Post images limit has been reached';
-      postAlertCode = 400;
+        var reader = FileReader()
+          ..readAsDataUrl(pic);
 
-      Timer(Duration(seconds: 5), dismissAlert);
-      return;
-    } else {
-      request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
-      request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
-      request.setRequestHeader('tenant-namespace', '${window.sessionStorage['tenant-namespace']}');
-      request.setRequestHeader('Authorization', 'Bearer ${window.sessionStorage['token']}');
-      request.upload.onProgress.listen((ProgressEvent progress){
-        imagesProgress.insert(counter, progress.loaded*100~/progress.total);
-      });
+        await reader.onLoadEnd.first;
+        imgPaths.add(reader.result);
 
-      request.onLoad.listen((e) {
-        print('Uploaded');
-      });
+        request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
+        request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
+        request.setRequestHeader('tenant-namespace', '${window.sessionStorage['tenant-namespace']}');
+        request.setRequestHeader('Authorization', 'Bearer ${window.sessionStorage['token']}');
+        request.upload.onProgress.listen((ProgressEvent progress){
+          imagesProgress.insert(counter, progress.loaded*100~/progress.total);
+        });
 
-      request.onError.listen((event) {
-        failed = true;
-      });
+        request.onLoad.listen((e) {
+          print('Uploaded');
+        });
 
-      request.send(formData);
+        request.onError.listen((event) {
+          failed = true;
+        });
 
-      event.preventDefault();
-      File pic = (event.target as FileUploadInputElement).files[0];
-      fileName = pic.name;
-
-      var reader = FileReader()
-        ..readAsDataUrl(pic);
-
-      await reader.onLoadEnd.first;
-      imgPaths.add(reader.result);
+        request.send(formData);
+      } else {
+        setAlert = Alert('You can not add more than 6 images', 400);
+        Timer(Duration(seconds: 5), resetAlert);
+        return;
+      }
     }
   }
 
-//  Future<void> handleUpload(Event event) async {
-//    event.preventDefault();
-//
-//    File pic = (event.target as FileUploadInputElement).files[0];
-//    fileName = pic.name;
-//
-//    var reader = FileReader()
-//      ..readAsDataUrl(pic);
-//
-//    await reader.onLoadEnd.first;
-//    imgPath = reader.result;
-
-//
-//    var r = FileReader()
-//      ..readAsArrayBuffer(pic);
-//
-//    await r.onLoadEnd.first;
-//    List<int> result = r.result;
-//    // print(result);
-//
-//    byteToString(result);
-//
-//  }
+  Future<void> deleteFile(int index) async {
+    Response resp;
+    try {
+      resp = await delete('${env['MEDIA_UPLOAD_URL']}' + '?file_name=${fileNames[index]}', headers: {
+        'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
+        'tenant-namespace': '${window.sessionStorage['tenant-namespace']}',
+        'Authorization': 'Bearer ${window.sessionStorage['token']}'
+      });
+    } catch(e) {
+      print('');
+    }
+    /*print(json.decode(resp.body)['ui_message']);*/
+  }
 
   void getAllIds() {
     deleteIds.clear();
@@ -168,11 +161,8 @@ class CreatePostComponent implements OnInit{
       loading = true; checkLoadingState(loading);
       PostStandardResponse deleteResponse = await _getPostService.batchDelete(deleteIds);
       loading = false; checkLoadingState(loading);
-      postAlert = deleteResponse.data.message;
-      postAlertCode =deleteResponse.httpStatusCode;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
-
+      setAlert = Alert(deleteResponse.data.message, deleteResponse.httpStatusCode);
+      Timer(Duration(seconds: 5), resetAlert);
 
       if(deleteResponse.httpStatusCode == 200) {
         for(int i = 0; i < deleteIds.length; i++) {
@@ -184,11 +174,8 @@ class CreatePostComponent implements OnInit{
       allIsChecked = false;
     } catch(e) {
       loading = false; checkLoadingState(loading);
-      postAlert = 'Could not delete. Server offline';
-      postAlertCode = 500;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
-
+      setAlert = Alert('Failed to delete selected posts', 500);
+      Timer(Duration(seconds: 5), resetAlert);
     }
   }
 
@@ -207,6 +194,11 @@ class CreatePostComponent implements OnInit{
     var endPosition = el.selectionEnd;
     insertPosition =  endPosition;
   }
+
+  void resetAlert() {
+    setAlert = null;
+  }
+
   void setData(data) {
     arrangePostMessage(data);
   }
@@ -221,8 +213,9 @@ class CreatePostComponent implements OnInit{
       postMessageList.insert(insertPosition, emoValue);
       insertPosition += 2;
     } else {
-      postMessage = postMessage + emoValue;
-      postMessageList.add(postMessage);
+      /*postMessage = postMessage + emoValue;*/
+      postMessageList.add(emoValue);
+      insertPosition += 2;
     }
 
     postMessage = '';
@@ -248,13 +241,8 @@ class CreatePostComponent implements OnInit{
         checkLoadingState(false);
         isSending = false;
 
-        postAlert = resp.data.message;
-        postAlertCode = resp.httpStatusCode;
-        postAlertBool = true;
-
-        Timer(Duration(seconds: 5), dismissAlert);
-
-
+        setAlert = Alert(resp.data.message, resp.httpStatusCode);
+        Timer(Duration(seconds: 5), resetAlert);
 
         if(resp.httpStatusCode == 200) {
           Post newPost = Post(postMessage, postTag: postTags, id: resp.data.id, postImage: postImage, postPriority: toggleState);
@@ -271,10 +259,9 @@ class CreatePostComponent implements OnInit{
       } catch(e) {
         checkLoadingState(false);
         isSending = false;
-        postAlert = 'Could not create. Server offline';
-        postAlertCode = 500;
-        postAlertBool = true;
-        Timer(Duration(seconds: 5), dismissAlert);
+
+        setAlert = Alert('Failed to create post', 500);
+        Timer(Duration(seconds: 5), resetAlert);
       }
   }
 
@@ -289,10 +276,8 @@ class CreatePostComponent implements OnInit{
       checkLoadingState(false);
       isSending = false;
 
-      postAlert = resp.data.message;
-      postAlertCode = resp.httpStatusCode;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
+      setAlert = Alert(resp.data.message, resp.httpStatusCode);
+      Timer(Duration(seconds: 5), resetAlert);
 
       if(resp.httpStatusCode == 200) {
         Post newPost = Post(postMessage, postTag: postTags, id: resp.data.id, postImage: postImage);
@@ -311,10 +296,8 @@ class CreatePostComponent implements OnInit{
     } catch(e) {
       isSending = false;
       checkLoadingState(false);
-      postAlert = 'Could not edit. Server offline';
-      postAlertCode = 500;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
+      setAlert = Alert('Failed to update post', 500);
+      Timer(Duration(seconds: 5), resetAlert);
 
 
     }
@@ -327,12 +310,8 @@ class CreatePostComponent implements OnInit{
       loading = true; checkLoadingState(loading);
       PostStandardResponse deleteResponse = await _getPostService.delete(id);
       loading = false; checkLoadingState(loading);
-      postAlert = deleteResponse.data.message;
-      postAlertCode = deleteResponse.httpStatusCode;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
-
-
+      setAlert = Alert(deleteResponse.data.message, deleteResponse.httpStatusCode);
+      Timer(Duration(seconds: 5), resetAlert);
 
       if(deleteResponse.httpStatusCode == 200) {
         window.sessionStorage.remove(id);
@@ -340,19 +319,13 @@ class CreatePostComponent implements OnInit{
       }
     } catch(e) {
       loading = false; checkLoadingState(loading);
-      postAlert = 'Could not delete. Server error';
-      postAlertCode = 500;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
+      setAlert = Alert('Failed to delete post', 500);
+      Timer(Duration(seconds: 5), resetAlert);
     }
 
   }
 
   void removeTag(int index) => postTags.removeAt(index);
-
-  void dismissAlert() {
-    postAlertBool = false;
-  }
 
   void addTag() {
     postTags.add(hashtag);

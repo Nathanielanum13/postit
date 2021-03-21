@@ -112,13 +112,14 @@ class GetPostService {
   }
 
   Future<PostStandardResponse> deleteSchedule(String id) async {
+    var deleteResponse;
     try {
-      final deleteResponse =
+      deleteResponse =
           await _http.delete(_scheduleUrl + '?schedule_id=' + id, headers: _headers);
-      return _extractData(deleteResponse);
     } catch (e) {
       throw _handleError(e);
     }
+    return _extractData(deleteResponse);
   }
 
   Future<PostStandardResponse> batchDelete(List<String> ids) async {

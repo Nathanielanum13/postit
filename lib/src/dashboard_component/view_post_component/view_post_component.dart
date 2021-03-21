@@ -5,24 +5,15 @@ import 'dart:convert';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart' show GetPostService, Post, Schedule;
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
+import 'package:angular_app/src/dashboard_component/widgets/emojis_component/emojis_component.dart';
+import 'package:angular_app/src/dashboard_component/widgets/filter_component/filter_component.dart';
 import 'package:angular_components/angular_components.dart';
+import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
 import 'package:angular_router/angular_router.dart';
-
-
-const List<String> _filters = [
-  'All',
-  'Posted',
-  'Scheduled',
-  'Unscheduled',
-];
-const List<String> _numbers = [
-  '20',
-  '50',
-  '100',
-  '100+',
-];
 
 @Component(
   selector: 'view-post',
@@ -32,261 +23,186 @@ const List<String> _numbers = [
     coreDirectives,
     formDirectives,
     MaterialCheckboxComponent,
-    routerDirectives,
-    FocusListDirective,
     MaterialIconComponent,
-    MaterialFabComponent,
-    MaterialButtonComponent,
-    MaterialExpansionPanel,
-    MaterialExpansionPanelAutoDismiss,
-    MaterialExpansionPanelSet,
-    ModalComponent,
+    MaterialChipComponent,
+    MaterialChipsComponent,
+    routerDirectives,
+    FilterComponent,
+    AlertComponent,
+    EmojisComponent
   ],
-  providers: [ClassProvider(GetPostService), overlayBindings],
-  exports: [InnerRoutes, InnerRoutePaths]
+  exports: [InnerRoutes, InnerRoutePaths],
+  providers: [ClassProvider(GetPostService)],
+  pipes: [commonPipes],
 )
 class ViewPostComponent implements OnInit {
-  final GetPostService _getPostService;
-
-  List<String> get filters => _filters;
-  List<String> get numbers => _numbers;
-  List<Post> posts = <Post>[];
-  List<Post> filteredPosts = <Post>[];
-  List<String> deleteIds = <String>[];
-  List<Schedule> schedule = <Schedule>[];
-
-  String selectedFilter = '';
-  String selectedNumber = '';
-
-  bool allIsChecked = false;
-  bool createNeed = false;
-  bool saveCancel = false;
-  int postAlertCode = 0;
-  bool loading = false;
-  bool isRefresh = false;
-  bool isDeleting = false;
-  String postAlert = '';
-  bool postAlertBool = false;
-  String emptyMessage = 'Select filters to apply';
   var appTheme;
+  bool allIsChecked = false;
+  bool loading = false;
+  bool isDeleting = false;
+  bool editPopup = false;
+  bool displayEmojiContainer = false;
+  List<String> selectedIds = <String>[];
+  List<Post> filteredPosts = <Post>[];
+  List<bool> tabs = <bool>[true, false, false];
+  Alert setAlert;
+  StreamSubscription<MouseEvent> listener;
+  int focusScheduleId = null;
+  int itemsPerPage = 10;
+  int currentPage = 1;
+  int maxPage;
+  int i;
 
+  String message = '';
+  String hashtag = '';
+  List<String> postTags = <String>[];
+  int insertPosition = 0;
+
+  GetPostService _getPostService;
   ViewPostComponent(this._getPostService);
 
-
-  Future<void> remove(String id) async {
-    await _getPostService.delete(id);
+  void getAllFilterData(FilterData data) {
+    filteredPosts = data.finalPost;
+    itemsPerPage = data.selectedPostPerPage;
   }
 
-  void onSubmit() {
-    if((selectedFilter == 'All' && selectedNumber.isEmpty) || (selectedFilter == 'All' && selectedNumber == '100+')) {
-      checkPostStatus();
-      filteredPosts = posts;
-    } else if(selectedFilter == 'All' && selectedNumber == '20') {
-      checkPostStatus();
-      if(posts.length < 20) {
-        filteredPosts = posts;
-      } else {
-        filteredPosts = posts.getRange(0, 20).toList();
-      }
-    } else if(selectedFilter == 'All' && selectedNumber == '50') {
-      checkPostStatus();
-      if(posts.length < 50) {
-        filteredPosts = posts;
-      } else {
-        filteredPosts = posts.getRange(0, 50).toList();
-      }
-    } else if(selectedFilter == 'All' && selectedNumber == '100') {
-      checkPostStatus();
-      if(posts.length < 100) {
-        filteredPosts = posts;
-      } else {
-        filteredPosts = posts.getRange(0, 100).toList();
-      }
-    } else if((selectedFilter == 'Posted' && selectedNumber.isEmpty) || (selectedFilter == 'Posted' && selectedNumber == '100+')) {
-      checkPostStatus();
-      filteredPosts = getPostedPosts();
-    } else if(selectedFilter == 'Posted' && selectedNumber == '20') {
-      checkPostStatus();
-      if(getPostedPosts().length < 20) {
-        filteredPosts = getPostedPosts();
-      } else {
-        filteredPosts = getPostedPosts().getRange(0, 20).toList();
-      }
-    } else if(selectedFilter == 'Posted' && selectedNumber == '50') {
-      checkPostStatus();
-      if(getPostedPosts().length < 50) {
-        filteredPosts = getPostedPosts();
-      } else {
-        filteredPosts = getPostedPosts().getRange(0, 50).toList();
-      }
-    }else if(selectedFilter == 'Posted' && selectedNumber == '100') {
-      checkPostStatus();
-      if(getPostedPosts().length < 100) {
-        filteredPosts = getPostedPosts();
-      } else {
-        filteredPosts = getPostedPosts().getRange(0, 100).toList();
-      }
-    } else if((selectedFilter == 'Scheduled' && selectedNumber.isEmpty) || (selectedFilter == 'Posted' && selectedNumber == '100+')) {
-      checkPostStatus();
-      filteredPosts = getScheduledPosts();
-      print(filteredPosts.toList().toString());
-    } else if(selectedFilter == 'Scheduled' && selectedNumber == '20') {
-      checkPostStatus();
-      if(getScheduledPosts().length < 20) {
-        filteredPosts = getScheduledPosts();
-      } else {
-        filteredPosts = getScheduledPosts().getRange(0, 20).toList();
-      }
-    } else if(selectedFilter == 'Scheduled' && selectedNumber == '50') {
-      checkPostStatus();
-      if(getScheduledPosts().length < 50) {
-        filteredPosts = getScheduledPosts();
-      } else {
-        filteredPosts = getScheduledPosts().getRange(0, 50).toList();
-      }
-    }else if(selectedFilter == 'Scheduled' && selectedNumber == '100') {
-      checkPostStatus();
-      if(getScheduledPosts().length < 100) {
-        filteredPosts = getScheduledPosts();
-      } else {
-        filteredPosts = getScheduledPosts().getRange(0, 100).toList();
-      }
-    }
+  void addTag() {
+    postTags.add(hashtag);
+    hashtag = '';
+  }
+  void removeTag(int index) => postTags.removeAt(index);
+
+  void toggleEmojiContainer() {
+    displayEmojiContainer = !displayEmojiContainer;
   }
 
-  List<Post> getPostedPosts() {
-    List<Post> postedPost = <Post>[];
-    for(int counter = 0; counter < posts.length; counter++) {
-      if(posts[counter].postStatus) {
-        postedPost.add(posts[counter]);
-      }
-    }
-    return postedPost;
-  }
-
-  List<Post> getScheduledPosts() {
-    List<Post> scheduledPost = <Post>[];
-
-    for(int counter = 0; counter < schedule.length; counter++) {
-      for(int i = 0; i < schedule[counter].postIds.length; i++) {
-        print('aaa');
-        if(searchPosts(schedule[counter].postIds[i])) {
-          scheduledPost.add(getPost(schedule[counter].postIds[i]));
-        }
-      }
-    }
-    print(scheduledPost.toString());
-    return scheduledPost;
-  }
-
-  Post getPost(String id) {
-    Post postToAdd;
-    for(int i = 0; i < posts.length; i++) {
-      if(posts[i].id == id) {
-        postToAdd = posts[i];
-      }
-    }
-    return postToAdd;
-  }
-
-  bool searchPosts(String postId) {
-    bool isFound = false;
-    for(int i = 0; i < posts.length; i++) {
-      if(posts[i].id == postId) {
-        isFound = true;
-      } else {
-        isFound = false;
-      }
-    }
-    return isFound;
-  }
-
-  Future<void> checkPostStatus() async {
-    if(posts.isEmpty) {
-      loading = true;
-      try {
-        posts = await _getPostService.getAllPost().timeout(Duration(seconds: 5));
-        loading = false;
-        emptyMessage = 'No post';
-        createNeed = true;
-      } catch(e) {
-        postAlert = 'Server offline. Request timeout';
-        postAlertCode = 500;
-        postAlertBool = true;
-        loading = false;
-        Timer(Duration(seconds: 5), dismissAlert);
-
-      }
+  void togglePopup(int index) {
+    editPopup = !editPopup;
+    var dashHome = getDocument().getElementById('view-app');
+    if(editPopup) {
+      focusScheduleId = index;
+      index = ((currentPage - 1) * itemsPerPage) + index;
+      message = filteredPosts[index].postMessage;
+      postTags = filteredPosts[index].postTag;
+      dashHome.style.filter = 'blur(3px)';
+      Timer(Duration(milliseconds: 100), afterClose);
     } else {
-      loading = false;
-      createNeed = false;
+      focusScheduleId = null;
+      displayEmojiContainer = false;
+      dashHome.style.filter = 'blur(0)';
+    }
+  }
+  void afterClose() {
+    var dashHome = getDocument().getElementById('view-app');
+    listener = dashHome.onClick.listen((event) {
+      closePopup();
+    });
+  }
+  void closePopup() {
+    var dashHome = getDocument().getElementById('view-app');
+    editPopup = false;
+    displayEmojiContainer = false;
+    dashHome.style.filter = 'blur(0)';
+    listener.cancel();
+  }
+
+  void switchTabs(int index) {
+    for(int i = 0; i < tabs.length; i++) {
+      if(index == i) {
+        tabs[i] = true;
+      } else {
+        tabs[i] = false;
+      }
     }
   }
 
   void getAllIds() {
-    deleteIds.clear();
-    allIsChecked = !allIsChecked;
+    selectedIds.clear();
+    !allIsChecked;
     if(allIsChecked) {
       for(int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = true;
-        deleteIds.add(filteredPosts[i].id);
+        selectedIds.add(filteredPosts[i].id);
       }
     } else {
       for(int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = false;
-        deleteIds.remove(filteredPosts[i].id);
+        selectedIds.remove(filteredPosts[i].id);
       }
     }
-
   }
 
   void getId(int index) {
-    filteredPosts[index].checkedState = !filteredPosts[index].checkedState;
+    index = ((currentPage - 1) * itemsPerPage) + index;
+    !filteredPosts[index].checkedState;
     if(filteredPosts[index].checkedState) {
-      deleteIds.add(posts[index].id);
+      selectedIds.add(filteredPosts[index].id);
     } else {
-      deleteIds.remove(posts[index].id);
+      selectedIds.remove(filteredPosts[index].id);
     }
-    print(deleteIds.toString());;
   }
 
-  Future<void> autoSync() async {
-    try {
-      isRefresh = true;
-      posts = await _getPostService.getAllPost();
-      isRefresh = false;
-      onSubmit();
-    } catch(e) {
-      isRefresh = false;
+  void setData(data) {
+    arrangePostMessage(data);
+  }
+
+  void getInputSelection(TextAreaElement el) {
+    var endPosition = el.selectionEnd;
+    insertPosition =  endPosition;
+  }
+
+  void arrangePostMessage(String emoValue) {
+    List<String> postMessageList = <String>[];
+
+    if(message.isNotEmpty) {
+      for(int i = 0; i < message.length; i++) {
+        postMessageList.add(message[i]);
+      }
+      postMessageList.insert(insertPosition, emoValue);
+      insertPosition += 2;
+    } else {
+      /*postMessage = postMessage + emoValue;*/
+      postMessageList.add(emoValue);
+      insertPosition += 2;
     }
+
+    message = '';
+
+    for(int i = 0; i < postMessageList.length; i++) {
+      message = message + postMessageList[i];
+    }
+  }
+
+  void resetAlert() {
+    setAlert = null;
+  }
+
+  @override
+  Future<void> ngOnInit() async {
+    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
   }
 
   Future<void> batchDelete() async {
     try {
       isDeleting = true;
-      PostStandardResponse deleteResponse = await _getPostService.batchDelete(deleteIds);
+      PostStandardResponse deleteResponse = await _getPostService.batchDelete(selectedIds);
       isDeleting = false;
-
       if(deleteResponse.httpStatusCode == 200) {
-        for(int i = 0; i < deleteIds.length; i++) {
-          window.localStorage.remove(deleteIds[i]);
-          posts.remove(stringToPost(deleteIds[i]));
-          filteredPosts.remove(stringToPost(deleteIds[i]));
+        for(int i = 0; i < selectedIds.length; i++) {
+          window.sessionStorage.remove(selectedIds[i]);
+          filteredPosts.remove(convertStringToPost(selectedIds[i]));
         }
       }
-      deleteIds.clear();
+      selectedIds.clear();
       allIsChecked = false;
     } catch(e) {
       isDeleting = false;
+      setAlert = Alert('Failed to delete selected post(s)', 500);
+      Timer(Duration(seconds: 5), resetAlert);
     }
-
   }
 
-  void dismissAlert() {
-    postAlertBool = false;
-  }
-
-  Post stringToPost(String st) {
+  Post convertStringToPost(String st) {
     Post deletePost;
     for(int i = 0; i < filteredPosts.length; i++) {
       if(filteredPosts[i].id == st) {
@@ -296,10 +212,41 @@ class ViewPostComponent implements OnInit {
     return deletePost;
   }
 
-  @override
-  Future<void> ngOnInit() async {
-    appTheme = json.decode(window.localStorage['x-user-preference-theme']);
-    posts = await _getPostService.getAllPost();
-    schedule = await _getPostService.getAllScheduledPost();
+  int conv(idx) {
+    if (idx is String) {
+      this.i = int.parse(idx);
+    } else if (idx == null) {
+      this.i = 1;
+    } else {
+      this.i = idx;
+    }
+    return this.i;
+  }
+  List range() {
+    this.maxPage = (filteredPosts.length/conv(itemsPerPage)).ceil();
+    List ret = [];
+    for (var i=1; i<=this.maxPage; i++) {
+      ret.add(i);
+    }
+    return ret;
+  }
+  void setPage(n) {
+    this.currentPage = n;
+  }
+  void prevPage() {
+    if (this.currentPage > 1) {
+      --this.currentPage;
+    }
+  }
+  void nextPage() {
+    if (this.currentPage < this.maxPage) {
+      ++this.currentPage;
+    }
+  }
+  String prevPageDisabled() {
+    return this.currentPage == 1 ? "disabled" : "";
+  }
+  String nextPageDisabled() {
+    return this.currentPage == this.maxPage ? "disabled" : "";
   }
 }

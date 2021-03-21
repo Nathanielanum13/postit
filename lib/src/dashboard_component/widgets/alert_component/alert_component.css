@@ -1,0 +1,45 @@
+#post_alert {
+    margin: 0 auto;
+    position: fixed;
+
+    transition: all 0.5s ease-in-out 0s;
+    z-index: 1080;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    animation-name: drop;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    opacity: 0;
+
+    /*border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;*/
+    border-radius: 5px;
+
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08) !important;
+}
+#alert_close {
+    color: #eae9e9;
+    font-size: 10px !important;
+    text-align: center !important;
+}
+#alert_close:hover {
+    padding: 4px;
+    background: rgba(234, 234, 234, 0.7);
+    border-radius: 50%;
+    font-size: 9px !important;
+    text-align: center !important;
+    color: #090c0e;
+}
+@keyframes drop {
+    from {
+        top: -50px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}

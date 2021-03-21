@@ -1,3 +1,6 @@
+#dash-home {
+  height: calc(100vh - 64px);
+}
 .p-label {
   position: absolute;
   top: auto;
@@ -12,7 +15,15 @@
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
   background-color: unset !important;
+  color: #262626;
   border-bottom: 2px solid #0c6bd0;
+}
+.text-overflow {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: max-content;
+  text-overflow: ellipsis;
 }
 .progress {
   height: 8px;
@@ -75,6 +86,9 @@
   font-size: .875rem;
   font-weight: 600;
 }
+table td {
+  vertical-align: middle;
+}
 .post-data {
   height: 227px;
   overflow-x: hidden;
@@ -86,4 +100,37 @@
   /*height: 185px;*/
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+.popup {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  margin: auto;
+
+  width: 40%;
+  height: max-content;
+  background-color: rgba(255, 255, 255, 0.4);
+
+  animation-name: popup;
+  animation-fill-mode: forwards;
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+}
+@media screen and (max-width: 567px){
+  .popup {
+    width: 90%;
+    margin: auto;
+  }
+}
+@keyframes popup {
+  from {
+    transform: scale(0, 0);
+  }
+  to {
+    transform: scale(1, 1);
+  }
 }

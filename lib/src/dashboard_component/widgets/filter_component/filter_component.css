@@ -1,0 +1,23 @@
+.filter-dropdwn {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: #f8f8f8;
+
+    animation-name: drop;
+    animation-duration: 400ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    opacity: 0;
+    z-index: 1;
+}
+@keyframes drop {
+    from {
+        margin-top: -50px;
+        opacity: 0;
+    }
+    to {
+        margin-top: 5px;
+        opacity: 1;
+    }
+}

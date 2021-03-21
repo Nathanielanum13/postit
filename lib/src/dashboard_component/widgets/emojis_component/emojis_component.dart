@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:emojis/emoji.dart';
-import 'package:angular_app/src/dashboard_component/create_post_component/create_post_component.dart' as a;
 
 @Component(
   selector: 'emoji-app',
@@ -31,7 +29,8 @@ class EmojisComponent implements OnInit {
   var appTheme;
   String emoValue = '';
   final _myEvent = StreamController<String>();
-  @Output('myClick') Stream<String> get myEvent => _myEvent.stream;
+  @Output('myClick')
+  Stream<String> get myEvent => _myEvent.stream;
 
   void getEmotionValue(int index) {
     emoValue = smileyEmotions.elementAt(index).toString();

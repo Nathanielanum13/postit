@@ -1,0 +1,110 @@
+<!--<form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-block d-md-none d-lg-none">
+    <material-expansionpanel-set flat class="br-20">
+        <material-expansionpanel [showSaveCancel]="saveCancel">
+            <div name class="default-muted h6">
+                Select filters here
+                <span class="ml-2 text-primary">{{deleteIds.length}}/{{filteredPosts.length}}</span>
+            </div>
+            <div class="col-12 box-three m-0 br-20 py-1">
+                <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
+                    <option value="" disabled selected>Filter by:</option>
+                    <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
+                </select>
+                <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
+                    <option value="" disabled selected>Show first:</option>
+                    <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
+                </select>
+                <div class="row col-12 my-3">
+                    <div class="col-3 my-auto">
+                        <button type="button" class="btn btn-sm br-20 shadow-c"
+                                [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
+                            <span class="fa fa-trash" *ngIf="!isDeleting"></span>
+                            <div *ngIf="isDeleting">
+                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-3 my-auto">
+                        <button type="button" class="btn btn-sm br-20 shadow-c"
+                                (click)="autoSync()">
+                            <span class="fa fa-refresh" *ngIf="!isRefresh"></span>
+                            <div *ngIf="isRefresh">
+                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-6 my-auto">
+                        <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
+                    </div>
+                </div>
+            </div>
+        </material-expansionpanel>
+    </material-expansionpanel-set>
+</form>-->
+<div class=" row w-100 m-0 p-0 d-block d-md-none d-lg-none">
+    <div class="px-1 mb-3">
+        <button class="btn btn-lg btn-block btn-outline-dark br-20" (click)="toggleFilterDropdown()">
+            <span class="fa fa-filter"></span>
+            Apply filters here
+        </button>
+        <div class="br-20 filter-dropdwn shadow mx-auto p-2" *ngIf="filterDropdown" id="filter-dropdwn">
+            <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="p-3">
+                <select name="filter" id="filter-mobile" class="nt-form-control border-0 br-10" [(ngModel)]="selectedFilter">
+                    <option value="" disabled selected>Filter by:</option>
+                    <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
+                </select>
+                <select name="number" id="number-mobile" class="nt-form-control border-0 br-10 mt-2" [(ngModel)]="selectedNumber">
+                    <option value="" disabled selected>Posts per page:</option>
+                    <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
+                </select>
+                <button type="submit" class="btn btn-sm btn-block btn-primary btn-sm br-10 px-3 mt-2" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
+            </form>
+        </div>
+    </div>
+</div>
+<form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-none d-md-block d-lg-block">
+    <div class="row c-bordered box-three sticky-top mx-2 br-20">
+        <div class="col-auto mx-auto">
+            <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
+                <option value="" disabled selected>Filter by:</option>
+                <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
+            </select>
+        </div>
+        <div class="col-auto mx-auto">
+            <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
+                <option value="" disabled selected>Posts per page:</option>
+                <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
+            </select>
+        </div>
+        <div class="col-auto mx-auto my-auto">
+            <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
+        </div>
+        <div class="col-auto mx-auto my-auto">
+            <button type="button" class="btn btn-sm br-20 shadow-c"
+                    (click)="autoSync()">
+                <span class="fa fa-refresh" *ngIf="!isRefresh"></span>
+                <div *ngIf="isRefresh">
+                    <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                </div>
+            </button>
+        </div>
+        <!--<div class="col-auto mx-auto my-auto">
+            &lt;!&ndash;<button type="button" class="btn btn-sm br-20 shadow-c"
+                    [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
+                <span class="fa fa-trash" *ngIf="!isDeleting"></span>
+                <div *ngIf="isDeleting">
+                    <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                </div>
+            </button>&ndash;&gt;
+            <div class="nt-circle bg-primary mr-1 cursor-pointer add-button shadow&#45;&#45;hover">
+                <span class="fa fa-chevron-left text-white"></span>
+            </div>
+            <div class="nt-circle bg-primary cursor-pointer add-button shadow&#45;&#45;hover">
+                <span class="fa fa-chevron-right text-white"></span>
+            </div>
+        </div>-->
+        <div class="col-auto mx-auto my-auto">
+            <span>{{selected}}/{{filteredPosts.length}}</span>
+        </div>
+    </div>
+</form>

@@ -20,4 +20,14 @@
 
 0.0.4:
 - Post engagement emojis section now scrolls
-  to the bottom on clicked
+  to the bottom on clicked.
+
+0.0.5:
+- Separated alert to it own component
+- Implementation of pagination in the view post component..
+- Added functionality to edit post in the view post component.
+- Filters are now its own component.
+- Refactored image upload to handle multiple pictures at the same time.
+- Uploaded images can now be remove.
+- Refactored home and create post component to use the new alert component directive.
+- View post tables remodeled to behave more responsive in both mobile and desktop.

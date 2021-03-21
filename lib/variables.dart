@@ -11,7 +11,7 @@
    'SCHEDULE_STATUS_WEBSOCKET': 'ws://localhost:5379/pws/schedule-status',
    'MEDIA_UPLOAD_URL': 'http://localhost:5379/file/upload'
 };*/
-const base_url = 'postit-backend-api.herokuapp.com';
+const base_url = 'postit-dev-api.herokuapp.com';
 const base_auth_url = 'postit-auth.herokuapp.com';
 Map env = const {
  'POST_URL': 'https://$base_url/posts',

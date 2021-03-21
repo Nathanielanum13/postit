@@ -48,7 +48,13 @@
     overflow-x: hidden;
     overflow-y: scroll;
 }
-
+.add-card {
+    width: 50px;
+    height: 50px;
+}
+.add-card-inner {
+    border: 1px dashed grey;
+}
 #create-table {
     max-height: max-content !important;
     height: max-content;
@@ -100,7 +106,7 @@
     /*margin-top: -2rem !important;*/
 }
 .blur {
-    filter: blur(1px);
+    filter: blur(3px);
 }
 .fill {
     display: flex;

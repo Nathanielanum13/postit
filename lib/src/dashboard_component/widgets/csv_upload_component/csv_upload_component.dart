@@ -26,7 +26,7 @@ class CsvUploadComponent {
   int activeProgress = 0;
 
   String csvFileName = 'Select CSV file';
-  List<String> column_one = <String>[], column_two = <String>[];
+  List<String> column_one = <String>[], column_two = <String>[], column_three = <String>[];
 
   CsvUploadComponent(this._getPostService);
 
@@ -42,9 +42,10 @@ class CsvUploadComponent {
     await reader.onLoadEnd.first;
     String result = reader.result;
 
-    Pattern pattern = '~';
+    Pattern pattern = ',';
     List<String> csvFile = result.split(pattern);
     csvFile.removeLast();
+    print(csvFile);
 
 
     int j = 0;
@@ -65,7 +66,9 @@ class CsvUploadComponent {
       progressStatus = true;
       if(column_one.length == column_two.length) {
         for(int i = 0; i < column_one.length; i++) {
-          await _getPostService.create(column_one[i], tags: trimColumn(column_two[i]), priority:false);
+          /*await _getPostService.create(column_one[i], tags: trimColumn(column_two[i]), priority:false);*/
+          print('${trimColumn(column_one[i])}');
+          /*||| (${trimColumn(column_two[i])}) ||| ${trimColumn(column_three[i])}*/
           getActiveProgress(i);
         }
         csvFileName = 'Select CSV file';
@@ -77,17 +80,20 @@ class CsvUploadComponent {
     }
   }
 
-  List<String> trimColumn(String str) {
-    List<String> result = <String>[];
+  String trimColumn(String str) {
+    /*List<String> result = <String>[];*/
 
-    Pattern pattern = ',';
+    str.trimRight();
+    str.trimLeft();
+
+    /*Pattern pattern = ',';
     result = str.split(pattern);
 
     if(result.last == '') {
       result.removeLast();
-    }
+    }*/
 
-    return result;
+    return str;
   }
 
   void getActiveProgress(int i) {

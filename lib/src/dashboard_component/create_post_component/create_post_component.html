@@ -1,12 +1,4 @@
-<div *ngIf="postAlertBool"
-     [class.alert-danger]="postAlertCode!=200"
-     [class.alert-success]="postAlertCode==200"
-     class="py-2 mt-2 w-auto text-center" id="post_alert">
-    <span class="fa fa-bell mx-3"></span>
-    {{postAlert}}
-    <span (click)="dismissAlert()"
-          class="fa fa-times fa-sm mx-3 my-auto cursor-pointer" id="alert_close"></span>
-</div>
+<alert [alert]="setAlert" *ngIf="setAlert != null"></alert>
 <div class="container mt-3">
     <div class="container mt-3">
         <div class="row">
@@ -137,10 +129,10 @@
                                                             <div class="progress-div" style="width: {{imagesProgress[$i]}}%;"></div>
                                                         </div>
                                                     </div>
-                                                    <img src="{{imgPath}}" alt="{{imgPath}}" width="100" class="img-fluid img-center" [class.blur]="imagesProgress[$i] != 100" style="border-radius: 10px">
+                                                    <img src="{{imgPath}}" alt="{{imgPath}}" class="img-fluid img-center" [class.blur]="imagesProgress[$i] != 100" style="border-radius: 5px">
                                                 </a>
                                                 <div class="nt-center">
-                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="!failed">
+                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="!failed" (click)="deleteFile($i)">
                                                         <span class="fa fa-times small text-white"></span>
                                                     </div>
                                                     <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="failed">
@@ -148,20 +140,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="nt-center">
-                                        <form #form enctype="multipart/form-data" class="">
-                                            <div class="custom-upload">
-                                                <input (change)="handleUpload(form, $event)" name="media_file" accept="image/*"
-                                                       type="file">
-                                                <!--<material-icon icon="add_circle" class="text-muted cursor-pointer" *ngIf="imgPath.isEmpty"></material-icon>-->
-                                                <!--<div class="text-muted cursor-pointer text-center br-20" *ngIf="imgPaths.isEmpty" style="padding: 2rem; border: 1px dashed grey">Click to add <span class="fa fa-picture-o"></span></div>-->
-                                                <div class="nt-circle bg-primary add-button">
-                                                    <span class="fa fa-plus text-white"></span>
-                                                </div>
+                                            <div class="card pl-3 py-3 bg-transparent border-0" *ngIf="counter < 6">
+                                                <form #form enctype="multipart/form-data" class="m-auto">
+                                                    <div class="custom-upload">
+                                                        <input (change)="handleUpload(form, $event)" name="media_file" accept="image/*"
+                                                               type="file" multiple="multiple">
+                                                        <!--<material-icon icon="add_circle" class="text-muted cursor-pointer" *ngIf="imgPath.isEmpty"></material-icon>-->
+                                                        <!--<div class="text-muted cursor-pointer text-center br-20" *ngIf="imgPaths.isEmpty" style="padding: 2rem; border: 1px dashed grey">Click to add <span class="fa fa-picture-o"></span></div>-->
+                                                        <div class="nt-circle bg-primary add-button">
+                                                            <span class="fa fa-plus text-white"></span>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Panel 1 -->
