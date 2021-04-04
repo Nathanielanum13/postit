@@ -12,7 +12,7 @@
    'MEDIA_UPLOAD_URL': 'http://localhost:5379/file/upload'
 };*/
 const base_url = 'postit-dev-api.herokuapp.com';
-const base_auth_url = 'postit-auth.herokuapp.com';
+const base_auth_url = 'postit-dev-auth.herokuapp.com';
 Map env = const {
  'POST_URL': 'https://$base_url/posts',
  'SCHEDULE_URL': 'https://$base_url/schedule-post',

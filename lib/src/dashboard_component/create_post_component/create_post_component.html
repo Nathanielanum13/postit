@@ -49,10 +49,6 @@
                                                   style="font-size: 17px !important;">
                                             <!--(keyup.enter)="addPost()"-->
                                         </textarea>
-                                        <!--<a type="button" class="btn-floating btn-comm waves-effect waves-light w-15 ml-auto my-auto" (click)="addPost()"
-                                           *ngIf="!editKey && !isSending">
-                                            <span class="fa fa-paper-plane nt-center text-white"></span>
-                                        </a>-->
                                         <span (click)="addPost()"
                                               *ngIf="!editKey && !isSending"
                                               class="fa fa-paper-plane w-15 ml-auto my-auto text-default-six cursor-pointer">
@@ -107,19 +103,6 @@
                             <div class="tab-content mt-3">
                                 <!-- Panel 1 -->
                                 <div class="tab-pane fade in show active position-relative" id="panel1" role="tabpanel" style="overflow-y: scroll !important;">
-                                    <!--<div class="text-muted cursor-pointer text-center br-20 small" *ngIf="imgPaths.isEmpty">Click to + to add image</div>-->
-                                    <!--<div class="row m-0 w-100">
-                                        <div class="col-auto mx-auto py-2" *ngFor="let imgPath of imgPaths; let $i = index">
-                                            <a target="_blank" href="{{imgPath}}" class="post-image img-center">
-                                                <div class="row mx-0 w-100 my-2" *ngIf="imagesProgress[$i] != 100">
-                                                    <div class="col-sm-10 mx-auto">
-                                                        <div class="progress-div" style="width: {{imagesProgress[$i]}}%;"></div>
-                                                    </div>
-                                                </div>
-                                                <img src="{{imgPath}}" alt="{{imgPath}}" width="120" class="img-fluid img-center br-20" [class.blur]="imagesProgress[$i] != 100">
-                                            </a>
-                                        </div>
-                                    </div>-->
                                     <div class="m-0 p-2">
                                         <div class="card-columns">
                                             <div class="card bg-transparent p-2 border-0" *ngFor="let imgPath of imgPaths; let $i = index" style="border-radius: 10px">
@@ -145,8 +128,6 @@
                                                     <div class="custom-upload">
                                                         <input (change)="handleUpload(form, $event)" name="media_file" accept="image/*"
                                                                type="file" multiple="multiple">
-                                                        <!--<material-icon icon="add_circle" class="text-muted cursor-pointer" *ngIf="imgPath.isEmpty"></material-icon>-->
-                                                        <!--<div class="text-muted cursor-pointer text-center br-20" *ngIf="imgPaths.isEmpty" style="padding: 2rem; border: 1px dashed grey">Click to add <span class="fa fa-picture-o"></span></div>-->
                                                         <div class="nt-circle bg-primary add-button">
                                                             <span class="fa fa-plus text-white"></span>
                                                         </div>

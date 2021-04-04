@@ -27,7 +27,8 @@ class PostAccountComponent implements OnInit {
   String loginLinkUrl = '';
   int accountCount = 0;
   var appTheme;
-  List<FacebookResponseData> accountEmails = <FacebookResponseData>[];
+  Data accounts;
+  List<bool> accountTabs = [false, false, false, false];
   final FacebookDataService _facebookDataService;
 
   PostAccountComponent(this._facebookDataService);
@@ -43,31 +44,29 @@ class PostAccountComponent implements OnInit {
 
   void cancel() {
     toggle = true;
-    showPopup('');
   }
 
   void cancelView() {
     toggleView = true;
-    showViewPopup('');
   }
 
   Future<void> deleteFacebookAccount(int index) async {
-    await _facebookDataService.deleteFacebookAccount(accountEmails[index].userId);
+    await _facebookDataService.deleteFacebookAccount(accounts.linkedin[index].userId);
 //    var userId = accountEmails[index].userId;
     var next = logout['next'];
-    var accessToken = accountEmails[index].accessToken;
+    var accessToken = accounts.linkedin[index].accessToken;
     var fbUrl = 'https://www.facebook.com/logout.php?confirm=1&next=$next&access_token=$accessToken';
 
     window.location.assign(fbUrl);
   }
 
-  void showPopup(String name) {
-    toggle = !toggle;
+  void showPopup(int index) {
+    accountTabs[index] = !accountTabs[index];
     var doc = getDocument();
     List<Element> a = doc.querySelectorAll('#body button');
     List<Element> x = doc.querySelectorAll('#fb button');
 
-    if (toggle) {
+    if (accountTabs[index]) {
       doc.getElementById('dialog').setAttribute('display', 'true');
       doc.getElementById('view-dialog').setAttribute('display', 'false');
       doc.getElementById('body').style.filter = 'blur(5px)';
@@ -76,23 +75,14 @@ class PostAccountComponent implements OnInit {
         a[i].setAttribute('disabled', 'true');
       }
 
-      if (name == 'facebook') {
-        mediaName = 'Facebook';
-        mediaIcon = 'facebook';
-        mediaText = 'text-primary';
-      } else if (name == 'twitter') {
-        mediaName = 'Twitter';
-        mediaIcon = 'twitter';
-        mediaText = 'text-primary';
-      } else if (name == 'instagram') {
-        mediaName = 'Instagram';
-        mediaIcon = 'instagram';
-        mediaText = 'text-danger';
-      } else if (name == 'linkedin') {
-        mediaName = 'LinkedIn';
-        mediaIcon = 'linkedin';
-        mediaText = 'text-primary';
+      for(int counter = 0; counter < accountTabs.length; counter++) {
+        if(counter == index) {
+          continue;
+        } else {
+          accountTabs[counter] = false;
+        }
       }
+
     } else {
       doc.getElementById('dialog').setAttribute('display', 'false');
       doc.getElementById('view-dialog').setAttribute('display', 'false');
@@ -154,12 +144,12 @@ class PostAccountComponent implements OnInit {
     await gotoFacebook();
 
     try {
-      accountEmails = await _facebookDataService.getAllFacebookData();
+      accounts = await _facebookDataService.getAllAccountData();
     } catch (e){
       print('An error has occurred');
     }
 
-    accountCount = accountEmails.length;
+    accountCount = (accounts.facebook.length + accounts.twitter.length + accounts.linkedin.length);
   }
 
 }

@@ -159,23 +159,25 @@
                                         No queued schedule
                                     </div>
                                     <div *ngIf="schedules.isNotEmpty">
-                                        <div class="card br-10 mt-3 shadow border-0" *ngFor="let schedule of schedules; let $i=index" style="background-color: #f9feff">
+                                        <div class="card br-10 mt-3 shadow border-0" *ngFor="let schedule of schedules; let $i=index" style="background-color: #f9fdff">
                                             <div class="card-body m-0 px-4">
                                                 <div class="row my-0 mx-auto">
                                                     <div class="col-4 my-auto text-overflow">
                                                         <span class="text-muted figure-caption">{{schedule.title}}</span>
                                                     </div>
                                                     <div class="col-4 my-auto text-muted figure-caption text-overflow">
-                                                        <span class="text-warning">Due in</span>
-                                                        1hr 30min
+                                                        <span class="text-muted font-weight-bold">Due in</span>
+                                                        {{ durationItems[$i] }} hrs
                                                     </div>
                                                     <div class="col-4 my-auto text-center text-muted figure-caption">
-                                                        <div class="nt-circle bg-primary add-button cursor-pointer my-auto" (click)="gotoManagePostComponent()">
+                                                        <!--<div class="nt-circle bg-primary add-button cursor-pointer my-auto" (click)="gotoManagePostComponent()">
                                                             <span class="fa fa-edit font-weight-bold text-white"></span>
-                                                        </div>
-                                                        <div class="nt-circle bg-dark add-button cursor-pointer my-auto" (click)="togglePopup($i)">
+                                                        </div>-->
+                                                        <span class="fa fa-pencil text-white my-auto shadow px-1 br-20 nt-circle bg-primary add-button cursor-pointer" (click)="gotoManagePostComponent()" style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                                                        <!--<div class="nt-circle bg-dark add-button cursor-pointer my-auto" (click)="togglePopup($i)">
                                                             <span class="fa fa-trash-o font-weight-bold text-white"></span>
-                                                        </div>
+                                                        </div>-->
+                                                        <span class="fa fa-times text-white my-auto shadow px-1 br-20 nt-circle bg-dark add-button cursor-pointer" (click)="togglePopup($i)" style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
                                                     </div>
                                                 </div>
                                             </div>

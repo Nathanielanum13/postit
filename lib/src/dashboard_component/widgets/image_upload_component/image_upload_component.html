@@ -1,1 +1,31 @@
-<input type="file" #image accept="image/*" (change)="handleUpload($event)">
+<div class="card-columns">
+    <div class="card bg-transparent p-2 border-0" *ngFor="let imgPath of imgPaths; let $i = index" style="border-radius: 10px">
+        <a target="_blank" href="{{imgPath}}" class="post-image img-center">
+            <div class="row mx-0 w-100 my-1" *ngIf="imagesProgress[$i] != 100 && !failed">
+                <div class="col-sm-12 m-0 p-0">
+                    <div class="progress-div" style="width: {{imagesProgress[$i]}}%;"></div>
+                </div>
+            </div>
+            <img src="{{imgPath}}" alt="{{imgPath}}" class="img-fluid img-center" [class.blur]="imagesProgress[$i] != 100" style="border-radius: 5px">
+        </a>
+        <div class="nt-center">
+            <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="!failed" (click)="deleteFile($i)">
+                <span class="fa fa-times small text-white"></span>
+            </div>
+            <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="failed">
+                <span class="fa fa-refresh small text-white"></span>
+            </div>
+        </div>
+    </div>
+    <div class="card pl-3 py-3 bg-transparent border-0" *ngIf="counter < 6">
+        <form #form enctype="multipart/form-data" class="m-auto">
+            <div class="custom-upload">
+                <input (change)="handleUpload(form, $event)" name="media_file" accept="image/*"
+                       type="file" multiple="multiple">
+                <div class="nt-circle bg-primary add-button">
+                    <span class="fa fa-plus text-white"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

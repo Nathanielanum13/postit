@@ -49,9 +49,6 @@ import 'inner_route_paths.dart';
 )
 
 class DashboardComponent implements OnInit, CanActivate {
-
-  bool persistentDrawerType = false;
-  bool temporaryDrawerType = false;
   bool customWidth = false;
   bool isLoggedIn = false;
   bool nullAction = false;
@@ -61,6 +58,8 @@ class DashboardComponent implements OnInit, CanActivate {
   bool dropdown = false;
   bool isExpanded = false;
   bool isPerExpanded = false;
+
+  int docSize;
   Router _router;
   Location _location;
   var data;
@@ -82,8 +81,10 @@ class DashboardComponent implements OnInit, CanActivate {
     var drop = getDocument();
     if(dropdown) {
       drop.getElementById('dropdwn-content').style.display = 'block';
+      drop.getElementById('dropdwn-content-temp').style.display = 'block';
     } else {
       drop.getElementById('dropdwn-content').style.display = 'none';
+      drop.getElementById('dropdwn-content-temp').style.display = 'none';
     }
   }
 
@@ -145,26 +146,14 @@ class DashboardComponent implements OnInit, CanActivate {
   }
 
   void getScreenSize() {
-    print('about to go down');
-
-    /*if(width <= 576) {
-      temporaryDrawerType = true;
-      persistentDrawerType = false;
-    } else if(width > 576 && width <= 720) {
-      temporaryDrawerType = true;
-      persistentDrawerType = false;
-    } else if(width > 720 && width <= 900) {
-      temporaryDrawerType = false;
-      persistentDrawerType = true;
-    } else if(width > 900) {
-      temporaryDrawerType = false;
-      persistentDrawerType = true;
-    }*/
+    docSize = getDocument().documentElement.clientWidth;
+    print('Width: $docSize');
   }
 
   @override
   Future<void> ngOnInit() async {
     getData();
+    window.addEventListener('resize', (event) => getScreenSize());
     getScreenSize();
   }
 

@@ -63,23 +63,23 @@
     </div>
 </div>
 <form novalidate #filterForm="ngForm" (ngSubmit)="onSubmit()" class="d-none d-md-block d-lg-block">
-    <div class="row c-bordered box-three sticky-top mx-2 br-20">
-        <div class="col-auto mx-auto">
+    <div class="row c-bordered box-three sticky-top mx-2 br-20 text-center">
+        <div class="col-3 m-auto">
             <select name="filter" id="filter" class="nt-form-control border-0 br-20" [(ngModel)]="selectedFilter">
                 <option value="" disabled selected>Filter by:</option>
                 <option [value]="filter" *ngFor="let filter of filters">{{filter}}</option>
             </select>
         </div>
-        <div class="col-auto mx-auto">
+        <div class="col-3 m-auto">
             <select name="number" id="number" class="nt-form-control border-0 br-20" [(ngModel)]="selectedNumber">
                 <option value="" disabled selected>Posts per page:</option>
                 <option [value]="number" *ngFor="let number of numbers">{{number}}</option>
             </select>
         </div>
-        <div class="col-auto mx-auto my-auto">
+        <div class="col-3 m-auto">
             <button type="submit" class="btn btn-primary btn-sm br-20 px-3" [class.disabled]="selectedFilter.isEmpty">Fetch post</button>
         </div>
-        <div class="col-auto mx-auto my-auto">
+        <div class="col-1 m-auto">
             <button type="button" class="btn btn-sm br-20 shadow-c"
                     (click)="autoSync()">
                 <span class="fa fa-refresh" *ngIf="!isRefresh"></span>
@@ -88,22 +88,7 @@
                 </div>
             </button>
         </div>
-        <!--<div class="col-auto mx-auto my-auto">
-            &lt;!&ndash;<button type="button" class="btn btn-sm br-20 shadow-c"
-                    [class.disabled]="deleteIds.isEmpty" (click)="batchDelete()">
-                <span class="fa fa-trash" *ngIf="!isDeleting"></span>
-                <div *ngIf="isDeleting">
-                    <img src="img/mini-loader.gif" style="width: 20px; height: auto">
-                </div>
-            </button>&ndash;&gt;
-            <div class="nt-circle bg-primary mr-1 cursor-pointer add-button shadow&#45;&#45;hover">
-                <span class="fa fa-chevron-left text-white"></span>
-            </div>
-            <div class="nt-circle bg-primary cursor-pointer add-button shadow&#45;&#45;hover">
-                <span class="fa fa-chevron-right text-white"></span>
-            </div>
-        </div>-->
-        <div class="col-auto mx-auto my-auto">
+        <div class="col-2 m-auto">
             <span>{{selected}}/{{filteredPosts.length}}</span>
         </div>
     </div>

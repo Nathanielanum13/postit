@@ -49,7 +49,8 @@ class DashHomeComponent implements OnInit, CanNavigate {
   List<Schedule> schedules = <Schedule>[];
   int postCount = 0;
   int scheduleCount = 0;
-  List<int> active = <int>[20, 69, 12, 50];
+  List<int> active = <int>[];
+  List<String> durationItems = <String>[];
   List<SocketData> datas = <SocketData>[];
   var appTheme;
   final GetWebSocketData _getWebSocketData;
@@ -118,6 +119,11 @@ class DashHomeComponent implements OnInit, CanNavigate {
   void calculateProgress(int total, int posted) {
     active.add(((posted/total)*100).toInt());
   }
+  void calculateDuration() {
+    for(int counter = 0; counter < schedules.length; counter++) {
+      durationItems.add((DateTime.parse(schedules[counter].to).difference(DateTime.parse(schedules[counter].from))).inHours.toString());
+    }
+  }
 
   void resetAlert() {
     setAlert = null;
@@ -133,11 +139,12 @@ class DashHomeComponent implements OnInit, CanNavigate {
   @override
   Future<void> ngOnInit() async {
     appTheme = json.decode(window.localStorage['x-user-preference-theme']);
+    schedules = await _getPostService.getAllScheduledPost();
+    calculateDuration();
     counters = await _getWebSocketData.getCountData();
     if(counters.accountCount == 0) {
       setAlert = Alert('No account added. Add to proceed', 400);
     }
-    schedules = await _getPostService.getAllScheduledPost();
     /*init [webSocket] var with [WebSocket] object*/
     webSocket = WebSocket('${env['SCHEDULE_STATUS_WEBSOCKET']}');
 

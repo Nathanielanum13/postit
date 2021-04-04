@@ -15,6 +15,7 @@ import 'package:angular_components/material_expansionpanel/material_expansionpan
 import 'package:angular_components/material_expansionpanel/material_expansionpanel_auto_dismiss.dart';
 import 'package:angular_components/material_expansionpanel/material_expansionpanel_set.dart';
 import 'package:angular_components/material_icon/material_icon.dart';
+import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 const List<String> _filters = [
@@ -73,27 +74,54 @@ class FilterComponent implements OnInit{
   bool isRefresh = false;
   bool isDeleting = false;
   bool filterDropdown = false;
+  bool isPostLoading = false;
   String postAlert = '';
   bool postAlertBool = false;
   String emptyMessage = 'Select filters to apply';
   final GetPostService _getPostService;
   var appTheme;
 
+  Alert setAlert;
+
+  /*StreamSubscription<MouseEvent> listener;*/
+
   FilterComponent(this._getPostService);
+
+  Future<void> checkPost() async {
+    if(posts.isNotEmpty) {
+      return;
+    } else {
+      isLoading();
+      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
+      try {
+        posts = await _getPostService.getAllPost();
+        isLoading();
+        _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
+        return;
+      } catch(e) {
+        isLoading();
+        _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, Alert('Failed to load posts', 500)));
+        return;
+      }
+    }
+  }
 
   void onSubmit() {
     if((selectedFilter == 'All')) {
+      checkPost();
       filteredPosts = posts;
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber)));
+      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
     } else if(selectedFilter == 'Posted') {
+      checkPost();
       filteredPosts = getPostedPosts();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber)));
+      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
     } else if(selectedFilter == 'Pending') {
+      checkPost();
       filteredPosts = getPendingPosts();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber)));
+      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
     } else if(selectedFilter == 'Scheduled') {
       filteredPosts = getScheduledPosts();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber)));
+      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
     }
   }
 
@@ -103,7 +131,20 @@ class FilterComponent implements OnInit{
 
   void toggleFilterDropdown() {
     filterDropdown = !filterDropdown;
+    /*if(filterDropdown) {
+      Timer(Duration(milliseconds: 100), listenToCloseDropdown);
+    }*/
   }
+
+  /*void closeDropdown() {
+    filterDropdown = false;
+    *//*listener.cancel();*//*
+  }*/
+  /*void listenToCloseDropdown() {
+    listener = getDocument().documentElement.onClick.listen((event) {
+      closeDropdown();
+    });
+  }*/
 
 
   List<Post> getPostedPosts() {
@@ -128,15 +169,11 @@ class FilterComponent implements OnInit{
 
   List<Post> getScheduledPosts() {
     List<Post> scheduledPost = <Post>[];
-    for(int counter = 0; counter < schedule.length; counter++) {
-      for(int i = 0; i < schedule[counter].postIds.length; i++) {
-        print('aaa');
-        if(searchPosts(schedule[counter].postIds[i])) {
-          scheduledPost.add(getPost(schedule[counter].postIds[i]));
-        }
+    for(int counter = 0; counter < posts.length; counter++) {
+      if(posts[counter].scheduleStatus) {
+        scheduledPost.add(posts[counter]);
       }
     }
-    print(scheduledPost.toString());
     return scheduledPost;
   }
 
@@ -235,11 +272,21 @@ class FilterComponent implements OnInit{
     }
   }
 
+  void isLoading() {
+    isPostLoading = !isPostLoading;
+  }
+
   @override
   Future<void> ngOnInit() async {
     appTheme = json.decode(window.localStorage['x-user-preference-theme']);
-    posts = await _getPostService.getAllPost();
-    schedule = await _getPostService.getAllScheduledPost();
+    try {
+      isLoading();
+      posts = await _getPostService.getAllPost();
+      isLoading();
+    } catch(e) {
+      isLoading();
+      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
+    }
   }
 
   int convInt(String selectedNumber) {
@@ -260,5 +307,8 @@ class FilterComponent implements OnInit{
 class FilterData {
   List<Post> finalPost;
   int selectedPostPerPage;
-  FilterData(this.finalPost, this.selectedPostPerPage);
+  bool loadingState;
+
+  Alert alert;
+  FilterData(this.finalPost, this.selectedPostPerPage, this.loadingState, this.alert);
 }

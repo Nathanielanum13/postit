@@ -25,7 +25,7 @@ class GetPostService {
   GetPostService(this._http);
 
   Future<List<Post>> getAllPost() async {
-    try {
+    /*try {
       final response = await _http.get(_postUrl, headers: _headers);
       final posts = (_extractPostData(response) as List)
           .map((json) => Post.fromJson(json))
@@ -33,11 +33,18 @@ class GetPostService {
       return posts;
     } catch (e) {
       throw _handleError(e);
-    }
+    }*/
+
+    return [
+      Post('Message one is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: true, createdOn: '1', id: '1', scheduleStatus: false),
+      Post('Message two is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: false, createdOn: '1', id: '2', scheduleStatus: false),
+      Post('Message three is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: false, createdOn: '1', id: '3', scheduleStatus: true),
+      Post('Message four is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: true, createdOn: '1', id: '4', scheduleStatus: false),
+    ];
   }
 
   Future<List<Schedule>> getAllScheduledPost() async {
-    try {
+    /*try {
       final response = await _http.get(_scheduleUrl, headers: _headers);
       final schedules = (_extractPostData(response) as List)
           .map((json) => Schedule.fromJson(json))
@@ -45,7 +52,11 @@ class GetPostService {
       return schedules;
     } catch (e) {
       throw _handleError(e);
-    }
+    }*/
+    return [
+      Schedule('January - one', '2021-11-20T00:00:00Z', '2021-11-21T00:00:00Z'),
+      Schedule('January - two', '2021-11-20T00:00:00Z', '2021-11-21T15:21:15Z'),
+    ];
   }
 
   dynamic _extractPostData(Response resp) => json.decode(resp.body)['data'];
@@ -145,6 +156,7 @@ class Post {
   bool checkedState = false;
   bool postPriority;
   bool postStatus;
+  bool scheduleStatus;
   bool edit = false;
 
   Post(this.postMessage,
@@ -154,7 +166,8 @@ class Post {
       this.postPic,
       this.createdOn,
       this.postPriority,
-      this.postStatus});
+      this.postStatus,
+      this.scheduleStatus});
 
   factory Post.fromJson(Map<String, dynamic> post) {
     return Post (
@@ -163,7 +176,8 @@ class Post {
       postPic: post['post_image'],
       id: post['post_id'],
       createdOn: post['created_on'],
-      postStatus: post['post_status']
+      postStatus: post['post_status'],
+      scheduleStatus: post['schedule_status']
     );
   }
 

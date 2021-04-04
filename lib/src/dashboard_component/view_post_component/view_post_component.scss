@@ -127,6 +127,17 @@ li.active {
 .special-btn:hover {
     background-color: rgba(0, 0, 0, .1);
 }
+#image-holder {
+    height: 150px;
+    max-height: 150px;
+
+    overflow-x: hidden !important;
+
+    width: 100%;
+
+    border: 1px dashed #b6b6b6;
+    border-radius: 5px !important;
+}
 .popup {
     position: fixed;
 

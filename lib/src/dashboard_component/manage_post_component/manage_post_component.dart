@@ -5,6 +5,9 @@ import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
+import 'package:angular_app/src/dashboard_component/widgets/filter_component/filter_component.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/material_datepicker/range.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -16,19 +19,6 @@ import 'package:angular_components/material_datepicker/module.dart';
 import 'package:angular_components/model/date/date.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 
-const List<String> _filters = [
-  'All',
-  'Posted',
-  'Scheduled',
-  'Unscheduled',
-];
-const List<String> _numbers = [
-  '20',
-  '50',
-  '100',
-  '100+',
-];
-
 @Component(
   selector: 'manage-post',
   templateUrl: 'manage_post_component.html',
@@ -39,6 +29,7 @@ const List<String> _numbers = [
     routerDirectives,
     MaterialCheckboxComponent,
     MaterialDatepickerComponent,
+    MaterialDateRangePickerComponent,
     DateRangeInputComponent,
     FocusListDirective,
     MaterialIconComponent,
@@ -48,13 +39,16 @@ const List<String> _numbers = [
     MaterialExpansionPanelAutoDismiss,
     MaterialExpansionPanelSet,
     ModalComponent,
+    FilterComponent,
+    AlertComponent,
   ],
   providers: [
     ClassProvider(GetPostService),
     windowBindings, datepickerBindings,
-    overlayBindings
+    overlayBindings,
   ],
-  exports: [InnerRoutes, InnerRoutePaths]
+  exports: [InnerRoutes, InnerRoutePaths],
+  pipes: [commonPipes]
 )
 class ManagePostComponent implements OnInit {
   final GetPostService _getPostService;
@@ -66,16 +60,11 @@ class ManagePostComponent implements OnInit {
   Date fromStart = Date.today();
   Date fromEnd = Date.today().add(years: 15);
   List<SingleDayRange> predefinedDates;
+  List<DatepickerPreset> getPresets;
 
   List<Schedule> scheduledPosts = <Schedule>[];
   List<Post> posts = <Post>[];
   List<Post> filteredPosts = <Post>[];
-  List<String> postIds = <String>[];
-  String selectedFilter = '';
-  String selectedNumber = '';
-
-  List<String> get filters => _filters;
-  List<String> get numbers => _numbers;
   String title = '';
   String duration = '';
   String postAlert = '';
@@ -84,30 +73,61 @@ class ManagePostComponent implements OnInit {
   bool isPosting = false;
   bool inputError = false;
   bool isRefresh = false;
-  bool createNeed = false;
-  bool saveCancel = false;
-  int postAlertCode = 0;
   String postMessage = '';
   bool loading = false;
+  bool showAccount = false;
   String emptyMessage = 'Select filters to apply';
   var appTheme;
+  String activeAccount = 'Facebook';
 
+  DatepickerComparison dateRange;
+  StreamSubscription<MouseEvent> listener;
+  List<String> selectedIds = <String>[];
+  Alert setAlert;
+  int itemsPerPage = 10;
+  int currentPage = 1;
+  int maxPage;
+  int i;
+
+  void getAllFilterData(FilterData data) {
+    filteredPosts = data.finalPost;
+    itemsPerPage = data.selectedPostPerPage;
+    loading = data.loadingState;
+    setAlert = data.alert;
+    Timer(Duration(seconds: 5), resetAlert);
+  }
+
+  void setDateRange() {
+    print('Date range::: ${dateRange.range.asPlainRange().toString()}');
+  }
+
+  void resetAlert() {
+    setAlert = null;
+  }
+
+  void getPresetsOnPageLoad() {
+      getPresets.add(DatepickerPreset('Today', DatepickerDateRange('Today', Date(2021, 3, 1), Date(2021, 3, 25))));
+  }
 
   Future<void> postSchedule() async {
+    showAccount = !showAccount;
+    var doc = getDocument().getElementById('manage-app');
 
-    if(startDate.isBefore(finalDate) && postIds.isNotEmpty && title.isNotEmpty) {
+    if(showAccount) {
+      doc.style.filter = 'blur(3px) brightness(0.9)';
+      Timer(Duration(milliseconds: 100), afterClose);
+    }
+    /*if(startDate.isBefore(finalDate) && selectedIds.isNotEmpty && title.isNotEmpty) {
       inputError = false;
       String from = startDate.asUtcTime().toIso8601String();
       String to = finalDate.asUtcTime().toIso8601String();
 
       try {
         isPosting = true;
-        PostStandardResponse resp = await _getPostService.createSchedule(title, true, from, to, postIds);
+        PostStandardResponse resp = await _getPostService.createSchedule(title, true, from, to, selectedIds);
         isPosting = false;
-        postAlert = resp.data.message;
-        postAlertCode = resp.httpStatusCode;
-        postAlertBool = true;
-        Timer(Duration(seconds: 5), dismissAlert);
+        setAlert = Alert(resp.data.message, resp.httpStatusCode);
+        Timer(Duration(seconds: 5), resetAlert);
 
         if(resp.httpStatusCode == 200) {
           Schedule newSchedule = Schedule(title, from, to, id: resp.data.id);
@@ -122,116 +142,66 @@ class ManagePostComponent implements OnInit {
           disableUsedDate();
         }
       } catch(e) {
-        postAlert = 'Could not create. Server offline';
-        postAlertCode = 500;
-        postAlertBool = true;
         isPosting = false;
-        Timer(Duration(seconds: 5), dismissAlert);
+        setAlert = Alert('Could not create. Server offline', 500);
+        Timer(Duration(seconds: 5), resetAlert);
       }
 
     } else {
       if(startDate == finalDate) {
-        postAlert = 'from: should not be equal to: ';
-        postAlertCode = 500;
-        postAlertBool = true;
         inputError = true;
-        Timer(Duration(seconds: 5), dismissAlert);
+        setAlert = Alert('from: should not be equal to: ', 500);
+        Timer(Duration(seconds: 5), resetAlert);
       } else {
-        postAlert = 'Invalid parameter. Check input fields';
-        postAlertCode = 500;
-        postAlertBool = true;
-        Timer(Duration(seconds: 5), dismissAlert);
+        setAlert = Alert('Invalid parameter. Check input fields', 500);
+        Timer(Duration(seconds: 5), resetAlert);
       }
 
-    }
+    }*/
 
   }
 
-  void dismissAlert() {
-    postAlertBool = false;
+  void afterClose() {
+    var doc = getDocument().getElementById('manage-app');
+    listener = doc.onClick.listen((event) {
+      closePopup();
+    });
+  }
+  void closePopup() {
+    getDocument().getElementById('accounts-slider').style.animationName = 'slide-down';
+    Timer(Duration(milliseconds: 500), close);
   }
 
-  Future<void> autoSync() async {
-    try {
-      isRefresh = true;
-      posts = await _getPostService.getAllPost();
-      isRefresh = false;
-      onSubmit();
-    } catch(e) {
-      isRefresh = false;
-    }
-  }
-
-  void onSubmit() {
-    if((selectedFilter == 'All' && selectedNumber.isEmpty) || (selectedFilter == 'All' && selectedNumber == '100+')) {
-      checkPostStatus();
-      filteredPosts = posts;
-    } else if(selectedFilter == 'All' && selectedNumber == '20') {
-      checkPostStatus();
-      if(posts.length < 20) {
-        filteredPosts = posts;
-      } else {
-        filteredPosts = posts.getRange(0, 20).toList();
-      }
-    } else if(selectedFilter == 'All' && selectedNumber == '50') {
-      checkPostStatus();
-      if(posts.length < 50) {
-        filteredPosts = posts;
-      } else {
-        filteredPosts = posts.getRange(0, 50).toList();
-      }
-    } else if(selectedFilter == 'All' && selectedNumber == '100') {
-      checkPostStatus();
-      if(posts.length < 100) {
-        filteredPosts = posts;
-      } else {
-        filteredPosts = posts.getRange(0, 100).toList();
-      }
-    }
-  }
-
-  Future<void> checkPostStatus() async {
-    if(posts.isEmpty) {
-      loading = true;
-      try {
-        posts = await _getPostService.getAllPost().timeout(Duration(seconds: 5));
-        loading = false;
-        emptyMessage = 'No post';
-        createNeed = true;
-      } catch(e) {
-        postAlert = 'Server offline. Request timeout';
-        postAlertCode = 500;
-        postAlertBool = true;
-        loading = false;
-        Timer(Duration(seconds: 5), dismissAlert);
-      }
-    } else {
-      loading = false;
-      createNeed = false;
-    }
+  void close() {
+    showAccount = false;
+    var doc = getDocument().getElementById('manage-app');
+    doc.style.filter = 'blur(0) brightness(1)';
+    listener.cancel();
   }
 
   void getAllIds() {
-    postIds.clear();
+    selectedIds.clear();
+    !allIsChecked;
     if(allIsChecked) {
       for(int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = true;
-        postIds.add(filteredPosts[i].id);
+        selectedIds.add(filteredPosts[i].id);
       }
     } else {
       for(int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = false;
-        postIds.remove(filteredPosts[i].id);
+        selectedIds.remove(filteredPosts[i].id);
       }
     }
-
   }
 
   void getId(int index) {
+    index = ((currentPage - 1) * itemsPerPage) + index;
+    !filteredPosts[index].checkedState;
     if(filteredPosts[index].checkedState) {
-      postIds.add(posts[index].id);
+      selectedIds.add(filteredPosts[index].id);
     } else {
-      postIds.remove(posts[index].id);
+      selectedIds.remove(filteredPosts[index].id);
     }
   }
 
@@ -247,21 +217,16 @@ class ManagePostComponent implements OnInit {
     String id = scheduledPosts[index].id;
     try {
       PostStandardResponse deleteResponse = await _getPostService.deleteSchedule(id);
-
-      postAlert = deleteResponse.data.message;
-      postAlertCode = deleteResponse.httpStatusCode;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
+      setAlert = Alert(deleteResponse.data.message, deleteResponse.httpStatusCode);
+      Timer(Duration(seconds: 5), resetAlert);
 
       if(deleteResponse.httpStatusCode == 200) {
         scheduledPosts.removeAt(index);
         disableUsedDate();
       }
     } catch(e) {
-      postAlert = 'Could not delete. Server error';
-      postAlertCode = 500;
-      postAlertBool = true;
-      Timer(Duration(seconds: 5), dismissAlert);
+      setAlert = Alert('Could not delete. Server error', 500);
+      Timer(Duration(seconds: 5), resetAlert);
     }
 
   }
@@ -292,6 +257,45 @@ class ManagePostComponent implements OnInit {
     posts = await _getPostService.getAllPost();
     scheduledPosts = await _getPostService.getAllScheduledPost();
     disableUsedDate();
+    getPresetsOnPageLoad();
+  }
+
+  int conv(idx) {
+    if (idx is String) {
+      this.i = int.parse(idx);
+    } else if (idx == null) {
+      this.i = 1;
+    } else {
+      this.i = idx;
+    }
+    return this.i;
+  }
+  List range() {
+    this.maxPage = (filteredPosts.length/conv(itemsPerPage)).ceil();
+    List ret = [];
+    for (var i=1; i<=this.maxPage; i++) {
+      ret.add(i);
+    }
+    return ret;
+  }
+  void setPage(n) {
+    this.currentPage = n;
+  }
+  void prevPage() {
+    if (this.currentPage > 1) {
+      --this.currentPage;
+    }
+  }
+  void nextPage() {
+    if (this.currentPage < this.maxPage) {
+      ++this.currentPage;
+    }
+  }
+  String prevPageDisabled() {
+    return this.currentPage == 1 ? "disabled" : "";
+  }
+  String nextPageDisabled() {
+    return this.currentPage == this.maxPage ? "disabled" : "";
   }
 
 }

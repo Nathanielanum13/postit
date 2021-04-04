@@ -1,12 +1,10 @@
 <!--Material Side bar-->
 <div id="app-body" class="{{appTheme['box-two']}}">
     <!--Temporary drawers-->
-    <!--<material-drawer #drawer="drawer" temporary
+    <material-drawer #drawer="drawer" id="temporary-drawer" temporary
                      [class.custom-width]="customWidth"
                      [attr.end]="end ? '' : null"
-                     [attr.overlay]="overlay ? '' : null"
-                     class=""
-                     style="border: 0 !important; position: fixed !important;" id="persistentDrawer">
+                     [attr.overlay]="overlay ? '' : null">
         <material-list *deferredContent id="app-drawer" class="{{appTheme['box']}}" style="overflow-x: hidden; overflow-y: scroll;">
             <div class="text-center py-3 w-50 mx-auto">
                 <div class="card bg-light br-20 py-4 border-0">
@@ -14,11 +12,11 @@
                 </div>
             </div>
             <div class="dropdwn">
-                <div class="text-center font-weight-bold text-muted cursor-pointer" id="account" (click)="toggleDropdwn()">
+                <div class="text-center font-weight-bold text-muted cursor-pointer" id="accounttemp" (click)="toggleDropdwn()">
                     {{data['admin_first_name']}} {{data['admin_last_name']}}
                     <span class="ml-2 fa fa-caret-down"></span>
                 </div>
-                <div class="dropdwn-content pb-0 mb-0 br-20" id="dropdwn-content">
+                <div class="dropdwn-content pb-0 mb-0 br-20" id="dropdwn-content-temp">
                     <ul class="list-unstyled">
                         <div class="px-3 pt-3">
                             <li class="pr-1">
@@ -76,7 +74,7 @@
                     </ul>
                 </div>
             </div>
-            &lt;!&ndash; Here is a group without a label &ndash;&gt;
+            <!-- Here is a group without a label -->
             <div group class="p-3 border-0 font-nyata mt-4">
                 <material-list-item @deferred [routerLink]="InnerRoutePaths.dash_home.toUrl()" [routerLinkActive]="'active_side'">
                     <material-icon icon="home" class="{{appTheme['text-muted']}}"></material-icon>Home
@@ -101,9 +99,9 @@
                     <material-icon icon="settings" class="{{appTheme['text-muted']}}"></material-icon>Settings
                 </material-list-item>
             </div>
-            &lt;!&ndash; This group has a label &ndash;&gt;
+            <!-- This group has a label -->
         </material-list>
-    </material-drawer>-->
+    </material-drawer>
     <!--/Temporary drawers-->
 
     <!--Expandable permanent drawer -->
@@ -219,7 +217,7 @@
     <!--/Expandable permanent drawer -->
 
     <!--Expandable persistent drawer-->
-    <material-drawer persistent #drawer="drawer" id="persistent-expandable-drawer" class="small-drawer" [attr.end]="end ? '' : null">
+    <!--<material-drawer  persistent #drawer="drawer" id="persistent-expandable-drawer" class="small-drawer" [attr.end]="end ? '' : null">
         <material-list *deferredContent style="overflow-x: hidden; overflow-y: scroll;">
             <div *ngIf="isExpanded">
                 <div class="text-center py-3 w-50 mx-auto">
@@ -327,7 +325,7 @@
         </material-list>
 
 
-    </material-drawer>
+    </material-drawer>-->
     <!--/Expandable persistent drawer-->
 
     <material-content>
@@ -344,7 +342,7 @@
 
                 <!--            <span class="material-header-title ml-2">Postit</span>-->
 
-                <nav class="material-navigation ml-auto" style="position: fixed; right: 1%;">
+                <nav class="material-navigation ml-auto" style="position: relative; right: 1%;">
                     <div class="font-weight-bold {{appTheme['text-muted']}} cursor-pointer mr-2">
                         <span class="fa fa-question-circle"></span>
                         Support

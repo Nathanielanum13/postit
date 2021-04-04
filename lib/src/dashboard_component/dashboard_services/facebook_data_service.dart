@@ -36,11 +36,10 @@ class FacebookDataService {
     return response;
   }
 
-  Future<List<FacebookResponseData>> getAllFacebookData() async {
+  Future<Data> getAllAccountData() async {
     final Response resp = await _http.get(_facebookUrl, headers: _headers);
-    final body = (json.decode(resp.body)['data'] as List)
-        .map((response) => FacebookResponseData.fromJson(response))
-        .toList();
+    final body = (json.decode(resp.body)['data'])
+        .map((response) => Data.fromJson(response));
     return body;
   }
 
@@ -63,14 +62,44 @@ class FacebookDataService {
     }
   }
 }
-class FacebookResponseData {
+class AccountResponseData {
   String username;
   String userId;
   String accessToken;
 
-  FacebookResponseData(this.username, this.userId, this.accessToken);
+  AccountResponseData(this.username, this.userId, this.accessToken);
 
-  factory FacebookResponseData.fromJson(Map<String, dynamic> data){
+  /*factory FacebookResponseData.fromJson(Map<String, dynamic> data){
     return FacebookResponseData(data['username'], data['user_id'], data['access_token']);
+  }*/
+}
+
+class Data {
+  List<AccountResponseData> facebook;
+  List<AccountResponseData> twitter;
+  List<AccountResponseData> linkedin;
+
+  Data(this.facebook, this.twitter, this.linkedin);
+
+  factory Data.fromJson(Map<String, dynamic> data) {
+    return Data(
+        extractAccountData(data['facebook_postit_user_data']),
+        extractAccountData(data['twitter_postit_user_data']),
+        extractAccountData(data['linked_in_postit_user_data']),
+    );
   }
+}
+
+List<AccountResponseData> extractAccountData(List<dynamic> accountData) {
+  List<AccountResponseData> finalData = <AccountResponseData>[];
+  for(int counter = 0; counter < accountData.length; counter++) {
+    finalData.add(
+        AccountResponseData(
+            accountData[counter]['username'],
+            accountData[counter]['userId'],
+            accountData[counter]['accessToken']
+        )
+    );
+  }
+  return finalData;
 }

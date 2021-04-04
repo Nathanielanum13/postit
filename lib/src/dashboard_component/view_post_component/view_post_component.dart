@@ -9,6 +9,7 @@ import 'package:angular_app/src/dashboard_component/widgets/alert_component/aler
 import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
 import 'package:angular_app/src/dashboard_component/widgets/emojis_component/emojis_component.dart';
 import 'package:angular_app/src/dashboard_component/widgets/filter_component/filter_component.dart';
+import 'package:angular_app/src/dashboard_component/widgets/image_upload_component/image_upload_component.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -29,7 +30,9 @@ import 'package:angular_router/angular_router.dart';
     routerDirectives,
     FilterComponent,
     AlertComponent,
-    EmojisComponent
+    EmojisComponent,
+    ImageUploadComponent,
+    routerDirectives,
   ],
   exports: [InnerRoutes, InnerRoutePaths],
   providers: [ClassProvider(GetPostService)],
@@ -37,6 +40,7 @@ import 'package:angular_router/angular_router.dart';
 )
 class ViewPostComponent implements OnInit {
   var appTheme;
+  Router _router;
   bool allIsChecked = false;
   bool loading = false;
   bool isDeleting = false;
@@ -47,6 +51,7 @@ class ViewPostComponent implements OnInit {
   List<bool> tabs = <bool>[true, false, false];
   Alert setAlert;
   StreamSubscription<MouseEvent> listener;
+  int selectedPostIndex;
   int focusScheduleId = null;
   int itemsPerPage = 10;
   int currentPage = 1;
@@ -59,11 +64,21 @@ class ViewPostComponent implements OnInit {
   int insertPosition = 0;
 
   GetPostService _getPostService;
-  ViewPostComponent(this._getPostService);
+  ViewPostComponent(this._getPostService, this._router);
+
+  Future<void> gotoPosts() async {
+    _router.navigate(InnerRoutePaths.create_post.toUrl());
+  }
+  Future<void> gotoSchedules() async {
+    _router.navigate(InnerRoutePaths.manage_post.toUrl());
+  }
 
   void getAllFilterData(FilterData data) {
     filteredPosts = data.finalPost;
     itemsPerPage = data.selectedPostPerPage;
+    loading = data.loadingState;
+    setAlert = data.alert;
+    Timer(Duration(seconds: 5), resetAlert);
   }
 
   void addTag() {
@@ -82,14 +97,16 @@ class ViewPostComponent implements OnInit {
     if(editPopup) {
       focusScheduleId = index;
       index = ((currentPage - 1) * itemsPerPage) + index;
+      selectedPostIndex = index;
       message = filteredPosts[index].postMessage;
       postTags = filteredPosts[index].postTag;
-      dashHome.style.filter = 'blur(3px)';
+      dashHome.style.filter = 'blur(3px) brightness(0.9)';
       Timer(Duration(milliseconds: 100), afterClose);
     } else {
       focusScheduleId = null;
       displayEmojiContainer = false;
-      dashHome.style.filter = 'blur(0)';
+      dashHome.style.filter = 'blur(0) brightness(1)';
+      tabs = [true, false, false];
     }
   }
   void afterClose() {
@@ -102,7 +119,8 @@ class ViewPostComponent implements OnInit {
     var dashHome = getDocument().getElementById('view-app');
     editPopup = false;
     displayEmojiContainer = false;
-    dashHome.style.filter = 'blur(0)';
+    dashHome.style.filter = 'blur(0) brightness(1)';
+    tabs = [true, false, false];
     listener.cancel();
   }
 
@@ -177,6 +195,31 @@ class ViewPostComponent implements OnInit {
     setAlert = null;
   }
 
+  Future<void> updatePost() async {
+    message = message.trim();
+    if (message.isEmpty) return null;
+
+    try {
+      PostStandardResponse resp = await _getPostService.update(filteredPosts[selectedPostIndex].id ,message, postTags, []);
+      setAlert = Alert(resp.data.message, resp.httpStatusCode);
+      Timer(Duration(seconds: 5), resetAlert);
+
+      if(resp.httpStatusCode == 200) {
+        Post newPost = Post(message, postTag: postTags, id: resp.data.id, postImage: []);
+
+        filteredPosts.removeAt(selectedPostIndex);
+        filteredPosts.insert(selectedPostIndex, newPost);
+
+        message = '';
+        postTags.clear();
+      }
+
+    } catch(e) {
+      setAlert = Alert('Failed to update post', 500);
+      Timer(Duration(seconds: 5), resetAlert);
+    }
+  }
+
   @override
   Future<void> ngOnInit() async {
     appTheme = json.decode(window.localStorage['x-user-preference-theme']);
@@ -197,7 +240,7 @@ class ViewPostComponent implements OnInit {
       allIsChecked = false;
     } catch(e) {
       isDeleting = false;
-      setAlert = Alert('Failed to delete selected post(s)', 500);
+      setAlert = Alert('Failed to delete selected post${selectedIds.length > 1 ? 's':''}', 500);
       Timer(Duration(seconds: 5), resetAlert);
     }
   }

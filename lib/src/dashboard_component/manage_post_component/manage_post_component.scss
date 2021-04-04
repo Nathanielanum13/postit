@@ -74,5 +74,91 @@
     overflow-x: hidden;
     overflow-y: scroll;
 }
+.table {
+    width: 100%;
+    display: table;
+    margin: 0;
+}
+.table th,
+.table td,
+.table thead th {
+    vertical-align: middle;
+}
+.table th {
+    padding: .25rem;
+}
+.table thead tr {
+    background-color: #e1e1e1;
+}
+.table thead tr th {
+    font-family: Nyata !important;
+    color: #7e7e7e;
+}
+.tags-text,
+.created-at-text,
+.post-message-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.post-message-text {
+    width: 10rem;
+}
+.created-at-text {
+    width: 8rem;
+}
+.tags-text {
+    width: 7rem;
+}
+.tag::after {
+    content: ' ';
+}
+.tag-host span {
+    display: inline !important;
+}
+li.active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+#accounts-slider {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #fcfeff;
 
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 
+    animation-name: slide-up;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes slide-up {
+    from {
+        bottom: -70vh;
+    }
+    to {
+        bottom: 0;
+    }
+}
+.slide-down {
+    animation-name: slide-down;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+@keyframes slide-down {
+    from {
+        bottom: 0;
+    }
+    to {
+        bottom: -70vh;
+    }
+}
