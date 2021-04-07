@@ -1,12 +1,11 @@
 //development
-const base_url = 'http://localhost:5379';
-const base_auth_url = 'http://localhost:3576';
+// const base_url = 'http://localhost:5379';
+// const base_auth_url = 'http://localhost:3576';
 
 //production
-/*
 const base_url = 'https://postit-dev-api.herokuapp.com';
 const base_auth_url = 'https://postit-dev-auth.herokuapp.com';
-*/
+
 
 Map env = const {
  'POST_URL': '$base_url/posts',
