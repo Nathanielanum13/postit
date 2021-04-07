@@ -30,7 +30,7 @@ Map env = const {
   'COUNT_URL': 'https://$base_url/count/data',
   'SCHEDULE_STATUS_WEBSOCKET': 'wss://$base_url/pws/schedule-status',
   'MEDIA_UPLOAD_URL': 'https://$base_url/file/upload',
-  'PROFILE_URL': 'https://$base_auth_url/auth',
+  'PROFILE_URL': 'https://$base_auth_url/auth/profile',
   'LOGIN_PASSWORD': 'https://$base_auth_url/auth/password',
   'COMPANY_DETAIL': 'https://$base_auth_url/auth/details'
 };
