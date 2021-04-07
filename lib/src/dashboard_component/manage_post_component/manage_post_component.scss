@@ -135,9 +135,14 @@ li.active {
     border-top-right-radius: 20px;
 
     animation-name: slide-up;
-    animation-duration: 500ms;
+    animation-duration: 300ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1;
+}
+.db {
+    position: fixed;
+    right: 5%;
+    bottom: 7%;
 }
 
 @keyframes slide-up {
@@ -150,7 +155,7 @@ li.active {
 }
 .slide-down {
     animation-name: slide-down;
-    animation-duration: 500ms;
+    animation-duration: 300ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1;
 }

@@ -4,8 +4,8 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/models.dart';
-import 'package:http/http.dart';
 import 'package:angular_app/variables.dart';
+import 'package:http/http.dart';
 
 @Injectable()
 class GetPostService {
@@ -19,13 +19,12 @@ class GetPostService {
   static final _scheduleUrl = '${env['SCHEDULE_URL']}';
   static final _batchDeleteUrl = '${env['BATCH_DELETE_URL']}';
 
-
   final Client _http;
 
   GetPostService(this._http);
 
   Future<List<Post>> getAllPost() async {
-    /*try {
+    try {
       final response = await _http.get(_postUrl, headers: _headers);
       final posts = (_extractPostData(response) as List)
           .map((json) => Post.fromJson(json))
@@ -33,18 +32,11 @@ class GetPostService {
       return posts;
     } catch (e) {
       throw _handleError(e);
-    }*/
-
-    return [
-      Post('Message one is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: true, createdOn: '1', id: '1', scheduleStatus: false),
-      Post('Message two is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: false, createdOn: '1', id: '2', scheduleStatus: false),
-      Post('Message three is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: false, createdOn: '1', id: '3', scheduleStatus: true),
-      Post('Message four is what I love to do, because of my height ', postTag: ['one', 'two', 'three', 'four'], postStatus: true, createdOn: '1', id: '4', scheduleStatus: false),
-    ];
+    }
   }
 
   Future<List<Schedule>> getAllScheduledPost() async {
-    /*try {
+    try {
       final response = await _http.get(_scheduleUrl, headers: _headers);
       final schedules = (_extractPostData(response) as List)
           .map((json) => Schedule.fromJson(json))
@@ -52,11 +44,7 @@ class GetPostService {
       return schedules;
     } catch (e) {
       throw _handleError(e);
-    }*/
-    return [
-      Schedule('January - one', '2021-11-20T00:00:00Z', '2021-11-21T00:00:00Z'),
-      Schedule('January - two', '2021-11-20T00:00:00Z', '2021-11-21T15:21:15Z'),
-    ];
+    }
   }
 
   dynamic _extractPostData(Response resp) => json.decode(resp.body)['data'];
@@ -73,14 +61,13 @@ class GetPostService {
     return Exception('Server error; cause: ${e.toString()}');
   }
 
-  Future<PostStandardResponse> create(
-      String message, {List<String> tags, List<int> image, bool priority}) async {
+  Future<PostStandardResponse> create(String message,
+      {List<String> tags, List<int> image, bool priority}) async {
     try {
       Post po = Post(message, postTag: tags, postPriority: priority);
 
       final response = await _http.post(_postUrl,
-          headers: _headers,
-          body: json.encode(po.toJson()));
+          headers: _headers, body: json.encode(po.toJson()));
       return _extractData(response);
     } catch (e) {
       throw _handleError(e);
@@ -88,12 +75,22 @@ class GetPostService {
   }
 
   Future<PostStandardResponse> createSchedule(
-      String title, bool postToFeed, String from, String to, List<String> postIds) async {
+      String title,
+      bool postToFeed,
+      String from,
+      String to,
+      List<String> postIds,
+      List<String> fbIds,
+      List<String> twIds,
+      List<String> liIds) async {
     try {
-      Schedule schedule = Schedule(title, from, to, postIds: postIds);
+      Schedule schedule = Schedule(title, from, to,
+          postIds: postIds,
+          fbAccounts: fbIds,
+          twAccounts: twIds,
+          liAccounts: liIds);
       final response = await _http.post(_scheduleUrl,
-          headers: _headers,
-          body: json.encode(schedule.toJson()));
+          headers: _headers, body: json.encode(schedule.toJson()));
       return _extractData(response);
     } catch (e) {
       throw _handleError(e);
@@ -105,8 +102,7 @@ class GetPostService {
     try {
       Post po = Post(message, postTag: tags);
       final update_response = await _http.put(_postUrl + '?post_id=' + id,
-          headers: _headers,
-          body: json.encode(po.toJson()));
+          headers: _headers, body: json.encode(po.toJson()));
       return _extractData(update_response);
     } catch (e) {
       throw _handleError(e);
@@ -115,7 +111,8 @@ class GetPostService {
 
   Future<PostStandardResponse> delete(String id) async {
     try {
-      final deleteResponse = await _http.delete(_postUrl + '?post_id=' + id, headers: _headers);
+      final deleteResponse =
+          await _http.delete(_postUrl + '?post_id=' + id, headers: _headers);
       return _extractData(deleteResponse);
     } catch (e) {
       throw _handleError(e);
@@ -125,8 +122,8 @@ class GetPostService {
   Future<PostStandardResponse> deleteSchedule(String id) async {
     var deleteResponse;
     try {
-      deleteResponse =
-          await _http.delete(_scheduleUrl + '?schedule_id=' + id, headers: _headers);
+      deleteResponse = await _http.delete(_scheduleUrl + '?schedule_id=' + id,
+          headers: _headers);
     } catch (e) {
       throw _handleError(e);
     }
@@ -158,6 +155,9 @@ class Post {
   bool postStatus;
   bool scheduleStatus;
   bool edit = false;
+  bool fbStatus;
+  bool twStatus;
+  bool liStatus;
 
   Post(this.postMessage,
       {this.postTag,
@@ -167,24 +167,27 @@ class Post {
       this.createdOn,
       this.postPriority,
       this.postStatus,
-      this.scheduleStatus});
+      this.scheduleStatus,
+      this.fbStatus,
+      this.twStatus,
+      this.liStatus});
 
   factory Post.fromJson(Map<String, dynamic> post) {
-    return Post (
-      post['post_message'],
-      postTag: convertLDS(post['hash_tags']),
-      postPic: post['post_image'],
-      id: post['post_id'],
-      createdOn: post['created_on'],
-      postStatus: post['post_status'],
-      scheduleStatus: post['schedule_status']
-    );
+    return Post(post['post_message'],
+        postTag: convertLDS(post['hash_tags']),
+        postPic: post['post_image'],
+        id: post['post_id'],
+        createdOn: post['created_on'],
+        fbStatus: post['post_fb_status'],
+        twStatus: post['post_tw_status'],
+        liStatus: post['post_li_status'],
+        scheduleStatus: post['scheduled']);
   }
 
   Map toJson() => {
-    'post_message': postMessage,
-    'hash_tags': postTag,
-  };
+        'post_message': postMessage,
+        'hash_tags': postTag,
+      };
 }
 
 List<Post> currentDBPost() {
@@ -215,9 +218,20 @@ class Schedule {
   String updated_on;
   List<String> postIds;
   int duration;
+  List<String> fbAccounts;
+  List<String> twAccounts;
+  List<String> liAccounts;
 
   Schedule(this.title, this.from, this.to,
-      {this.created_on, this.postToFeed, this.updated_on, this.id, this.postIds, this.duration});
+      {this.created_on,
+      this.postToFeed,
+      this.updated_on,
+      this.id,
+      this.postIds,
+      this.duration,
+      this.fbAccounts,
+      this.twAccounts,
+      this.liAccounts});
 
   factory Schedule.fromJson(Map<String, dynamic> schedule) {
     return Schedule(
@@ -230,11 +244,15 @@ class Schedule {
   }
 
   Map toJson() => {
-    'schedule_title': title,
-    'post_to_feed': postToFeed,
-    'from': from,
-    'to': to,
-    'post_ids': postIds,
-  };
-
+        'schedule_title': title,
+        'post_to_feed': postToFeed,
+        'from': from,
+        'to': to,
+        'post_ids': postIds,
+        'profiles': {
+          'facebook': fbAccounts,
+          'twitter': twAccounts,
+          'linked_in': liAccounts,
+        },
+      };
 }

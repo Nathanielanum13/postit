@@ -1,5 +1,5 @@
-<alert [alert]="setAlert" *ngIf="setAlert != null"></alert>
-<div class="container" id="dash-home">
+<alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
+<div class="container px-md-0" id="dash-home">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-9 col-sm-12">
@@ -20,7 +20,8 @@
                                     <div class="col-6">
                                         <span class="text-white font-weight-bolder h5">{{counters.postCount}}</span>
                                     </div>
-                                    <div class="col-6 bg-danger br-10 cursor-pointer add-button" (click)="gotoCreatePostComponent()">
+                                    <div (click)="gotoCreatePostComponent()"
+                                         class="col-6 bg-danger br-10 cursor-pointer add-button">
                                         <span class="fa fa-plus-circle mt-1"></span>
                                     </div>
                                 </div>
@@ -38,7 +39,8 @@
                                     <div class="col-6">
                                         <span class="text-white font-weight-bolder h5">{{counters.scheduleCount}}</span>
                                     </div>
-                                    <div class="col-6 bg-default-two br-10 cursor-pointer add-button" (click)="gotoManagePostComponent()">
+                                    <div (click)="gotoManagePostComponent()"
+                                         class="col-6 bg-default-two br-10 cursor-pointer add-button">
                                         <span class="fa fa-plus-circle mt-1"></span>
                                     </div>
                                 </div>
@@ -56,7 +58,8 @@
                                     <div class="col-6">
                                         <span class="text-white font-weight-bolder h5">{{counters.accountCount}}</span>
                                     </div>
-                                    <div class="col-6 bg-default-two br-10 cursor-pointer add-button" (click)="gotoPostAccountComponent()">
+                                    <div (click)="gotoPostAccountComponent()"
+                                         class="col-6 bg-default-two br-10 cursor-pointer add-button">
                                         <span class="fa fa-plus-circle mt-1"></span>
                                     </div>
                                 </div>
@@ -88,26 +91,34 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="row">
+        <div class="row text-center">
             <div class="col-md-6 col-sm-12">
                 <div class="col-12 mt-3">
                     <span>Schedule Progress</span>
                     <span class="ml-2 text-muted" style="font-size: small">All Schedules</span>
                     <span class="ml-2 fa fa-line-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
-                <div class="row br-20 card border-0 {{appTheme['box-one']}} p-3 mt-3" style="height: 263px">
+                <div class="row br-20 card border-0 {{appTheme['box-one']}} p-3 mt-3 mx-lg-2 mr-md-1 mb-4"
+                     style="height: 263px">
                     <div class="col-12 p-0">
                         <div style="height: 227px; overflow-y: scroll; overflow-x: hidden">
                             <div class="nav-wrapper">
-                                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text"
+                                    role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link mb-sm-3 mb-md-0 text-dark active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">
+                                        <a aria-controls="tabs-icons-text-1" aria-selected="true"
+                                           class="nav-link mb-sm-3 mb-md-0 text-dark active" data-toggle="tab"
+                                           href="#tabs-icons-text-1"
+                                           id="tabs-icons-text-1-tab" role="tab">
                                             <span class="fa fa-calendar text-danger mr-2"></span>Due
                                             <span class="badge badge-danger">{{datas.length}}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link mb-sm-3 mb-md-0 text-dark" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">
+                                        <a aria-controls="tabs-icons-text-2" aria-selected="false"
+                                           class="nav-link mb-sm-3 mb-md-0 text-dark" data-toggle="tab"
+                                           href="#tabs-icons-text-2"
+                                           id="tabs-icons-text-2-tab" role="tab">
                                             <span class="fa fa-clock-o mr-2 text-muted"></span>Queue
                                             <span class="badge badge-light">{{schedules.length}}</span>
                                         </a>
@@ -115,69 +126,81 @@
                                 </ul>
                             </div>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active p-2" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                    <div class="text-center nt-center {{appTheme['text-colour']}}" *ngIf="datas.isEmpty">
+                                <div aria-labelledby="tabs-icons-text-1-tab" class="tab-pane fade show active p-2"
+                                     id="tabs-icons-text-1"
+                                     role="tabpanel">
+                                    <div *ngIf="datas.isEmpty"
+                                         class="text-center nt-center {{appTheme['text-colour']}}">
                                         No schedule due
                                     </div>
                                     <div *ngIf="datas.isNotEmpty">
-                                        <div class="card br-10 mt-3 shadow--hover" *ngFor="let d of datas; let $i=index">
+                                        <div *ngFor="let d of datas; let $i=index"
+                                             class="card br-10 mt-3 shadow--hover">
                                             <div class="card-body m-0 px-4">
                                                 <div class="row my-0 mx-auto">
                                                     <div class="col-4 my-auto text-overflow">
-                                                        <span class="text-muted figure-caption">{{d.scheduleTitle}}</span>
+                                                        <span [title]="d.scheduleTitle"
+                                                              class="text-muted figure-caption">{{d.scheduleTitle}}</span>
                                                     </div>
-                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow" style="border-right: 1px solid green">
+                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow"
+                                                         style="border-right: 1px solid green">
                                                     <span class="text-danger">
-                                                    <span class="fa fa-arrow-up"></span>
+                                                    <span [title]="d.from" class="fa fa-arrow-up"></span>
                                                         {{d.from}}
                                                     </span>
                                                     </div>
                                                     <div class="col-4 my-auto text-muted figure-caption text-overflow">
                                                     <span class="text-success">
-                                                    <span class="fa fa-arrow-down"></span>
+                                                    <span [title]="d.to" class="fa fa-arrow-down"></span>
                                                         {{d.to}}
                                                     </span>
                                                     </div>
                                                 </div>
                                                 <div class="row my-0 mx-auto">
                                                     <div class="col-7 my-auto">
-                                                        <material-progress [activeProgress]="active[$i]"></material-progress>
+                                                        <material-progress
+                                                                [activeProgress]="active[$i]"></material-progress>
                                                     </div>
                                                     <div class="col-3 my-auto text-center">
                                                         <span class="figure-caption">{{active[$i]}}%</span>
                                                     </div>
                                                     <div class="col-2 my-auto">
-                                                        <span class="float-right figure-caption fa fa-eye cursor-pointer text-primary" (click)="postData($i)"></span>
+                                                        <span (click)="postData($i)"
+                                                              class="float-right figure-caption fa fa-eye cursor-pointer text-primary"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade p-2" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                    <div class="text-center nt-center {{appTheme['text-colour']}}" *ngIf="schedules.isEmpty">
+                                <div aria-labelledby="tabs-icons-text-2-tab" class="tab-pane fade p-2"
+                                     id="tabs-icons-text-2"
+                                     role="tabpanel">
+                                    <div *ngIf="schedules.isEmpty"
+                                         class="text-center nt-center {{appTheme['text-colour']}}">
                                         No queued schedule
                                     </div>
                                     <div *ngIf="schedules.isNotEmpty">
-                                        <div class="card br-10 mt-3 shadow border-0" *ngFor="let schedule of schedules; let $i=index" style="background-color: #f9fdff">
+                                        <div *ngFor="let schedule of schedules; let $i=index"
+                                             class="card br-10 mt-3 shadow border-0"
+                                             style="background-color: #f9fdff">
                                             <div class="card-body m-0 px-4">
                                                 <div class="row my-0 mx-auto">
                                                     <div class="col-4 my-auto text-overflow">
-                                                        <span class="text-muted figure-caption">{{schedule.title}}</span>
+                                                        <span [title]="schedule.title"
+                                                              class="text-muted figure-caption">{{schedule.title}}</span>
                                                     </div>
-                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow">
+                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow" title="{{ durationItems[$i] }} days">
                                                         <span class="text-muted font-weight-bold">Due in</span>
-                                                        {{ durationItems[$i] }} hrs
+                                                        {{ durationItems[$i] }} days
                                                     </div>
-                                                    <div class="col-4 my-auto text-center text-muted figure-caption">
-                                                        <!--<div class="nt-circle bg-primary add-button cursor-pointer my-auto" (click)="gotoManagePostComponent()">
-                                                            <span class="fa fa-edit font-weight-bold text-white"></span>
-                                                        </div>-->
-                                                        <span class="fa fa-pencil text-white my-auto shadow px-1 br-20 nt-circle bg-primary add-button cursor-pointer" (click)="gotoManagePostComponent()" style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
-                                                        <!--<div class="nt-circle bg-dark add-button cursor-pointer my-auto" (click)="togglePopup($i)">
-                                                            <span class="fa fa-trash-o font-weight-bold text-white"></span>
-                                                        </div>-->
-                                                        <span class="fa fa-times text-white my-auto shadow px-1 br-20 nt-circle bg-dark add-button cursor-pointer" (click)="togglePopup($i)" style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                                                    <div class="col-4 my-auto text-right text-muted figure-caption">
+                                                        <span (click)="gotoManagePostComponent()"
+                                                              class="fa fa-pencil text-white my-auto shadow px-1 br-20 nt-circle bg-primary add-button cursor-pointer"
+                                                              style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                                                        <span (click)="togglePopup($i)"
+                                                              class="fa fa-times text-white my-auto shadow px-1 br-20 nt-circle bg-dark add-button cursor-pointer"
+                                                              style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,9 +218,10 @@
                     <span class="ml-1 text-muted" style="font-size: small">for {{currentSchedule}}</span>
                     <span class="ml-2 fa fa-bar-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
-                <div class="row br-20 card border-0 {{appTheme['box-one']}} p-3 mt-3 mx-md-4 mb-4" style="height: 263px">
+                <div class="row br-20 card border-0 {{appTheme['box-one']}} p-3 mt-3 mx-lg-2 ml-md-1 mb-4"
+                     style="height: 263px">
                     <div class="col-md-12 mx-auto p-0">
-                        <div class="post-data" *ngIf="sentPosts.isEmpty">
+                        <div *ngIf="sentPosts.isEmpty" class="post-data">
                             <span class="text-center nt-center">Nothing to display</span>
                         </div>
                         <div *ngIf="sentPosts.isNotEmpty" class="post-data">
@@ -206,7 +230,8 @@
                                     <div class="row m-0">
                                         <div class="col-md-12 m-0 p-0">
                                             <div class="container p-0">
-                                                <table class="table post-card-data small table-responsive mb-0 table-striped" style="display: table !important;">
+                                                <table class="table post-card-data small table-responsive mb-0 table-striped"
+                                                       style="display: table !important;">
                                                     <thead>
                                                     <tr>
                                                         <th scope="col"></th>
@@ -225,12 +250,21 @@
                                                         <td class="text-center">
                                                             <span class="my-auto fa fa-check-circle text-success"></span>
                                                         </td>
-                                                        <td>{{sentPost.postMessage}}</td>
-                                                        <td><span *ngFor="let tag of sentPost.postTag">{{tag}},</span></td>
+                                                        <td [title]="sentPost.postMessage" class="text-overflow">
+                                                            {{sentPost.postMessage}}
+                                                        </td>
+                                                        <td [title]="sentPost.postTag"><span *ngFor="let tag of sentPost.postTag">{{tag}},</span>
+                                                        </td>
                                                     </tr>
                                                     <tr *ngIf="currentScheduleId != sentPosts.length">
                                                         <td colspan="3">
-                                                            <div class="lds-ellipsis nt-center" style="left: 45% !important;"><div></div><div></div><div></div><div></div></div>
+                                                            <div class="lds-ellipsis nt-center"
+                                                                 style="left: 45% !important;">
+                                                                <div></div>
+                                                                <div></div>
+                                                                <div></div>
+                                                                <div></div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -253,8 +287,8 @@
         <span class="figure-caption">Deleted schedules cannot be recovered</span>
 
         <div class="mt-3 p-0 text-center">
-            <button class="btn btn-sm btn-light br-20 px-4 mr-3" (click)="deleteSchedule()">Yes</button>
-            <button class="btn btn-sm btn-danger br-20 px-4" (click)="closePopup()">Cancel</button>
+            <button (click)="deleteSchedule()" class="btn btn-sm btn-light br-20 px-4 mr-3">Yes</button>
+            <button (click)="closePopup()" class="btn btn-sm btn-danger br-20 px-4">Cancel</button>
         </div>
     </div>
 </div>

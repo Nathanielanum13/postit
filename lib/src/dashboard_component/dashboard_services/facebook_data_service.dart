@@ -7,7 +7,6 @@ import 'package:http/http.dart';
 
 @Injectable()
 class FacebookDataService {
-
   final Client _http;
 
   //   Set the headers to be used by the class
@@ -22,8 +21,8 @@ class FacebookDataService {
 
   // Get the facebook url from the env file
   static final _facebookUrl = '${env['FACEBOOK_URL']}';
-  static final _deleteFacebookAccountUrl = '${env['DELETE_FACEBOOK_ACCOUNT_URL']}';
-
+  static final _deleteFacebookAccountUrl =
+      '${env['DELETE_FACEBOOK_ACCOUNT_URL']}';
 
   Future<Response> sendCodeToApi(String code) async {
     print('Received code: $code');
@@ -32,20 +31,21 @@ class FacebookDataService {
       'code': code,
     };
     // Send the code data to the backend
-    final Response response = await _http.post(_facebookUrl, headers: _headers, body: json.encode(FacebookRequestObject));
+    final Response response = await _http.post(_facebookUrl,
+        headers: _headers, body: json.encode(FacebookRequestObject));
     return response;
   }
 
-  Future<Data> getAllAccountData() async {
+  Future<Datar> getAllAccountData() async {
     final Response resp = await _http.get(_facebookUrl, headers: _headers);
-    final body = (json.decode(resp.body)['data'])
-        .map((response) => Data.fromJson(response));
-    return body;
+    return _extractDataResponse(json.decode(resp.body)['data']);
   }
 
   Future<void> deleteFacebookAccount(String userId) async {
-    final resp = await _http.delete(_deleteFacebookAccountUrl+ '?app_id=' + userId, headers: _headers);
-    if(resp.statusCode != 200) {
+    final resp = await _http.delete(
+        _deleteFacebookAccountUrl + '?app_id=' + userId,
+        headers: _headers);
+    if (resp.statusCode != 200) {
       return;
     }
   }
@@ -61,45 +61,46 @@ class FacebookDataService {
       return converted;
     }
   }
+
+  Datar _extractDataResponse(decodedItem) {
+    return Datar(
+      extractAccountData(decodedItem['facebook_postit_user_data']),
+      extractAccountData(decodedItem['twitter_postit_user_data']),
+      extractAccountData(decodedItem['linked_in_postit_user_data']),
+    );
+  }
+
+  List<AccountResponseData> extractAccountData(List<dynamic> accountData) {
+    List<AccountResponseData> finalData = <AccountResponseData>[];
+    if (accountData != null) {
+      for (int counter = 0; counter < accountData.length; counter++) {
+        finalData.add(AccountResponseData(
+            accountData[counter]['username'],
+            accountData[counter]['user_id'],
+            accountData[counter]['access_token']));
+      }
+    }
+    return finalData;
+  }
 }
+
 class AccountResponseData {
   String username;
   String userId;
   String accessToken;
+  bool checked = false;
 
   AccountResponseData(this.username, this.userId, this.accessToken);
 
-  /*factory FacebookResponseData.fromJson(Map<String, dynamic> data){
+/*factory FacebookResponseData.fromJson(Map<String, dynamic> data){
     return FacebookResponseData(data['username'], data['user_id'], data['access_token']);
   }*/
 }
 
-class Data {
+class Datar {
   List<AccountResponseData> facebook;
   List<AccountResponseData> twitter;
   List<AccountResponseData> linkedin;
 
-  Data(this.facebook, this.twitter, this.linkedin);
-
-  factory Data.fromJson(Map<String, dynamic> data) {
-    return Data(
-        extractAccountData(data['facebook_postit_user_data']),
-        extractAccountData(data['twitter_postit_user_data']),
-        extractAccountData(data['linked_in_postit_user_data']),
-    );
-  }
-}
-
-List<AccountResponseData> extractAccountData(List<dynamic> accountData) {
-  List<AccountResponseData> finalData = <AccountResponseData>[];
-  for(int counter = 0; counter < accountData.length; counter++) {
-    finalData.add(
-        AccountResponseData(
-            accountData[counter]['username'],
-            accountData[counter]['userId'],
-            accountData[counter]['accessToken']
-        )
-    );
-  }
-  return finalData;
+  Datar(this.facebook, this.twitter, this.linkedin);
 }

@@ -1,236 +1,288 @@
-<alert [alert]="setAlert" *ngIf="setAlert != null"></alert>
-<div class="row mt-3 ml-0 mr-0 mx-2" id="manage-app">
-    <div class="col-lg-4 col-md-12 col-sm-12 mb-md-3 mb-0">
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-12">
-                <div class="card shadow-c bg-transparent {{appTheme['box-one']}} br-20 border-0">
-                    <div class="card-body">
-                        <div class="text-center h6 {{appTheme['text-muted']}} mb-2">Create Schedule</div>
-                        <form novalidate>
-                            <div class="form-group">
-                                <input type="text"
-                                       class="nt-form-control border-0 br-20"
-                                       placeholder="Schedule title" [(ngModel)]="title">
-                            </div>
-                            <!--<div class="form-group">
-                                <material-date-range-picker class="simplified-example"
-                                                            [(range)]="rangeSimplified"
-                                                            [supportsComparison]="false"
-                                                            [showNextPrevButtons]="false">
-                                </material-date-range-picker>
-                            </div>-->
-                            <div class="form-group">
-                                <input type="text" class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger" placeholder="from" [(value)]="startDate" [class.alert-danger]="inputError">
-                                <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
-                                <material-datepicker [(date)]="startDate"
-                                                     [minDate]="fromStart"
-                                                     [maxDate]="fromEnd"
-                                                     [required]="true"
-                                                     class="dt-picker">
-                                </material-datepicker>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="nt-form-control border-0 pr-5 br-20" placeholder="to" [(value)]="finalDate" [class.alert-danger]="inputError">
-                                <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
-                                <material-datepicker [(date)]="finalDate"
-                                                     [minDate]="startDate"
-                                                     [maxDate]="fromEnd"
-                                                     [required]="true"
-                                                     class="dt-picker">
-                                </material-datepicker>
-                            </div>
-                            <!--<div class="form-group">
-                                <input type="text" class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger" placeholder="Date Range (from - to)" [(value)]="startDate" [class.alert-danger]="inputError">
-                                <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
-                                <material-date-range-picker [showNextPrevButtons]="false"
-                                                            [(range)]="dateRange"
-                                                            [presets]="getPresets"
-                                                            (click)="setDateRange()"></material-date-range-picker>
-                            </div>-->
-                        </form>
+<alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
+<div class="container mt-3 px-md-0">
+    <div class="row" id="manage-app">
+        <div class="col-lg-4 col-md-12 col-sm-12 mb-md-3 mb-0">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-12">
+                    <div class="card shadow-c bg-transparent {{appTheme['box-one']}} br-20 border-0">
+                        <div class="card-body">
+                            <div class="text-center h6 {{appTheme['text-muted']}} mb-2">Create Schedule</div>
+                            <form novalidate>
+                                <div class="form-group">
+                                    <input [(ngModel)]="title"
+                                           class="nt-form-control border-0 br-20"
+                                           placeholder="Schedule title" type="text">
+                                </div>
+                                <!--<div class="form-group">
+                                    <material-date-range-picker class="simplified-example"
+                                                                [(range)]="rangeSimplified"
+                                                                [supportsComparison]="false"
+                                                                [showNextPrevButtons]="false">
+                                    </material-date-range-picker>
+                                </div>-->
+                                <div class="form-group">
+                                    <input [(value)]="startDate" [class.alert-danger]="inputError"
+                                           class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger"
+                                           placeholder="from" type="text">
+                                    <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
+                                    <material-datepicker #sd
+                                                         (click)="disableUsedDates(sd)"
+                                                         [(date)]="startDate"
+                                                         [maxDate]="fromEnd"
+                                                         [minDate]="fromStart"
+                                                         [required]="true" class="dt-picker">
+                                    </material-datepicker>
+                                </div>
+                                <div class="form-group">
+                                    <input [(value)]="finalDate" [class.alert-danger]="inputError"
+                                           class="nt-form-control border-0 pr-5 br-20"
+                                           placeholder="to" type="text">
+                                    <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
+                                    <material-datepicker [(date)]="finalDate"
+                                                         [maxDate]="fromEnd"
+                                                         [minDate]="startDate"
+                                                         [required]="true"
+                                                         class="dt-picker">
+                                    </material-datepicker>
+                                </div>
+                                <!--<div class="form-group">
+                                    <input type="text" class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger" placeholder="Date Range (from - to)" [(value)]="startDate" [class.alert-danger]="inputError">
+                                    <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
+                                    <material-date-range-picker [showNextPrevButtons]="false"
+                                                                [(range)]="dateRange"
+                                                                [presets]="getPresets"
+                                                                (click)="setDateRange()"></material-date-range-picker>
+                                </div>-->
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-12">
-                <div class="card shadow-c bg-transparent {{appTheme['box-one']}} br-20 border-0 py-3 mt-3 my-3" style="height: 220px">
-                    <div class="card bg-transparent br-20 border-0 mx-0" id="scheduled-posts">
-                        <div class="card-body">
-                            <div class="text-center h6 {{appTheme['text-muted']}} mb-3">Scheduled Posts</div>
-                            <div *ngIf="scheduledPosts.isNotEmpty" class="px-3">
-                                <div *ngFor="let scheduledPost of scheduledPosts; let $i = index" class="row py-1 bg-light br-20 mb-2">
-                                    <div class="col-9">
+                <div class="col-sm-12 col-md-6 col-lg-12">
+                    <div class="card shadow-c bg-transparent {{appTheme['box-one']}} br-20 border-0 py-3 mt-3 my-3"
+                         style="height: 220px">
+                        <div class="card bg-transparent br-20 border-0 mx-0" id="scheduled-posts">
+                            <div class="card-body">
+                                <div class="text-center h6 {{appTheme['text-muted']}} mb-3">Scheduled Posts</div>
+                                <div *ngIf="scheduledPosts.isNotEmpty" class="px-3">
+                                    <div *ngFor="let scheduledPost of scheduledPosts; let $i = index"
+                                         class="row py-1 bg-light br-20 mb-2">
+                                        <div class="col-9">
                                 <span class="{{appTheme['text-muted']}} d-post-text py-1">
                                     {{scheduledPost.title}}
                                 </span>
-                                    </div>
-                                    <div class="col-3 my-auto text-right">
-                                        <span class="fa fa-times text-white shadow px-1 br-20 nt-circle bg-dark add-button cursor-pointer" (click)="remove($i)" style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                                        </div>
+                                        <div class="col-3 my-auto text-right">
+                                        <span (click)="remove($i)"
+                                              class="fa fa-times text-white shadow px-1 br-20 nt-circle bg-dark add-button cursor-pointer"
+                                              style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="mt-5 {{appTheme['text-muted']}} text-center" *ngIf="scheduledPosts.isEmpty">
-                                No schedule created
+                                <div *ngIf="scheduledPosts.isEmpty" class="mt-5 {{appTheme['text-muted']}} text-center">
+                                    No schedule created
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-8 col-md-12 col-sm-12 mb-3">
-        <div class="card shadow-c border-0 bg-transparent {{appTheme['box-one']}} br-20">
-            <div class="card-body">
-                <filter (sendData)="getAllFilterData($event)" [selected]="selectedIds.length"></filter>
-                <div class="row mt-2 mr-auto ml-auto" id="manage_box">
-                    <div class="table-responsive">
-                        <!-- Table -->
-                        <table class="table table-hover mb-0">
+        <div class="col-lg-8 col-md-12 col-sm-12 mb-3">
+            <div class="card shadow-c border-0 bg-transparent {{appTheme['box-one']}} br-20">
+                <div class="card-body">
+                    <filter (sendData)="getAllFilterData($event)" [selected]="selectedIds.length"></filter>
+                    <div class="row mt-2 mr-auto ml-auto" id="manage_box">
+                        <div class="table-responsive">
+                            <!-- Table -->
+                            <table class="table table-hover mb-0">
 
-                            <!-- Table head -->
-                            <thead>
-                            <tr>
-                                <th [class.text-center]="filteredPosts.isEmpty">
-                                    <material-checkbox [(checked)]="allIsChecked" (click)="getAllIds()"></material-checkbox>
-                                </th>
-                                <th class="th-lg">Post message</th>
-                                <th class="th-lg">Tags </th>
-                                <th class="th-lg">Status</th>
-                            </tr>
-                            </thead>
-                            <!-- Table head -->
-                            <!-- Table body -->
-                            <tbody *ngIf="filteredPosts.isNotEmpty">
-                            <tr *ngFor="let filteredPost of filteredPosts | slice:(currentPage-1)*conv(itemsPerPage):currentPage*conv(itemsPerPage); let $i=index">
-                                <th scope="row">
-                                    <material-checkbox [(checked)]="filteredPost.checkedState" (click)="getId($i)"></material-checkbox>
-                                </th>
-                                <td>
-                                    <span class="post-message-text figure-caption">{{filteredPost.postMessage}}</span>
+                                <!-- Table head -->
+                                <thead>
+                                <tr>
+                                    <th [class.text-center]="filteredPosts.isEmpty">
+                                        <material-checkbox (click)="getAllIds()"
+                                                           [(checked)]="allIsChecked"></material-checkbox>
+                                    </th>
+                                    <th class="th-lg">Post message</th>
+                                    <th class="th-lg">Tags</th>
+                                    <th class="th-lg">Status</th>
+                                </tr>
+                                </thead>
+                                <!-- Table head -->
+                                <!-- Table body -->
+                                <tbody *ngIf="filteredPosts.isNotEmpty">
+                                <tr *ngFor="let filteredPost of filteredPosts | slice:(currentPage-1)*conv(itemsPerPage):currentPage*conv(itemsPerPage); let $i=index">
+                                    <th scope="row">
+                                        <material-checkbox (click)="getId($i)"
+                                                           [(checked)]="filteredPost.checkedState"></material-checkbox>
+                                    </th>
+                                    <td>
+                                        <span class="post-message-text figure-caption" [title]="filteredPost.postMessage">{{filteredPost.postMessage}}</span>
+                                    </td>
+                                    <td class="tag-host" [title]="filteredPost.postTag"><span *ngFor="let tag of filteredPost.postTag"
+                                                               class="tag tags-text figure-caption">{{tag}}</span></td>
+                                    <td class="tags-text">
+                                        <span *ngIf="filteredPost.fbStatus"
+                                              title="Posted to facebook"
+                                              class="fa fa-facebook-square text-primary pr-1"></span>
+                                        <span *ngIf="filteredPost.twStatus"
+                                              title="Posted to twitter"
+                                              class="fa fa-twitter-square text-primary pr-1"></span>
+                                        <span *ngIf="filteredPost.liStatus"
+                                              title="Posted to linkedin"
+                                              class="fa fa-linkedin-square text-info pr-1"></span>
+                                        <span *ngIf="!filteredPost.fbStatus && !filteredPost.twStatus && !filteredPost.liStatus"
+                                              class="figure-caption">Not posted</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot *ngIf="filteredPosts.isNotEmpty">
+                                <td colspan="4">
+                                    <ul class="pagination float-right my-auto">
+                                        <li [class.text-muted]="currentPage == 1">
+                                            <a (click)="prevPage()" class="nav-link cursor-pointer font-weight-bold">≪
+                                                Prev</a>
+                                        </li>
+                                        <li (click)="setPage(n)"
+                                            *ngFor="let n of range()"
+                                            [class.active]="n == currentPage"
+                                            class="nt-circle cursor-pointer">
+                                            <span>{{n}}</span>
+                                        </li>
+                                        <li [class.text-muted]="currentPage == maxPage">
+                                            <a (click)="nextPage()" class="nav-link cursor-pointer font-weight-bold">Next
+                                                ≫</a>
+                                        </li>
+                                    </ul>
                                 </td>
-                                <td class="tag-host"><span class="tag tags-text figure-caption" *ngFor="let tag of filteredPost.postTag">{{tag}}</span></td>
-                                <td>
-                                    <button class="btn btn-outline-success btn-sm br-20 px-4 figure-caption" disabled *ngIf="filteredPost.postStatus">Posted</button>
-                                    <button class="btn btn-outline-primary btn-sm br-20 px-4 figure-caption" disabled *ngIf="!filteredPost.postStatus">Pending</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                            <tfoot *ngIf="filteredPosts.isNotEmpty">
-                            <td colspan="5">
-                                <ul class="pagination float-right my-auto">
-                                    <li [class.text-muted]="currentPage == 1">
-                                        <a class="nav-link cursor-pointer font-weight-bold" (click)="prevPage()">≪ Prev</a>
-                                    </li>
-                                    <li *ngFor="let n of range()"
-                                        [class.active]="n == currentPage"
-                                        class="nt-circle cursor-pointer"
-                                        (click)="setPage(n)">
-                                        <span>{{n}}</span>
-                                    </li>
-                                    <li [class.text-muted]="currentPage == maxPage">
-                                        <a class="nav-link cursor-pointer font-weight-bold" (click)="nextPage()">Next ≫</a>
-                                    </li>
-                                </ul>
-                            </td>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div *ngIf="filteredPosts.isEmpty && !loading">
-                        <div class="nt-center {{appTheme['text-muted']}}" style="width: max-content;">
-                            <template [ngIf]="!loading">
-                                <span class="fa fa-cloud {{appTheme['text-muted']}} mr-1"></span>
-                                {{emptyMessage}}
-                                <button type="button" class="btn btn-sm btn-outline-primary br-20 ml-2" [routerLink]="InnerRoutePaths.create_post.toUrl()">
-                                    <span class="fa fa-plus-circle mr-1"></span>Create post
-                                </button>
-                            </template>
-                            <template [ngIf]="loading">
-                                <img src="img/load.gif" alt="Loading..." class="img-fluid">
-                            </template>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div *ngIf="filteredPosts.isEmpty">
+                            <div class="nt-center {{appTheme['text-muted']}} text-center mt-4"
+                                 style="width: max-content;">
+                                <template [ngIf]="!loading">
+                                    <div class="mb-1">
+                                        <span class="fa fa-database {{appTheme['text-muted']}} fa-5x drop-fade"></span>
+                                    </div>
+                                    <span class="font-weight-bold text-muted fade-in">Nothing to show</span><br>
+                                    <span class="text-muted figure-caption"><span
+                                            class="text-muted font-weight-bold fade-in">Suggestions:</span> You can also create:</span>
+                                    <br>
+                                    <div class="mt-2">
+                                <span class="mx-2 slide-right">
+                                    <button (click)="gotoPosts()"
+                                            class="btn btn-sm btn-outline-dark br-20 px-4">Posts</button>
+                                </span>
+                                    </div>
+                                </template>
+                                <template [ngIf]="loading">
+                                    <img alt="Loading..." class="img-fluid" src="img/load.gif">
+                                </template>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row col-12 mx-0 mt-2" style="display: inline-flex !important;">
-                    <div class="col-6">
-                        <input type="text" class="nt-form-control border-0 br-20" disabled [value]="title" placeholder="Title">
-                    </div>
-                    <div class="col-6 my-auto">
-                        <button class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3 py-2"
-                                type="button"
-                                [class.disabled]="title.isEmpty || selectedIds.isEmpty"
-                                (click)="postSchedule()">
-                            <span *ngIf="!isPosting">
-                                <span class="d-none d-md-block">Post Schedule</span>
+                    <div class="row col-12 mx-0 mt-2 pt-4 py-1" style="display: inline-flex !important;">
+                        <div class="col-6">
+                            <input [value]="title" class="nt-form-control border-0 br-20" disabled placeholder="Title"
+                                   type="text">
+                        </div>
+                        <div class="col-6 my-auto">
+                            <button (click)="postSchedule()"
+                                    [class.d-none]="title.isEmpty || selectedIds.isEmpty"
+                                    class="btn btn-primary btn-sm btn-block btn-lg br-20 px-3 py-2"
+                                    type="button">
+                                <span class="d-none d-md-block">Proceed to Schedule</span>
                                 <span class="fa fa-paper-plane d-block d-md-none"></span>
-                            </span>
-                            <div *ngIf="isPosting">
-                                <img src="img/mini-loader.gif" style="width: 20px; height: auto">
-                            </div>
-                        </button>
+                                <!--<span *ngIf="!isPosting">
+                                    <span class="d-none d-md-block">Post Schedule</span>
+                                    <span class="fa fa-paper-plane d-block d-md-none"></span>
+                                </span>
+                                <div *ngIf="isPosting">
+                                    <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                </div>-->
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="shadow" id="accounts-slider" *ngIf="showAccount">
+<div *ngIf="showAccount" class="shadow" id="accounts-slider">
     <div class="row w-100 m-0 p-0 text-center">
         <div class="col-12 text-center p-5">
             <span class="font-weight-bold text-muted h5">
-                Choose which account(s) to send your posts to
+                Choose which accounts to send your posts to
             </span>
-            <div class="figure-caption">You can choose more than one account</div>
+            <div class="figure-caption">You can choose more than one SM platforms</div>
         </div>
         <div class="col-sm-12 col-md-4">
             <div class="p-2 p-md-4 mt-3 mt-md-4">
-                <button class="btn btn-sm btn-primary mb-2 px-4 py-2 shadow--hover br-10">
-                    <span class="fa fa-facebook mr-1"></span>
+                <button (click)="setAccounts(0)" class="btn btn-sm btn-primary mb-2 px-4 py-2 shadow--hover br-10">
+                    <span class="fa fa-facebook mr-2"></span>
                     Facebook Accounts
+                    <span class="badge badge-light ml-2">{{ fbAccounts.length }}</span>
                 </button>
                 <br>
-                <button class="btn btn-sm btn-info mb-2 px-4 py-2 shadow--hover br-10">
-                    <span class="fa fa-linkedin mr-1"></span>
+                <button (click)="setAccounts(1)" class="btn btn-sm btn-info mb-2 px-4 py-2 shadow--hover br-10">
+                    <span class="fa fa-linkedin mr-2"></span>
                     Linkedin Accounts
+                    <span class="badge badge-light ml-2">{{ liAccounts.length }}</span>
                 </button>
                 <br>
-                <button class="btn btn-sm btn-primary mb-2 px-4 py-2 shadow--hover br-10">
-                    <span class="fa fa-twitter mr-1"></span>
+                <button (click)="setAccounts(2)" class="btn btn-sm btn-primary mb-2 px-4 py-2 shadow--hover br-10">
+                    <span class="fa fa-twitter mr-2"></span>
                     Twitter Accounts
+                    <span class="badge badge-light ml-2">{{ twAccounts.length }}</span>
                 </button>
             </div>
         </div>
         <div class="col-sm-12 col-md-8 px-2 px-md-5">
             <div class="p-2 p-md-4 mt-3 mt-md-4 c-bordered br-10">
-                <span class="font-weight-bold text-center mb-2">
+                <span *ngIf="activeAccount != ''" class="font-weight-bold text-center mb-2">
                     {{activeAccount}} accounts
                 </span>
                 <div class="p-2 br-10" style="height: 150px; overflow-y: scroll; overflow-x: hidden">
-                    <div class="row mx-0 mt-3 mb-2 p-2 br-10 c-bordered text-left shadow">
-                        <div class="col-3">
-                            <material-checkbox></material-checkbox>
+                    <template [ngIf]="activeAccountLists.isNotEmpty">
+                        <div *ngFor="let activeAccountList of activeAccountLists; let $i = index"
+                             class="row mx-0 mt-3 mb-2 p-2 br-10 c-bordered text-left shadow">
+                            <div class="col-3">
+                                <material-checkbox (click)="collectId($i)"
+                                                   [(checked)]="activeAccountList.checked"></material-checkbox>
+                            </div>
+                            <div class="col-9 my-auto">
+                                <span class="post-message-text font-weight-bold text-muted">{{activeAccountList.username}}</span>
+                            </div>
                         </div>
-                        <div class="col-9 my-auto">
-                            <span class="post-message-text">User account name</span>
+                    </template>
+                    <template [ngIf]="activeAccountLists.isEmpty">
+                        <div class="nt-center">
+                            <template [ngIf]="isLoading">
+                                Loading...
+                            </template>
+                            <template [ngIf]="!isLoading">
+                                <div class="p-2 text-center">
+                                    <span (click)="gotoPostAccount()"
+                                          class="fa fa-user-plus fa-3x text-primary cursor-pointer"></span><br>
+                                    <span class="text-muted figure-caption font-weight-bold mt-2">Add account</span>
+                                </div>
+                            </template>
                         </div>
-                    </div>
-                    <div class="row mx-0 mt-3 mb-2 p-2 br-10 c-bordered text-left shadow">
-                        <div class="col-3">
-                            <material-checkbox></material-checkbox>
-                        </div>
-                        <div class="col-9 my-auto">
-                            <span class="post-message-text">User account name</span>
-                        </div>
-                    </div>
-                    <div class="row mx-0 mt-3 mb-2 p-2 br-10 c-bordered text-left shadow">
-                        <div class="col-3">
-                            <material-checkbox></material-checkbox>
-                        </div>
-                        <div class="col-9 my-auto">
-                            <span class="post-message-text">User account name</span>
-                        </div>
-                    </div>
+                    </template>
                 </div>
             </div>
         </div>
+    </div>
+    <div (click)="finalPostSchedule()" [class.d-none]="fbAccounts.isEmpty && twAccounts.isEmpty && liAccounts.isEmpty"
+         class="nt-circle bg-success add-button db cursor-pointer shadow">
+        <div *ngIf="isPosting" class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <span *ngIf="!isPosting" class="text-white fa fa-paper-plane" icon="delete"></span>
     </div>
 </div>

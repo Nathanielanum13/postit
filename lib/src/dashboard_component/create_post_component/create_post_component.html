@@ -1,13 +1,14 @@
-<alert [alert]="setAlert" *ngIf="setAlert != null"></alert>
-<div class="container mt-3">
-    <div class="container mt-3">
+<alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
+<div class="container mt-3 px-md-0">
+    <!--<div class="container mt-3">
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="row bg-transparent br-20 py-1">
                     <div class="col-md-12">
                         <a download="post_template.csv" href="files/post_template.csv">
-                            <button id="downloads" class="btn btn-primary border-0 br-20 px-4" style="margin-bottom: 10px">
-                                <!--<material-icon icon="get_app" class="mt-1"></material-icon>-->
+                            <button class="btn btn-primary border-0 br-20 px-4" id="downloads"
+                                    style="margin-bottom: 10px">
+                                &lt;!&ndash;<material-icon icon="get_app" class="mt-1"></material-icon>&ndash;&gt;
                                 <span class="fa fa-download mt-1"></span>
                                 <span class="down-text">Download template</span>
                             </button>
@@ -17,49 +18,48 @@
             </div>
             <csv-app></csv-app>
         </div>
-    </div>
-
+    </div>-->
     <div class="row justify-content-start mt-3">
         <div class="col-md-10 col-sm-12 col-lg-5" id="create-table" style="margin-bottom: 20px">
             <div class="card shadow-c c-bordered bg-transparent {{appTheme['box-one']}} br-20">
-                <div class="card-body mr-auto ml-auto">
+                <div class="card-body px-md-4">
                     <form action="#" novalidate>
                         <div class="form-group">
                             <div class="container mt-3 w-100">
                                 <div class="form-group">
                                     <div class="row" style="margin-bottom: 40px">
-                                        <!--<input (keyup.enter)="addPost()" [(ngModel)]="postMessage"
-                                               class="nt-form-control w-75 ml-auto"
-                                               (input)="getInputSelection(el)"
-                                               (click)="getInputSelection(el)"
-                                               (keyup)="getInputSelection(el)"
-                                               id="message_box" placeholder="Write post message..."
-                                               #el
-                                               size="50" type="text" style="font-size: 17px !important;">-->
-                                        <textarea name="message"
-                                                  id="message_box"
-                                                  cols="50" rows="1"
-                                                  class="nt-form-control w-75 ml-auto br-20"
-                                                  #el
-                                                  (input)="getInputSelection(el)"
+                                        <textarea #el
                                                   (click)="getInputSelection(el)"
-                                                  (keyup)="getInputSelection(el)"
-                                                  placeholder="Write post message..."
+                                                  (input)="getInputSelection(el)" (keyup)="getInputSelection(el)"
                                                   [(ngModel)]="postMessage"
-                                                  style="font-size: 17px !important;">
-                                            <!--(keyup.enter)="addPost()"-->
+                                                  class="nt-form-control w-75 ml-auto br-20"
+                                                  cols="50"
+                                                  id="message_box"
+                                                  name="message"
+                                                  placeholder="Write post message..."
+                                                  rows="6"
+                                                  style="font-size: 14px !important; height: auto">
                                         </textarea>
-                                        <span (click)="addPost()"
-                                              *ngIf="!editKey && !isSending"
-                                              class="fa fa-paper-plane w-15 ml-auto my-auto text-default-six cursor-pointer">
-                                        </span>
-                                        <span *ngIf="isSending" class="w-15 ml-auto my-auto">
-                                            <img src="img/mini-loader.gif" style="width: 20px; height: auto">
-                                        </span>
-                                        <span (click)="updatePost()"
-                                              *ngIf="editKey && !isSending"
-                                              class="fa fa-pencil w-15 ml-auto my-auto text-default-four cursor-pointer">
-                                        </span>
+                                        <div class="w-15 ml-auto my-auto">
+                                            <template [ngIf]="!editKey && !isSending">
+                                                <div (click)="addPost()"
+                                                     class="nt-circle cursor-pointer add-button bg-success">
+                                                    <span class="fa fa-paper-plane text-white"></span>
+                                                </div>
+                                            </template>
+                                            <template [ngIf]="isSending">
+                                                <div (click)="updatePost()"
+                                                     class="nt-circle cursor-pointer add-button bg-light">
+                                                    <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                                                </div>
+                                            </template>
+                                            <template [ngIf]="editKey && !isSending">
+                                                <div (click)="updatePost()"
+                                                     class="nt-circle cursor-pointer add-button bg-primary">
+                                                    <span class="fa fa-pencil text-white"></span>
+                                                </div>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                 <li class="nav-item mx-auto">
                                     <a class="c-link text-default-six" data-toggle="tab" href="#panel1" role="tab">
                                         <div id="pictures">
-                                            <material-icon icon="image" class="b-icon p-1"></material-icon>
+                                            <material-icon class="b-icon p-1" icon="image"></material-icon>
                                             <span class="pic-text">Upload image</span>
                                         </div>
                                     </a>
@@ -77,7 +77,7 @@
                                 <li class="nav-item mx-auto">
                                     <a class="c-link text-danger" data-toggle="tab" href="#panel2" role="tab">
                                         <div id="emojis">
-                                            <material-icon icon="tag_faces" class="b-icon p-1"></material-icon>
+                                            <material-icon class="b-icon p-1" icon="tag_faces"></material-icon>
                                             <span class="emo-text">Emoji's</span>
                                         </div>
                                     </a>
@@ -85,7 +85,7 @@
                                 <li class="nav-item mx-auto">
                                     <a class="c-link text-primary" data-toggle="tab" href="#panel3" role="tab">
                                         <div id="tags">
-                                            <material-icon icon="tag" class="b-icon p-1"></material-icon>
+                                            <material-icon class="b-icon p-1" icon="tag"></material-icon>
                                             <span class="tag-text">Tags</span>
                                         </div>
                                     </a>
@@ -102,32 +102,45 @@
                             <!-- Tab panels -->
                             <div class="tab-content mt-3">
                                 <!-- Panel 1 -->
-                                <div class="tab-pane fade in show active position-relative" id="panel1" role="tabpanel" style="overflow-y: scroll !important;">
+                                <div class="tab-pane fade in show position-relative" id="panel1" role="tabpanel"
+                                     style="overflow-y: scroll !important;">
                                     <div class="m-0 p-2">
                                         <div class="card-columns">
-                                            <div class="card bg-transparent p-2 border-0" *ngFor="let imgPath of imgPaths; let $i = index" style="border-radius: 10px">
-                                                <a target="_blank" href="{{imgPath}}" class="post-image img-center">
-                                                    <div class="row mx-0 w-100 my-1" *ngIf="imagesProgress[$i] != 100 && !failed">
+                                            <div *ngFor="let imgPath of imgPaths; let $i = index"
+                                                 class="card bg-transparent p-2 border-0"
+                                                 style="border-radius: 10px">
+                                                <a class="post-image img-center" href="{{imgPath}}" target="_blank">
+                                                    <div *ngIf="imagesProgress[$i] != 100 && !failed"
+                                                         class="row mx-0 w-100 my-1">
                                                         <div class="col-sm-12 m-0 p-0">
-                                                            <div class="progress-div" style="width: {{imagesProgress[$i]}}%;"></div>
+                                                            <div class="progress-div"
+                                                                 style="width: {{imagesProgress[$i]}}%;"></div>
                                                         </div>
                                                     </div>
-                                                    <img src="{{imgPath}}" alt="{{imgPath}}" class="img-fluid img-center" [class.blur]="imagesProgress[$i] != 100" style="border-radius: 5px">
+                                                    <img [class.blur]="imagesProgress[$i] != 100" alt="{{imgPath}}"
+                                                         class="img-fluid img-center"
+                                                         src="{{imgPath}}"
+                                                         style="border-radius: 5px">
                                                 </a>
                                                 <div class="nt-center">
-                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="!failed" (click)="deleteFile($i)">
+                                                    <div (click)="deleteFile($i)"
+                                                         *ngIf="!failed" class="nt-circle add-button bg-dark"
+                                                         style="width: 20px; height: 20px">
                                                         <span class="fa fa-times small text-white"></span>
                                                     </div>
-                                                    <div class="nt-circle add-button bg-dark" style="width: 20px; height: 20px" *ngIf="failed">
+                                                    <div *ngIf="failed"
+                                                         class="nt-circle add-button bg-dark"
+                                                         style="width: 20px; height: 20px">
                                                         <span class="fa fa-refresh small text-white"></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card pl-3 py-3 bg-transparent border-0" *ngIf="counter < 6">
-                                                <form #form enctype="multipart/form-data" class="m-auto">
+                                            <div *ngIf="counter < 6" class="card pl-3 py-3 bg-transparent border-0">
+                                                <form #form class="m-auto" enctype="multipart/form-data">
                                                     <div class="custom-upload">
-                                                        <input (change)="handleUpload(form, $event)" name="media_file" accept="image/*"
-                                                               type="file" multiple="multiple">
+                                                        <input (change)="handleUpload(form, $event)" accept="image/*"
+                                                               multiple="multiple"
+                                                               name="media_file" type="file">
                                                         <div class="nt-circle bg-primary add-button">
                                                             <span class="fa fa-plus text-white"></span>
                                                         </div>
@@ -146,7 +159,7 @@
                                 </div>
                                 <!-- Panel 2 -->
                                 <!-- Panel 3 -->
-                                <div class="tab-pane fade" id="panel3" role="tabpanel">
+                                <div class="tab-pane fade in show active" id="panel3" role="tabpanel">
                                     <div class="container mt-2 w-100">
                                         <form action="" novalidate>
                                             <div class="form-group">
@@ -159,13 +172,13 @@
                                                         class="btn btn-primary btn-sm br-20"
                                                         id="tag_button"
                                                         type="button">
-                                                    +
+                                                    <span class="font-weight-bold">+</span>
                                                 </button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="container mt-2 w-100">
-                                        <div class="row">
+                                        <div class="row mx-0">
                                             <material-chips>
                                                 <material-chip (remove)="removeTag($i)"
                                                                *ngFor="let postTag of postTags; let $i = index"
@@ -204,25 +217,27 @@
                                  class="row c-bordered {{appTheme['box-two']}} post-row">
                                 <material-checkbox (click)="getId($i)"
                                                    [(checked)]="currentPost.checkedState"></material-checkbox>
-                                <div class="mr-auto my-auto w-50 d-post-text">
+                                <div [title]="currentPost.postMessage" class="mr-auto my-auto w-50 d-post-text">
                                     {{currentPost.postMessage}}
                                 </div>
-                                <div class="nt-circle light-button cursor-pointer mr-3 my-auto" (click)="editPost($i)">
-                                    <span class="fa fa-edit font-weight-bold" *ngIf="editKeys[$i] == false"></span>
-                                    <span class="fa fa-close font-weight-bold" *ngIf="editKeys[$i] == true"></span>
+                                <div (click)="editPost($i)" class="nt-circle light-button cursor-pointer mr-3 my-auto">
+                                    <span *ngIf="editKeys[$i] == false" class="fa fa-edit font-weight-bold"></span>
+                                    <span *ngIf="editKeys[$i] == true" class="fa fa-close font-weight-bold"></span>
                                 </div>
-                                <material-icon icon="delete_outline" (click)="remove($i)" class="my-auto cursor-pointer mr-3"></material-icon>
+                                <material-icon (click)="remove($i)" class="my-auto cursor-pointer mr-3"
+                                               icon="delete_outline"></material-icon>
                             </div>
                         </div>
 
                         <div *ngIf="currentPosts.isEmpty">
                             <div class="nt-center {{appTheme['text-muted']}}" style="width: max-content;">
-                                <img src="img/no-data.png" alt="no-data" class="img-fluid mt-2" width="200">
+                                <img alt="no-data" class="img-fluid mt-2" src="img/no-data.png" width="200">
                             </div>
                         </div>
                         <div *ngIf="loading">
                             <div class="nt-center {{appTheme['text-muted']}}">
-                                <img src="img/load.gif" alt="Loading..." class="img-fluid" style="border-radius: 20px; background: rgba(255,255,255,0.95)">
+                                <img alt="Loading..." class="img-fluid" src="img/load.gif"
+                                     style="border-radius: 20px; background: rgba(255,255,255,0.95)">
                             </div>
                         </div>
                     </div>

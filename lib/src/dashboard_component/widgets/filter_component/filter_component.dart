@@ -15,13 +15,12 @@ import 'package:angular_components/material_expansionpanel/material_expansionpan
 import 'package:angular_components/material_expansionpanel/material_expansionpanel_auto_dismiss.dart';
 import 'package:angular_components/material_expansionpanel/material_expansionpanel_set.dart';
 import 'package:angular_components/material_icon/material_icon.dart';
-import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 const List<String> _filters = [
   'All',
   'Posted',
-  'Pending',
+  'Not posted',
   'Scheduled',
 ];
 const List<String> _numbers = [
@@ -30,7 +29,6 @@ const List<String> _numbers = [
   '50',
   '100',
 ];
-
 
 @Component(
   selector: 'filter',
@@ -50,15 +48,16 @@ const List<String> _numbers = [
   ],
   providers: [ClassProvider(GetPostService), overlayBindings],
 )
-class FilterComponent implements OnInit{
-
+class FilterComponent implements OnInit {
   final _filterData = StreamController<FilterData>();
+
   @Output('sendData')
   Stream<FilterData> get filterData => _filterData.stream;
   @Input('selected')
   int selected = 0;
 
   List<String> get filters => _filters;
+
   List<String> get numbers => _numbers;
   String selectedFilter = '';
   String selectedNumber = '';
@@ -88,40 +87,70 @@ class FilterComponent implements OnInit{
   FilterComponent(this._getPostService);
 
   Future<void> checkPost() async {
-    if(posts.isNotEmpty) {
+    if (posts.isNotEmpty) {
       return;
     } else {
       isLoading();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
+      _filterData.add(FilterData(
+          filteredPosts, convInt(selectedNumber), isPostLoading, null));
       try {
         posts = await _getPostService.getAllPost();
         isLoading();
-        _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
+        filteredPosts.isEmpty
+            ? _filterData.add(FilterData(filteredPosts, convInt(selectedNumber),
+                isPostLoading, Alert('Post is Empty', 100)))
+            : '';
+        /*_filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));*/
         return;
-      } catch(e) {
+      } catch (e) {
         isLoading();
-        _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, Alert('Failed to load posts', 500)));
+        _filterData.add(FilterData(filteredPosts, convInt(selectedNumber),
+            isPostLoading, Alert('Failed to load posts', 500)));
         return;
       }
     }
   }
 
   void onSubmit() {
-    if((selectedFilter == 'All')) {
+    if ((selectedFilter == 'All')) {
       checkPost();
       filteredPosts = posts;
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
-    } else if(selectedFilter == 'Posted') {
+      _filterData.add(FilterData(
+          filteredPosts,
+          convInt(selectedNumber),
+          isPostLoading,
+          filteredPosts.isEmpty
+              ? Alert('Data is empty', 100)
+              : Alert('Fetching data complete', 100)));
+    } else if (selectedFilter == 'Posted') {
       checkPost();
       filteredPosts = getPostedPosts();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
-    } else if(selectedFilter == 'Pending') {
+      _filterData.add(FilterData(
+          filteredPosts,
+          convInt(selectedNumber),
+          isPostLoading,
+          filteredPosts.isEmpty
+              ? Alert('Data is empty', 100)
+              : Alert('Fetching data complete', 100)));
+    } else if (selectedFilter == 'Pending') {
       checkPost();
       filteredPosts = getPendingPosts();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
-    } else if(selectedFilter == 'Scheduled') {
+      _filterData.add(FilterData(
+          filteredPosts,
+          convInt(selectedNumber),
+          isPostLoading,
+          filteredPosts.isEmpty
+              ? Alert('Data is empty', 100)
+              : Alert('Fetching data complete', 100)));
+    } else if (selectedFilter == 'Scheduled') {
       filteredPosts = getScheduledPosts();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
+      _filterData.add(FilterData(
+          filteredPosts,
+          convInt(selectedNumber),
+          isPostLoading,
+          filteredPosts.isEmpty
+              ? Alert('Data is empty', 100)
+              : Alert('Fetching data complete', 100)));
     }
   }
 
@@ -138,7 +167,7 @@ class FilterComponent implements OnInit{
 
   /*void closeDropdown() {
     filterDropdown = false;
-    *//*listener.cancel();*//*
+    */ /*listener.cancel();*/ /*
   }*/
   /*void listenToCloseDropdown() {
     listener = getDocument().documentElement.onClick.listen((event) {
@@ -146,11 +175,12 @@ class FilterComponent implements OnInit{
     });
   }*/
 
-
   List<Post> getPostedPosts() {
     List<Post> postedPost = <Post>[];
-    for(int counter = 0; counter < posts.length; counter++) {
-      if(posts[counter].postStatus) {
+    for (int counter = 0; counter < posts.length; counter++) {
+      if (posts[counter].fbStatus ||
+          posts[counter].twStatus ||
+          posts[counter].liStatus) {
         postedPost.add(posts[counter]);
       }
     }
@@ -159,8 +189,10 @@ class FilterComponent implements OnInit{
 
   List<Post> getPendingPosts() {
     List<Post> postedPost = <Post>[];
-    for(int counter = 0; counter < posts.length; counter++) {
-      if(!posts[counter].postStatus) {
+    for (int counter = 0; counter < posts.length; counter++) {
+      if (!posts[counter].fbStatus &&
+          !posts[counter].twStatus &&
+          !posts[counter].liStatus) {
         postedPost.add(posts[counter]);
       }
     }
@@ -169,8 +201,8 @@ class FilterComponent implements OnInit{
 
   List<Post> getScheduledPosts() {
     List<Post> scheduledPost = <Post>[];
-    for(int counter = 0; counter < posts.length; counter++) {
-      if(posts[counter].scheduleStatus) {
+    for (int counter = 0; counter < posts.length; counter++) {
+      if (posts[counter].scheduleStatus) {
         scheduledPost.add(posts[counter]);
       }
     }
@@ -179,8 +211,8 @@ class FilterComponent implements OnInit{
 
   Post getPost(String id) {
     Post postToAdd;
-    for(int i = 0; i < posts.length; i++) {
-      if(posts[i].id == id) {
+    for (int i = 0; i < posts.length; i++) {
+      if (posts[i].id == id) {
         postToAdd = posts[i];
       }
     }
@@ -189,8 +221,8 @@ class FilterComponent implements OnInit{
 
   bool searchPosts(String postId) {
     bool isFound = false;
-    for(int i = 0; i < posts.length; i++) {
-      if(posts[i].id == postId) {
+    for (int i = 0; i < posts.length; i++) {
+      if (posts[i].id == postId) {
         isFound = true;
       } else {
         isFound = false;
@@ -202,23 +234,22 @@ class FilterComponent implements OnInit{
   void getAllIds() {
     deleteIds.clear();
     allIsChecked = !allIsChecked;
-    if(allIsChecked) {
-      for(int i = 0; i < filteredPosts.length; i++) {
+    if (allIsChecked) {
+      for (int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = true;
         deleteIds.add(filteredPosts[i].id);
       }
     } else {
-      for(int i = 0; i < filteredPosts.length; i++) {
+      for (int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = false;
         deleteIds.remove(filteredPosts[i].id);
       }
     }
-
   }
 
   void getId(int index) {
     filteredPosts[index].checkedState = !filteredPosts[index].checkedState;
-    if(filteredPosts[index].checkedState) {
+    if (filteredPosts[index].checkedState) {
       deleteIds.add(posts[index].id);
     } else {
       deleteIds.remove(posts[index].id);
@@ -229,11 +260,12 @@ class FilterComponent implements OnInit{
   Future<void> batchDelete() async {
     try {
       isDeleting = true;
-      PostStandardResponse deleteResponse = await _getPostService.batchDelete(deleteIds);
+      PostStandardResponse deleteResponse =
+          await _getPostService.batchDelete(deleteIds);
       isDeleting = false;
 
-      if(deleteResponse.httpStatusCode == 200) {
-        for(int i = 0; i < deleteIds.length; i++) {
+      if (deleteResponse.httpStatusCode == 200) {
+        for (int i = 0; i < deleteIds.length; i++) {
           window.localStorage.remove(deleteIds[i]);
           posts.remove(stringToPost(deleteIds[i]));
           filteredPosts.remove(stringToPost(deleteIds[i]));
@@ -241,10 +273,9 @@ class FilterComponent implements OnInit{
       }
       deleteIds.clear();
       allIsChecked = false;
-    } catch(e) {
+    } catch (e) {
       isDeleting = false;
     }
-
   }
 
   void dismissAlert() {
@@ -253,8 +284,8 @@ class FilterComponent implements OnInit{
 
   Post stringToPost(String st) {
     Post deletePost;
-    for(int i = 0; i < filteredPosts.length; i++) {
-      if(filteredPosts[i].id == st) {
+    for (int i = 0; i < filteredPosts.length; i++) {
+      if (filteredPosts[i].id == st) {
         deletePost = filteredPosts[i];
       }
     }
@@ -267,7 +298,7 @@ class FilterComponent implements OnInit{
       posts = await _getPostService.getAllPost();
       isRefresh = false;
       onSubmit();
-    } catch(e) {
+    } catch (e) {
       isRefresh = false;
     }
   }
@@ -283,20 +314,21 @@ class FilterComponent implements OnInit{
       isLoading();
       posts = await _getPostService.getAllPost();
       isLoading();
-    } catch(e) {
+    } catch (e) {
       isLoading();
-      _filterData.add(FilterData(filteredPosts, convInt(selectedNumber), isPostLoading, null));
+      _filterData.add(FilterData(
+          filteredPosts, convInt(selectedNumber), isPostLoading, null));
     }
   }
 
   int convInt(String selectedNumber) {
-    if(selectedNumber == '10') {
+    if (selectedNumber == '10') {
       return 10;
-    } else if(selectedNumber == '20') {
+    } else if (selectedNumber == '20') {
       return 20;
-    } else if(selectedNumber == '50') {
+    } else if (selectedNumber == '50') {
       return 50;
-    } else if(selectedNumber == '100') {
+    } else if (selectedNumber == '100') {
       return 100;
     } else {
       return 10;
@@ -310,5 +342,7 @@ class FilterData {
   bool loadingState;
 
   Alert alert;
-  FilterData(this.finalPost, this.selectedPostPerPage, this.loadingState, this.alert);
+
+  FilterData(
+      this.finalPost, this.selectedPostPerPage, this.loadingState, this.alert);
 }

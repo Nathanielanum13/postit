@@ -16,6 +16,7 @@ dependencies:
   archive: ^2.0.13
   angular_modern_charts: ^0.2.0
   angel_static: ^2.0.0-alpha
+  uuid: ^2.2.2
   websok: ^2.1.2
   chartjs: ^0.5.2
 

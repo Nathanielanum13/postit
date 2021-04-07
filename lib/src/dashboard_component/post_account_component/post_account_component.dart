@@ -1,132 +1,142 @@
-import 'dart:html';
+import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
+
 import 'package:angular/angular.dart';
+import 'package:angular_app/config.dart';
 import 'package:angular_app/src/dashboard_component/dashboard_services/facebook_data_service.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
-import 'package:angular_app/config.dart';
 import 'package:angular_router/angular_router.dart';
 
 @Component(
   selector: 'post-account',
   templateUrl: 'post_account_component.html',
   styleUrls: ['post_account_component.css'],
-  directives: [
-    coreDirectives,
-    routerDirectives
-  ],
+  directives: [coreDirectives, routerDirectives],
   providers: [ClassProvider(FacebookDataService)],
 )
-
 class PostAccountComponent implements OnInit {
-  bool toggle = false;
-  bool toggleView = false;
-  String mediaName = '';
-  String mediaIcon = '';
-  String mediaText = '';
   bool isFinished = false;
   String loginLinkUrl = '';
-  int accountCount = 0;
   var appTheme;
-  Data accounts;
+  Datar accounts;
   List<bool> accountTabs = [false, false, false, false];
+  List<bool> viewTabs = [false, false, false, false];
+  int fbCount = 0;
+  int twCount = 0;
+  int liCount = 0;
+
+  StreamSubscription<MouseEvent> listener;
   final FacebookDataService _facebookDataService;
 
   PostAccountComponent(this._facebookDataService);
 
-  void setDefault() {
-    var a = getDocument();
-    if (a.getElementById('dialog').getAttribute('display') == 'true' &&
-        isFinished) {
-    } else {
-      return;
-    }
-  }
-
-  void cancel() {
-    toggle = true;
-  }
-
-  void cancelView() {
-    toggleView = true;
-  }
-
   Future<void> deleteFacebookAccount(int index) async {
-    await _facebookDataService.deleteFacebookAccount(accounts.linkedin[index].userId);
-//    var userId = accountEmails[index].userId;
+    await _facebookDataService
+        .deleteFacebookAccount(accounts.facebook[index].userId);
     var next = logout['next'];
-    var accessToken = accounts.linkedin[index].accessToken;
-    var fbUrl = 'https://www.facebook.com/logout.php?confirm=1&next=$next&access_token=$accessToken';
+    var accessToken = accounts.facebook[index].accessToken;
+    var fbUrl =
+        'https://www.facebook.com/logout.php?confirm=1&next=$next&access_token=$accessToken';
 
     window.location.assign(fbUrl);
+  }
+
+  Future<void> deleteTwitterAccount(int index) async {
+    await _facebookDataService
+        .deleteFacebookAccount(accounts.twitter[index].userId);
+    var next = logout['next'];
+    var accessToken = accounts.twitter[index].accessToken;
+    var fbUrl =
+        'https://www.facebook.com/logout.php?confirm=1&next=$next&access_token=$accessToken';
+
+    window.location.assign(fbUrl);
+  }
+
+  Future<void> deleteLinkedinAccount(int index) async {
+    await _facebookDataService
+        .deleteFacebookAccount(accounts.linkedin[index].userId);
+    var next = logout['next'];
+    var accessToken = accounts.linkedin[index].accessToken;
+    var fbUrl =
+        'https://www.facebook.com/logout.php?confirm=1&next=$next&access_token=$accessToken';
+
+    window.location.assign(fbUrl);
+  }
+
+  void afterClose() {
+    var doc = getDocument().getElementById('post-app');
+    listener = doc.onClick.listen((event) {
+      closePopup();
+    });
+  }
+
+  void closePopup() {
+    var doc = getDocument().getElementById('post-app');
+    doc.style.filter = 'blur(0)';
+    btnState('enable');
+    accountTabs = [false, false, false, false];
+    viewTabs = [false, false, false, false];
+    listener.cancel();
+  }
+
+  void btnState(String action) {
+    var doc = getDocument();
+    List<Element> a = doc.querySelectorAll('button.in');
+    switch (action) {
+      case 'enable':
+        for (int i = 0; i < a.length; i++) {
+          a[i].removeAttribute('disabled');
+        }
+        break;
+      case 'disable':
+        for (int i = 0; i < a.length; i++) {
+          a[i].setAttribute('disabled', 'true');
+        }
+        break;
+    }
   }
 
   void showPopup(int index) {
     accountTabs[index] = !accountTabs[index];
     var doc = getDocument();
-    List<Element> a = doc.querySelectorAll('#body button');
-    List<Element> x = doc.querySelectorAll('#fb button');
 
     if (accountTabs[index]) {
-      doc.getElementById('dialog').setAttribute('display', 'true');
-      doc.getElementById('view-dialog').setAttribute('display', 'false');
-      doc.getElementById('body').style.filter = 'blur(5px)';
-
-      for (int i = 0; i < a.length; i++) {
-        a[i].setAttribute('disabled', 'true');
-      }
-
-      for(int counter = 0; counter < accountTabs.length; counter++) {
-        if(counter == index) {
+      doc.getElementById('post-app').style.filter = 'blur(5px)';
+      for (int counter = 0; counter < accountTabs.length; counter++) {
+        if (counter == index) {
           continue;
         } else {
           accountTabs[counter] = false;
         }
       }
-
+      btnState('disable');
+      Timer(Duration(milliseconds: 100), afterClose);
     } else {
-      doc.getElementById('dialog').setAttribute('display', 'false');
-      doc.getElementById('view-dialog').setAttribute('display', 'false');
-      doc.getElementById('body').style.filter = 'blur(0px)';
-      mediaIcon = '';
-
-      for (int i = 0; i < x.length; i++) {
-        x[i].removeAttribute('disabled');
-      }
+      closePopup();
+      btnState('enable');
     }
   }
 
-  void showViewPopup(String name) {
-    toggleView = !toggleView;
+  void showViewPopup(int index) {
+    viewTabs[index] = !viewTabs[index];
     var doc = getDocument();
-    List<Element> a = doc.querySelectorAll('#body button');
-    List<Element> x = doc.querySelectorAll('#fb button');
 
-    if (toggleView) {
-      doc.getElementById('view-dialog').setAttribute('display', 'true');
-      doc.getElementById('dialog').setAttribute('display', 'false');
-      doc.getElementById('body').style.filter = 'blur(5px)';
+    if (viewTabs[index]) {
+      doc.getElementById('post-app').style.filter = 'blur(5px)';
 
-      for (int i = 0; i < a.length; i++) {
-        a[i].setAttribute('disabled', 'true');
+      for (int counter = 0; counter < viewTabs.length; counter++) {
+        if (counter == index) {
+          continue;
+        } else {
+          viewTabs[counter] = false;
+        }
       }
-
-      if (name == 'facebook') {
-        mediaName = 'Facebook';
-      } else if (name == 'twitter') {
-        mediaName = 'Twitter';
-      } else if (name == 'instagram') {
-        mediaName = 'Instagram';
-      } else if (name == 'linkedin') {
-        mediaName = 'LinkedIn';
-      }
+      btnState('disable');
+      Timer(Duration(milliseconds: 100), afterClose);
     } else {
-      doc.getElementById('view-dialog').setAttribute('display', 'false');
-      doc.getElementById('dialog').setAttribute('display', 'false');
-      doc.getElementById('body').style.filter = 'blur(0px)';
-
-      for (int i = 0; i < x.length; i++) {
-        x[i].removeAttribute('disabled');
-      }
+      closePopup();
+      btnState('enable');
     }
   }
 
@@ -135,7 +145,8 @@ class PostAccountComponent implements OnInit {
     var appId = fbConfig['appId'];
     var url = fbConfig['url'];
 
-    loginLinkUrl = 'https://www.facebook.com/v9.0/dialog/oauth/?display=popup&client_id=$appId&redirect_uri=$url&state=access_token&scope=pages_read_engagement,pages_show_list';
+    loginLinkUrl =
+        'https://www.facebook.com/v9.0/dialog/oauth/?display=popup&client_id=$appId&redirect_uri=$url&state=access_token&scope=pages_read_engagement,pages_show_list';
   }
 
   @override
@@ -145,11 +156,11 @@ class PostAccountComponent implements OnInit {
 
     try {
       accounts = await _facebookDataService.getAllAccountData();
-    } catch (e){
+      fbCount = accounts.facebook.length;
+      twCount = accounts.twitter.length;
+      liCount = accounts.linkedin.length;
+    } catch (e) {
       print('An error has occurred');
     }
-
-    accountCount = (accounts.facebook.length + accounts.twitter.length + accounts.linkedin.length);
   }
-
 }

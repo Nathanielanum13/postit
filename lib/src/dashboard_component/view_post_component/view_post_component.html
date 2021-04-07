@@ -1,5 +1,5 @@
-<alert [alert]="setAlert" *ngIf="setAlert != null"></alert>
-<div class="container mt-3" id="view-app">
+<alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
+<div class="container mt-3 px-md-0" id="view-app">
     <div class="card shadow-c border-0 bg-transparent {{appTheme['box-one']}} br-20 view-slate">
         <div class="card-body">
             <filter (sendData)="getAllFilterData($event)" [selected]="selectedIds.length"></filter>
@@ -12,52 +12,65 @@
                         <thead>
                         <tr>
                             <th [class.text-center]="filteredPosts.isEmpty">
-                                <material-checkbox [(checked)]="allIsChecked" (click)="getAllIds()"></material-checkbox>
+                                <material-checkbox (click)="getAllIds()" [(checked)]="allIsChecked"></material-checkbox>
                             </th>
                             <th class="th-lg">Post message</th>
-                            <th class="th-lg">Tags </th>
+                            <th class="th-lg">Tags</th>
                             <th class="th-lg">Status</th>
-                            <th class="th-lg">Created at</th>
+                            <th class="th-lg">Created on</th>
                             <th></th>
                         </tr>
                         </thead>
                         <!-- Table head -->
                         <!-- Table body -->
                         <tbody *ngIf="filteredPosts.isNotEmpty">
-                            <tr *ngFor="let filteredPost of filteredPosts | slice:(currentPage-1)*conv(itemsPerPage):currentPage*conv(itemsPerPage); let $i=index">
-                                <th scope="row">
-                                    <material-checkbox [(checked)]="filteredPost.checkedState" (click)="getId($i)"></material-checkbox>
-                                </th>
-                                <td>
-                                    <span class="post-message-text figure-caption">{{filteredPost.postMessage}}</span>
-                                </td>
-                                <td class="tag-host"><span class="tag tags-text figure-caption" *ngFor="let tag of filteredPost.postTag">{{tag}}</span></td>
-                                <td>
-                                    <button class="btn btn-outline-success btn-sm br-20 px-4 figure-caption" disabled *ngIf="filteredPost.postStatus">Posted</button>
-                                    <button class="btn btn-outline-primary btn-sm br-20 px-4 figure-caption" disabled *ngIf="!filteredPost.postStatus">Pending</button>
-                                </td>
-                                <td><span class="created-at-text figure-caption">{{filteredPost.createdOn}}</span></td>
-                                <td class="text-center">
-                                    <div class="nt-circle bg-light shadow--hover add-button cursor-pointer" (click)="togglePopup($i)">
-                                        <span class="fa fa-edit font-weight-bold"></span>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr *ngFor="let filteredPost of filteredPosts | slice:(currentPage-1)*conv(itemsPerPage):currentPage*conv(itemsPerPage); let $i=index">
+                            <th scope="row">
+                                <material-checkbox (click)="getId($i)"
+                                                   [(checked)]="filteredPost.checkedState"></material-checkbox>
+                            </th>
+                            <td>
+                                <span class="post-message-text figure-caption" [title]="filteredPost.postMessage">{{filteredPost.postMessage}}</span>
+                            </td>
+                            <td class="tag-host" [title]="filteredPost.postTag"><span *ngFor="let tag of filteredPost.postTag"
+                                                       class="tag tags-text figure-caption">{{tag}}</span></td>
+                            <td>
+                                <span *ngIf="filteredPost.fbStatus"
+                                      title="Posted to facebook"
+                                      class="fa fa-facebook-square text-primary pr-1"></span>
+                                <span *ngIf="filteredPost.twStatus"
+                                      title="Posted to twitter"
+                                      class="fa fa-twitter-square text-primary pr-1"></span>
+                                <span *ngIf="filteredPost.liStatus"
+                                      title="Posted to linkedin"
+                                      class="fa fa-linkedin-square text-info pr-1"></span>
+                                <span *ngIf="!filteredPost.fbStatus && !filteredPost.twStatus && !filteredPost.liStatus"
+                                      class="figure-caption">Not posted</span>
+                            </td>
+                            <td><span class="created-at-text figure-caption" [title]="presentDate(filteredPost.createdOn) | date">{{presentDate(filteredPost.createdOn) | date}}</span>
+                            </td>
+                            <td class="text-center">
+                                <div (click)="togglePopup($i)"
+                                     class="nt-circle bg-light shadow--hover add-button cursor-pointer">
+                                    <span class="fa fa-edit font-weight-bold"></span>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                         <tfoot *ngIf="filteredPosts.isNotEmpty">
                         <td colspan="6">
                             <ul class="pagination float-right my-auto">
                                 <li [class.text-muted]="currentPage == 1">
-                                    <a class="nav-link cursor-pointer font-weight-bold" (click)="prevPage()">≪ Prev</a>
+                                    <a (click)="prevPage()" class="nav-link cursor-pointer font-weight-bold">≪ Prev</a>
                                 </li>
-                                <li *ngFor="let n of range()"
+                                <li (click)="setPage(n)"
+                                    *ngFor="let n of range()"
                                     [class.active]="n == currentPage"
-                                    class="nt-circle cursor-pointer"
-                                    (click)="setPage(n)">
+                                    class="nt-circle cursor-pointer">
                                     <span>{{n}}</span>
                                 </li>
                                 <li [class.text-muted]="currentPage == maxPage">
-                                    <a class="nav-link cursor-pointer font-weight-bold" (click)="nextPage()">Next ≫</a>
+                                    <a (click)="nextPage()" class="nav-link cursor-pointer font-weight-bold">Next ≫</a>
                                 </li>
                             </ul>
                         </td>
@@ -71,18 +84,20 @@
                                 <span class="fa fa-database {{appTheme['text-muted']}} fa-5x drop-fade"></span>
                             </div>
                             <span class="font-weight-bold text-muted fade-in">Nothing to show</span><br>
-                            <span class="text-muted figure-caption"><span class="text-muted font-weight-bold fade-in">Suggestions:</span> You can also create:</span> <br>
+                            <span class="text-muted figure-caption"><span class="text-muted font-weight-bold fade-in">Suggestions:</span> You can also create:</span>
+                            <br>
                             <div class="mt-2">
                                 <span class="mx-2 slide-right">
-                                    <button class="btn btn-sm btn-outline-dark br-20 px-4" (click)="gotoPosts()">Posts</button>
+                                    <button (click)="gotoPosts()"
+                                            class="btn btn-sm btn-outline-dark br-20 px-4">Posts</button>
                                 </span>
                                 <span class="mx-2 slide-left">
-                                    <button class="btn btn-sm btn-outline-dark br-20 px-4" (click)="gotoSchedules()">Schedules</button>
+                                    <button (click)="gotoSchedules()" class="btn btn-sm btn-outline-dark br-20 px-4">Schedules</button>
                                 </span>
                             </div>
                         </template>
                         <template [ngIf]="loading">
-                            <img src="img/load.gif" alt="Loading..." class="img-fluid">
+                            <img alt="Loading..." class="img-fluid" src="img/load.gif">
                         </template>
                     </div>
                 </div>
@@ -90,45 +105,53 @@
         </div>
     </div>
 </div>
-<div class="nt-circle bg-danger add-button db cursor-pointer shadow" [class.d-none]="selectedIds.isEmpty" [class.opa-7]="selectedIds.isNotEmpty" (click)="batchDelete()">
-    <div class="lds-ring" *ngIf="isDeleting"><div></div><div></div><div></div><div></div></div>
-    <material-icon icon="delete" class="text-white" *ngIf="!isDeleting"></material-icon>
+<div (click)="batchDelete()" [class.d-none]="selectedIds.isEmpty"
+     [class.opa-7]="selectedIds.isNotEmpty" class="nt-circle bg-danger add-button db cursor-pointer shadow">
+    <div *ngIf="isDeleting" class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <material-icon *ngIf="!isDeleting" class="text-white" icon="delete"></material-icon>
 </div>
 <div *ngIf="editPopup" class="popup br-10 p-3 shadow">
     <div class="px-2 py-3 br-10 text-dark bg-light">
-        <div class="row w-100 m-0 p-0" *ngIf="tabs[0]">
+        <div *ngIf="tabs[0]" class="row w-100 m-0 p-0">
             <div class="font-weight-bold h5 mb-2 mx-4">Post Message</div>
             <div class="col-10 my-auto">
-                <textarea name="message"
-                          id="message"
-                          cols="30"
-                          rows="5"
-                          placeholder="Type message here..."
-                          class="nt-form-control br-20"
-                          [(ngModel)]="message"
-                          #el
-                          (input)="getInputSelection(el)"
+                <textarea #el
                           (click)="getInputSelection(el)"
-                          (keyup)="getInputSelection(el)"></textarea>
+                          (input)="getInputSelection(el)"
+                          (keyup)="getInputSelection(el)"
+                          [(ngModel)]="message"
+                          class="nt-form-control br-20"
+                          cols="30"
+                          id="message"
+                          name="message"
+                          placeholder="Type message here..."
+                          rows="5"></textarea>
                 <div class="row mx-0 mt-3 p-0">
-                    <span class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted" (click)="switchTabs(1)">
+                    <span (click)="switchTabs(1)"
+                          class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted">
                         <span class="fa fa-hashtag mr-1"></span>Tags
                     </span>
-                    <span class="br-20 px-3 py-1 special-btn cursor-pointer font-weight-bold text-muted" (click)="switchTabs(2)">
+                    <span (click)="switchTabs(2)"
+                          class="br-20 px-3 py-1 special-btn cursor-pointer font-weight-bold text-muted">
                         <span class="fa fa-file-picture-o text-success mr-1"></span>Photos
                     </span>
                 </div>
                 <div class="row m-0 p-0">
-                    <div id="emoji-container" class="br-20 bg-white shadow" *ngIf="displayEmojiContainer">
+                    <div *ngIf="displayEmojiContainer" class="br-20 bg-white shadow" id="emoji-container">
                         <emoji-app (myClick)="setData($event)"></emoji-app>
                     </div>
                 </div>
             </div>
             <div class="col-2 text-center">
-                <span class="fa fa-2x fa-smile-o cursor-pointer text-warning" (click)="toggleEmojiContainer()"></span>
+                <span (click)="toggleEmojiContainer()" class="fa fa-2x fa-smile-o cursor-pointer text-warning"></span>
             </div>
         </div>
-        <div class="row w-100 m-0 p-0" *ngIf="tabs[1]">
+        <div *ngIf="tabs[1]" class="row w-100 m-0 p-0">
             <div class="font-weight-bold h5 mb-2 mx-auto">Post Tags</div>
             <div class="col-12 my-auto">
                 <form action="" novalidate>
@@ -148,40 +171,46 @@
                                 {{postTag}}
                             </material-chip>
                         </material-chips>
-                        <div class="nt-center text-muted font-weight-bold" *ngIf="postTags.isEmpty">
+                        <div *ngIf="postTags.isEmpty" class="nt-center text-muted font-weight-bold">
                             + Add some tags here
                         </div>
                     </div>
                 </div>
                 <div class="row mx-0 mt-3 p-0">
-                    <span class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted" (click)="switchTabs(0)">
+                    <span (click)="switchTabs(0)"
+                          class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted">
                         <span class="fa fa-envelope mr-1"></span>Post
                     </span>
-                    <span class="br-20 px-3 py-1 special-btn cursor-pointer font-weight-bold text-muted" (click)="switchTabs(2)">
+                    <span (click)="switchTabs(2)"
+                          class="br-20 px-3 py-1 special-btn cursor-pointer font-weight-bold text-muted">
                         <span class="fa fa-file-picture-o text-success mr-1"></span>Photos
                     </span>
                 </div>
             </div>
         </div>
-        <div class="row w-100 m-0 p-0" *ngIf="tabs[2]">
+        <div *ngIf="tabs[2]" class="row w-100 m-0 p-0">
             <div class="font-weight-bold h5 mb-2 mx-auto">Post Image</div>
             <div class="col-12 my-auto">
                 <div class="m-0 p-2" id="image-holder">
                     <image-app></image-app>
                 </div>
                 <div class="row mx-0 mt-3 p-0">
-                    <span class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted" (click)="switchTabs(1)">
+                    <span (click)="switchTabs(1)"
+                          class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted">
                         <span class="fa fa-hashtag mr-1"></span>Tags
                     </span>
-                    <span class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted" (click)="switchTabs(0)">
+                    <span (click)="switchTabs(0)"
+                          class="br-20 px-3 py-1 special-btn mr-3 cursor-pointer font-weight-bold text-muted">
                         <span class="fa fa-envelope mr-1"></span>Post
                     </span>
                 </div>
             </div>
         </div>
         <div class="mt-3 p-0 text-right">
-            <button class="btn btn-sm btn-success br-20 px-4 mr-2" (click)="updatePost()"> <span class="fa fa-edit mr-1"></span>Save</button>
-            <button class="btn btn-sm btn-light br-20 px-4" (click)="closePopup()">Cancel</button>
+            <button (click)="updatePost()" class="btn btn-sm btn-success br-20 px-4 mr-2"><span
+                    class="fa fa-edit mr-1"></span>Save
+            </button>
+            <button (click)="closePopup()" class="btn btn-sm btn-light br-20 px-4">Cancel</button>
         </div>
     </div>
 </div>

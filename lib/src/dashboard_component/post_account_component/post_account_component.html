@@ -1,235 +1,263 @@
-<div class="container mt-3" id="body" (click)="setDefault()">
+<div class="container mt-3" id="post-app" style="height: calc(100vh - 80px)">
     <h5 class="text-center font-weight-bold {{appTheme['text-muted']}} mt-3">Post Accounts</h5>
-    <div class="text-center figure-caption {{appTheme['text-colour']}} mb-4">Add accounts under any of the sections</div>
+    <div class="text-center font-weight-bold figure-caption {{appTheme['text-muted']}} mb-4 separator">Add accounts under any of the sections
+    </div>
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mb-sm-3" id="fb">
             <div class="card border-0 bg-transparent {{appTheme['box-one']}} c-bordered br-20 shadow-c">
                 <div class="card-header bg-transparent border-0 {{appTheme['box-one']}} mt-0 n-mt-1 br-20">
-                    <span class="float-left ml-3 {{appTheme['text-colour']}}">Facebook</span>
+                    <span class="float-left ml-3 font-weight-bold {{appTheme['text-colour']}}">Facebook</span>
                     <span class="float-right mr-3 fa fa-facebook text-primary mt-1"></span>
                 </div>
                 <div class="card-body m-2">
                     <div class="text-center">
                         <span class="float-left ml-2 mr-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-primary br-20 px-3"
-                                    (click)="showPopup(0)">
+                            <button (click)="showPopup(0)"
+                                    class="btn btn-sm in rounded-circle btn-outline-primary br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
                         <span class="float-right mr-2 ml-1">
-                            <button type="button" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
-                                    (click)="showViewPopup('facebook')">
+                            <button (click)="showViewPopup(0)"
+                                    class="btn btn-sm in rounded-circle btn-outline-dark br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-eye"></span>
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 {{appTheme['text-muted']}}">{{ accountCount }} accounts</div>
+                    <div class="text-center mt-5 {{appTheme['text-muted']}}">{{ fbCount }} account(s)
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mb-sm-3">
             <div class="card border-0 bg-transparent {{appTheme['box-one']}} c-bordered br-20 shadow-c">
                 <div class="card-header bg-transparent border-0 {{appTheme['box-one']}} n-mt-1 mt-0 br-20">
-                    <span class="float-left ml-3 {{appTheme['text-colour']}}">Twitter</span>
+                    <span class="float-left ml-3 font-weight-bold {{appTheme['text-colour']}}">Twitter</span>
                     <span class="float-right mr-3 fa fa-twitter text-primary mt-1"></span>
                 </div>
                 <div class="card-body m-2">
                     <div class="text-center">
                         <span class="float-left ml-2 mr-1">
-                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-primary br-20 px-3"
-                                    (click)="showPopup(1)">
+                            <button (click)="showPopup(1)"
+                                    class="btn btn-sm in rounded-circle btn-outline-primary br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
                         <span class="float-right mr-2 ml-1">
-                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
-                                    (click)="showViewPopup('twitter')">
+                            <button (click)="showViewPopup(1)"
+                                    class="btn btn-sm in rounded-circle btn-outline-dark br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-eye"></span>
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 {{appTheme['text-muted']}}">0 accounts</div>
+                    <div class="text-center mt-5 {{appTheme['text-muted']}}">{{ twCount }} account(s)</div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mb-sm-3">
             <div class="card border-0 bg-transparent {{appTheme['box-one']}} c-bordered br-20 shadow-c">
                 <div class="card-header bg-transparent border-0 {{appTheme['box-one']}} n-mt-1 mt-0 br-20">
-                    <span class="float-left ml-3 {{appTheme['text-colour']}}">Instagram</span>
+                    <span class="float-left ml-3 font-weight-bold {{appTheme['text-colour']}}">Instagram</span>
                     <span class="float-right mr-3 fa fa-instagram text-danger mt-1"></span>
                 </div>
                 <div class="card-body m-2">
                     <div class="text-center">
                         <span class="float-left ml-2 mr-1">
-                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-danger br-20 px-3"
-                                    (click)="showPopup(3)">
+                            <button (click)="showPopup(2)"
+                                    class="btn btn-sm in rounded-circle btn-outline-danger br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
                         <span class="float-right mr-2 ml-1">
-                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
-                                    (click)="showViewPopup('instagram')">
+                            <button (click)="showViewPopup(2)"
+                                    class="btn btn-sm in rounded-circle btn-outline-dark br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-eye"></span>
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 {{appTheme['text-muted']}}">0 accounts</div>
+                    <div class="text-center mt-5 {{appTheme['text-muted']}}">{{ fbCount }} account(s)</div>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mb-sm-3">
             <div class="card border-0 bg-transparent {{appTheme['box-one']}} c-bordered br-20 shadow-c">
                 <div class="card-header bg-transparent border-0 {{appTheme['box-one']}} n-mt-1 mt-0 br-20">
-                    <span class="float-left ml-3 {{appTheme['text-colour']}}">LinkedIn</span>
+                    <span class="float-left ml-3 font-weight-bold {{appTheme['text-colour']}}">LinkedIn</span>
                     <span class="float-right mr-3 fa fa-linkedin-in {{appTheme['text-colour']}} mt-1"></span>
                 </div>
                 <div class="card-body m-2">
                     <div class="text-center">
                         <span class="float-left ml-2 mr-1">
-                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
-                                    (click)="showPopup(2)">
+                            <button (click)="showPopup(3)" class="btn btn-sm in rounded-circle btn-outline-dark br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-plus"></span>
                             </button>
                         </span>
                         <span class="float-right mr-2 ml-1">
-                            <button type="button" disabled="true" class="btn btn-sm rounded-circle btn-outline-dark br-20 px-3"
-                                    (click)="showViewPopup('linkedin')">
+                            <button (click)="showViewPopup(3)"
+                                    class="btn btn-sm in rounded-circle btn-outline-dark br-20 px-3"
+                                    type="button">
                                 <span class="fa fa-eye"></span>
                             </button>
                         </span>
                     </div>
-                    <div class="text-center mt-5 {{appTheme['text-muted']}}">0 accounts</div>
+                    <div class="text-center mt-5 {{appTheme['text-muted']}}">{{ liCount }} account(s)</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="dialog-box card bg-transparent border-0 shadow-c br-20" id="dialog" display="false">
+<div *ngIf="accountTabs[0] || accountTabs[1] || accountTabs[2] || accountTabs[3]"
+     class="dialog-box card bg-transparent border-0 shadow-c br-20" id="dialog">
     <div class="card-header bg-transparent border-0 text-center" id="media-icon">
         <div class="nt-circle">
-            <img src="img/facebook_icon.png" alt="facebook-icon" width="100px" height="100px" class="nt-center img-fluid" *ngIf="accountTabs[0]">
-            <img src="img/twitter_icon.png" alt="twitter-icon" width="100px" height="100px" class="nt-center img-fluid" *ngIf="accountTabs[1]">
-            <img src="img/linkedin_icon.png" alt="linkedin-icon" width="100px" height="100px" class="nt-center img-fluid" *ngIf="accountTabs[2]">
-            <img src="img/instagram_icon.png" alt="instagram-icon" width="100px" height="100px" class="nt-center img-fluid" *ngIf="accountTabs[3]">
-<!--            <span class="nt-center fa fa-{{ mediaIcon }} {{ mediaText }} fa-6x"></span>-->
+            <img *ngIf="accountTabs[0]" alt="facebook-icon" class="nt-center img-fluid" height="100px"
+                 src="img/facebook_icon.png" width="100px">
+            <img *ngIf="accountTabs[1]" alt="twitter-icon" class="nt-center img-fluid" height="100px"
+                 src="img/twitter_icon.png"
+                 width="100px">
+            <img *ngIf="accountTabs[2]" alt="instagram-icon" class="nt-center img-fluid" height="100px"
+                 src="img/instagram_icon.png" width="100px">
+            <img *ngIf="accountTabs[3]" alt="linkedin-icon" class="nt-center img-fluid" height="100px"
+                 src="img/linkedin_icon.png" width="100px">
+            <!--            <span class="nt-center fa fa-{{ mediaIcon }} {{ mediaText }} fa-6x"></span>-->
         </div>
     </div>
 
     <div class="font-nyata">
-        <div class="text-center mt-4 {{appTheme['text-colour']}}">
-            {{ mediaName }}
+        <div class="text-center font-weight-bold mt-4 {{appTheme['text-colour']}}">
+            <template [ngIf]="accountTabs[0]">Facebook Account</template>
+            <template [ngIf]="accountTabs[1]">Twitter Account</template>
+            <template [ngIf]="accountTabs[2]">Instagram Account</template>
+            <template [ngIf]="accountTabs[3]">Linkedin Account</template>
         </div>
     </div>
-
-    <div class="my-4 px-4">
+    <div class="mt-4 mb-2 px-4">
         <form novalidate>
-            <div class="form-group">
-                <a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with facebook</a>
-            </div>
+            <template [ngIf]="accountTabs[0]">
+                <div class="form-group">
+                    <a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with facebook</a>
+                </div>
+            </template>
+            <template [ngIf]="accountTabs[1]">
+                <div class="form-group">
+                    <a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with twitter</a>
+                </div>
+            </template>
+            <template [ngIf]="accountTabs[2]">
+                <div class="form-group">
+                    <a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with instagram</a>
+                </div>
+            </template>
+            <template [ngIf]="accountTabs[3]">
+                <div class="form-group">
+                    <a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with linkedin</a>
+                </div>
+            </template>
             <div class="form-group">
                 <span class="float-right my-3">
-                    <button type="button" class="btn btn-sm btn-white px-3 br-20 mx-2 text-muted" (click)="cancel()">Cancel</button>
-<!--                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2"><span class="fa fa-user-plus"></span></button>-->
+                    <button (click)="closePopup()" class="btn btn-sm btn-white px-3 br-20 mx-2 text-muted"
+                            type="button">Cancel</button>
+                    <!--                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2"><span class="fa fa-user-plus"></span></button>-->
                 </span>
             </div>
         </form>
     </div>
 </div>
 
-
-<div class="dialog-box card bg-transparent border-0 shadow-c br-20" id="view-dialog" display="false">
+<div *ngIf="viewTabs[0] || viewTabs[1] || viewTabs[2] || viewTabs[3]"
+     class="dialog-box card bg-transparent border-0 shadow-c br-20" id="view-dialog">
 
     <div class="font-nyata">
-        <div class="text-center mt-4 {{appTheme['text-colour']}}">
-            <template [ngIf]="accountTabs[0]">Facebook Accounts</template>
-            <template [ngIf]="accountTabs[1]">Twitter Accounts</template>
-            <template [ngIf]="accountTabs[2]">Linkedin Accounts</template>
-            <template [ngIf]="accountTabs[3]">Instagram Accounts</template>
+        <div class="text-center font-weight-bold mt-4 {{appTheme['text-colour']}}">
+            <template [ngIf]="viewTabs[0]">Facebook Accounts</template>
+            <template [ngIf]="viewTabs[1]">Twitter Accounts</template>
+            <template [ngIf]="viewTabs[2]">Instagram Accounts</template>
+            <template [ngIf]="viewTabs[3]">Linkedin Accounts</template>
         </div>
     </div>
 
-    <div class="my-4 px-2" *ngIf="accountTabs[0]">
-        <div class="card bg-transparent {{appTheme['box-one']}} mb-1 border-0 c-bordered border-0 br-20" *ngIf="accounts.facebook.isNotEmpty">
-            <div *ngFor="let email of accounts.facebook; let $i=index" class="card-body border-0 row">
-                <span class="fa fa-user-circle col-3 mx-auto fa-2x {{appTheme['text-muted']}} my-auto"></span>
-                <div class="{{appTheme['text-muted']}} col-6 text-sm-left mx-auto my-auto d-post-text">
-                    {{ email.username }}
+    <div class="mt-4 mb-2 px-2">
+        <template [ngIf]="viewTabs[0] || viewTabs[2]">
+            <div *ngIf="accounts.facebook.isNotEmpty"
+                 class="{{appTheme['box-one']}} mb-1 br-20 box px-2">
+                <div class="card bg-transparent border-0 br-20 shadow mb-2" *ngFor="let email of accounts.facebook; let $i=index" >
+                    <div class="card-body border-0 row">
+                        <span class="fa fa-user-circle col-3 mx-auto fa-2x {{appTheme['text-muted']}} my-auto"></span>
+                        <div class="{{appTheme['text-muted']}} col-6 text-sm-left mx-auto my-auto d-post-text" [title]="email.username">
+                            {{ email.username }}
+                        </div>
+                        <div class="col-3 m-auto text-right">
+                            <span (click)="deleteFacebookAccount($i)"
+                                  class="fa fa-trash-o text-white shadow px-1 br-20 nt-circle bg-danger add-button cursor-pointer"
+                                  style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                        </div>
+                    </div>
                 </div>
-                <span class="fa fa-trash col-3 {{appTheme['text-muted']}} mx-auto my-auto" (click)="deleteFacebookAccount($i)"></span>
             </div>
-        </div>
-        <div class="mb-1 p-3 border-0 c-bordered border-0 br-20" *ngIf="accounts.facebook.isEmpty">
-            <div class="nt-center">
-                <div class="text-center">No account added</div>
-            </div>
-        </div>
-        <div class="form-group">
-                <span class="float-right my-3">
-                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
-                </span>
-        </div>
-    </div>
-    <div class="my-4 px-4" disabled="true" *ngIf="accountTabs[1]">
-        <div class="card bg-transparent {{appTheme['box-one']}} mb-1 border-0 c-bordered border-0 br-20" *ngIf="accounts.twitter.isNotEmpty">
-            <div class="card-body border-0 row">
-                <span class="fa fa-user-circle col-3 mx-auto fa-2x {{appTheme['text-muted']}} my-auto"></span>
-                <div class="{{appTheme['text-muted']}} col-6 text-sm-left mx-auto my-auto d-post-text">
-                    Nothing
+            <div *ngIf="accounts.facebook.isEmpty" class="mb-1 p-3">
+                <div class="nt-center">
+                    <div class="text-center">No account added</div>
                 </div>
-                <span class="fa fa-trash col-3 {{appTheme['text-muted']}} mx-auto my-auto"></span>
             </div>
-        </div>
-        <!--<div class="card bg-transparent {{appTheme['box-one']}} mb-1 border-0 c-bordered border-0 br-20" *ngIf="accounts.isEmpty">
-            <div class="nt-center">
-                <div class="text-center">No account added</div>
-            </div>
-        </div>-->
-        <div class="form-group">
-                <span class="float-right my-3">
-                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
-                </span>
-        </div>
-    </div>
-    <div class="my-4 px-4" disabled="true" *ngIf="accountTabs[2]">
-        <div class="card bg-transparent {{appTheme['box-one']}} mb-1 border-0 c-bordered border-0 br-20" *ngIf="accounts.linkedin.isNotEmpty">
-            <div class="card-body border-0 row">
-                <span class="fa fa-user-circle col-3 mx-auto fa-2x {{appTheme['text-muted']}} my-auto"></span>
-                <div class="{{appTheme['text-muted']}} col-6 text-sm-left mx-auto my-auto d-post-text">
-                    Nothing
+        </template>
+        <template [ngIf]="viewTabs[1]">
+            <div *ngIf="accounts.twitter.isNotEmpty"
+                 class="{{appTheme['box-one']}} mb-1 br-20 box px-2">
+                <div class="card bg-transparent border-0 br-20 shadow mb-2" *ngFor="let email of accounts.twitter; let $i=index" >
+                    <div class="card-body border-0 row">
+                        <span class="fa fa-user-circle col-3 mx-auto fa-2x {{appTheme['text-muted']}} my-auto"></span>
+                        <div class="{{appTheme['text-muted']}} col-6 text-sm-left mx-auto my-auto d-post-text" [title]="email.username">
+                            {{ email.username }}
+                        </div>
+                        <div class="col-3 m-auto text-right">
+                            <span (click)="deleteTwitterAccount($i)"
+                                  class="fa fa-trash-o text-white shadow px-1 br-20 nt-circle bg-danger add-button cursor-pointer"
+                                  style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                        </div>
+                    </div>
                 </div>
-                <span class="fa fa-trash col-3 {{appTheme['text-muted']}} mx-auto my-auto"></span>
             </div>
-        </div>
-        <!--<div class="card bg-transparent {{appTheme['box-one']}} mb-1 border-0 c-bordered border-0 br-20" *ngIf="accounts.isEmpty">
-            <div class="nt-center">
-                <div class="text-center">No account added</div>
-            </div>
-        </div>-->
-        <div class="form-group">
-                <span class="float-right my-3">
-                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
-                </span>
-        </div>
-    </div>
-    <div class="my-4 px-4" disabled="true" *ngIf="accountTabs[3]">
-        <div class="card bg-transparent {{appTheme['box-one']}} mb-1 border-0 c-bordered border-0 br-20" *ngIf="accounts.facebook.isNotEmpty">
-            <div class="card-body border-0 row">
-                <span class="fa fa-user-circle col-3 mx-auto fa-2x {{appTheme['text-muted']}} my-auto"></span>
-                <div class="{{appTheme['text-muted']}} col-6 text-sm-left mx-auto my-auto d-post-text">
-                    Nothing
+            <div *ngIf="accounts.twitter.isEmpty" class="mb-1 p-3">
+                <div class="nt-center">
+                    <div class="text-center">No account added</div>
                 </div>
-                <span class="fa fa-trash col-3 {{appTheme['text-muted']}} mx-auto my-auto"></span>
             </div>
-        </div>
-        <!--<div class="card bg-transparent {{appTheme['box-one']}} mb-1 border-0 c-bordered border-0 br-20" *ngIf="accounts.isEmpty">
-            <div class="nt-center">
-                <div class="text-center">No account added</div>
+        </template>
+        <template [ngIf]="viewTabs[3]">
+            <div *ngIf="accounts.linkedin.isNotEmpty"
+                 class="{{appTheme['box-one']}} mb-1 br-20 box px-2">
+                <div class="card bg-transparent border-0 br-20 shadow mb-2" *ngFor="let email of accounts.linkedin; let $i=index" >
+                    <div class="card-body border-0 row">
+                        <span class="fa fa-user-circle col-3 mx-auto fa-2x {{appTheme['text-muted']}} my-auto"></span>
+                        <div class="{{appTheme['text-muted']}} col-6 text-sm-left mx-auto my-auto d-post-text" [title]="email.username">
+                            {{ email.username }}
+                        </div>
+                        <div class="col-3 m-auto text-right">
+                            <span (click)="deleteLinkedinAccount($i)"
+                                  class="fa fa-trash-o text-white shadow px-1 br-20 nt-circle bg-danger add-button cursor-pointer"
+                                  style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>-->
+            <div *ngIf="accounts.linkedin.isEmpty" class="mb-1 p-3">
+                <div class="nt-center">
+                    <div class="text-center">No account added</div>
+                </div>
+            </div>
+        </template>
         <div class="form-group">
-                <span class="float-right my-3">
-                    <button type="button" class="btn btn-sm btn-primary px-3 br-20 mx-2" (click)="cancelView()">Cancel</button>
-                </span>
+            <span class="float-right my-3">
+                <button (click)="closePopup()" class="btn btn-sm btn-primary px-3 br-20 mx-2"
+                        type="button">Cancel</button>
+            </span>
         </div>
     </div>
 </div>

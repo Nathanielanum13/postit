@@ -1,7 +1,7 @@
 <div *ngIf="alert != null">
     <div *ngIf="alert.show"
          class="py-2 mt-2 bg-gradient-darker text-white font-weight-bold w-auto text-center" id="post_alert">
-        <div class="nt-circle mx-3" [class.bg-gradient-danger]="alert.statusCode != 200" [class.bg-gradient-green]="alert.statusCode == 200" style="width: 20px; height: 20px">
+        <div class="nt-circle mx-3" [class.bg-gradient-danger]="alert.statusCode != 200 && alert.statusCode != 100" [class.bg-gradient-green]="alert.statusCode == 200" [class.bg-gradient-primary]="alert.statusCode == 100" style="width: 20px; height: 20px">
             <span class="fa fa-bell text-white"></span>
         </div>
         {{alert.message}}

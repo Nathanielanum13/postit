@@ -10,7 +10,7 @@
 
     padding: 10px;
 
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     top: 0;
@@ -55,4 +55,9 @@ div[display="true"] {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.box {
+    height: 220px;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
