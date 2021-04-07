@@ -147,29 +147,46 @@
                 <form>
                     <div class="form-row">
                         <div class="col">
-                            <div class="form-group"><label for="username" class="text-muted"><strong>Username</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="user.name" name="username" id="username">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group"><label for="email" class="text-muted"><strong>Email Address</strong></label>
-                                <input class="nt-form-control br-20 " type="email" placeholder="user@example.com" name="email" id="email">
+                            <div class="form-group"><label for="username"
+                                                           class="text-muted"><strong>Username</strong></label>
+                                <input class="nt-form-control br-20"
+                                       type="text"
+                                       placeholder="user.name"
+                                       name="username"
+                                       [(ngModel)]="profile.username"
+                                       id="username">
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col">
-                            <div class="form-group"><label for="first_name" class="text-muted"><strong>First Name</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="Nathaniel" name="first_name" id="first_name">
+                            <div class="form-group"><label for="first_name" class="text-muted"><strong>First
+                                Name</strong></label>
+                                <input class="nt-form-control br-20"
+                                       type="text"
+                                       placeholder="Nathaniel"
+                                       name="first_name"
+                                       [(ngModel)]="profile.firstName"
+                                       id="first_name">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group"><label for="last_name" class="text-muted"><strong>Last Name</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="Rice" name="last_name" id="last_name">
+                                <input class="nt-form-control br-20"
+                                       type="text"
+                                       placeholder="Rice"
+                                       name="last_name"
+                                       [(ngModel)]="profile.lastName"
+                                       id="last_name">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group mb-0 float-right mt-2"><button class="btn btn-primary btn-sm px-3 br-20" type="submit">Save Settings</button></div>
+                    <div class="form-group mb-0 float-right mt-2">
+                        <button class="btn btn-primary btn-sm px-3 br-20"
+                                (click)="saveProfile()"
+                                type="submit">Save Settings
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -183,23 +200,42 @@
             <div class="col-12">
                 <form>
                     <div class="form-row">
-                        <div class="form-group"><label for="username-disabled" class="text-muted"><strong>Username</strong></label>
-                            <input class="nt-form-control br-20" type="text" placeholder="Username" name="username" id="username-disabled" disabled>
+                        <div class="form-group"><label for="username-disabled"
+                                                       class="text-muted"><strong>Username</strong></label>
+                            <input class="nt-form-control br-20" type="text" placeholder="Username" name="username"
+                                   id="username-disabled" disabled>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col">
-                            <div class="form-group"><label for="old-password" class="text-muted"><strong>Old Password</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="Old password" name="old password" id="old-password">
+                            <div class="form-group"><label for="old-password" class="text-muted"><strong>Old
+                                Password</strong></label>
+                                <input class="nt-form-control br-20"
+                                       type="password"
+                                       placeholder="Old password"
+                                       name="old password"
+                                       [(ngModel)]="oldPassword"
+                                       id="old-password">
                             </div>
                         </div>
                         <div class="col">
-                            <div class="form-group"><label for="new-password" class="text-muted"><strong>New Password</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="New password" name="new-password" id="new-password">
+                            <div class="form-group"><label for="new-password" class="text-muted"><strong>New
+                                Password</strong></label>
+                                <input class="nt-form-control br-20"
+                                       type="password"
+                                       placeholder="New password"
+                                       name="new-password"
+                                       [(ngModel)]="newPassword"
+                                       id="new-password">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group mb-0 float-right mt-2"><button class="btn btn-primary btn-sm px-3 br-20" type="submit">Save Settings</button></div>
+                    <div class="form-group mb-0 float-right mt-2">
+                        <button class="btn btn-primary btn-sm px-3 br-20"
+                                (click)="saveLoginDetails()"
+                                type="submit">Save Settings
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -216,13 +252,22 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="company-name" class="text-muted"><strong>Company Name</strong></label>
-                                <input type="text" class="nt-form-control br-20" placeholder="Company Name" name="company-name" id="company-name">
+                                <input type="text" class="nt-form-control br-20"
+                                       placeholder="Company Name"
+                                       name="company-name"
+                                       [(ngModel)]="companyName"
+                                       id="company-name">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="address" class="text-muted"><strong>Address</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="112, Rice Street" name="address" id="address">
+                                <input class="nt-form-control br-20"
+                                       type="text"
+                                       placeholder="112, Rice Street"
+                                       name="address"
+                                       [(ngModel)]="companyAddress"
+                                       id="address">
                             </div>
                         </div>
                     </div>
@@ -230,17 +275,32 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="phone" class="text-muted"><strong>Phone</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="Accra" name="phone" id="phone">
+                                <input class="nt-form-control br-20"
+                                       type="text"
+                                       placeholder="0204648254"
+                                       name="phone"
+                                       [(ngModel)]="companyPhoneNumber"
+                                       id="phone">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 <label for="company-email" class="text-muted"><strong>Company Email</strong></label>
-                                <input class="nt-form-control br-20 " type="text" placeholder="Company Email " name="company-email" id="company-email">
+                                <input class="nt-form-control br-20"
+                                       type="text"
+                                       placeholder="Company Email"
+                                       name="company-email"
+                                       [(ngModel)]="companyEmail"
+                                       id="company-email">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group mt-2 mb-3 mb-md-0 float-right"><button class="btn btn-primary btn-sm px-3 br-20" type="submit">Save&nbsp;Settings</button></div>
+                    <div class="form-group mt-2 mb-3 mb-md-0 float-right">
+                        <button class="btn btn-primary btn-sm px-3 br-20"
+                                (click)="saveCompanyDetails()"
+                                type="submit">Save&nbsp;Settings
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

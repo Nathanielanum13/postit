@@ -3,7 +3,8 @@ import 'dart:html';
 import 'dart:convert';
 
 import 'package:angular/angular.dart';
-import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart' show GetPostService, Post, Schedule;
+import 'package:angular_app/src/dashboard_component/dashboard_services/create_post_service.dart'
+    show GetPostService, Post, Schedule;
 import 'package:angular_app/src/dashboard_component/inner_routes.dart';
 import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert.dart';
 import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
@@ -64,11 +65,13 @@ class ViewPostComponent implements OnInit {
   int insertPosition = 0;
 
   GetPostService _getPostService;
+
   ViewPostComponent(this._getPostService, this._router);
 
   Future<void> gotoPosts() async {
     _router.navigate(InnerRoutePaths.create_post.toUrl());
   }
+
   Future<void> gotoSchedules() async {
     _router.navigate(InnerRoutePaths.manage_post.toUrl());
   }
@@ -85,6 +88,7 @@ class ViewPostComponent implements OnInit {
     postTags.add(hashtag);
     hashtag = '';
   }
+
   void removeTag(int index) => postTags.removeAt(index);
 
   void toggleEmojiContainer() {
@@ -94,12 +98,12 @@ class ViewPostComponent implements OnInit {
   void togglePopup(int index) {
     editPopup = !editPopup;
     var dashHome = getDocument().getElementById('view-app');
-    if(editPopup) {
+    if (editPopup) {
       focusScheduleId = index;
       index = ((currentPage - 1) * itemsPerPage) + index;
       selectedPostIndex = index;
-      message = filteredPosts[index].postMessage;
-      postTags = filteredPosts[index].postTag;
+      message = filteredPosts.elementAt(index).postMessage;
+      postTags = filteredPosts.elementAt(index).postTag;
       dashHome.style.filter = 'blur(3px) brightness(0.9)';
       Timer(Duration(milliseconds: 100), afterClose);
     } else {
@@ -109,12 +113,14 @@ class ViewPostComponent implements OnInit {
       tabs = [true, false, false];
     }
   }
+
   void afterClose() {
     var dashHome = getDocument().getElementById('view-app');
     listener = dashHome.onClick.listen((event) {
       closePopup();
     });
   }
+
   void closePopup() {
     var dashHome = getDocument().getElementById('view-app');
     editPopup = false;
@@ -125,8 +131,8 @@ class ViewPostComponent implements OnInit {
   }
 
   void switchTabs(int index) {
-    for(int i = 0; i < tabs.length; i++) {
-      if(index == i) {
+    for (int i = 0; i < tabs.length; i++) {
+      if (index == i) {
         tabs[i] = true;
       } else {
         tabs[i] = false;
@@ -137,13 +143,13 @@ class ViewPostComponent implements OnInit {
   void getAllIds() {
     selectedIds.clear();
     !allIsChecked;
-    if(allIsChecked) {
-      for(int i = 0; i < filteredPosts.length; i++) {
+    if (allIsChecked) {
+      for (int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = true;
         selectedIds.add(filteredPosts[i].id);
       }
     } else {
-      for(int i = 0; i < filteredPosts.length; i++) {
+      for (int i = 0; i < filteredPosts.length; i++) {
         filteredPosts[i].checkedState = false;
         selectedIds.remove(filteredPosts[i].id);
       }
@@ -153,7 +159,7 @@ class ViewPostComponent implements OnInit {
   void getId(int index) {
     index = ((currentPage - 1) * itemsPerPage) + index;
     !filteredPosts[index].checkedState;
-    if(filteredPosts[index].checkedState) {
+    if (filteredPosts[index].checkedState) {
       selectedIds.add(filteredPosts[index].id);
     } else {
       selectedIds.remove(filteredPosts[index].id);
@@ -166,14 +172,14 @@ class ViewPostComponent implements OnInit {
 
   void getInputSelection(TextAreaElement el) {
     var endPosition = el.selectionEnd;
-    insertPosition =  endPosition;
+    insertPosition = endPosition;
   }
 
   void arrangePostMessage(String emoValue) {
     List<String> postMessageList = <String>[];
 
-    if(message.isNotEmpty) {
-      for(int i = 0; i < message.length; i++) {
+    if (message.isNotEmpty) {
+      for (int i = 0; i < message.length; i++) {
         postMessageList.add(message[i]);
       }
       postMessageList.insert(insertPosition, emoValue);
@@ -186,7 +192,7 @@ class ViewPostComponent implements OnInit {
 
     message = '';
 
-    for(int i = 0; i < postMessageList.length; i++) {
+    for (int i = 0; i < postMessageList.length; i++) {
       message = message + postMessageList[i];
     }
   }
@@ -200,12 +206,14 @@ class ViewPostComponent implements OnInit {
     if (message.isEmpty) return null;
 
     try {
-      PostStandardResponse resp = await _getPostService.update(filteredPosts[selectedPostIndex].id ,message, postTags, []);
+      PostStandardResponse resp = await _getPostService
+          .update(filteredPosts[selectedPostIndex].id, message, postTags, []);
       setAlert = Alert(resp.data.message, resp.httpStatusCode);
       Timer(Duration(seconds: 5), resetAlert);
 
-      if(resp.httpStatusCode == 200) {
-        Post newPost = Post(message, postTag: postTags, id: resp.data.id, postImage: []);
+      if (resp.httpStatusCode == 200) {
+        Post newPost =
+            Post(message, postTag: postTags, id: resp.data.id, postImage: []);
 
         filteredPosts.removeAt(selectedPostIndex);
         filteredPosts.insert(selectedPostIndex, newPost);
@@ -213,8 +221,7 @@ class ViewPostComponent implements OnInit {
         message = '';
         postTags.clear();
       }
-
-    } catch(e) {
+    } catch (e) {
       setAlert = Alert('Failed to update post', 500);
       Timer(Duration(seconds: 5), resetAlert);
     }
@@ -228,27 +235,30 @@ class ViewPostComponent implements OnInit {
   Future<void> batchDelete() async {
     try {
       isDeleting = true;
-      PostStandardResponse deleteResponse = await _getPostService.batchDelete(selectedIds);
+      PostStandardResponse deleteResponse =
+          await _getPostService.batchDelete(selectedIds);
       isDeleting = false;
-      if(deleteResponse.httpStatusCode == 200) {
-        for(int i = 0; i < selectedIds.length; i++) {
+      if (deleteResponse.httpStatusCode == 200) {
+        for (int i = 0; i < selectedIds.length; i++) {
           window.sessionStorage.remove(selectedIds[i]);
           filteredPosts.remove(convertStringToPost(selectedIds[i]));
         }
       }
       selectedIds.clear();
       allIsChecked = false;
-    } catch(e) {
+    } catch (e) {
       isDeleting = false;
-      setAlert = Alert('Failed to delete selected post${selectedIds.length > 1 ? 's':''}', 500);
+      setAlert = Alert(
+          'Failed to delete selected post${selectedIds.length > 1 ? 's' : ''}',
+          500);
       Timer(Duration(seconds: 5), resetAlert);
     }
   }
 
   Post convertStringToPost(String st) {
     Post deletePost;
-    for(int i = 0; i < filteredPosts.length; i++) {
-      if(filteredPosts[i].id == st) {
+    for (int i = 0; i < filteredPosts.length; i++) {
+      if (filteredPosts[i].id == st) {
         deletePost = filteredPosts[i];
       }
     }
@@ -265,30 +275,36 @@ class ViewPostComponent implements OnInit {
     }
     return this.i;
   }
+
   List range() {
-    this.maxPage = (filteredPosts.length/conv(itemsPerPage)).ceil();
+    this.maxPage = (filteredPosts.length / conv(itemsPerPage)).ceil();
     List ret = [];
-    for (var i=1; i<=this.maxPage; i++) {
+    for (var i = 1; i <= this.maxPage; i++) {
       ret.add(i);
     }
     return ret;
   }
+
   void setPage(n) {
     this.currentPage = n;
   }
+
   void prevPage() {
     if (this.currentPage > 1) {
       --this.currentPage;
     }
   }
+
   void nextPage() {
     if (this.currentPage < this.maxPage) {
       ++this.currentPage;
     }
   }
+
   String prevPageDisabled() {
     return this.currentPage == 1 ? "disabled" : "";
   }
+
   String nextPageDisabled() {
     return this.currentPage == this.maxPage ? "disabled" : "";
   }

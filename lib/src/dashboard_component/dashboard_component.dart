@@ -147,7 +147,6 @@ class DashboardComponent implements OnInit, CanActivate {
 
   void getScreenSize() {
     docSize = getDocument().documentElement.clientWidth;
-    print('Width: $docSize');
   }
 
   @override
