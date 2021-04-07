@@ -107,8 +107,8 @@ class ViewPostComponent implements OnInit {
       focusScheduleId = index;
       index = ((currentPage - 1) * itemsPerPage) + index;
       selectedPostIndex = index;
-      message = filteredPosts[index].postMessage;
-      postTags = filteredPosts[index].postTag;
+      message = filteredPosts.elementAt(index).postMessage;
+      postTags = filteredPosts.elementAt(index).postTag;
       dashHome.style.filter = 'blur(3px) brightness(0.9)';
       Timer(Duration(milliseconds: 100), afterClose);
     } else {

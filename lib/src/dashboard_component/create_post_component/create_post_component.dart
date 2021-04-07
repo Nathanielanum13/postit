@@ -55,9 +55,7 @@ class CreatePostComponent implements OnInit {
   String hashtag = '';
   String imageFile, fileFile = 'Select file to upload...';
   List<int> postImage;
-
   List<String> postTags = <String>[];
-
   List<String> deleteIds = <String>[];
   List<Post> currentPosts = <Post>[];
   List<String> fileNames = <String>[];

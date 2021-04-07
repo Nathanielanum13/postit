@@ -19,5 +19,8 @@ Map env = const {
  'DELETE_FACEBOOK_ACCOUNT_URL': '$base_url/fb/code',
  'COUNT_URL': '$base_url/count/data',
  'SCHEDULE_STATUS_WEBSOCKET': 'wss://$base_url/pws/schedule-status',
- 'MEDIA_UPLOAD_URL': '$base_url/file/upload'
+ 'MEDIA_UPLOAD_URL': '$base_url/file/upload',
+ 'PROFILE_URL': '$base_auth_url/auth/profile',
+ 'LOGIN_PASSWORD': '$base_auth_url/auth/password',
+ 'COMPANY_DETAIL': '$base_auth_url/auth/details'
 };

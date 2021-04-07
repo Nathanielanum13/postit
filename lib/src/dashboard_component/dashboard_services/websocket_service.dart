@@ -47,7 +47,6 @@ class GetWebSocketData {
     try {
       final resp = await _http.get(_countUrl, headers: _headers);
       return _extractCountData(resp);
-
     } catch(e) {
       throw _handleError(e);
     }
