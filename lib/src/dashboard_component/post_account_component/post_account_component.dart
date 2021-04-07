@@ -135,7 +135,7 @@ class PostAccountComponent implements OnInit {
     var appId = fbConfig['appId'];
     var url = fbConfig['url'];
 
-    loginLinkUrl = 'https://www.facebook.com/v9.0/dialog/oauth/?display=popup&client_id=$appId&redirect_uri=$url&state=access_token&scope=pages_read_engagement,pages_show_list';
+    loginLinkUrl = 'https://www.facebook.com/v9.0/dialog/oauth/?display=popup&client_id=$appId&redirect_uri=$url&state=access_token&scope=pages_manage_posts,pages_read_engagement,pages_show_list';
   }
 
   @override
