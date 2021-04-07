@@ -34,9 +34,9 @@ class SignupServices {
             'company_email' : companyEmail,
             'ghana_post_address' : ghanaPostAddress,
           }));
-      window.localStorage.clear();
-      window.localStorage['token'] = response.headers['token'];
-      window.localStorage['tenant-namespace'] = response.headers['tenant-namespace'];
+      window.sessionStorage.clear();
+      window.sessionStorage['token'] = response.headers['token'];
+      window.sessionStorage['tenant-namespace'] = response.headers['tenant-namespace'];
 
       final signUpData = _extractResponse(response);
 
@@ -49,7 +49,7 @@ class SignupServices {
   SignupStandardResponse _extractResponse(Response resp) {
     /*return SignupStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);*/
     var company_data = json.decode(resp.body)['company_data'];
-    window.localStorage['x-data'] = json.encode(company_data);
+    window.sessionStorage['x-data'] = json.encode(company_data);
     return SignupStandardResponse(statusCode: resp.statusCode, message: json.decode(resp.body)['message']);
   }
 

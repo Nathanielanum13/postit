@@ -20,7 +20,13 @@ class SettingsService {
 
   SettingsService(this._http);
 
-  Future<Response> saveProfile(Profile profile) async {
+  StandardResponse _extractResponse(Response resp) {
+    var statusCode = resp.statusCode;
+    var response = json.decode(resp.body)['message'];
+    return StandardResponse(message: response, statusCode: statusCode);
+  }
+
+  Future<StandardResponse> saveProfile(Profile profile) async {
     try {
       var data = json.decode(window.sessionStorage['x-data']);
       final response = await _http.post(
@@ -32,14 +38,14 @@ class SettingsService {
           'last_name': profile.lastName,
         }),
       );
-      print(json.decode(response.body));
+      return _extractResponse(response);
     } catch (e) {
       print(e);
     }
     return null;
   }
 
-  Future<void> saveLoginDetails(String oldPassword, String newPassword) async {
+  Future<StandardResponse> saveLoginDetails(String oldPassword, String newPassword) async {
     try {
       var data = json.decode(window.sessionStorage['x-data']);
       final response = await _http.post(
@@ -50,14 +56,14 @@ class SettingsService {
           'new_password': newPassword,
         }),
       );
-      print(json.decode(response.body));
+      return _extractResponse(response);
     } catch (e) {
       print(e);
     }
     return null;
   }
 
-  Future<void> saveCompanyDetails(String companyName, String companyAddress,
+  Future<StandardResponse> saveCompanyDetails(String companyName, String companyAddress,
       String companyPhoneNumber, String companyEmail) async {
     try {
       var data = json.decode(window.sessionStorage['x-data']);
@@ -71,12 +77,13 @@ class SettingsService {
           'company_email': companyEmail
         }),
       );
-      print(json.decode(response.body));
+      return _extractResponse(response);
     } catch (e) {
       print(e);
     }
     return null;
   }
+
 }
 
 class Profile {
@@ -85,4 +92,11 @@ class Profile {
   String lastName;
 
   Profile({this.username, this.firstName, this.lastName});
+}
+
+class StandardResponse {
+  String message;
+  int statusCode;
+
+  StandardResponse({this.message, this.statusCode});
 }
