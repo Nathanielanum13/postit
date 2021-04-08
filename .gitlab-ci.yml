@@ -20,7 +20,3 @@ test:
   stage: test
   script:
     - pub run test $PUB_VARS
-build:
-  stage: build
-  script:
-    - webdev build
