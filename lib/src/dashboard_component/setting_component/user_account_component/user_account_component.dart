@@ -79,9 +79,21 @@ class UserAccountComponent implements OnInit {
       StandardResponse standardResponse =
           await _settingsService.saveCompanyDetails(
               companyName, companyAddress, companyPhoneNumber, companyEmail);
-      setAlert = Alert(standardResponse.message, standardResponse.statusCode);
       var data = json.decode(window.sessionStorage['x-data']);
-      
+      Map newD = {
+            'admin_first_name' : data['admin_first_name'],
+            'admin_last_name' : data['admin_last_name'],
+            'username' : data['username'],
+            'password' : data['password'],
+            'company_name' : companyName,
+            'company_website' : data['company-website'],
+            'company_address' : companyAddress,
+            'company_contact_number' : companyPhoneNumber,
+            'company_email' : companyEmail,
+            'ghana_post_address' : data['ghana_post_address'],
+          };
+          window.sessionStorage.remove('x-data');
+      setAlert = Alert(standardResponse.message, standardResponse.statusCode);
     } catch (e) {
       print(e);
     }

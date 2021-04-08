@@ -20,9 +20,10 @@ class FacebookDataService {
   FacebookDataService(this._http);
 
   // Get the facebook url from the env file
-  static final _facebookUrl = '${env['FACEBOOK_URL']}';
+  static final _facebookUrl = '${env['FACEBOOK_LOGIN_URL']}';
   static final _deleteFacebookAccountUrl =
       '${env['DELETE_FACEBOOK_ACCOUNT_URL']}';
+  static final _getAllPostAccountsUrl = '${env['ALL_ACCOUNTS_URL']}';
 
   Future<Response> sendCodeToApi(String code) async {
     print('Received code: $code');
