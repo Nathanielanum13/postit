@@ -48,6 +48,21 @@ class UserAccountComponent implements OnInit {
       StandardResponse standardResponse =
           await _settingsService.saveProfile(profile);
       setAlert = Alert(standardResponse.message, standardResponse.statusCode);
+      var data = json.decode(window.sessionStorage['x-data']);
+      Map newD = {
+        'admin_first_name': profile.firstName,
+        'admin_last_name': profile.lastName,
+        'username': profile.username,
+        'password': data['password'],
+        'company_name': data['company-name'],
+        'company_website': data['company-website'],
+        'company_address': data['company-address'],
+        'company_contact_number': data['company_contact_number'],
+        'company_email': data['company_email'],
+        'ghana_post_address': data['ghana_post_address'],
+      };
+      window.sessionStorage.remove('x-data');
+      window.sessionStorage['x-data'] = json.encode(newD);
     } catch (e) {
       print(e);
     }
@@ -55,6 +70,7 @@ class UserAccountComponent implements OnInit {
 
   Future<void> saveLoginDetails() async {
     if (oldPassword.isEmpty || newPassword.isEmpty) {
+      setAlert = Alert("old Password/new Password empty", 400);
       return;
     }
 
@@ -72,43 +88,51 @@ class UserAccountComponent implements OnInit {
         companyAddress.isEmpty ||
         companyPhoneNumber.isEmpty ||
         companyEmail.isEmpty) {
+      setAlert = Alert("some 'Company Details' fields are empty", 400);
       return;
     }
 
     try {
+      print('sending req');
       StandardResponse standardResponse =
           await _settingsService.saveCompanyDetails(
               companyName, companyAddress, companyPhoneNumber, companyEmail);
+      setAlert = Alert(standardResponse.message, standardResponse.statusCode);
       var data = json.decode(window.sessionStorage['x-data']);
       Map newD = {
-            'admin_first_name' : data['admin_first_name'],
-            'admin_last_name' : data['admin_last_name'],
-            'username' : data['username'],
-            'password' : data['password'],
-            'company_name' : companyName,
-            'company_website' : data['company-website'],
-            'company_address' : companyAddress,
-            'company_contact_number' : companyPhoneNumber,
-            'company_email' : companyEmail,
-            'ghana_post_address' : data['ghana_post_address'],
-          };
-          window.sessionStorage.remove('x-data');
-      setAlert = Alert(standardResponse.message, standardResponse.statusCode);
+        'admin_first_name': data['admin_first_name'],
+        'admin_last_name': data['admin_last_name'],
+        'username': data['username'],
+        'company_name': companyName,
+        'company_website': data['company-website'],
+        'company_address': companyAddress,
+        // 'company_contact_number': companyPhoneNumber,
+        'company_email': companyEmail,
+        'ghana_post_address': data['ghana_post_address'],
+        'created_at': data['created_at'],
+        'updated_at': data['updated_at'],
+      };
+      window.sessionStorage.remove('x-data');
+      window.sessionStorage['x-data'] = json.encode(newD);
     } catch (e) {
       print(e);
     }
-//    final data = json.decode(window.sessionStorage['x-data']);
   }
 
   @override
   void ngOnInit() {
-    final data = json.decode(window.sessionStorage['x-data']);
-    companyName = data['company_name'];
-    companyAddress = data['company_address'];
-    companyEmail = data['company_email'];
-    profile = Profile(
-        username: data['username'],
-        firstName: data['admin_first_name'],
-        lastName: data['admin_last_name']);
+    try {
+      final data = json.decode(window.sessionStorage['x-data']);
+      companyName = data['company_name'];
+      companyAddress = data['company_address'];
+      companyEmail = data['company_email'];
+      profile = Profile(
+          username: data['username'],
+          firstName: data['admin_first_name'],
+          lastName: data['admin_last_name']);
+    } catch (e) {
+      print(e);
+      setAlert = Alert("Something went wrong! Contact admin", 400);
+    }
   }
 }

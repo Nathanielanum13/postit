@@ -121,7 +121,6 @@ class CreatePostComponent implements OnInit {
   }
 
   Future<void> deleteFile(int index) async {
-    Response resp;
     try {
       resp = await delete(
           '${env['MEDIA_UPLOAD_URL']}' + '?file_name=${fileNames[index]}',
