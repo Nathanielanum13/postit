@@ -58,12 +58,15 @@ class DashboardComponent implements OnInit, CanActivate {
   bool dropdown = false;
   bool isExpanded = false;
   bool isPerExpanded = false;
+  bool logoutPopup = false;
 
   int docSize;
   Router _router;
   Location _location;
   var data;
   var appTheme;
+
+  StreamSubscription<MouseEvent> listener;
 
   DashboardComponent(this._router, this._location);
 
@@ -78,14 +81,25 @@ class DashboardComponent implements OnInit, CanActivate {
 
   void toggleDropdwn() {
     dropdown = !dropdown;
-    var drop = getDocument();
     if(dropdown) {
-      drop.getElementById('dropdwn-content').style.display = 'block';
-      drop.getElementById('dropdwn-content-temp').style.display = 'block';
+      getDocument().getElementById('dropdwn-content-temp').style.display = 'block';
     } else {
-      drop.getElementById('dropdwn-content').style.display = 'none';
-      drop.getElementById('dropdwn-content-temp').style.display = 'none';
+      getDocument().getElementById('dropdwn-content-temp').style.display = 'none';
     }
+  }
+
+  void afterClose() {
+    var dashHome = getDocument().getElementById('app-body');
+    listener = dashHome.onClick.listen((event) {
+      closePopup();
+    });
+  }
+
+  void closePopup() {
+    var dashHome = getDocument().getElementById('app-body');
+    logoutPopup = false;
+    dashHome.style.filter = 'blur(0) brightness(1)';
+    listener.cancel();
   }
 
   void dismissDialog() {
@@ -122,26 +136,13 @@ class DashboardComponent implements OnInit, CanActivate {
   }
 
   void showDialog() {
-    toggle = !toggle;
-    var doc = getDocument();
-    List<Element> a = doc.querySelectorAll('#html-body button');
-
-    if(toggle) {
-
-      doc.getElementById('log-dialog').setAttribute('display', 'true');
-      doc.getElementById('html-body').style.filter = 'blur(5px)';
-
-      for(int i = 0; i < a.length; i++) {
-        a[i].setAttribute('disabled', 'true');
-      }
-
+    logoutPopup = !logoutPopup;
+    var dashHome = getDocument().getElementById('app-body');
+    if (logoutPopup) {
+      dashHome.style.filter = 'blur(3px) brightness(0.9)';
+      Timer(Duration(milliseconds: 100), afterClose);
     } else {
-      doc.getElementById('log-dialog').setAttribute('display', 'false');
-      doc.getElementById('html-body').style.filter = 'blur(0px)';
-
-      for(int i = 0; i < a.length; i++) {
-        a[i].removeAttribute('disabled');
-      }
+      dashHome.style.filter = 'blur(0) brightness(1)';
     }
   }
 

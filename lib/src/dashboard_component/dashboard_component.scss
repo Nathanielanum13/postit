@@ -200,7 +200,7 @@ material-drawer[persistent] > material-list > [group] > material-list-item > .si
 
 /*noinspection ALL*/
 #html-body {
-
+    height: 100%;
 }
 #app-body {
     margin: 0;
@@ -360,4 +360,61 @@ material-drawer[persistent].small-drawer > material-list > div[group] > .active_
         top: 90% !important;
         left: 75% !important;
     }
+}
+.popup {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    margin: auto;
+
+    width: 40%;
+    height: max-content;
+    background-color: rgba(255, 255, 255, 0.4);
+
+    animation-name: popup;
+    animation-fill-mode: forwards;
+    animation-duration: 300ms;
+    animation-iteration-count: 1;
+}
+@media screen and (max-width: 567px){
+    .popup {
+        width: 90%;
+        margin: auto;
+    }
+}
+@keyframes popup {
+    from {
+        transform: scale(0, 0);
+    }
+    to {
+        transform: scale(1, 1);
+    }
+}
+.bg-dark > div[group] > material-list-item:active,
+.bg-dark > div[group] > material-list-item:hover,
+.bg-dark > div[group] > material-list-item:focus {
+    border-radius: 20px !important;
+    background: #013156 !important;
+    color: #6c757d !important;
+}
+.bg-dark > div[group] > material-list-item:active > material-icon {
+    color: #6c757d !important;
+}
+.bg-dark > div[group] > material-list-item:focus > material-icon {
+    color: #6c757d !important;
+}
+.bg-dark > div[group] > material-list-item:hover > material-icon {
+    color: #6c757d !important;
+}
+.bg-dark > div[group] > material-list-item.active_side {
+    color: #6c757d !important;
+    background: #013156 !important;
+    border-radius: 20px !important;
+}
+.bg-dark > div[group] > material-list-item.active_side > material-icon{
+    color: #cecfd0 !important;
 }

@@ -1,6 +1,6 @@
 <alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
-<div class="container mt-3 px-md-0">
-    <div class="row" id="manage-app">
+<div class="container mt-3 px-md-0" id="manage-app">
+    <div class="row">
         <div class="col-lg-4 col-md-12 col-sm-12 mb-md-3 mb-0">
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-12">
@@ -10,7 +10,7 @@
                             <form novalidate>
                                 <div class="form-group">
                                     <input [(ngModel)]="title"
-                                           class="nt-form-control border-0 br-20"
+                                           class="{{appTheme['box-one']}} nt-form-control {{appTheme['border']}} br-20"
                                            placeholder="Schedule title" type="text">
                                 </div>
                                 <!--<div class="form-group">
@@ -22,7 +22,7 @@
                                 </div>-->
                                 <div class="form-group">
                                     <input [(value)]="startDate" [class.alert-danger]="inputError"
-                                           class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger"
+                                           class="{{appTheme['box-one']}} {{appTheme['border']}} nt-form-control pr-5 br-20 datepicker"
                                            placeholder="from" type="text">
                                     <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
                                     <material-datepicker #sd
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input [(value)]="finalDate" [class.alert-danger]="inputError"
-                                           class="nt-form-control border-0 pr-5 br-20"
+                                           class="{{appTheme['box-one']}} nt-form-control {{appTheme['border']}} pr-5 br-20"
                                            placeholder="to" type="text">
                                     <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
                                     <material-datepicker [(date)]="finalDate"
@@ -65,11 +65,11 @@
                                 <div class="text-center h6 {{appTheme['text-muted']}} mb-3">Scheduled Posts</div>
                                 <div *ngIf="scheduledPosts.isNotEmpty" class="px-3">
                                     <div *ngFor="let scheduledPost of scheduledPosts; let $i = index"
-                                         class="row py-1 bg-light br-20 mb-2">
+                                         class="row py-1 {{appTheme['box-two']}} br-20 mb-2">
                                         <div class="col-9">
-                                <span class="{{appTheme['text-muted']}} d-post-text py-1">
-                                    {{scheduledPost.title}}
-                                </span>
+                                            <span class="{{appTheme['text-muted']}} d-post-text py-1">
+                                                {{scheduledPost.title}}
+                                            </span>
                                         </div>
                                         <div class="col-3 my-auto text-right">
                                         <span (click)="remove($i)"
@@ -95,18 +95,18 @@
                     <div class="row mt-2 mr-auto ml-auto" id="manage_box">
                         <div class="table-responsive">
                             <!-- Table -->
-                            <table class="table table-hover mb-0">
+                            <table class="table table-hover mb-0 {{appTheme['table']}}">
 
                                 <!-- Table head -->
                                 <thead>
-                                <tr>
+                                <tr class="{{appTheme['box-two']}}">
                                     <th [class.text-center]="filteredPosts.isEmpty">
                                         <material-checkbox (click)="getAllIds()"
                                                            [(checked)]="allIsChecked"></material-checkbox>
                                     </th>
                                     <th class="th-lg">Post message</th>
-                                    <th class="th-lg">Tags</th>
                                     <th class="th-lg">Status</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <!-- Table head -->
@@ -118,27 +118,28 @@
                                                            [(checked)]="filteredPost.checkedState"></material-checkbox>
                                     </th>
                                     <td>
-                                        <span class="post-message-text figure-caption" [title]="filteredPost.postMessage">{{filteredPost.postMessage}}</span>
+                                        <span [title]="filteredPost.postMessage"
+                                              class="post-message-text figure-caption">{{filteredPost.postMessage}}</span>
                                     </td>
-                                    <td class="tag-host" [title]="filteredPost.postTag"><span *ngFor="let tag of filteredPost.postTag"
-                                                               class="tag tags-text figure-caption">{{tag}}</span></td>
-                                    <td class="tags-text">
+                                    <td>
                                         <span *ngIf="filteredPost.fbStatus"
-                                              title="Posted to facebook"
-                                              class="fa fa-facebook-square text-primary pr-1"></span>
+                                              class="fa fa-facebook-square text-primary pr-1"
+                                              title="Posted to facebook"></span>
                                         <span *ngIf="filteredPost.twStatus"
-                                              title="Posted to twitter"
-                                              class="fa fa-twitter-square text-primary pr-1"></span>
+                                              class="fa fa-twitter-square text-primary pr-1"
+                                              title="Posted to twitter"></span>
                                         <span *ngIf="filteredPost.liStatus"
-                                              title="Posted to linkedin"
-                                              class="fa fa-linkedin-square text-info pr-1"></span>
+                                              class="fa fa-linkedin-square text-info pr-1"
+                                              title="Posted to linkedin"></span>
                                         <span *ngIf="!filteredPost.fbStatus && !filteredPost.twStatus && !filteredPost.liStatus"
-                                              class="figure-caption">Not posted</span>
+                                              class="figure-caption">
+                                                <button class="btn btn-sm btn-outline-primary px-3 br-20">Not posted</button>
+                                            </span>
                                     </td>
                                 </tr>
                                 </tbody>
                                 <tfoot *ngIf="filteredPosts.isNotEmpty">
-                                <td colspan="4">
+                                <td colspan="3">
                                     <ul class="pagination float-right my-auto">
                                         <li [class.text-muted]="currentPage == 1">
                                             <a (click)="prevPage()" class="nav-link cursor-pointer font-weight-bold">≪
@@ -166,15 +167,15 @@
                                     <div class="mb-1">
                                         <span class="fa fa-database {{appTheme['text-muted']}} fa-5x drop-fade"></span>
                                     </div>
-                                    <span class="font-weight-bold text-muted fade-in">Nothing to show</span><br>
-                                    <span class="text-muted figure-caption"><span
-                                            class="text-muted font-weight-bold fade-in">Suggestions:</span> You can also create:</span>
+                                    <span class="font-weight-bold {{appTheme['text-muted']}} fade-in">Nothing to show</span><br>
+                                    <span class="{{appTheme['text-muted']}} figure-caption"><span
+                                            class="{{appTheme['text-muted']}} font-weight-bold fade-in">Suggestions:</span> You can also create:</span>
                                     <br>
                                     <div class="mt-2">
-                                <span class="mx-2 slide-right">
-                                    <button (click)="gotoPosts()"
-                                            class="btn btn-sm btn-outline-dark br-20 px-4">Posts</button>
-                                </span>
+                                        <span class="mx-2 slide-right">
+                                            <button (click)="gotoPosts()"
+                                                    class="btn btn-sm btn-outline-dark {{appTheme['text-muted']}} br-20 px-4">Posts</button>
+                                        </span>
                                     </div>
                                 </template>
                                 <template [ngIf]="loading">
@@ -185,7 +186,7 @@
                     </div>
                     <div class="row col-12 mx-0 mt-2 pt-4 py-1" style="display: inline-flex !important;">
                         <div class="col-6">
-                            <input [value]="title" class="nt-form-control border-0 br-20" disabled placeholder="Title"
+                            <input [value]="title" class="nt-form-control {{appTheme['box-one']}} {{appTheme['border']}} br-20" disabled placeholder="Title"
                                    type="text">
                         </div>
                         <div class="col-6 my-auto">
@@ -210,13 +211,13 @@
         </div>
     </div>
 </div>
-<div *ngIf="showAccount" class="shadow" id="accounts-slider">
+<div *ngIf="showAccount" class="shadow {{appTheme['box-one']}}" id="accounts-slider">
     <div class="row w-100 m-0 p-0 text-center">
         <div class="col-12 text-center p-5">
-            <span class="font-weight-bold text-muted h5">
+            <span class="font-weight-bold {{appTheme['text-muted']}} h5">
                 Choose which accounts to send your posts to
             </span>
-            <div class="figure-caption">You can choose more than one SM platforms</div>
+            <div class="figure-caption {{appTheme['text-colour']}}">You can choose more than one SM platforms</div>
         </div>
         <div class="col-sm-12 col-md-4">
             <div class="p-2 p-md-4 mt-3 mt-md-4">
@@ -241,32 +242,32 @@
         </div>
         <div class="col-sm-12 col-md-8 px-2 px-md-5">
             <div class="p-2 p-md-4 mt-3 mt-md-4 c-bordered br-10">
-                <span *ngIf="activeAccount != ''" class="font-weight-bold text-center mb-2">
+                <span *ngIf="activeAccount != ''" class="font-weight-bold text-center {{appTheme['text-muted']}} mb-2">
                     {{activeAccount}} accounts
                 </span>
                 <div class="p-2 br-10" style="height: 150px; overflow-y: scroll; overflow-x: hidden">
                     <template [ngIf]="activeAccountLists.isNotEmpty">
                         <div *ngFor="let activeAccountList of activeAccountLists; let $i = index"
-                             class="row mx-0 mt-3 mb-2 p-2 br-10 c-bordered text-left shadow">
+                             class="row mx-0 mt-3 mb-2 p-2 br-10 c-bordered {{appTheme['box-one']}} {{appTheme['border']}} text-left shadow">
                             <div class="col-3">
                                 <material-checkbox (click)="collectId($i)"
-                                                   [(checked)]="activeAccountList.checked"></material-checkbox>
+                                                   [(checked)]="activeAccountList.checked" class="{{appTheme['text-muted']}}"></material-checkbox>
                             </div>
                             <div class="col-9 my-auto">
-                                <span class="post-message-text font-weight-bold text-muted">{{activeAccountList.username}}</span>
+                                <span class="post-message-text font-weight-bold {{appTheme['text-muted']}}">{{activeAccountList.username}}</span>
                             </div>
                         </div>
                     </template>
                     <template [ngIf]="activeAccountLists.isEmpty">
                         <div class="nt-center">
-                            <template [ngIf]="isLoading">
+                            <template [ngIf]="isLoading" class="{{appTheme['text-muted']}}">
                                 Loading...
                             </template>
                             <template [ngIf]="!isLoading">
                                 <div class="p-2 text-center">
                                     <span (click)="gotoPostAccount()"
                                           class="fa fa-user-plus fa-3x text-primary cursor-pointer"></span><br>
-                                    <span class="text-muted figure-caption font-weight-bold mt-2">Add account</span>
+                                    <span class="{{appTheme['text-muted']}} figure-caption font-weight-bold mt-2">Add account</span>
                                 </div>
                             </template>
                         </div>

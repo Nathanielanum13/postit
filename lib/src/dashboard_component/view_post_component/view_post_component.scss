@@ -1,6 +1,6 @@
 @import 'package:angular_components/material_expansionpanel/material_expansionpanel.scss';
 #view-app {
-    /*height: calc(100vh - 64px);*/
+    height: calc(100vh - 64px);
 }
 .d-resp-text {
     display: block;
@@ -87,6 +87,10 @@
 .table thead tr th {
     font-family: Nyata !important;
     color: #7e7e7e;
+}
+.table.table-dark thead tr th {
+    font-family: Nyata !important;
+    color: #e7e7e7;
 }
 .tags-text,
 .created-at-text,
@@ -190,4 +194,28 @@ li.active {
     to {
         transform: scale(1, 1);
     }
+}
+@media screen and (max-width: 567px) {
+    #view-app {
+        height: calc(100vh - 64px);
+    }
+}
+.table-dark td,
+.table-dark th {
+    border-color: #32383e;
+}
+
+.table-dark thead th {
+    border-color: #32383e00;
+}
+.table-light thead tr {
+    background-color: #d2d4d7 !important;
+}
+.table thead tr:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.table thead tr:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
