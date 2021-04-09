@@ -1,0 +1,54 @@
+{
+    "short_name": "Postit",
+    "name": "PostIt - Social Media Marketing Platform",
+    "icons": [
+        {
+            "src": "/img/postit-logo-new.png",
+            "type": "image/png",
+            "purpose": "any maskable",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/img/postit-logo-new.png",
+            "type": "image/png",
+            "purpose": "any maskable",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/login",
+    "background_color": "#3254a8",
+    "display_override": [
+        "window-control-overlay",
+        "minimal-ui"
+    ],
+    "display": "standalone",
+    "scope": "/login",
+    "theme_color": "#3254a8",
+    "shortcuts": [
+        {
+            "name": "login",
+            "short_name": "login",
+            "description": "Login to PostIt",
+            "url": "/login?source=pwa",
+            "icons": [
+                {
+                    "src": "/img/postit-logo-new.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Dashboard",
+            "short_name": "Dashboard",
+            "description": "Market yourself digitally with PostIt",
+            "url": "/dashboard?source=pwa",
+            "icons": [
+                {
+                    "src": "/img/postit-logo-new.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "description": "Social media marketing platform"
+}

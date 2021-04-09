@@ -5,14 +5,16 @@ import 'package:http/browser_client.dart';
 import 'package:http/http.dart';
 
 import 'main.template.dart' as self;
+import 'package:pwa/client.dart' as pwa;
 
 @GenerateInjector([
-  routerProvidersHash,
+  routerProviders,
   ClassProvider(Client, useClass: BrowserClient),
   ValueProvider.forToken(appBaseHref, '/'),
 ])
 final InjectorFactory injector = self.injector$Injector;
 
 void main() {
+  pwa.Client();
   runApp(postit.PostItAppComponentNgFactory, createInjector: injector);
 }

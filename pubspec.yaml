@@ -19,6 +19,7 @@ dependencies:
   uuid: ^2.2.2
   websok: ^2.1.2
   chartjs: ^0.5.2
+  pwa: ^0.2.0
 
 dev_dependencies:
   angular_test: ^2.3.1

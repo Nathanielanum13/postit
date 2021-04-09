@@ -157,20 +157,20 @@ class ManagePostComponent implements OnInit {
     }
   }
 
-  void setFbIds(int index) => _fbIds.add(activeAccountLists[index].accessToken);
+  void setFbIds(int index) => _fbIds.add(activeAccountLists[index].userId);
 
-  void setLiIds(int index) => _liIds.add(activeAccountLists[index].accessToken);
+  void setLiIds(int index) => _liIds.add(activeAccountLists[index].userId);
 
-  void setTwIds(int index) => _twIds.add(activeAccountLists[index].accessToken);
+  void setTwIds(int index) => _twIds.add(activeAccountLists[index].userId);
 
   void removeFbIds(int index) =>
-      _fbIds.remove(activeAccountLists[index].accessToken);
+      _fbIds.remove(activeAccountLists[index].userId);
 
   void removeLiIds(int index) =>
-      _liIds.remove(activeAccountLists[index].accessToken);
+      _liIds.remove(activeAccountLists[index].userId);
 
   void removeTwIds(int index) =>
-      _twIds.remove(activeAccountLists[index].accessToken);
+      _twIds.remove(activeAccountLists[index].userId);
 
   void setAccounts(int index) {
     switch (index) {
