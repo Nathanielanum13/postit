@@ -7,8 +7,8 @@
                      [attr.overlay]="overlay ? '' : null">
         <material-list *deferredContent id="app-drawer" class="{{appTheme['box']}}" style="overflow-x: hidden; overflow-y: scroll;">
             <div class="text-center py-3 w-50 mx-auto">
-                <div class="card bg-light br-20 py-4 border-0">
-                    <span class="fa fa-user-circle fa-3x"></span>
+                <div class="card {{appTheme['box-one']}} br-20 py-4 border-0">
+                    <span class="fa fa-user-circle fa-3x {{appTheme['text-colour']}}"></span>
                 </div>
             </div>
             <div class="dropdwn">
@@ -347,24 +347,12 @@
                         <span class="fa fa-question-circle"></span>
                         Support
                     </div>
-                    <!--<material-icon id="power-button" icon="power_settings_new" class="mt-1 p-1 cursor-pointer br-5" [class.login]="isLoggedIn" (click)="showDialog()"></material-icon>-->
-                    <!--<span class="log-text" *ngIf="isLoggedIn">logged in</span>
-                    <span class="log-text" *ngIf="!isLoggedIn">logged out</span>-->
                 </nav>
             </div>
         </header>
         <!--/Material Nav bar-->
         <div class="w-100 m-0 p-0" id="html-body">
             <router-outlet [routes]="InnerRoutes.all"></router-outlet>
-
-            <!--<div class="position-fixed" id="floating-nav">
-                <button type="button" class="btn rounded-circle border-0 shadow-c" (click)="goBack()">
-                    <span class="fa fa-chevron-left text-muted"></span>
-                </button>
-                <button type="button" class="btn rounded-circle border-0 shadow-c" (click)="goForward()">
-                    <span class="fa fa-chevron-right text-muted"></span>
-                </button>
-            </div>-->
         </div>
     </material-content>
     <!--/Page Content-->
@@ -379,6 +367,16 @@
         <div class="mt-2 mb-3 float-right">
             <button class="btn btn-sm btn-success px-4 br-20" (click)="doLogout()">Yes</button>
             <button class="btn btn-sm btn-primary px-4 br-20" (click)="dismissDialog()">No</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="logoutPopup" class="popup br-10 p-3 shadow">
+    <div class="p-4 br-10 text-white" style="background: #1f1f1f">
+        Are you sure you want to <span class="text-danger">logout</span>? <br>
+
+        <div class="mt-3 p-0 text-center">
+            <button (click)="doLogout()" class="btn btn-sm btn-light br-20 px-4 mr-3">Yes</button>
+            <button (click)="dismissDialog()" class="btn btn-sm btn-danger br-20 px-4">Cancel</button>
         </div>
     </div>
 </div>

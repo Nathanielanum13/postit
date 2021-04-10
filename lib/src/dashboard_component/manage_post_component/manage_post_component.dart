@@ -225,7 +225,7 @@ class ManagePostComponent implements OnInit {
     var doc = getDocument().getElementById('manage-app');
 
     if (showAccount) {
-      doc.style.filter = 'blur(3px) brightness(0.9)';
+      doc.style.filter = 'blur(5px) brightness(0.9)';
       Timer(Duration(milliseconds: 100), afterClose);
 
       try {

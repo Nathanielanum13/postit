@@ -225,6 +225,7 @@ class ViewPostComponent implements OnInit {
 
         message = '';
         postTags.clear();
+        closePopup();
       }
     } catch (e) {
       setAlert = Alert('Failed to update post', 500);

@@ -1,188 +1,314 @@
-<!--
-<div class="container mt-3">
-    <div class="card shadow-c border-0 bg-transparent box-one br-20" style="height: 540px !important;">
-        <div class="card-body">
-            <div class="row mt-2 mr-auto ml-auto" id="setting_box">
-                <div class="card border-0 box-one w-100 p-2 br-20" style="height: 500px !important;">
-                    <div class="card-body">
-                        <div class="row sticky-top">
-                            <div class="col-lg-7 col-sm-auto col-md-auto mx-auto my-auto box-three c-bordered br-20 border-0 py-2 px-sm-3 px-md-5">
-                                <div class="text-center font-nyata text-muted">
-                                    Settings
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-sm-auto col-md-auto ml-auto">
-                                <input type="search" class="nt-form-control br-20" placeholder="Search Setting">
-                            </div>
-                        </div>
-
-                        <div class="row mt-3 setting-row">
-                            &lt;!&ndash;Setting goes here&ndash;&gt;
-&lt;!&ndash;                            <div class="text-muted my-4 mx-5">Post Settings</div>&ndash;&gt;
-                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
-                                <div class="float-left">
-                                    <span class="fa fa-paper-plane ml-3 mr-5 my-auto"></span>
-                                    <span class="text-muted">Post Settings</span>
-                                </div>
-                            </div>
-&lt;!&ndash;                            <div class="text-muted my-4 mx-5">User Settings</div>&ndash;&gt;
-                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer" [routerLink]="InnerRoutePaths.user_account.toUrl()" [routerLinkActive]="'active_side'">
-                                <div class="float-left">
-                                    <span class="fa fa-user ml-3 mr-5 my-auto"></span>
-                                    <span class="text-muted">User Account</span>
-&lt;!&ndash;                                    <span class="fa fa-chevron-right ml-5 pl-5 mr-3 my-auto"></span>&ndash;&gt;
-                                </div>
-                            </div>
-
-&lt;!&ndash;                            <div class="text-muted my-4 mx-5"><span class="mx-2 fa fa-palette"></span>Appearance</div>&ndash;&gt;
-                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
-                                <div class="float-left">
-                                    <span class="fa fa-palette ml-3 mr-5 my-auto"></span>
-                                    <span class="text-muted">Theme</span>
-                                </div>
-                            </div>
-                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
-                                <div class="float-left">
-                                    <span class="fa fa-images ml-3 mr-5 my-auto"></span>
-                                    <span class="text-muted">App Background</span>
-                                </div>
-                            </div>
-                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
-                                <div class="float-left">
-                                    <span class="fa fa-atom ml-3 mr-5 my-auto"></span>
-                                    <span class="text-muted">Navigation Settings</span>
-                                </div>
-                            </div>
-&lt;!&ndash;                            <div class="text-muted my-4 mx-5"><span class="mx-2 fa fa-question-circle"></span>Help & Support</div>&ndash;&gt;
-                            <div class="col-12 card box-three my-2 border-0 br-20 py-3 px-3 cursor-pointer">
-                                <div class="float-left">
-                                    <span class="fa fa-video ml-3 mr-5 my-auto"></span>
-                                    <span class="text-muted">Tutorials</span>
-                                </div>
+<alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
+<div class="container px-md-0" id="settings-app" style="height: 100%;">
+    <div class="m-0 m-md-5 p-2 p-md-5 {{appTheme['box-one']}} br-20 user-section shadow">
+        <div class="row m-0 mt-2 mb-3 p-0">
+            <div class="col-12 m-auto text-center separator">
+                <h5 class="font-weight-bold {{appTheme['text-muted']}}">
+                    <span class="fa fa-gears mx-2"></span>
+                    Settings
+                </h5>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="p-3 br-10 font-weight-bold"
+                 style="border: 1px solid rgb(94, 164, 255); background-color: rgb(214, 240, 248);">
+                        <span class="nt-circle bg-primary add-button mr-3" style="width: 1.5rem; height: 1.5rem;">
+                            <span class="fa fa-info text-white"></span>
+                        </span>
+                View admin account info. Change username, login details and
+                password.
+            </div>
+        </div>
+        <div class="row w-100 mx-0 my-5 p-0">
+            <div class="col-12">
+                <h6 class="font-weight-bold {{appTheme['text-muted']}} pb-5 b-b">
+                    <span class="fa fa-user-o text-primary pr-2"></span>
+                    User Profile
+                </h6>
+            </div>
+            <div class="col-12">
+                <form class="mt-1 px-md-5 py-md-3">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group"><label class="{{appTheme['text-muted']}}"
+                                                           for="username"><strong>Username</strong></label>
+                                <input [(ngModel)]="profile.username"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="username"
+                                       name="username"
+                                       placeholder="user.name"
+                                       type="text">
                             </div>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group"><label class="{{appTheme['text-muted']}}"
+                                                           for="first_name"><strong>First
+                                Name</strong></label>
+                                <input [(ngModel)]="profile.firstName"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="first_name"
+                                       name="first_name"
+                                       placeholder="Nathaniel"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group"><label class="{{appTheme['text-muted']}}"
+                                                           for="last_name"><strong>Last
+                                Name</strong></label>
+                                <input [(ngModel)]="profile.lastName"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="last_name"
+                                       name="last_name"
+                                       placeholder="Rice"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-0 float-right mt-2">
+                        <button (click)="saveProfile()"
+                                class="btn btn-primary btn-sm px-3 br-20"
+                                type="submit">Save Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row w-100 mx-0 mb-5 p-0">
+            <div class="col-12">
+                <h6 class="font-weight-bold {{appTheme['text-muted']}} pb-5 b-b">
+                    <span class="fa fa-sign-in text-danger pr-2"></span>
+                    Login Settings
+                </h6>
+            </div>
+            <hr>
+            <div class="col-12">
+                <form class="mt-1 px-md-5 py-md-3">
+                    <div class="form-row">
+                        <div class="form-group"><label class="{{appTheme['text-muted']}}"
+                                                       for="username-disabled"><strong>Username</strong></label>
+                            <input class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                   disabled id="username-disabled"
+                                   name="username"
+                                   placeholder="Username" type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group"><label class="{{appTheme['text-muted']}}"
+                                                           for="old-password"><strong>Old
+                                Password</strong></label>
+                                <input [(ngModel)]="oldPassword"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="old-password"
+                                       name="old password"
+                                       placeholder="Old password"
+                                       type="password">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group"><label class="{{appTheme['text-muted']}}"
+                                                           for="new-password"><strong>New
+                                Password</strong></label>
+                                <input [(ngModel)]="newPassword"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="new-password"
+                                       name="new-password"
+                                       placeholder="New password"
+                                       type="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-0 float-right mt-2">
+                        <button (click)="saveLoginDetails()"
+                                class="btn btn-primary btn-sm px-3 br-20"
+                                type="submit">Save Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row w-100 mx-0 mb-0 p-0">
+            <div class="col-12">
+                <h6 class="font-weight-bold {{appTheme['text-muted']}} pb-5 b-b">
+                    <span class="fa fa-info-circle text-success pr-2"></span>
+                    Company Details
+                </h6>
+            </div>
+            <div class="col-12">
+                <form class="mt-1 px-md-5 py-md-3">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="{{appTheme['text-muted']}}" for="company-name"><strong>Company
+                                    Name</strong></label>
+                                <input [(ngModel)]="companyName"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="company-name"
+                                       name="company-name"
+                                       placeholder="Company Name"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="{{appTheme['text-muted']}}" for="address"><strong>Address</strong></label>
+                                <input [(ngModel)]="companyAddress"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="address"
+                                       name="address"
+                                       placeholder="112, Rice Street"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="{{appTheme['text-muted']}}"
+                                       for="phone"><strong>Phone</strong></label>
+                                <input [(ngModel)]="companyPhoneNumber"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="phone"
+                                       name="phone"
+                                       placeholder="0204648254"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="{{appTheme['text-muted']}}" for="company-email"><strong>Company
+                                    Email</strong></label>
+                                <input [(ngModel)]="companyEmail"
+                                       class="nt-form-control br-20 {{appTheme['box-two']}} {{appTheme['border']}}"
+                                       id="company-email"
+                                       name="company-email"
+                                       placeholder="Company Email"
+                                       type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2 mb-3 mb-md-0 float-right">
+                        <button (click)="saveCompanyDetails()"
+                                class="btn btn-primary btn-sm px-3 br-20"
+                                type="submit">Save&nbsp;Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="p-3 br-10 mt-5 font-weight-bold"
+                 style="border: 1px solid rgb(255, 226, 94); background-color: rgb(248, 245, 214);">
+                        <span class="nt-circle bg-primary add-button mr-3" style="width: 1.5rem; height: 1.5rem;">
+                            <span class="fa fa-user text-white"></span>
+                        </span>
+                Manage all added accounts from here. Choose or remove target accounts. etc.
+            </div>
+        </div>
+        <div class="row w-100 mx-0 mb-0 p-3 figure-caption">
+            <div class="col-md-4 mx-auto mt-1 mt-sm-2 mt-md-5 br-10 px-2 p-3">
+                <div (click)="setAccounts(0)" class="nt-circle bg-primary cursor-pointer">
+                    <div class="text-center">
+                        <span class="fa fa-facebook text-white"></span>
+                    </div>
                 </div>
+                <span (click)="setAccounts(0)" class="py-2 px-4 ml-2 bg-info text-white br-20 cursor-pointer">
+                            {{fbCount}} accounts
+                        </span>
+            </div>
+            <div class="col-md-4 mx-auto mt-1 mt-sm-2 mt-md-5 br-10 px-2 p-3">
+                <div (click)="setAccounts(1)" class="nt-circle bg-primary cursor-pointer">
+                    <div class="text-center">
+                        <span class="fa fa-twitter text-white"></span>
+                    </div>
+                </div>
+                <span (click)="setAccounts(1)" class="py-2 px-4 ml-2 bg-info text-white br-20 cursor-pointer">
+                            {{twCount}} accounts
+                        </span>
+            </div>
+            <div class="col-md-4 mx-auto mt-1 mt-sm-2 mt-md-5 br-10 px-2 p-3">
+                <div (click)="setAccounts(2)" class="nt-circle bg-info cursor-pointer">
+                    <div class="text-center">
+                        <span class="fa fa-linkedin text-white"></span>
+                    </div>
+                </div>
+                <span (click)="setAccounts(2)"
+                      class="py-2 px-4 ml-2 bg-primary text-white br-20 cursor-pointer">
+                            {{liCount}} accounts
+                        </span>
+            </div>
+            <div class="col-sm-12 col-md-12 px-2 px-md-5">
+                <div class="p-2 p-md-4 mt-3 mt-md-4 c-bordered br-10">
+                    <div class="p-2 br-10" style="height: 150px; overflow-y: scroll; overflow-x: hidden">
+                        <template [ngIf]="activeAccountLists.isNotEmpty">
+                            <div *ngFor="let activeAccountList of activeAccountLists; let $i = index"
+                                 class="row mx-0 mt-3 mb-2 p-2 br-10 c-bordered {{appTheme['box-one']}} {{appTheme['border']}} text-left shadow">
+                                <div class="col-3 my-auto">
+                                            <span (click)="gotoPostAccount()"
+                                                  class="fa fa-trash-o text-white shadow px-1 br-20 nt-circle bg-danger add-button cursor-pointer"
+                                                  style="font-size: 12px !important; width: 1.5rem !important; height: 1.5rem !important;"></span>
+                                </div>
+                                <div class="col-6 my-auto">
+                                            <span [title]="activeAccountList.username"
+                                                  class="post-message-text font-weight-bold {{appTheme['text-muted']}}">{{activeAccountList.username}}</span>
+                                </div>
+                                <div class="col-3 text-right">
+                                    <material-checkbox (click)="disable($i)"
+                                                       [(checked)]="activeAccountList.checked" class="{{appTheme['text-muted']}}"></material-checkbox>
+                                </div>
+                            </div>
+                        </template>
+                        <template [ngIf]="activeAccountLists.isEmpty">
+                            <div class="nt-center">
+                                <template [ngIf]="isLoading" class="{{appTheme['text-muted']}}">
+                                    Loading...
+                                </template>
+                                <template [ngIf]="!isLoading">
+                                    <div class="p-2 text-center">
+                                    <span (click)="gotoPostAccount()"
+                                          class="fa fa-user-plus fa-3x text-primary cursor-pointer"></span><br>
+                                        <span class="{{appTheme['text-muted']}} figure-caption font-weight-bold mt-2">Add account</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="p-3 br-10 mt-5 font-weight-bold text-white"
+                 style="border: 1px solid rgb(41,41,41); background-color: rgb(68,69,68);">
+                        <span class="nt-circle bg-dark add-button mr-3" style="width: 1.5rem; height: 1.5rem;">
+                            <span class="fa fa-paint-brush text-white"></span>
+                        </span>
+                Dark mode comes with carefully selected colors and themes to
+                help you use postit at night.
+            </div>
+        </div>
+        <div class="row w-100 mx-0 my-5 p-0">
+            <div class="col-12">
+                <form class="mt-1 px-md-5 py-md-3">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group font-weight-bold {{appTheme['text-muted']}}">
+                                Dark mode
+                            </div>
+                        </div>
+                        <div class="col text-right">
+                            <material-toggle (click)="toggleDarkMode()"
+                                             [(checked)]="darkMode"></material-toggle>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>-->
-<alert [alert]="setAlert" *ngIf="setAlert != null"></alert>
-<div class="m-0 p-0 w-100">
-    <div class="row m-0 my-3 p-0">
-        <div class="col-8 col-md-6 m-auto text-center">
-            <div class="nt-center" *ngIf="search">
-                <input type="search" class="nt-form-control br-20" placeholder="Search setting here..." style="width: fit-content !important;">
-            </div>
-            <h5 class="font-weight-bold {{appTheme['text-muted']}}">
-                <span class="fa fa-gears mx-2"></span>
-                Settings
-            </h5>
-        </div>
-        <div class="col-2 col-md-6 m-auto text-center px-5">
-            <div class="row w-100 m-0 p-0 d-none d-sm-none d-md-block d-lg-block">
-                <div class="col-8 d-inline-flex">
-                    <input type="search" class="nt-form-control br-20" placeholder="Search setting here...">
-                </div>
-                <div class="col-4" style="display: contents">
-                    <button class="btn btn-sm btn-primary br-20">
-                        <span class="fa fa-search"></span>
-                    </button>
-                </div>
-            </div>
-            <span class="fa fa-search {{appTheme['text-muted']}} font-weight-bold d-block d-sm-block d-md-none d-lg-none" (click)="displaySearch()"></span>
-        </div>
-    </div>
-    <div class="row m-0 p-0">
-        <div class="col-sm-12 col-md-4 mb-4">
-            <div class="card br-20 shadow">
-                <div class="card-body py-3 px-4">
-                    <div class="nt-circle bg-dark">
-                        <span class="fa fa-user text-white font-weight-bold"></span>
-                    </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #us (click)="gotoSettings(us)" id="user-settings">
-                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
-                    </div>
-                    <div class="card-title my-3 font-weight-bold">User Settings</div>
-                    <hr>
-                    <div class="card-text figure-caption py-2">
-                        View admin account info. Change username, login details and
-                        password. Update profile image and info etc.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-4 mb-4">
-            <div class="card br-20 shadow">
-                <div class="card-body py-3 px-4">
-                    <div class="nt-circle bg-warning">
-                        <span class="fa fa-users text-white font-weight-bold"></span>
-                    </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #pas (click)="gotoSettings(pas)" id="post-account-settings">
-                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
-                    </div>
-                    <div class="card-title my-3 font-weight-bold">Post Account Settings</div>
-                    <hr>
-                    <div class="card-text figure-caption py-2">
-                        Manage all added accounts from here. Choose target accounts, Disable or remove
-                        specific accounts.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-4 mb-4">
-            <div class="card br-20 shadow">
-                <div class="card-body py-3 px-4">
-                    <div class="nt-circle bg-success">
-                        <span class="fa fa-paint-brush text-white font-weight-bold"></span>
-                    </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #t (click)="gotoSettings(t)" id="theme">
-                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
-                    </div>
-                    <div class="card-title my-3 font-weight-bold">Theme</div>
-                    <hr>
-                    <div class="card-text figure-caption py-2">
-                        Choose from a wide range of color themes that will
-                        spice up your app to your taste.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--<div class="col-sm-12 col-md-4 mb-4">
-            <div class="card br-20 shadow">
-                <div class="card-body py-3 px-4">
-                    <div class="nt-circle bg-info">
-                        <span class="fa fa-image text-white font-weight-bold"></span>
-                    </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #ab (click)="gotoSettings(ab)" id="app-background">
-                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
-                    </div>
-                    <div class="card-title my-3 font-weight-bold">App Background</div>
-                    <hr>
-                    <div class="card-text figure-caption py-2">
-                        Choose and apply a background photo to your app.
-                        You can also add custom backgrounds
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-4 mb-4">
-            <div class="card br-20 shadow">
-                <div class="card-body py-3 px-4">
-                    <div class="nt-circle bg-danger">
-                        <span class="fa fa-navicon text-white font-weight-bold"></span>
-                    </div>
-                    <div class="nt-circle bg-light add-button cursor-pointer float-right" animation-explode="false" #ns (click)="gotoSettings(ns)" id="navigation-settings">
-                        <span class="fa fa-chevron-right text-dark font-weight-bold"></span>
-                    </div>
-                    <div class="card-title my-3 font-weight-bold">Navigation Settings</div>
-                    <hr>
-                    <div class="card-text figure-caption py-2">
-                        Customize the navbar and sidebar by applying different themes,
-                        changing positions, colors etc.
-                    </div>
-                </div>
-            </div>
-        </div>-->
-    </div>
+</div>
+<div *ngIf="darkMode && !isDone" class="nt-center position-fixed text-center">
+    <!--<img src="img/mini-loader.gif" class="img-fluid img-center" alt="Loading..." style="width: 30px; height: auto">-->
+    <span class="figure-caption font-weight-bold text-white py-2 px-4 bg-dark br-20">Configuring dark mode...</span>
 </div>

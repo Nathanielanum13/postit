@@ -32,7 +32,7 @@ class FacebookDataService {
       'code': code,
     };
     // Send the code data to the backend
-    final Response response = await _http.post(_facebookUrl,
+    final Response response = await _http.post(_deleteFacebookAccountUrl,
         headers: _headers, body: json.encode(FacebookRequestObject));
     return response;
   }

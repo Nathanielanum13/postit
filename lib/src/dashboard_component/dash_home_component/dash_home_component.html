@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-9 col-sm-12">
                 <div class="col-12 my-3">
-                    <span>Post Statistics</span>
+                    <span class="{{appTheme['text-colour']}}">Post Statistics</span>
                     <span class="ml-2 text-muted" style="font-size: small">{{date | date}}</span>
                     <span class="ml-2 fa fa-pie-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
@@ -70,7 +70,7 @@
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="col-12 my-3">
-                    <span>Engagements</span>
+                    <span class="{{appTheme['text-colour']}}">Engagements</span>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -94,7 +94,7 @@
         <div class="row text-center">
             <div class="col-md-6 col-sm-12">
                 <div class="col-12 mt-3">
-                    <span>Schedule Progress</span>
+                    <span class="{{appTheme['text-colour']}}">Schedule Progress</span>
                     <span class="ml-2 text-muted" style="font-size: small">All Schedules</span>
                     <span class="ml-2 fa fa-line-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
@@ -107,7 +107,7 @@
                                     role="tablist">
                                     <li class="nav-item">
                                         <a aria-controls="tabs-icons-text-1" aria-selected="true"
-                                           class="nav-link mb-sm-3 mb-md-0 text-dark active" data-toggle="tab"
+                                           class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}} active" data-toggle="tab"
                                            href="#tabs-icons-text-1"
                                            id="tabs-icons-text-1-tab" role="tab">
                                             <span class="fa fa-calendar text-danger mr-2"></span>Due
@@ -116,7 +116,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a aria-controls="tabs-icons-text-2" aria-selected="false"
-                                           class="nav-link mb-sm-3 mb-md-0 text-dark" data-toggle="tab"
+                                           class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}}" data-toggle="tab"
                                            href="#tabs-icons-text-2"
                                            id="tabs-icons-text-2-tab" role="tab">
                                             <span class="fa fa-clock-o mr-2 text-muted"></span>Queue
@@ -182,8 +182,7 @@
                                     </div>
                                     <div *ngIf="schedules.isNotEmpty">
                                         <div *ngFor="let schedule of schedules; let $i=index"
-                                             class="card br-10 mt-3 shadow border-0"
-                                             style="background-color: #f9fdff">
+                                             class="card br-10 mt-3 shadow border-0 {{appTheme['box-two']}}">
                                             <div class="card-body m-0 px-4">
                                                 <div class="row my-0 mx-auto">
                                                     <div class="col-4 my-auto text-overflow">
@@ -214,7 +213,7 @@
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="col-12 mt-3">
-                    <span>Post Data</span>
+                    <span class="{{appTheme['text-colour']}}">Post Data</span>
                     <span class="ml-1 text-muted" style="font-size: small">for {{currentSchedule}}</span>
                     <span class="ml-2 fa fa-bar-chart cursor-pointer {{appTheme['text-colour']}}"></span>
                 </div>
@@ -222,7 +221,7 @@
                      style="height: 263px">
                     <div class="col-md-12 mx-auto p-0">
                         <div *ngIf="sentPosts.isEmpty" class="post-data">
-                            <span class="text-center nt-center">Nothing to display</span>
+                            <span class="text-center nt-center {{appTheme['text-colour']}}">Nothing to display</span>
                         </div>
                         <div *ngIf="sentPosts.isNotEmpty" class="post-data">
                             <div class="card shadow post-data-card">

@@ -24,5 +24,5 @@ Map env = const {
  'MEDIA_UPLOAD_URL': '$base_url/file/upload',
  'PROFILE_URL': '$base_auth_url/auth/profile',
  'LOGIN_PASSWORD': '$base_auth_url/auth/password',
- 'COMPANY_DETAIL': '$base_auth_url/auth/details'
+ 'COMPANY_DETAIL': '$base_auth_url/auth/details',
 };

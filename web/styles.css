@@ -47,18 +47,9 @@ html {
 body {
   margin: 0;
   padding: 0;
-  /*background: #d8defa;*/
-  /*background: #f2f7ff;*/
   background: rgba(230, 232, 234, 0.89);
-  /*background: #f2f6f9;*/
-  /*background: url("img/postit-ui-bg.png") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;*/
-
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 .br-20 {
@@ -87,7 +78,7 @@ body {
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 400px;
+  width: 350px;
   height: auto;
 }
 .nt-center {
@@ -564,11 +555,16 @@ body {
 .bg-light-two {
   background-color: rgba(248, 249, 250, 0.4) !important;
 }
+.bg-dark {
+  background: #002040 !important;
+}
 .bg-dark-one {
-  background-color: rgba(52, 58, 64, 0.8) !important;
+  /*background-color: rgba(52, 58, 64, 0.8) !important;*/
+  background-color: rgba(4, 75, 145, 0.4) !important;
 }
 .bg-dark-two {
-  background-color: rgba(52, 58, 64, 0.4) !important;
+  /*background-color: rgba(52, 58, 64, 0.4) !important;*/
+  background-color: #03214c !important;
 }
 .bg-success-one {
   background-color: rgba(40, 167, 69, 0.8) !important;
@@ -769,4 +765,10 @@ body {
 
 .separator:not(:empty)::after {
   margin-left: .25em;
+}
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dcdcdc29;
 }

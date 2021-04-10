@@ -6,11 +6,11 @@
             <div class="row mt-2 mx-auto" id="view-box" style="overflow-x: hidden;">
                 <div class="table-responsive">
                     <!-- Table -->
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0 {{appTheme['table']}}">
 
                         <!-- Table head -->
                         <thead>
-                        <tr>
+                        <tr class="{{appTheme['box-two']}}">
                             <th [class.text-center]="filteredPosts.isEmpty">
                                 <material-checkbox (click)="getAllIds()" [(checked)]="allIsChecked"></material-checkbox>
                             </th>
@@ -45,14 +45,16 @@
                                       title="Posted to linkedin"
                                       class="fa fa-linkedin-square text-info pr-1"></span>
                                 <span *ngIf="!filteredPost.fbStatus && !filteredPost.twStatus && !filteredPost.liStatus"
-                                      class="figure-caption">Not posted</span>
+                                      class="figure-caption">
+                                    <button class="btn btn-sm btn-outline-primary px-3 br-20">Not posted</button>
+                                </span>
                             </td>
                             <td><span class="created-at-text figure-caption" [title]="presentDate(filteredPost.createdOn) | date">{{presentDate(filteredPost.createdOn) | date}}</span>
                             </td>
                             <td class="text-center">
                                 <div (click)="togglePopup($i)"
                                      class="nt-circle bg-light shadow--hover add-button cursor-pointer">
-                                    <span class="fa fa-edit font-weight-bold"></span>
+                                    <span class="fa fa-edit font-weight-bold text-dark"></span>
                                 </div>
                             </td>
                         </tr>
@@ -83,16 +85,16 @@
                             <div class="mb-1">
                                 <span class="fa fa-database {{appTheme['text-muted']}} fa-5x drop-fade"></span>
                             </div>
-                            <span class="font-weight-bold text-muted fade-in">Nothing to show</span><br>
-                            <span class="text-muted figure-caption"><span class="text-muted font-weight-bold fade-in">Suggestions:</span> You can also create:</span>
+                            <span class="font-weight-bold {{appTheme['text-muted']}} fade-in">Nothing to show</span><br>
+                            <span class="{{appTheme['text-muted']}} figure-caption"><span class="{{appTheme['text-muted']}} font-weight-bold fade-in">Suggestions:</span> You can also create:</span>
                             <br>
                             <div class="mt-2">
                                 <span class="mx-2 slide-right">
                                     <button (click)="gotoPosts()"
-                                            class="btn btn-sm btn-outline-dark br-20 px-4">Posts</button>
+                                            class="btn btn-sm btn-outline-dark {{appTheme['text-muted']}} br-20 px-4">Posts</button>
                                 </span>
                                 <span class="mx-2 slide-left">
-                                    <button (click)="gotoSchedules()" class="btn btn-sm btn-outline-dark br-20 px-4">Schedules</button>
+                                    <button (click)="gotoSchedules()" class="btn btn-sm btn-outline-dark {{appTheme['text-muted']}} br-20 px-4">Schedules</button>
                                 </span>
                             </div>
                         </template>

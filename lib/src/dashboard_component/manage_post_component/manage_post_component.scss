@@ -167,3 +167,19 @@ li.active {
         bottom: -70vh;
     }
 }
+.table-dark td,
+.table-dark th {
+    border-color: #32383e;
+}
+
+.table-dark thead th {
+    border-color: #32383e00;
+}
+#manage-app {
+    height: calc(100vh - 64px);
+}
+@media screen and (max-width: 567px) {
+    #manage-app {
+        height: 100%;
+    }
+}

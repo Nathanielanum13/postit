@@ -71,3 +71,22 @@
         right: 0;
     }
 }
+@media screen and (max-width: 567px) {
+    .user-section {
+        border-radius: 0 !important;
+    }
+}
+.b-b {
+    border-bottom: 1px solid rgba(226, 226, 226, .4);
+}
+.post-message-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@media screen and (max-width: 567px) {
+    #settings-app {
+        height: 100% !important;
+    }
+}
