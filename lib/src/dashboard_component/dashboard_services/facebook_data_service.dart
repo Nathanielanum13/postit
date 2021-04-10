@@ -38,7 +38,7 @@ class FacebookDataService {
   }
 
   Future<Datar> getAllAccountData() async {
-    final Response resp = await _http.post(_getAllPostAccountsUrl, headers: _headers);
+    final Response resp = await _http.get(_getAllPostAccountsUrl, headers: _headers);
     return _extractDataResponse(json.decode(resp.body)['data']);
   }
 
