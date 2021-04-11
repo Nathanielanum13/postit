@@ -16,10 +16,10 @@ before_script:
   - export PATH="$PATH":"~/.pub-cache/bin"
   - pub get --no-precompile
 
-test:
-  stage: test
-  script:
-    - pub run pwa
+# test:
+#   stage: test
+#   script:
+#     - pub run pwa
 
 build:
   stage: build
