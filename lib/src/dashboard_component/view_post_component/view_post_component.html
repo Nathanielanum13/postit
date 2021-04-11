@@ -1,6 +1,6 @@
 <alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
 <div class="container mt-3 px-md-0" id="view-app">
-    <div class="card shadow-c border-0 bg-transparent {{appTheme['box-one']}} br-20 view-slate">
+    <div class="card shadow-c border-0 {{appTheme['box-one']}} br-20 view-slate">
         <div class="card-body">
             <filter (sendData)="getAllFilterData($event)" [selected]="selectedIds.length"></filter>
             <div class="row mt-2 mx-auto" id="view-box" style="overflow-x: hidden;">

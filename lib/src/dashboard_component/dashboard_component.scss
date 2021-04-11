@@ -394,27 +394,27 @@ material-drawer[persistent].small-drawer > material-list > div[group] > .active_
         transform: scale(1, 1);
     }
 }
-.bg-dark > div[group] > material-list-item:active,
-.bg-dark > div[group] > material-list-item:hover,
-.bg-dark > div[group] > material-list-item:focus {
+.bg-dark-c > div[group] > material-list-item:active,
+.bg-dark-c > div[group] > material-list-item:hover,
+.bg-dark-c > div[group] > material-list-item:focus {
     border-radius: 20px !important;
     background: #013156 !important;
     color: #6c757d !important;
 }
-.bg-dark > div[group] > material-list-item:active > material-icon {
+.bg-dark-c > div[group] > material-list-item:active > material-icon {
     color: #6c757d !important;
 }
-.bg-dark > div[group] > material-list-item:focus > material-icon {
+.bg-dark-c > div[group] > material-list-item:focus > material-icon {
     color: #6c757d !important;
 }
-.bg-dark > div[group] > material-list-item:hover > material-icon {
+.bg-dark-c > div[group] > material-list-item:hover > material-icon {
     color: #6c757d !important;
 }
-.bg-dark > div[group] > material-list-item.active_side {
+.bg-dark-c > div[group] > material-list-item.active_side {
     color: #6c757d !important;
     background: #013156 !important;
     border-radius: 20px !important;
 }
-.bg-dark > div[group] > material-list-item.active_side > material-icon{
+.bg-dark-c > div[group] > material-list-item.active_side > material-icon{
     color: #cecfd0 !important;
 }

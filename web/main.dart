@@ -5,7 +5,7 @@ import 'package:http/browser_client.dart';
 import 'package:http/http.dart';
 
 import 'main.template.dart' as self;
-import 'package:pwa/client.dart' as pwa;
+// import 'package:pwa/client.dart' as pwa;
 
 @GenerateInjector([
   routerProviders,
@@ -15,6 +15,6 @@ import 'package:pwa/client.dart' as pwa;
 final InjectorFactory injector = self.injector$Injector;
 
 void main() {
-  pwa.Client();
+  // pwa.Client();
   runApp(postit.PostItAppComponentNgFactory, createInjector: injector);
 }

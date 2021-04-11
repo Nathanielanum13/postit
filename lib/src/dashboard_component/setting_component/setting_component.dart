@@ -63,7 +63,7 @@ class SettingComponent implements OnInit {
   int liCount = 0;
   Datar data;
   var appTheme;
-  Theme darkTheme = Theme('bg-dark', 'Dark', 'bg-dark-one', 'bg-dark-two', textColor: 'text-white', mutedText: 'dark-text-muted', borderState: 'border-0', table: 'table-dark');
+  Theme darkTheme = Theme('bg-dark-c', 'Dark', 'bg-dark-one', 'bg-dark-two', textColor: 'text-white', mutedText: 'dark-text-muted', borderState: 'border-0', table: 'table-dark');
   Alert setAlert;
 
   SettingComponent(
@@ -177,7 +177,7 @@ class SettingComponent implements OnInit {
   @override
   void ngOnInit() {
     appTheme = json.decode(window.localStorage['x-user-preference-theme']);
-    if (appTheme['box'] == 'bg-dark') {
+    if (appTheme['box'] == 'bg-dark-c') {
       darkMode = !darkMode;
       isDone = true;
     } else darkMode = false;

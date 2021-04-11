@@ -126,7 +126,13 @@ class ManagePostComponent implements OnInit {
   }
 
   void disableUsedDates(MaterialDatepickerComponent element) {
-    print('${element.date}');
+    element.focus();
+  }
+
+  void get(LocalDateTimeInputElement e) {
+    if (e.value == null) return;
+    DateTime date = DateTime.parse(e.value);
+    print('Date ::: ${date.toString()}');
   }
 
   void collectId(int index) {

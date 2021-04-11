@@ -1,35 +1,9 @@
-/*noinspection CssUnknownTarget*/
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-/*noinspection CssUnknownTarget*/
 @import url(https://fonts.googleapis.com/css?family=Material+Icons);
-@import url(css/font-awesome.css);
-@import url(css/bootstrap.min.css);
-/*@import url(css/argon.min.css);*/
+@import url('http://fonts.cdnfonts.com/css/product-sans');
 
-/*noinspection ALL*/
-@font-face {
-  font-family: Gilroy;
-  src: url(fonts/Gilroy/Gilroy-Light\ 300.otf)
-  format('opentype');
-  font-weight: 100;
-}
-
-/*noinspection ALL*/
-@font-face {
-  font-family: Gilroy-bold;
-  src: url(fonts/Gilroy/Gilroy-ExtraBold\ 800.otf)
-  format('opentype');
-  font-weight: 100;
-}
 @font-face {
   font-family: Nyata;
   src: url(fonts/Nyata/NyataFTR-Regular.otf)
-  format('opentype');
-  font-weight: 100;
-}
-@font-face {
-  font-family: Nexa-light;
-  src: url(fonts/Nexa/NexaLight350.otf)
   format('opentype');
   font-weight: 100;
 }
@@ -51,7 +25,9 @@ body {
   width: 100vw;
   height: 100%;
 }
-
+.fa {
+  display: inline-flex !important;
+}
 .br-20 {
   border-radius: 20px !important;
 }
@@ -62,7 +38,7 @@ body {
   /*font-family: Roboto, Helvetica, Arial, sans-serif;*/
   /*font-family: Gilroy;*/
   /*font-family: Nyata;*/
-  font-family: Google-Sans;
+  font-family: 'Product Sans', Google-Sans;
   font-weight: 400;
 }
 .img-center {
@@ -555,7 +531,7 @@ body {
 .bg-light-two {
   background-color: rgba(248, 249, 250, 0.4) !important;
 }
-.bg-dark {
+.bg-dark-c {
   background: #002040 !important;
 }
 .bg-dark-one {

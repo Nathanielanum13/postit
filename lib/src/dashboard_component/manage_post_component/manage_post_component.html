@@ -4,7 +4,7 @@
         <div class="col-lg-4 col-md-12 col-sm-12 mb-md-3 mb-0">
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-12">
-                    <div class="card shadow-c bg-transparent {{appTheme['box-one']}} br-20 border-0">
+                    <div class="card shadow-c {{appTheme['box-one']}} br-20 border-0">
                         <div class="card-body">
                             <div class="text-center h6 {{appTheme['text-muted']}} mb-2">Create Schedule</div>
                             <form novalidate>
@@ -13,6 +13,12 @@
                                            class="{{appTheme['box-one']}} nt-form-control {{appTheme['border']}} br-20"
                                            placeholder="Schedule title" type="text">
                                 </div>
+                                <div class="form-group">
+                                    <input #sd type="datetime-local" class="nt-form-control {{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" placeholder="Select start date" (click)="get(sd)">
+                                </div>
+                                <div class="form-group">
+                                    <input #ed type="datetime-local" class="nt-form-control {{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" placeholder="Select end date" (click)="get(ed)">
+                                </div>
                                 <!--<div class="form-group">
                                     <material-date-range-picker class="simplified-example"
                                                                 [(range)]="rangeSimplified"
@@ -20,7 +26,7 @@
                                                                 [showNextPrevButtons]="false">
                                     </material-date-range-picker>
                                 </div>-->
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <input [(value)]="startDate" [class.alert-danger]="inputError"
                                            class="{{appTheme['box-one']}} {{appTheme['border']}} nt-form-control pr-5 br-20 datepicker"
                                            placeholder="from" type="text">
@@ -44,7 +50,7 @@
                                                          [required]="true"
                                                          class="dt-picker">
                                     </material-datepicker>
-                                </div>
+                                </div>-->
                                 <!--<div class="form-group">
                                     <input type="text" class="nt-form-control border-0 pr-5 br-20 datepicker alert-danger" placeholder="Date Range (from - to)" [(value)]="startDate" [class.alert-danger]="inputError">
                                     <span class="fa fa-calendar float-right input-icon cursor-pointer"></span>
@@ -58,7 +64,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-12">
-                    <div class="card shadow-c bg-transparent {{appTheme['box-one']}} br-20 border-0 py-3 mt-3 my-3"
+                    <div class="card shadow-c {{appTheme['box-one']}} br-20 border-0 py-3 mt-3 my-3"
                          style="height: 220px">
                         <div class="card bg-transparent br-20 border-0 mx-0" id="scheduled-posts">
                             <div class="card-body">
@@ -89,7 +95,7 @@
             </div>
         </div>
         <div class="col-lg-8 col-md-12 col-sm-12 mb-3">
-            <div class="card shadow-c border-0 bg-transparent {{appTheme['box-one']}} br-20">
+            <div class="card shadow-c border-0 {{appTheme['box-one']}} br-20">
                 <div class="card-body">
                     <filter (sendData)="getAllFilterData($event)" [selected]="selectedIds.length"></filter>
                     <div class="row mt-2 mr-auto ml-auto" id="manage_box">

@@ -145,6 +145,7 @@ class CreatePostComponent implements OnInit, CanNavigate {
           });
       if (resp.statusCode == 200) {
         imgPaths.removeAt(index);
+        fileNames.removeAt(index);
         counter = counter - 1;
         setAlert = Alert(
             json.decode(resp.body)['data']['ui_message'], resp.statusCode);
@@ -502,14 +503,10 @@ class CreatePostComponent implements OnInit, CanNavigate {
     return finalBool;
   }
 
-
   @override
   Future<bool> canNavigate() async {
-    /*if (fileNames.isEmpty) return true;
-    togglePopup();
-    return await deleteFinalImages();*/
     if (fileNames.isEmpty) return true;
-    bool isPermitted = window.confirm('Are you sure you want to exit');
+    bool isPermitted = window.confirm('Are you sure you want to exit? You would loose currently uploaded images');
     if (isPermitted) {
       return deleteFinalImages();
     }
