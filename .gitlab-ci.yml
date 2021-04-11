@@ -19,4 +19,46 @@ before_script:
 test:
   stage: test
   script:
-    - pub run test $PUB_VARS
+    - webdev build
+
+development:
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-dev-ui --api-key=$HEROKU_API_KEY
+  environment:
+    name: Development
+    url: https://postit-dev-ui.herokuapp.com/
+  only:
+    - master
+
+
+staging:
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-staging-ui --api-key=$HEROKU_API_KEY
+  environment:
+    name: Staging
+    url: https://postit-staging-ui.herokuapp.com/
+  only:
+    - master
+  when: manual
+
+production:
+  stage: deploy
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=postit-prod-ui --api-key=$HEROKU_API_KEY
+  environment:
+    name: Production
+    url: https://postit-prod-ui.herokuapp.com/
+  only:
+    - master
+  when: manual
