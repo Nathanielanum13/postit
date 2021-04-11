@@ -13,6 +13,7 @@ import 'package:angular_app/variables.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
 import 'package:http/http.dart';
 
 @Component(
@@ -37,7 +38,7 @@ import 'package:http/http.dart';
   ],
   providers: [ClassProvider(GetPostService)],
 )
-class CreatePostComponent implements OnInit {
+class CreatePostComponent implements OnInit, CanNavigate {
   final GetPostService _getPostService;
 
   Alert setAlert;
@@ -45,16 +46,19 @@ class CreatePostComponent implements OnInit {
   bool postAlertBool = false;
   bool editKey = false;
   bool toggleState = false;
+  bool exitPopup = false;
   bool allIsChecked = false;
   bool loading = false;
   bool isSending = false;
   bool failed = false;
+  bool isDel = false;
+  bool finalBool = false;
   int postAlertCode = 0;
 
   String postMessage = '';
   String hashtag = '';
   String imageFile, fileFile = 'Select file to upload...';
-  List<int> postImage;
+  List<String> postImage;
   List<String> postTags = <String>[];
   List<String> deleteIds = <String>[];
   List<Post> currentPosts = <Post>[];
@@ -71,6 +75,8 @@ class CreatePostComponent implements OnInit {
   List<bool> editKeys = <bool>[];
   var appTheme;
 
+  StreamSubscription<MouseEvent> listener;
+
   CreatePostComponent(this._getPostService);
 
   Future<void> handleUpload(form, Event event) async {
@@ -78,60 +84,75 @@ class CreatePostComponent implements OnInit {
     var formData = FormData(form);
     final request = HttpRequest();
 
-    for (int i = 0;
+    counter += 1;
+    if (counter < 6) {
+      File pic = (event.target as FileUploadInputElement).files[0];
+      fileNames.add(pic.name);
+
+      var reader = FileReader()..readAsDataUrl(pic);
+
+      await reader.onLoadEnd.first;
+      imgPaths.add(reader.result);
+
+      request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
+      request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
+      request.setRequestHeader(
+          'tenant-namespace', '${window.sessionStorage['tenant-namespace']}');
+      request.setRequestHeader(
+          'Authorization', 'Bearer ${window.sessionStorage['token']}');
+
+      request.upload.onProgress.listen((ProgressEvent progress) {
+        imagesProgress.insert(counter, progress.loaded * 100 ~/ progress.total);
+      });
+
+      request.onLoad.listen((e) {
+        print('${counter} :: Uploaded');
+      });
+
+      request.onError.listen((event) {
+        failed = true;
+      });
+
+      request.send(formData);
+    } else {
+      setAlert = Alert('You can not add more than 6 images', 400);
+      Timer(Duration(seconds: 5), resetAlert);
+      return;
+    }
+
+    /*for (int i = 0;
         i < (event.target as FileUploadInputElement).files.length;
         i++) {
       counter += 1;
       if (i < 6 && counter < 6) {
-        File pic = (event.target as FileUploadInputElement).files[i];
-        fileNames.add(pic.name);
 
-        var reader = FileReader()..readAsDataUrl(pic);
-
-        await reader.onLoadEnd.first;
-        imgPaths.add(reader.result);
-
-        request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
-        request.setRequestHeader(
-            'trace-id', '8923002323732uhi2o388y7372838932');
-        request.setRequestHeader(
-            'tenant-namespace', '${window.sessionStorage['tenant-namespace']}');
-        request.setRequestHeader(
-            'Authorization', 'Bearer ${window.sessionStorage['token']}');
-        request.upload.onProgress.listen((ProgressEvent progress) {
-          imagesProgress.insert(
-              counter, progress.loaded * 100 ~/ progress.total);
-        });
-
-        request.onLoad.listen((e) {
-          print('Uploaded');
-        });
-
-        request.onError.listen((event) {
-          failed = true;
-        });
-
-        request.send(formData);
       } else {
         setAlert = Alert('You can not add more than 6 images', 400);
         Timer(Duration(seconds: 5), resetAlert);
         return;
       }
-    }
+    }*/
   }
 
   Future<void> deleteFile(int index) async {
-    Response resp;
     try {
-      resp = await delete(
+      final resp = await delete(
           '${env['MEDIA_UPLOAD_URL']}' + '?file_name=${fileNames[index]}',
           headers: {
             'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
             'tenant-namespace': '${window.sessionStorage['tenant-namespace']}',
             'Authorization': 'Bearer ${window.sessionStorage['token']}'
           });
+      if (resp.statusCode == 200) {
+        imgPaths.removeAt(index);
+        counter = counter - 1;
+        setAlert = Alert(
+            json.decode(resp.body)['data']['ui_message'], resp.statusCode);
+        Timer(Duration(seconds: 5), resetAlert);
+      }
     } catch (e) {
-      print('');
+      setAlert = Alert('Delete operation failed', 400);
+      Timer(Duration(seconds: 5), resetAlert);
     }
     /*print(json.decode(resp.body)['ui_message']);*/
   }
@@ -232,9 +253,6 @@ class CreatePostComponent implements OnInit {
     }
   }
 
-  void byteToString(List<int> s) {
-    postImage = s;
-  }
 
   Future<void> addPost() async {
     postMessage = postMessage.trim();
@@ -244,7 +262,7 @@ class CreatePostComponent implements OnInit {
       isSending = true;
       checkLoadingState(true);
       PostStandardResponse resp = await _getPostService.create(postMessage,
-          tags: postTags, image: postImage, priority: toggleState);
+          tags: postTags, priority: toggleState);
       checkLoadingState(false);
       isSending = false;
 
@@ -265,7 +283,10 @@ class CreatePostComponent implements OnInit {
         postMessage = '';
         postTags.clear();
         imgPaths.clear();
+        fileNames.clear();
         toggleState = false;
+
+        counter = -1;
       }
     } catch (e) {
       checkLoadingState(false);
@@ -284,7 +305,7 @@ class CreatePostComponent implements OnInit {
       isSending = true;
       checkLoadingState(true);
       PostStandardResponse resp = await _getPostService.update(
-          _updatePostId, postMessage, postTags, postImage);
+          _updatePostId, postMessage, postTags);
       checkLoadingState(false);
       isSending = false;
 
@@ -302,6 +323,8 @@ class CreatePostComponent implements OnInit {
 
         postMessage = '';
         postTags.clear();
+
+        counter = -1;
       }
 
       editKey = false;
@@ -427,5 +450,69 @@ class CreatePostComponent implements OnInit {
     } else {
       doc.querySelectorAll('.create-table-info').style.filter = 'blur(0)';
     }
+  }
+
+  void togglePopup() {
+    exitPopup = !exitPopup;
+    var dashHome = getDocument().getElementById('create-app');
+    if (exitPopup) {
+      dashHome.style.filter = 'blur(3px)';
+      Timer(Duration(milliseconds: 100), afterClose);
+    } else {
+      dashHome.style.filter = 'blur(0)';
+    }
+  }
+
+  void afterClose() {
+    var dashHome = getDocument().getElementById('create-app');
+    listener = dashHome.onClick.listen((event) {
+      closePopup();
+    });
+  }
+
+  void closePopup() {
+    var dashHome = getDocument().getElementById('create-app');
+    exitPopup = false;
+    dashHome.style.filter = 'blur(0)';
+    listener.cancel();
+  }
+
+  Future<bool> deleteFinalImages() async {
+    finalBool = true;
+    isDel = true;
+    for (int i = 0; i < fileNames.length; i++ ) {
+      try {
+        final resp = await delete(
+            '${env['MEDIA_UPLOAD_URL']}' + '?file_name=${fileNames[i]}',
+            headers: {
+              'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
+              'tenant-namespace': '${window.sessionStorage['tenant-namespace']}',
+              'Authorization': 'Bearer ${window.sessionStorage['token']}'
+            });
+        if (resp.statusCode == 200) {
+          bool successBool = true;
+          finalBool = finalBool && successBool;
+        }
+      } catch (e) {
+        isDel = false;
+        return false;
+      }
+    }
+    isDel = false;
+    return finalBool;
+  }
+
+
+  @override
+  Future<bool> canNavigate() async {
+    /*if (fileNames.isEmpty) return true;
+    togglePopup();
+    return await deleteFinalImages();*/
+    if (fileNames.isEmpty) return true;
+    bool isPermitted = window.confirm('Are you sure you want to exit');
+    if (isPermitted) {
+      return deleteFinalImages();
+    }
+    return false;
   }
 }

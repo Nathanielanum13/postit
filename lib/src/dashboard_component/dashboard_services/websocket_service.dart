@@ -69,7 +69,7 @@ class GetWebSocketData {
             Post(
                 allPosts[i]['post_message'],
                 postTag: convertLDS(allPosts[i]['hash_tags']),
-                postImage: convertDynamicToListOfInt(allPosts[i]['post_image']),
+                /*postImage: convertDynamicToListOfInt(allPosts[i]['post_image']),*/
                 id: allPosts[i]['post_id'],
                 postStatus: allPosts[i]['post_status']
             )

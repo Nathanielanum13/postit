@@ -98,7 +98,7 @@ class GetPostService {
   }
 
   Future<PostStandardResponse> update(
-      String id, String message, List<String> tags, List<int> image) async {
+      String id, String message, List<String> tags, {List<String> image}) async {
     try {
       Post po = Post(message, postTag: tags);
       final update_response = await _http.put(_postUrl + '?post_id=' + id,
@@ -147,7 +147,8 @@ class Post {
   String id;
   String postMessage;
   List<String> postTag;
-  List<int> postImage;
+  List<String> postImage;
+  List<String> imagePaths;
   String postPic;
   String createdOn;
   bool checkedState = false;
@@ -170,7 +171,8 @@ class Post {
       this.scheduleStatus,
       this.fbStatus,
       this.twStatus,
-      this.liStatus});
+      this.liStatus,
+      this.imagePaths});
 
   factory Post.fromJson(Map<String, dynamic> post) {
     return Post(post['post_message'],
@@ -181,7 +183,9 @@ class Post {
         fbStatus: post['post_fb_status'],
         twStatus: post['post_tw_status'],
         liStatus: post['post_li_status'],
-        scheduleStatus: post['scheduled']);
+        scheduleStatus: post['scheduled'],
+        postImage: convertLDS(post['post_images']),
+        imagePaths: convertLDS(post['image_paths']),);
   }
 
   Map toJson() => {

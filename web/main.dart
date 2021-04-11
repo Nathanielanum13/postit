@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 import 'main.template.dart' as self;
 
 @GenerateInjector([
-  routerProviders,
+  routerProvidersHash,
   ClassProvider(Client, useClass: BrowserClient),
   ValueProvider.forToken(appBaseHref, '/'),
 ])

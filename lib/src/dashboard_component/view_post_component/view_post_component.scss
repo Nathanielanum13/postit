@@ -219,3 +219,21 @@ li.active {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+.custom-upload {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+
+.custom-upload input[type="file"] {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    filter: alpha(opacity=0);
+
+    zoom: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}

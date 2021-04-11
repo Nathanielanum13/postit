@@ -101,39 +101,7 @@ table td {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-.popup {
-  position: fixed;
 
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  margin: auto;
-
-  width: 40%;
-  height: max-content;
-  background-color: rgba(255, 255, 255, 0.4);
-
-  animation-name: popup;
-  animation-fill-mode: forwards;
-  animation-duration: 300ms;
-  animation-iteration-count: 1;
-}
-@media screen and (max-width: 567px){
-  .popup {
-    width: 90%;
-    margin: auto;
-  }
-}
-@keyframes popup {
-  from {
-    transform: scale(0, 0);
-  }
-  to {
-    transform: scale(1, 1);
-  }
-}
 @media screen and (max-width: 567px) {
   #dash-home {
     height: 100%;

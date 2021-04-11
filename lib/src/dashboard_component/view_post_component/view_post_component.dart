@@ -11,7 +11,7 @@ import 'package:angular_app/src/dashboard_component/widgets/alert_component/aler
 import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
 import 'package:angular_app/src/dashboard_component/widgets/emojis_component/emojis_component.dart';
 import 'package:angular_app/src/dashboard_component/widgets/filter_component/filter_component.dart';
-import 'package:angular_app/src/dashboard_component/widgets/image_upload_component/image_upload_component.dart';
+import 'package:angular_app/variables.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_components/utils/browser/window/module.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -32,7 +32,6 @@ import 'package:angular_router/angular_router.dart';
     FilterComponent,
     AlertComponent,
     EmojisComponent,
-    ImageUploadComponent,
     routerDirectives,
   ],
   exports: [InnerRoutes, InnerRoutePaths],
@@ -47,13 +46,14 @@ class ViewPostComponent implements OnInit {
   bool isDeleting = false;
   bool editPopup = false;
   bool displayEmojiContainer = false;
+  List<String> imgBytes = <String>[];
   List<String> selectedIds = <String>[];
   List<Post> filteredPosts = <Post>[];
   List<bool> tabs = <bool>[true, false, false];
   Alert setAlert;
   StreamSubscription<MouseEvent> listener;
   int selectedPostIndex;
-  int focusScheduleId = null;
+
   int itemsPerPage = 10;
   int currentPage = 1;
   int maxPage;
@@ -61,8 +61,18 @@ class ViewPostComponent implements OnInit {
 
   String message = '';
   String hashtag = '';
-  List<String> postTags = <String>[];
+  List<String> hashTags = <String>[];
   int insertPosition = 0;
+
+  List<String> fileNames = <String>[];
+  String fileName = '';
+
+  String imgPath = '';
+  int counter = -1;
+  List<String> imgPaths = <String>[];
+  List<int> imagesProgress = <int>[0, 0, 0, 0, 0, 0];
+
+  bool failed = false;
 
   GetPostService _getPostService;
 
@@ -84,17 +94,91 @@ class ViewPostComponent implements OnInit {
     Timer(Duration(seconds: 5), resetAlert);
   }
 
+  Future<void> handleUpload(form, Event event) async {
+    event.preventDefault();
+    var formData = FormData(form);
+    final request = HttpRequest();
+
+    counter += 1;
+    if (counter < 6) {
+      File pic = (event.target as FileUploadInputElement).files[0];
+      fileNames.add(pic.name);
+
+      var reader = FileReader()..readAsDataUrl(pic);
+
+      await reader.onLoadEnd.first;
+      imgPaths.add(reader.result);
+
+      request.open("POST", "${env['MEDIA_UPLOAD_URL']}");
+      request.setRequestHeader('trace-id', '8923002323732uhi2o388y7372838932');
+      request.setRequestHeader(
+          'tenant-namespace', '${window.sessionStorage['tenant-namespace']}');
+      request.setRequestHeader(
+          'Authorization', 'Bearer ${window.sessionStorage['token']}');
+
+      request.upload.onProgress.listen((ProgressEvent progress) {
+        imagesProgress.insert(counter, progress.loaded * 100 ~/ progress.total);
+      });
+
+      request.onLoad.listen((e) {
+        print('${counter} :: Uploaded');
+      });
+
+      request.onError.listen((event) {
+        failed = true;
+      });
+
+      request.send(formData);
+    } else {
+      setAlert = Alert('You can not add more than 6 images', 400);
+      Timer(Duration(seconds: 5), resetAlert);
+      return;
+    }
+  }
+
+  Future<void> deleteFile(int index) async {
+    List<String> updatedImageList = <String>[];
+    // ignore: sdk_version_ui_as_code
+    updatedImageList = [...imgPaths];
+    updatedImageList.removeAt(index);
+
+    try {
+      PostStandardResponse resp = await _getPostService.update(
+          filteredPosts[selectedPostIndex].id,
+          filteredPosts[selectedPostIndex].postMessage,
+          filteredPosts[selectedPostIndex].postTag,
+          image: updatedImageList);
+
+      if (resp.httpStatusCode == 200) {
+        imgPaths.removeAt(index);
+        setAlert = Alert('Deleted image successfully', 200);
+        Timer(Duration(seconds: 3), resetAlert);
+      }
+    } catch (e) {
+      setAlert = Alert('Failed to delete image', 500);
+      Timer(Duration(seconds: 3), resetAlert);
+    }
+  }
+
   DateTime presentDate(String date) {
     Pattern x = 'T';
     return DateTime.parse(date.split(x)[0]);
   }
 
+  String presentTime(String date) {
+    Pattern x = 'T';
+    Pattern y = ':';
+    return date.split(x)[1].split(y)[0] + ':' + date.split(x)[1].split(y)[1];
+  }
+
   void addTag() {
-    postTags.add(hashtag);
+    hashTags.add(hashtag);
     hashtag = '';
   }
 
-  void removeTag(int index) => postTags.removeAt(index);
+  void removeTag(int index) {
+    hashTags.removeAt(index);
+  }
 
   void toggleEmojiContainer() {
     displayEmojiContainer = !displayEmojiContainer;
@@ -104,15 +188,33 @@ class ViewPostComponent implements OnInit {
     editPopup = !editPopup;
     var dashHome = getDocument().getElementById('view-app');
     if (editPopup) {
-      focusScheduleId = index;
       index = ((currentPage - 1) * itemsPerPage) + index;
       selectedPostIndex = index;
-      message = filteredPosts.elementAt(index).postMessage;
-      postTags = filteredPosts.elementAt(index).postTag;
+
+      counter = -1;
+      imgPaths.clear();
+      imagesProgress = [0, 0, 0, 0, 0, 0];
+
+      message = filteredPosts[index].postMessage;
+      // ignore: sdk_version_ui_as_code
+      hashTags = [...filteredPosts[index].postTag];
+      // ignore: sdk_version_ui_as_code
+      imgBytes = [...filteredPosts[index].postImage];
+      // ignore: sdk_version_ui_as_code
+      fileNames = [...filteredPosts[index].imagePaths];
+
+      if (imgBytes.isNotEmpty) {
+        imgPaths.clear();
+        for (int i = 0; i < imgBytes.length; i++) {
+          counter = (imgBytes.length) - 1;
+          imgPaths.add('data:image/jpeg;base64,' + imgBytes[i]);
+          imagesProgress.insert(i, 100);
+        }
+      }
+
       dashHome.style.filter = 'blur(3px) brightness(0.9)';
       Timer(Duration(milliseconds: 100), afterClose);
     } else {
-      focusScheduleId = null;
       displayEmojiContainer = false;
       dashHome.style.filter = 'blur(0) brightness(1)';
       tabs = [true, false, false];
@@ -132,6 +234,8 @@ class ViewPostComponent implements OnInit {
     displayEmojiContainer = false;
     dashHome.style.filter = 'blur(0) brightness(1)';
     tabs = [true, false, false];
+    imgPaths.clear();
+    imagesProgress.clear();
     listener.cancel();
   }
 
@@ -211,20 +315,22 @@ class ViewPostComponent implements OnInit {
     if (message.isEmpty) return null;
 
     try {
-      PostStandardResponse resp = await _getPostService
-          .update(filteredPosts[selectedPostIndex].id, message, postTags, []);
+      PostStandardResponse resp = await _getPostService.update(
+          filteredPosts[selectedPostIndex].id, message, hashTags,
+          image: imgPaths);
       setAlert = Alert(resp.data.message, resp.httpStatusCode);
       Timer(Duration(seconds: 5), resetAlert);
 
       if (resp.httpStatusCode == 200) {
-        Post newPost =
-            Post(message, postTag: postTags, id: resp.data.id, postImage: []);
-
-        filteredPosts.removeAt(selectedPostIndex);
-        filteredPosts.insert(selectedPostIndex, newPost);
-
+        filteredPosts[selectedPostIndex].postMessage = message;
+        filteredPosts[selectedPostIndex].postImage = imgPaths;
+        filteredPosts[selectedPostIndex].scheduleStatus = false;
+        filteredPosts[selectedPostIndex].fbStatus = false;
+        filteredPosts[selectedPostIndex].twStatus = false;
+        filteredPosts[selectedPostIndex].liStatus = false;
+        filteredPosts[selectedPostIndex].postTag = hashTags;
         message = '';
-        postTags.clear();
+        hashTags.clear();
         closePopup();
       }
     } catch (e) {
