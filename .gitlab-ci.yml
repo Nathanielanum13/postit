@@ -19,11 +19,12 @@ before_script:
 test:
   stage: test
   script:
-    - pub global activate webdev
+    - pub run pwa
 
 build:
   stage: build
   script:
+    - pub global activate webdev
     - webdev build
 
 development:
