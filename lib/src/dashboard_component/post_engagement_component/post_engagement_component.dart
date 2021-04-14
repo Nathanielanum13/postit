@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 import 'dart:convert';
 
@@ -28,6 +29,12 @@ class PostEngagementComponent implements OnInit{
   bool isEmojiClicked = false;
   var appTheme;
 
+  bool isFetchingFbPosts = false;
+
+  int insertPosition = 0;
+  // ignore: cancel_subscriptions
+  StreamSubscription<MouseEvent> listener;
+
   PostEngagementComponent(this._getPostEngagementServices);
   void showChat(int index) {
     chatShow = !chatShow;
@@ -54,11 +61,12 @@ class PostEngagementComponent implements OnInit{
     autoScroll();
   }
   void replyComment(int index) {
-    message = '@' + chats[index].issuer + ' ';
+    message = '@' + chats[index].issuer + '@ ';
     getDocument().getElementById('chat-area').focus();
+    getDocument().getElementById('chat-area-mob').focus();
   }
   void like(Element element) {
-    element.setAttribute('class', 'fa fa-thumbs-up text-primary');
+    element.classes.toggle('text-primary');
   }
 
   void autoScroll() {
@@ -77,17 +85,72 @@ class PostEngagementComponent implements OnInit{
       emojiElement.style.display = 'block';
       chatElement.style.position = 'relative';
       window.scroll(0, getDocument().getElementById('postit-body').scrollHeight);
+      Timer(Duration(milliseconds: 100), closeEmojiContainer);
     } else {
       emojiElement.style.display = 'none';
       chatElement.style.position = 'fixed';
     }
+  }
+  void toggleEmojiContainerDesktop() {
+    isEmojiClicked = !isEmojiClicked;
+    var emojiElement = getDocument().getElementById('emojis-desktop');
+    if(isEmojiClicked) {
+      emojiElement.style.display = 'block';
+      window.scroll(0, getDocument().getElementById('postit-body').scrollHeight);
+    } else {
+      emojiElement.style.display = 'none';
+    }
+  }
+
+  void closeEmojiContainer() {
+    listener = getDocument().getElementById('area-0').onClick.listen((event) {
+      close();
+    });
+  }
+
+  void close() {
+    toggleEmojiContainer();
+    listener.cancel();
+  }
+
+  void setData(data) {
+    arrangePostMessage(data);
+  }
+
+  void arrangePostMessage(String emoValue) {
+    List<String> postMessageList = <String>[];
+
+    if (message.isNotEmpty) {
+      for (int i = 0; i < message.length; i++) {
+        postMessageList.add(message[i]);
+      }
+      postMessageList.insert(insertPosition, emoValue);
+      insertPosition += 2;
+    } else {
+      /*postMessage = postMessage + emoValue;*/
+      postMessageList.add(emoValue);
+      insertPosition += 2;
+    }
+
+    message = '';
+
+    for (int i = 0; i < postMessageList.length; i++) {
+      message = message + postMessageList[i];
+    }
+  }
+
+  void getInputSelection(InputElement el) {
+    var endPosition = el.selectionEnd;
+    insertPosition = endPosition;
   }
 
   @override
   Future<void> ngOnInit() async {
     // TODO: implement ngOnInit
     appTheme = json.decode(window.localStorage['x-user-preference-theme']);
-    engagements = await _getPostEngagementServices.getAllEngagements();
+    isFetchingFbPosts = true;
+    engagements = await _getPostEngagementServices.getAllFacebookEngagements();
+    isFetchingFbPosts = false;
     allPostEngagements = engagements.postEngagement;
   }
 

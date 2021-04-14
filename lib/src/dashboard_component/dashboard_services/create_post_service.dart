@@ -43,7 +43,7 @@ class GetPostService {
           .toList();
       return schedules;
     } catch (e) {
-      throw _handleError(e);
+      return [];
     }
   }
 

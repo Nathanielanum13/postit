@@ -102,8 +102,17 @@ table td {
   border-bottom-right-radius: 20px;
 }
 
-@media screen and (max-width: 567px) {
+@media screen and (max-width: 991px) {
   #dash-home {
     height: 100%;
   }
+}
+
+.table td,
+.table th {
+  border-top: none;
+}
+.table thead th {
+  /*border-color: #32383e00;*/
+  border-bottom: none;
 }

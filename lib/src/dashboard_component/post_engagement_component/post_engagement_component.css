@@ -1,4 +1,6 @@
-
+#post-app {
+    height: calc(100vh - 64px);
+}
 .main-container {
     /*border: 1px solid rgb(238, 238, 238);*/
     width: 100%;
@@ -35,12 +37,27 @@
 .post-container {
     height: inherit;
 }
+.emojis-desktop {
+    position: absolute;
+    display: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 300px !important;
+    height: 300px !important;
+    background: #fdfbf7;
+
+    margin-top: -400px;
+}
 .emojis {
     display: none;
     overflow-y: scroll;
     overflow-x: hidden;
     height: 300px !important;
     background: #fdfbf7;
+
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
 }
 .chat-container {
     max-height: inherit;
@@ -213,5 +230,28 @@
     }
     to {
         right: 0;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        bottom: -300px;
+    }
+    to {
+        bottom: 0;
+    }
+}
+.slide-down {
+    animation-name: slide-down;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+@keyframes slide-down {
+    from {
+        bottom: 0;
+    }
+    to {
+        bottom: -300px;
     }
 }

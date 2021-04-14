@@ -76,6 +76,11 @@ class ManagePostComponent implements OnInit {
   List<SingleDayRange> predefinedDates;
   List<DatepickerPreset> getPresets;
 
+  String fromDate;
+  String toDate;
+  String fromDateTime;
+  String toDateTime;
+
   List<Schedule> scheduledPosts = <Schedule>[];
   List<Post> posts = <Post>[];
   List<Post> filteredPosts = <Post>[];
@@ -127,12 +132,6 @@ class ManagePostComponent implements OnInit {
 
   void disableUsedDates(MaterialDatepickerComponent element) {
     element.focus();
-  }
-
-  void get(LocalDateTimeInputElement e) {
-    if (e.value == null) return;
-    DateTime date = DateTime.parse(e.value);
-    print('Date ::: ${date.toString()}');
   }
 
   void collectId(int index) {
@@ -227,6 +226,7 @@ class ManagePostComponent implements OnInit {
   }
 
   Future<void> postSchedule() async {
+    setTime();
     showAccount = !showAccount;
     var doc = getDocument().getElementById('manage-app');
 
@@ -244,13 +244,72 @@ class ManagePostComponent implements OnInit {
     }
   }
 
+  String setTime() {
+    List<String> resultAfterXPatternSplit = <String>[];
+    List<String> resultAfterYPatternSplit = <String>[];
+    Pattern xPattern = ' ';
+    Pattern yPattern = ':';
+
+    //Get today's date
+    DateTime nowDate = DateTime.now();
+    //Add an hour to today's date and convert it to strings
+    String nowDateInString = (nowDate.add(Duration(hours: 1))).toString();
+    //Split new date with pattern T or a ( white space ) and then :
+    resultAfterXPatternSplit = nowDateInString.split(xPattern);
+    String nowTime =
+        resultAfterXPatternSplit[resultAfterXPatternSplit.length - 1];
+    resultAfterYPatternSplit = nowTime.split(yPattern);
+    // Join the hour and minutes part with : and return
+    return '${resultAfterYPatternSplit[0]}:${resultAfterYPatternSplit[1]}';
+  }
+
+  String reformatDate(Date date) {
+    int month = date.month;
+    int day = date.day;
+    int year = date.year;
+
+    String formattedMonth = '';
+    String formattedDay = '';
+
+    formattedMonth = month < 10 ? '0$month' : '$month';
+    formattedDay = day < 10 ? '0$day' : '$day';
+
+    return '$year-$formattedMonth-$formattedDay';
+  }
+
   Future<void> finalPostSchedule() async {
-    if (startDate.isBefore(finalDate) &&
-        selectedIds.isNotEmpty &&
-        title.isNotEmpty) {
-      inputError = false;
-      String from = startDate.asUtcTime().toIso8601String();
-      String to = finalDate.asUtcTime().toIso8601String();
+    fromDateTime =
+        reformatDate(Date.today()) == fromDate && fromDateTime == null
+            ? setTime()
+            : fromDateTime == null
+                ? '00:00'
+                : fromDateTime;
+    toDateTime = toDateTime == null ? '00:00' : toDateTime;
+    DateTime formattedFrom = DateTime.parse('${fromDate}T${fromDateTime}:00');
+    DateTime formattedTo = DateTime.parse('${toDate}T${toDateTime}:00');
+
+    if (fromDate == null || toDate == null) {
+      setAlert =
+          Alert('You can\'t create a schedule without from: or to: dates', 100);
+      Timer(Duration(seconds: 5), resetAlert);
+      return;
+    }
+
+    if (selectedIds.isEmpty) {
+      setAlert = Alert('You can\'t create a schedule without posts', 100);
+      Timer(Duration(seconds: 5), resetAlert);
+      return;
+    }
+
+    if (title.isEmpty) {
+      setAlert = Alert('You can\'t create a schedule without a title', 100);
+      Timer(Duration(seconds: 5), resetAlert);
+      return;
+    }
+
+    if (formattedFrom.isBefore(formattedTo)) {
+      String from = formattedFrom.toIso8601String().toString() + 'Z';
+      String to = formattedTo.toIso8601String().toString() + 'Z';
 
       try {
         isPosting = true;
@@ -265,13 +324,12 @@ class ManagePostComponent implements OnInit {
           scheduledPosts.add(newSchedule);
 
           title = '';
-          startDate = null;
-          finalDate = null;
 
           allIsChecked = false;
           _fbIds.clear();
           _liIds.clear();
           _twIds.clear();
+          selectedIds.clear();
           getAllIds();
           disableUsedDate();
           closePopup();
@@ -282,14 +340,8 @@ class ManagePostComponent implements OnInit {
         Timer(Duration(seconds: 5), resetAlert);
       }
     } else {
-      if (startDate == finalDate) {
-        inputError = true;
-        setAlert = Alert('from: should not be equal to: ', 500);
-        Timer(Duration(seconds: 5), resetAlert);
-      } else {
-        setAlert = Alert('Please check input fields', 500);
-        Timer(Duration(seconds: 5), resetAlert);
-      }
+      setAlert = Alert('from: should not be equal or less than to: ', 500);
+      Timer(Duration(seconds: 5), resetAlert);
     }
   }
 
@@ -367,23 +419,26 @@ class ManagePostComponent implements OnInit {
   }
 
   void disableUsedDate() {
-    /*Date finalTo = Date.today();
+    Date finalTo = Date.today();
 
     if (scheduledPosts.isNotEmpty) {
       for (int i = 0; i < scheduledPosts.length; i++) {
         List<String> to = scheduledPosts[i].to.split('T');
         to.removeLast();
+        List<String> from = scheduledPosts[i].from.split('T');
 
         Date dTo = Date.fromTime(DateTime.parse(to[0]));
+        Date dFrom = Date.fromTime(DateTime.parse(from[0]));
 
         if (dTo.isAfter(finalTo)) {
-          finalTo = dTo;
+          finalTo = dFrom;
         }
         fromStart = finalTo;
+        fromEnd = dTo.add(years: 15);
       }
     } else {
       fromStart = Date.today();
-    }*/
+    }
   }
 
   @override
@@ -391,6 +446,7 @@ class ManagePostComponent implements OnInit {
     appTheme = json.decode(window.localStorage['x-user-preference-theme']);
     posts = await _getPostService.getAllPost();
     scheduledPosts = await _getPostService.getAllScheduledPost();
+    disablePastDates();
     disableUsedDate();
   }
 
@@ -436,5 +492,22 @@ class ManagePostComponent implements OnInit {
 
   String nextPageDisabled() {
     return this.currentPage == this.maxPage ? "disabled" : "";
+  }
+
+  void disablePastDates() {
+    Date today = Date.today();
+    int month = today.month;
+    int day = today.day;
+    int year = today.year;
+
+    String maxMonth = '';
+    String maxDay = '';
+
+    maxMonth = month < 10 ? '0$month' : '$month';
+    maxDay = day < 10 ? '0$day' : '$day';
+
+    String maxDate = '$year-$maxMonth-$maxDay';
+    getDocument().getElementById('from').setAttribute('min', maxDate);
+    getDocument().getElementById('to').setAttribute('min', maxDate);
   }
 }

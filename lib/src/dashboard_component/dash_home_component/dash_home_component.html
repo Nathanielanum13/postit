@@ -107,7 +107,8 @@
                                     role="tablist">
                                     <li class="nav-item">
                                         <a aria-controls="tabs-icons-text-1" aria-selected="true"
-                                           class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}} active" data-toggle="tab"
+                                           class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}} active"
+                                           data-toggle="tab"
                                            href="#tabs-icons-text-1"
                                            id="tabs-icons-text-1-tab" role="tab">
                                             <span class="fa fa-calendar text-danger mr-2"></span>Due
@@ -116,7 +117,8 @@
                                     </li>
                                     <li class="nav-item">
                                         <a aria-controls="tabs-icons-text-2" aria-selected="false"
-                                           class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}}" data-toggle="tab"
+                                           class="nav-link mb-sm-3 mb-md-0 {{appTheme['text-colour']}}"
+                                           data-toggle="tab"
                                            href="#tabs-icons-text-2"
                                            id="tabs-icons-text-2-tab" role="tab">
                                             <span class="fa fa-clock-o mr-2 text-muted"></span>Queue
@@ -135,23 +137,16 @@
                                     </div>
                                     <div *ngIf="datas.isNotEmpty">
                                         <div *ngFor="let d of datas; let $i=index"
-                                             class="card br-10 mt-3 shadow--hover">
+                                             class="{{appTheme['box-two']}} br-20 mt-3 shadow--hover">
                                             <div class="card-body m-0 px-4">
                                                 <div class="row my-0 mx-auto">
-                                                    <div class="col-4 my-auto text-overflow">
-                                                        <span [title]="d.scheduleTitle"
-                                                              class="text-muted figure-caption">{{d.scheduleTitle}}</span>
+                                                    <div class="col-5 my-auto text-overflow" [title]="d.scheduleTitle">
+                                                        <span class="{{appTheme['text-muted']}} figure-caption">{{d.scheduleTitle}}</span>
                                                     </div>
-                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow"
-                                                         style="border-right: 1px solid green">
-                                                    <span class="text-danger">
-                                                    <span [title]="d.from" class="fa fa-arrow-up"></span>
-                                                        {{d.from}}
-                                                    </span>
-                                                    </div>
-                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow">
-                                                    <span class="text-success">
-                                                    <span [title]="d.to" class="fa fa-arrow-down"></span>
+                                                    <div class="col-7 my-auto {{appTheme['text-muted']}} figure-caption text-overflow" [title]="d.to">
+                                                        <span class="font-weight-bold">Ends on </span>
+                                                        <span class="text-success">
+                                                        <span class="fa fa-clock-o"></span>
                                                         {{d.to}}
                                                     </span>
                                                     </div>
@@ -189,9 +184,10 @@
                                                         <span [title]="schedule.title"
                                                               class="text-muted figure-caption">{{schedule.title}}</span>
                                                     </div>
-                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow" title="{{ durationItems[$i] }} days">
+                                                    <div class="col-4 my-auto text-muted figure-caption text-overflow"
+                                                         title="{{ durationItems[$i] }}">
                                                         <span class="text-muted font-weight-bold">Due in</span>
-                                                        {{ durationItems[$i] }} days
+                                                        {{durationItems[$i]}}
                                                     </div>
                                                     <div class="col-4 my-auto text-right text-muted figure-caption">
                                                         <span (click)="gotoManagePostComponent()"
@@ -224,12 +220,12 @@
                             <span class="text-center nt-center {{appTheme['text-colour']}}">Nothing to display</span>
                         </div>
                         <div *ngIf="sentPosts.isNotEmpty" class="post-data">
-                            <div class="card shadow post-data-card">
+                            <div class="card shadow post-data-card {{appTheme['box-one']}}">
                                 <div class="card-body m-0 p-0">
                                     <div class="row m-0">
                                         <div class="col-md-12 m-0 p-0">
                                             <div class="container p-0">
-                                                <table class="table post-card-data small table-responsive mb-0 table-striped"
+                                                <table class="table {{appTheme['text-muted']}} post-card-data small table-responsive mb-0 table-striped"
                                                        style="display: table !important;">
                                                     <thead>
                                                     <tr>
@@ -252,7 +248,8 @@
                                                         <td [title]="sentPost.postMessage" class="text-overflow">
                                                             {{sentPost.postMessage}}
                                                         </td>
-                                                        <td [title]="sentPost.postTag"><span *ngFor="let tag of sentPost.postTag">{{tag}},</span>
+                                                        <td [title]="sentPost.postTag"><span
+                                                                *ngFor="let tag of sentPost.postTag">{{tag}},</span>
                                                         </td>
                                                     </tr>
                                                     <tr *ngIf="currentScheduleId != sentPosts.length">

@@ -1,96 +1,7 @@
-<div class="container p-0 m-0 px-md-2 m-md-auto">
-    <h6 class="small text-center py-3 d-none d-md-block">Read and reply to all your comments in this section</h6>
-    <!--<div class="row m-0 p-0 main-container c-bordered d-block d-lg-none d-md-none">
-        <div class="col-sm-12 col-md-5 post-container m-0 p-0" *ngIf="!chatShow">
-            <div class="w-100 text-center p-2 box-three br-20 mb-2">
-                <span class="fa fa-commenting mx-2 text-primary"></span>
-                <span class="font-weight-bold">Comments <small>from</small> All</span>
-            </div>
-            <div class="w-100 p-2 post-card-container">
-                <div class="card w-100 mb-2 br-10 cursor-pointer" *ngFor="let allPostEngagement of allPostEngagements; let $i = index" (click)="showChat($i)">
-                    <div class="card-body">
-                        <div class="row w-100 m-0">
-                            <div class="col-3 my-auto">
-                                <div class="post-image">
-                                    <img src="../img/postit_background.png" alt="post-image" class="img-fluid br-10">
-                                </div>
-                            </div>
-                            <div class="col-9 small">
-                                {{allPostEngagement.postMessage}}
-                            </div>
-                        </div>
-                        <div class="card-footer mt-2">
-                            <div class="row w-100 m-0">
-                                <div class="col-3 m-auto p-0"></div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-thumbs-up text-primary"></span>
-                                    <span class="small">{{allPostEngagement.likes}}</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-heart text-danger"></span>
-                                    <span class="small">{{allPostEngagement.loves}}</span>
-                                </div>
-                                <div class="col-3 m-auto p-0 text-center">
-                                    <span class="fa fa-comment-o"></span>
-                                    <span class="small">{{allPostEngagement.comments}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-7 chat-container m-0 p-0" *ngIf="chatShow">
-            <div class="w-100 text-center p-2 box-three br-20 my-auto">
-                <span class="fa fa-chevron-left text-primary mx-2 float-left pt-1" (click)="hideChat()"></span>
-                <span class="font-weight-bold">Engagement Room</span>
-                <span class="fa fa-home mx-2 text-primary"></span>
-            </div>
-            <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isEmpty">
-                <div class="nt-center">
-                    <img src="img/display_chat.png" alt="click-to-display-chat-icon" class="img-fluid">
-                </div>
-            </div>
-            <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isNotEmpty" id="chat-box-mob">
-                <div class="text-center w-100" style="height: max-content;">
-                    <span class="table-bordered p-2 small see-older-messages">See older comments</span>
-                </div>
-                <div class="w-100 m-0 px-2" style="padding-bottom: 100px">
-                    <div *ngFor="let chat of chats; let $i = index">
-                        <div class="{{chat.status}} px-3 py-2 mt-5">
-                            <div class="nt-center forward-call">
-                                <div class="nt-circle bg-dark" style="cursor: pointer;" (click)="replyComment($i)">
-                                    <span class="fa fa-reply text-white"></span>
-                                </div>
-                                <div class="nt-circle bg-dark" style="cursor: pointer;" (click)="like(el)">
-                                    <span class="fa fa-thumbs-up text-white" #el></span>
-                                </div>
-                            </div>
-                            <div class="name small font-weight-bold issuer">{{chat.issuer}}</div>
-                            <div class="comment" style="font-size: 14px;">{{chat.message}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="w-100 chat-engine p-2 bg-light br-20">
-                <div class="row m-0">
-                    <div class="col-2 m-auto p-0 text-center">
-                        <span class="fa fa-smile-o fa-2x mx-2"></span>
-                    </div>
-                    <div class="col-8 m-auto p-0">
-                        <input type="text" class="nt-form-control" [(ngModel)]="message" (keyup.enter)="sendComment()" style="border-radius: 20px;" placeholder="Type your message here ..." id="chat-area">
-                    </div>
-                    <div class="col-2 m-auto p-0 text-center">
-                        <div class="nt-circle bg-success cursor-pointer" (click)="sendComment()" style="width: 2.25rem !important; height: 2.25rem !important;">
-                            <span class="fa fa-paper-plane text-white"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
+<div class="container p-0 m-0 px-md-2 m-md-auto" id="post-app">
+    <h6 class="small text-center py-3 d-none d-md-block {{appTheme['text-muted']}}">Read and reply to all your comments in this section</h6>
     <div class="row m-0 p-0 main-container c-bordered d-block d-lg-none d-md-none">
-        <div class="col-sm-12 col-md-5 post-container box-one br-10 m-0 p-0" *ngIf="!chatShow">
+        <div class="col-sm-12 col-md-5 post-container {{appTheme['box-two']}} br-10 m-0 p-0" *ngIf="!chatShow">
             <div class="w-100 p-2 bg-primary br-10 mx-0 figure-caption mb-2 text-center text-white">
                 <div class="row w-100 m-0 p-0">
                     <div class="col-3">All</div>
@@ -98,19 +9,12 @@
                     <div class="col-3"><span class="fa fa-twitter"></span></div>
                     <div class="col-3"><span class="fa fa-instagram"></span></div>
                 </div>
-                <!--<span class="fa fa-commenting mx-2 text-white"></span>
-                <span class="font-weight-bold text-white">Comments</span>-->
             </div>
             <div class="w-100 p-2 post-card-container">
-                <div class="card w-100 mb-2 br-10-pic" *ngFor="let allPostEngagement of allPostEngagements; let $i = index">
+                <div class="card {{appTheme['box-one']}} {{appTheme['text-muted']}} w-100 mb-2 br-10-pic" *ngFor="let allPostEngagement of allPostEngagements; let $i = index">
                     <div class="card-body">
                         <div class="row w-100 m-0">
-                            <div class="col-3 my-auto">
-                                <div class="post-image">
-                                    <img src="../img/postit_background.png" alt="post-image" class="img-fluid br-10-pic">
-                                </div>
-                            </div>
-                            <div class="col-9 small">
+                            <div class="col-12 small">
                                 {{allPostEngagement.postMessage}}
                                 <div class="row w-100 mx-0 mt-2">
                                     <div class="col-4 m-auto p-0 text-center">
@@ -132,11 +36,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-7 chat-container m-0 p-0 {{appTheme['box-one']}} br-10 shadow" *ngIf="chatShow">
-            <div class="w-100 text-center p-2 box-three br-10 shadow my-auto">
+        <div class="col-sm-12 col-md-7 chat-container m-0 p-0 {{appTheme['box-two']}} br-10 shadow" *ngIf="chatShow">
+            <div class="w-100 text-center p-2 {{appTheme['box-one']}} br-10 shadow my-auto">
                 <span class="fa fa-chevron-left text-primary mx-2 float-left pt-1" (click)="hideChat()"></span>
                 <span class="font-weight-bold fa fa-envelope text-success"></span>
-                <span class="font-weight-bold mx-2">Engagement Room</span>
+                <span class="font-weight-bold mx-2 {{appTheme['text-muted']}}">Engagement Room</span>
             </div>
             <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isEmpty">
                 <div class="nt-center">
@@ -145,9 +49,9 @@
             </div>
             <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isNotEmpty" id="chat-box-mob">
                 <div class="text-center w-100" style="height: max-content;">
-                    <span class="px-4 py-1 small see-older-messages">See older comments</span>
+                    <span class="px-4 py-1 small {{appTheme['text-muted']}} see-older-messages">See older comments</span>
                 </div>
-                <div class="w-100 m-0 px-3 px-lg-4" style="padding-bottom: 100px">
+                <div class="w-100 m-0 px-3 px-lg-4" id="area-0" style="padding-bottom: 100px">
                     <div *ngFor="let chat of chats; let $i = index">
                         <div class="{{chat.status}} px-3 py-2 mt-5">
                             <div class="nt-center forward-call">
@@ -159,18 +63,25 @@
                                 </div>
                             </div>
                             <div class="name small font-weight-bold issuer">{{chat.issuer}}</div>
-                            <div class="comment" style="font-size: 14px;">{{chat.message}}</div>
+                            <div class="comment" style="font-size: 14px; word-break: break-all">{{chat.message}}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="w-100 chat-engine p-2 bg-light" id="chat-engine">
+            <div class="w-100 chat-engine p-2 {{appTheme['box-one']}}" id="chat-engine">
                 <div class="row m-0">
                     <div class="col-2 m-auto p-0 text-center">
-                        <span class="fa fa-smile-o fa-2x mx-2" (click)="toggleEmojiContainer()"></span>
+                        <span class="fa fa-smile-o fa-2x mx-2 {{appTheme['text-muted']}}" (click)="toggleEmojiContainer()"></span>
                     </div>
                     <div class="col-8 m-auto p-0">
-                        <input type="text" class="nt-form-control" [(ngModel)]="message" (keyup.enter)="sendComment()" style="border-radius: 20px;" placeholder="Type your message here ..." id="chat-area">
+                        <input type="text" #ce
+                               (click)="getInputSelection(ce)"
+                               (input)="getInputSelection(ce)"
+                               (keyup)="getInputSelection(ce)"
+                               class="nt-form-control {{appTheme['border']}} {{appTheme['box-one']}}" [(ngModel)]="message"
+                               (keyup.enter)="sendComment()"
+                               style="border-radius: 20px;" placeholder="Type your message here ..."
+                               id="chat-area-mob">
                     </div>
                     <div class="col-2 m-auto p-0 text-center">
                         <div class="nt-circle bg-success cursor-pointer" (click)="sendComment()" style="width: 2.25rem !important; height: 2.25rem !important;">
@@ -179,13 +90,13 @@
                     </div>
                 </div>
             </div>
-            <div class="emojis w-100" id="emojis">
-                <emoji-app></emoji-app>
+            <div class="emojis w-100 {{appTheme['box']}}" id="emojis">
+                <emoji-app (myClick)="setData($event)"></emoji-app>
             </div>
         </div>
     </div>
     <div class="row m-0 p-0 main-container d-none d-md-flex d-lg-flex">
-        <div class="col-sm-12 col-md-5 post-container box-one br-10 m-0 p-0">
+        <div class="col-sm-12 col-md-5 post-container {{appTheme['box-two']}} br-10 m-0 p-0">
             <div class="w-100 p-2 bg-primary br-10 mx-0 figure-caption mb-2 text-center text-white">
                 <div class="row w-100 m-0 p-0">
                     <div class="col-3">All</div>
@@ -193,32 +104,31 @@
                     <div class="col-3"><span class="fa fa-twitter"></span></div>
                     <div class="col-3"><span class="fa fa-instagram"></span></div>
                 </div>
-                <!--<span class="fa fa-commenting mx-2 text-white"></span>
-                <span class="font-weight-bold text-white">Comments</span>-->
             </div>
             <div class="w-100 p-2 post-card-container">
-                <div class="card w-100 mb-2 br-10" *ngFor="let allPostEngagement of allPostEngagements; let $i = index">
-                    <div class="card-body">
-                        <div class="row w-100 m-0">
-                            <div class="col-3 my-auto">
-                                <div class="post-image">
-                                    <img src="../img/postit_background.png" alt="post-image" class="img-fluid br-10">
-                                </div>
-                            </div>
-                            <div class="col-9 small">
-                                {{allPostEngagement.postMessage}}
-                                <div class="row w-100 mx-0 mt-2">
-                                    <div class="col-4 m-auto p-0 text-center">
-                                        <span class="fa fa-thumbs-up text-primary"></span>
-                                        <span class="small">{{allPostEngagement.likes}} likes</span>
-                                    </div>
-                                    <div class="col-4 m-auto p-0 text-center">
-                                        <span class="fa fa-comment-o"></span>
-                                        <span class="small">{{allPostEngagement.comments}} comments</span>
-                                    </div>
-                                    <div class="col-4 m-auto p-0 text-center cursor-pointer" (click)="loadChat($i)">
-                                        <span class="fa fa-mail-reply"></span>
-                                        <span class="small ml-2">Reply</span>
+                <div class="nt-center {{appTheme['text-muted']}} font-weight-bold" *ngIf="allPostEngagements.isEmpty">
+                    <template [ngIf]="isFetchingFbPosts">Loading...</template>
+                    <template [ngIf]="!isFetchingFbPosts">No data</template>
+                </div>
+                <div *ngIf="allPostEngagements.isNotEmpty">
+                    <div class="card {{appTheme['box-one']}} w-100 mb-2 br-10 {{appTheme['text-muted']}}" *ngFor="let allPostEngagement of allPostEngagements; let $i = index">
+                        <div class="card-body">
+                            <div class="row w-100 m-0">
+                                <div class="col-12 small">
+                                    {{allPostEngagement.postMessage}}
+                                    <div class="row w-100 mx-0 mt-2">
+                                        <div class="col-4 m-auto p-0 text-center">
+                                            <span class="fa fa-thumbs-up text-primary"></span>
+                                            <span class="small">{{allPostEngagement.likes == null ? 0 : allPostEngagement.likes}} likes</span>
+                                        </div>
+                                        <div class="col-4 m-auto p-0 text-center">
+                                            <span class="fa fa-comment-o"></span>
+                                            <span class="small">{{allPostEngagement.comments == null ? 0: allPostEngagement.comments}} comments</span>
+                                        </div>
+                                        <div class="col-4 m-auto p-0 text-center cursor-pointer" (click)="loadChat($i)">
+                                            <span class="fa fa-mail-reply"></span>
+                                            <span class="small ml-2">Reply</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -227,10 +137,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-7 chat-container m-0 p-0 {{appTheme['box-one']}} br-10 shadow">
-            <div class="w-100 text-center p-2 box-three br-10 shadow my-auto">
+        <div class="col-sm-12 col-md-7 chat-container m-0 p-0 {{appTheme['box-two']}} br-10 shadow">
+            <div class="w-100 text-center p-2 {{appTheme['box-one']}} br-10 shadow my-auto">
                 <span class="font-weight-bold fa fa-envelope text-success"></span>
-                <span class="font-weight-bold mx-2">Engagement Room</span>
+                <span class="font-weight-bold {{appTheme['text-muted']}} mx-2">Engagement Room</span>
             </div>
             <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isEmpty">
                 <div class="nt-center">
@@ -239,9 +149,9 @@
             </div>
             <div class="row w-100 m-0 px-0 py-2 chat-box" *ngIf="chats.isNotEmpty" id="chat-box">
                 <div class="text-center w-100" style="height: max-content;">
-                    <span class="px-4 py-1 small see-older-messages">See older comments</span>
+                    <span class="px-4 py-1 small {{appTheme['text-muted']}} see-older-messages">See older comments</span>
                 </div>
-                <div class="w-100 m-0 px-4" style="padding-bottom: 100px">
+                <div class="w-100 m-0 px-4" id="area-0" style="padding-bottom: 100px">
                     <div *ngFor="let chat of chats; let $i = index">
                         <div class="{{chat.status}} px-3 py-2 mt-5">
                             <div class="nt-center forward-call">
@@ -253,18 +163,26 @@
                                 </div>
                             </div>
                             <div class="name small font-weight-bold issuer">{{chat.issuer}}</div>
-                            <div class="comment" style="font-size: 14px;">{{chat.message}}</div>
+                            <div class="comment" style="font-size: 14px; word-break: break-all">{{chat.message}}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="w-100 chat-engine p-2 bg-light br-10">
+            <div class="w-100 chat-engine p-2 {{appTheme['box-one']}} br-10" id="chat-engine-desktop">
                 <div class="row m-0">
                     <div class="col-2 m-auto p-0 text-center">
-                        <span class="fa fa-smile-o fa-2x mx-2"></span>
+                        <span class="fa fa-smile-o fa-2x mx-2 {{appTheme['text-muted']}}" (click)="toggleEmojiContainerDesktop()"></span>
                     </div>
                     <div class="col-8 m-auto p-0">
-                        <input type="text" class="nt-form-control" [(ngModel)]="message" (keyup.enter)="sendComment()" style="border-radius: 20px;" placeholder="Type your message here ..." id="chat-area">
+                        <input type="text" #ced
+                               (click)="getInputSelection(ced)"
+                               (input)="getInputSelection(ced)"
+                               (keyup)="getInputSelection(ced)"
+                               class="nt-form-control {{appTheme['box-one']}} {{appTheme['border']}}"
+                               [(ngModel)]="message"
+                               (keyup.enter)="sendComment()" style="border-radius: 20px;"
+                               placeholder="Type your message here ..."
+                               id="chat-area">
                     </div>
                     <div class="col-2 m-auto p-0 text-center">
                         <div class="nt-circle bg-success cursor-pointer" (click)="sendComment()" style="width: 2.25rem !important; height: 2.25rem !important;">
@@ -272,6 +190,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="emojis-desktop w-100 {{appTheme['box']}} shadow br-20" id="emojis-desktop">
+                <emoji-app (myClick)="setData($event)"></emoji-app>
             </div>
         </div>
     </div>
