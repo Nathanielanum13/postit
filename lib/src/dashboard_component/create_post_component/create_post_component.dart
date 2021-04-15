@@ -481,25 +481,24 @@ class CreatePostComponent implements OnInit, CanNavigate {
   Future<bool> deleteFinalImages() async {
     finalBool = true;
     isDel = true;
-    for (int i = 0; i < fileNames.length; i++ ) {
+    if (fileNames.isNotEmpty) {
       try {
         final resp = await delete(
-            '${env['MEDIA_UPLOAD_URL']}' + '?file_name=${fileNames[i]}',
+            '${env['MEDIA_BATCH_UPLOAD_URL']}',
             headers: {
               'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
               'tenant-namespace': '${window.sessionStorage['tenant-namespace']}',
               'Authorization': 'Bearer ${window.sessionStorage['token']}'
             });
         if (resp.statusCode == 200) {
-          bool successBool = true;
-          finalBool = finalBool && successBool;
+          finalBool = true;
         }
       } catch (e) {
         isDel = false;
-        return false;
+        finalBool = false;
       }
     }
-    isDel = false;
+
     return finalBool;
   }
 

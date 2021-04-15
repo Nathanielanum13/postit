@@ -4,9 +4,9 @@
 // const websocket_url = 'ws://localhost:3567';
 
 //production
-const base_url = 'https://postit-dev-api.herokuapp.com';
-const base_auth_url = 'https://postit-dev-auth.herokuapp.com';
-const websocket_url = 'wss://postit-dev-schedule-status.herokuapp.com';
+const base_url = 'https://postit-prod-api.herokuapp.com';
+const base_auth_url = 'https://postit-prod-auth.herokuapp.com';
+const websocket_url = 'wss://postit-prod-schedule-status.herokuapp.com';
 
 
 Map env = const {
@@ -23,6 +23,7 @@ Map env = const {
  'COUNT_URL': '$base_url/count/data',
  'SCHEDULE_STATUS_WEBSOCKET': '$websocket_url/pws/schedule-status',
  'MEDIA_UPLOAD_URL': '$base_url/file/upload',
+ 'MEDIA_BATCH_UPLOAD_URL': '$base_url/delete/all',
  'PROFILE_URL': '$base_auth_url/auth/profile',
  'LOGIN_PASSWORD': '$base_auth_url/auth/password',
  'COMPANY_DETAIL': '$base_auth_url/auth/details'

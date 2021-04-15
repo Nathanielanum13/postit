@@ -1,4 +1,4 @@
-@import url('http://fonts.cdnfonts.com/css/product-sans');
+/*@import url('http://fonts.cdnfonts.com/css/product-sans');*/
 
 @font-face {
   font-family: Nyata;
@@ -11,6 +11,18 @@
   src: url(fonts/Google/ProductSans-Light.ttf)
   format('truetype');
   font-weight: 100;
+}
+@font-face {
+    font-family: Montserrat;
+    src: url(fonts/Montserrat-Regular.ttf)
+    format('truetype');
+    font-weight: 100;
+}
+@font-face {
+    font-family: Pacifico;
+    src: url(fonts/Pacifico.ttf)
+    format('truetype');
+    font-weight: 100;
 }
 html {
   margin: 0;
@@ -53,7 +65,7 @@ body {
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 350px;
+  width: 150px;
   height: auto;
 }
 .nt-center {
@@ -718,7 +730,7 @@ body {
   }
   to {
     opacity: 1;
-    margin-left: 0;
+    margin-left: 60px;
   }
 }
 .separator {

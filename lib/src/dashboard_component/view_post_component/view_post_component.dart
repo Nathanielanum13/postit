@@ -45,6 +45,7 @@ class ViewPostComponent implements OnInit {
   bool loading = false;
   bool isDeleting = false;
   bool editPopup = false;
+  bool editing = false;
   bool displayEmojiContainer = false;
   List<String> imgBytes = <String>[];
   List<String> selectedIds = <String>[];
@@ -315,9 +316,11 @@ class ViewPostComponent implements OnInit {
     if (message.isEmpty) return null;
 
     try {
+      editing = true;
       PostStandardResponse resp = await _getPostService.update(
           filteredPosts[selectedPostIndex].id, message, hashTags,
           image: imgPaths);
+      editing = false;
       setAlert = Alert(resp.data.message, resp.httpStatusCode);
       Timer(Duration(seconds: 5), resetAlert);
 
@@ -334,6 +337,7 @@ class ViewPostComponent implements OnInit {
         closePopup();
       }
     } catch (e) {
+      editing = false;
       setAlert = Alert('Failed to update post', 500);
       Timer(Duration(seconds: 5), resetAlert);
     }

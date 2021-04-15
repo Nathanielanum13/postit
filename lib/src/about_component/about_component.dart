@@ -17,11 +17,10 @@ import 'dart:async';
   exports: [Routes]
 )
 class AboutComponent {
-
-  Router _router;
-  AboutComponent(this._router);
+  Location _location;
+  AboutComponent(this._location);
 
   Future<void> gotoHome() async {
-    _router.navigate(RoutePaths.home.toUrl());
+    _location.back();
   }
 }

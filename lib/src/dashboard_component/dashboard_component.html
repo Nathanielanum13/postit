@@ -23,11 +23,11 @@
                                 <div class="row mx-0">
                                     <div class="col-4 pr-0">
                                         <div class="icon-circle">
-                                            <span class="text-center fa fa-user"></span>
+                                            <span class="text-center fa fa-users"></span>
                                         </div>
                                     </div>
                                     <div class="col-8 px-0">
-                                        <a href="#" class="nav-link text-muted my-auto small font-weight-bold">Profile</a>
+                                        <a [routerLink]="InnerRoutePaths.post_account.toUrl()" [routerLinkActive]="'active'" class="nav-link text-muted my-auto small font-weight-bold">Accounts</a>
                                     </div>
                                 </div>
                             </li>
@@ -40,19 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="col-8 px-0">
-                                        <a href="#" class="nav-link text-muted my-auto small font-weight-bold">Settings</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="pr-1">
-                                <div class="row mx-0">
-                                    <div class="col-4 pr-0">
-                                        <div class="icon-circle">
-                                            <span class="text-center fa fa-users"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-8 px-0">
-                                        <a href="#" class="nav-link text-muted my-auto small font-weight-bold">Accounts</a>
+                                        <a [routerLink]="InnerRoutePaths.setting.toUrl()" [routerLinkActive]="'active'" class="nav-link text-muted my-auto small font-weight-bold">Settings</a>
                                     </div>
                                 </div>
                             </li>

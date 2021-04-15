@@ -244,8 +244,10 @@
             </div>
         </div>
         <div class="mt-3 p-0 text-right">
-            <button (click)="updatePost()" class="btn btn-sm btn-success br-20 px-4 mr-2"><span
-                    class="fa fa-edit mr-1"></span>Save
+            <button (click)="updatePost()" class="btn btn-sm btn-success br-20 px-4 mr-2">
+                <span class="fa fa-edit mr-1"></span>
+                <template [ngIf]="editing">...</template>
+                <template [ngIf]="!editing">Save</template>
             </button>
             <button (click)="closePopup()" class="btn btn-sm btn-light br-20 px-4">Cancel</button>
         </div>

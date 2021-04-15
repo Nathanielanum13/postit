@@ -23,7 +23,7 @@ class HomeComponent {
   Router _router;
   HomeComponent(this._router);
 
-  Future<void> gotoAbout() async {
-    _router.navigate(RoutePaths.about.toUrl());
+  Future<void> gotoLogin() async {
+    _router.navigate(RoutePaths.login.toUrl());
   }
 }

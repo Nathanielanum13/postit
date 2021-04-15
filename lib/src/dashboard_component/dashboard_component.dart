@@ -79,6 +79,7 @@ class DashboardComponent implements OnInit, CanActivate {
     _location.forward();
   }
 
+
   void toggleDropdwn() {
     dropdown = !dropdown;
     if(dropdown) {

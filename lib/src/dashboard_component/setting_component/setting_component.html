@@ -70,7 +70,9 @@
                     <div class="form-group mb-0 float-right mt-2">
                         <button (click)="saveProfile()"
                                 class="btn btn-primary btn-sm px-3 br-20"
-                                type="submit">Save Settings
+                                type="submit">
+                            <template [ngIf]="isProfile">...</template>
+                            <template [ngIf]="!isProfile">Save Settings</template>
                         </button>
                     </div>
                 </form>
@@ -124,7 +126,9 @@
                     <div class="form-group mb-0 float-right mt-2">
                         <button (click)="saveLoginDetails()"
                                 class="btn btn-primary btn-sm px-3 br-20"
-                                type="submit">Save Settings
+                                type="submit">
+                            <template [ngIf]="isLogin">...</template>
+                            <template [ngIf]="!isLogin">Save Settings</template>
                         </button>
                     </div>
                 </form>
@@ -193,7 +197,9 @@
                     <div class="form-group mt-2 mb-3 mb-md-0 float-right">
                         <button (click)="saveCompanyDetails()"
                                 class="btn btn-primary btn-sm px-3 br-20"
-                                type="submit">Save&nbsp;Settings
+                                type="submit">
+                            <template [ngIf]="isContact">...</template>
+                            <template [ngIf]="!isContact">Save Settings</template>
                         </button>
                     </div>
                 </form>
