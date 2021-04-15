@@ -14,10 +14,24 @@
                                            placeholder="Schedule title" type="text">
                                 </div>
                                 <div class="form-group">
-                                    <input #sd type="datetime-local" class="nt-form-control {{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" placeholder="Select start date" (click)="get(sd)">
+                                    <div class="form-row">
+                                        <div class="col-7">
+                                            <input #sd id="from" type="date" class="{{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" placeholder="Select start date" [(ngModel)]="fromDate">
+                                        </div>
+                                        <div class="col-5">
+                                            <input #sdt type="time" class="{{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" [(ngModel)]="fromDateTime">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <input #ed type="datetime-local" class="nt-form-control {{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" placeholder="Select end date" (click)="get(ed)">
+                                    <div class="form-row">
+                                        <div class="col-7">
+                                            <input #ed id="to" type="date" class="nt-form-control {{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" placeholder="Select end date" [(ngModel)]="toDate">
+                                        </div>
+                                        <div class="col-5">
+                                            <input #edt type="time" class="{{appTheme['box-one']}} {{appTheme['border']}} nt-form-control br-20" [(ngModel)]="toDateTime">
+                                        </div>
+                                    </div>
                                 </div>
                                 <!--<div class="form-group">
                                     <material-date-range-picker class="simplified-example"

@@ -32,8 +32,12 @@
                             <td>
                                 <span class="post-message-text figure-caption" [title]="filteredPost.postMessage">{{filteredPost.postMessage}}</span>
                             </td>
-                            <td class="tag-host tags-text" [title]="filteredPost.postTag"><span *ngFor="let tag of filteredPost.postTag"
-                                                       class="tag tags-text figure-caption">{{tag}}</span></td>
+                            <td class="tag-host" [title]="filteredPost.postTag">
+                                <div class="tags-text">
+                                    <span *ngFor="let tag of filteredPost.postTag"
+                                          class="tag tags-text figure-caption">{{tag}}</span>
+                                </div>
+                            </td>
                             <td>
                                 <span *ngIf="filteredPost.fbStatus"
                                       title="Posted to facebook"

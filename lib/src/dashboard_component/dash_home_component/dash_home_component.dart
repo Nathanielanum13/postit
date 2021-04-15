@@ -48,7 +48,7 @@ class DashHomeComponent implements OnInit, CanNavigate {
   int postCount = 0;
   int scheduleCount = 0;
   List<int> active = <int>[];
-  List<int> durationItems = <int>[];
+  List<String> durationItems = <String>[];
   List<SocketData> datas = <SocketData>[];
   var appTheme;
   final GetWebSocketData _getWebSocketData;
@@ -126,11 +126,62 @@ class DashHomeComponent implements OnInit, CanNavigate {
     active.add(((posted / total) * 100).toInt());
   }
 
+  String getPreferredDuration(int value) {
+    int weeks = 0;
+    const int weeksMod = 604800;
+    int days = 0;
+    const int daysMod = 86400;
+    int hours = 0;
+    const int hoursMod = 3600;
+    int minutes = 0;
+    const int minutesMod = 60;
+    int seconds = 0;
+    const int secondsMod = 1;
+
+    do {
+      do {
+        int rem = value % weeksMod;
+        weeks += (value - rem) ~/ weeksMod;
+        value = rem;
+      } while (value >= weeksMod);
+
+      do {
+        int rem = value % daysMod;
+        days += (value - rem) ~/ daysMod;
+        value = rem;
+      } while (value >= daysMod);
+
+      do {
+        int rem = value % hoursMod;
+        hours += (value - rem) ~/ hoursMod;
+        value = rem;
+      } while (value >= hoursMod);
+
+      do {
+        int rem = value % minutesMod;
+        minutes += (value - rem) ~/ minutesMod;
+        value = rem;
+      } while (value >= minutesMod);
+
+      do {
+        int rem = value % secondsMod;
+        seconds += (value - rem) ~/ secondsMod;
+        value = rem;
+      } while (value >= secondsMod);
+    } while (seconds > 0);
+
+    // return '$weeks weeks, $days days, $hours hours, $minutes minutes and $seconds seconds';
+    return '${weeks == 0 ? '' : weeks > 1 ? '$weeks weeks ' : '$weeks week '}${days == 0 ? '' : days > 1 ? '$days days ' : '$days day '}${hours == 0 ? '' : hours > 1 ? '$hours hours ' : '$hours hour '}${minutes == 0 ? '' : minutes > 1 ? '$minutes minutes ' : '$minutes minute '}${seconds == 0 ? '' : seconds > 1 ? '$seconds seconds' : '$seconds second'}';
+  }
+
   void calculateDuration() {
+    durationItems.clear();
     for (int counter = 0; counter < schedules.length; counter++) {
-      durationItems.add(DateTime.parse(schedules[counter].from)
+      int finalSeconds = DateTime.parse(schedules[counter].from)
           .difference(Date.today().asUtcTime())
-          .inDays);
+          .inSeconds;
+      String duration = getPreferredDuration(finalSeconds);
+      durationItems.add(duration);
     }
   }
 
@@ -144,6 +195,7 @@ class DashHomeComponent implements OnInit, CanNavigate {
         schedules.removeAt(i);
       }
     }
+    calculateDuration();
   }
 
   @override
@@ -166,7 +218,7 @@ class DashHomeComponent implements OnInit, CanNavigate {
     webSocket.onOpen.first.then((_) => {
           userData = {
             'tenant_namespace': '${window.sessionStorage['tenant-namespace']}',
-            'auth_token': '${window.sessionStorage['token']}'
+            'token': '${window.sessionStorage['token']}'
           },
           data = json.encode(userData),
           webSocket.send(data)
