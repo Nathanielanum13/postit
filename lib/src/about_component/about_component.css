@@ -7,3 +7,10 @@
 material-icon {
     cursor: pointer;
 }
+#about-app {
+    background-image: url("img/signup_bg_2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7);
+}

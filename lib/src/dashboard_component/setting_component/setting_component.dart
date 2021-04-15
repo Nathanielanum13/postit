@@ -53,6 +53,9 @@ class SettingComponent implements OnInit {
   bool isLoading = false;
   bool darkMode = false;
   bool isDone = false;
+  bool isProfile = false;
+  bool isLogin = false;
+  bool isContact = false;
 
   String activeAccount = '';
   int activeAccountIndex;
@@ -140,8 +143,12 @@ class SettingComponent implements OnInit {
     }
 
     try {
+      isProfile = true;
       await _settingsService.saveProfile(profile);
+      isProfile = false;
+      setAlert = Alert('Saved changes successfully', 200);
     } catch (e) {
+      isProfile = false;
       print(e);
     }
   }
@@ -152,8 +159,12 @@ class SettingComponent implements OnInit {
     }
 
     try {
+      isLogin = true;
       await _settingsService.saveLoginDetails(oldPassword, newPassword);
+      isLogin = false;
     } catch (e) {
+      isLogin = false;
+      setAlert = Alert('Saved changes successfully', 200);
       print(e);
     }
   }
@@ -167,9 +178,13 @@ class SettingComponent implements OnInit {
     }
 
     try {
+      isContact = true;
       await _settingsService.saveCompanyDetails(
           companyName, companyAddress, companyPhoneNumber, companyEmail);
+      isContact = false;
     } catch (e) {
+      isContact = false;
+      setAlert = Alert('Saved changes successfully', 200);
       print(e);
     }
   }

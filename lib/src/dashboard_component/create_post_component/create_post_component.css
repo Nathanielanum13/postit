@@ -320,7 +320,7 @@ material-chip {
         opacity: 0;
     }
 }
-@media screen and (max-width: 991px){
+@media screen and (max-width: 768px){
     #create-app {
         height: 100%
     }

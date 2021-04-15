@@ -145,8 +145,13 @@ class PostAccountComponent implements OnInit {
     var appId = fbConfig['appId'];
     var url = fbConfig['url'];
 
-    loginLinkUrl = 'https://www.facebook.com/v9.0/dialog/oauth/?display=popup&client_id=$appId&redirect_uri=$url&state=access_token&scope=pages_manage_posts,pages_read_engagement,pages_show_list,pages_manage_engagement,pages_read_user_content';
+    loginLinkUrl = 'https://www.facebook.com/v9.0/dialog/oauth/?display=popup&client_id=$appId&redirect_uri=$url&state=access_token&scope=pages_manage_posts,pages_read_engagement,pages_show_list';
   }
+
+  /*void loginWithFacebook() {
+    var ref = window.open('$loginLinkUrl', 'account-login', 'status = 1, height = 600, width = 600, resizable = 0');
+    print('::${ref.location.toString()}');
+  }*/
 
   @override
   Future<void> ngOnInit() async {

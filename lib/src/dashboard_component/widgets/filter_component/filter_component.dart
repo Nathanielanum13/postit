@@ -120,7 +120,7 @@ class FilterComponent implements OnInit {
           convInt(selectedNumber),
           isPostLoading,
           filteredPosts.isEmpty
-              ? Alert('Data is empty', 100)
+              ? Alert('Data is empty. Try refreshing', 100)
               : Alert('Fetching data complete', 100)));
     } else if (selectedFilter == 'Posted') {
       checkPost();
@@ -130,7 +130,7 @@ class FilterComponent implements OnInit {
           convInt(selectedNumber),
           isPostLoading,
           filteredPosts.isEmpty
-              ? Alert('Data is empty', 100)
+              ? Alert('Data is empty. Try refreshing', 100)
               : Alert('Fetching data complete', 100)));
     } else if (selectedFilter == 'Pending') {
       checkPost();
@@ -140,7 +140,7 @@ class FilterComponent implements OnInit {
           convInt(selectedNumber),
           isPostLoading,
           filteredPosts.isEmpty
-              ? Alert('Data is empty', 100)
+              ? Alert('Data is empty. Try refreshing', 100)
               : Alert('Fetching data complete', 100)));
     } else if (selectedFilter == 'Scheduled') {
       filteredPosts = getScheduledPosts();
@@ -149,7 +149,7 @@ class FilterComponent implements OnInit {
           convInt(selectedNumber),
           isPostLoading,
           filteredPosts.isEmpty
-              ? Alert('Data is empty', 100)
+              ? Alert('Data is empty. Try refreshing', 100)
               : Alert('Fetching data complete', 100)));
     }
   }

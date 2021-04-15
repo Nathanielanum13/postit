@@ -175,12 +175,13 @@ class DashHomeComponent implements OnInit, CanNavigate {
   }
 
   void calculateDuration() {
+    String duration;
     durationItems.clear();
     for (int counter = 0; counter < schedules.length; counter++) {
       int finalSeconds = DateTime.parse(schedules[counter].from)
           .difference(Date.today().asUtcTime())
           .inSeconds;
-      String duration = getPreferredDuration(finalSeconds);
+      duration = finalSeconds < 0 ? '-' : getPreferredDuration(finalSeconds);
       durationItems.add(duration);
     }
   }

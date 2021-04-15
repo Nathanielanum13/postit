@@ -1,10 +1,34 @@
+<!--
 <nav class="navbar navbar-expand navbar-light bg-light custom-navbar my-4">
     <div class="nav navbar-nav ml-auto">
-<!--        <material-button>-->
-<!--            <material-icon icon="keyboard_arrow_right"></material-icon><div class="px-1">Login</div>-->
-<!--        </material-button>-->
+&lt;!&ndash;        <material-button>&ndash;&gt;
+&lt;!&ndash;            <material-icon icon="keyboard_arrow_right"></material-icon><div class="px-1">Login</div>&ndash;&gt;
+&lt;!&ndash;        </material-button>&ndash;&gt;
 
         <button class="btn btn-sm rounded mx-1 bg-white br-20 px-3 border-0" (click)="gotoLogin()">Log In</button>
         <button class="btn btn-sm rounded mx-1 bg-orange text-white br-20 px-3 border-0" (click)="gotoSignup()">Sign Up</button>
+    </div>
+</nav>-->
+<nav class="navbar navbar-expand-sm navbar-light bg-transparent mx-0">
+    <a class="navbar-brand" href="#">
+        <img src="img/postit-01.png" alt="logo" width="100" class="img-fluid mx-2">
+    </a>
+    <!-- <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+
+    </button> -->
+    <span class="navbar-toggler-icon navbar-toggler d-lg-none border-0" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></span>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mx-auto mt-lg-0 font-weight-bold">
+            <li class="nav-item col-auto">
+                <a class="nav-link font-weight-bold" [routerLink]="RoutePaths.about.toUrl()" [routerLinkActive]="'active'">About</a>
+            </li>
+            <li class="nav-item col-auto">
+                <a class="nav-link font-weight-bold" [routerLink]="RoutePaths.login.toUrl()" [routerLinkActive]="'active'">Login</a>
+            </li>
+            <li class="nav-item col-auto">
+                <a class="nav-link font-weight-bold" [routerLink]="RoutePaths.signup.toUrl()" [routerLinkActive]="'active'">Sign up</a>
+            </li>
+        </ul>
     </div>
 </nav>

@@ -61,7 +61,7 @@ div[display="true"] {
     overflow-x: hidden;
     overflow-y: scroll;
 }
-@media screen and (max-width: 567px) {
+@media screen and (max-width: 768px) {
     #post-app {
         height: 100% !important;
     }

@@ -1,234 +1,201 @@
-<div id="alert" *ngIf="showAlert"
-     [class.alert-danger]="statusCode!=200"
-     [class.alert-success]="statusCode==200"
->
-    <div class="row" *ngIf="statusCode!=200">
-        <div class="col-2 my-auto">
-            <span class="fa fa-tice fa-2x text-danger ml-2 my-auto"></span>
-        </div>
-        <div class="col-8 my-auto">
-            <span class="text-center">{{message}}</span>
-        </div>
-        <div class="col-2 my-auto">
-            <span class="fa fa-times cursor-pointer mr-2 my-auto" (click)="dismissAlert()"></span>
-        </div>
-    </div>
-</div>
-
+<alert *ngIf="setAlert != null" [alert]="setAlert"></alert>
 <div class="row m-0 p-0">
-    <div class="col-lg-6 col-sm-12 px-0 d-none d-lg-block">
-        <img src="img/svg-bg.png" alt="home-bg" style="height: 100vh; width: inherit" class="img-fluid">
-    </div>
-    <div class="col-lg-6 col-md-12 col-sm-12 px-0" style="height: 100vh; width: 100vw; overflow-y: scroll; overflow-x: hidden; box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, 0.16) !important;">
+    <div class="col-lg-6 col-sm-12 px-0 d-none d-lg-block" id="sign"></div>
+    <div class="col-lg-6 col-md-12 col-sm-12 px-0" id="signup-bg">
         <nav-app></nav-app>
         <div class="container">
             <div class="pb-sm-5">
-                <form class="p-4" novalidate #sForm="ngForm">
-                    <h3 class="mt-2 mb-4">Registration Form</h3>
-
-                    <div class="px-1 py-2 row my-3" style="color: #05356e !important;">
-                        <div class="col-md-6 col-sm-12">
-                            <h5>Admins Info </h5>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>First Name</label>
-                            <input type="text" class="nt-form-control border-0 br-20"
-                                   [(ngModel)]="user.firstname"
-                                   required
-                                   #firstname="ngForm"
-                                   [class.is-invalid] = "firstname.dirty && !firstname.valid"
-                                   [class.is-valid] = "firstname.dirty && firstname.valid"
-                                   ngControl = "firstname"
-                            >
-                            <div [hidden] = "firstname.valid || firstname.pristine" class="invalid-feedback">Please enter firstname</div>
-                        </div>
-                        <div class="form-wrapper">
-                            <label>Last Name</label>
-                            <input type="text" class="nt-form-control border-0 br-20"
-                                   [(ngModel)]="user.lastname"
-                                   required
-                                   #lastname="ngForm"
-                                   [class.is-invalid] = "(lastname.dirty && !lastname.valid)"
-                                   [class.is-valid] = "lastname.dirty && lastname.valid"
-                                   ngControl = "lastname"
-                            >
-                            <div [hidden] = "lastname.valid || lastname.pristine" class="invalid-feedback">Please enter lastname</div>
-                        </div>
-                    </div>
-                    <div class="form-wrapper">
-                        <label>Username</label>
-                        <input type="text" class="nt-form-control border-0 br-20"
-                               [(ngModel)]="user.username"
-                               required
-                               #username="ngForm"
-                               [class.is-invalid] = "(username.dirty && !username.valid)"
-                               [class.is-valid] = "username.dirty && username.valid"
-                               ngControl = "username"
-                        >
-                        <div [hidden] = "username.valid || username.pristine" class="invalid-feedback">Please enter username</div>
-                    </div>
-                    <div class="form-wrapper">
-                        <label>Password</label>
-                        <input type="password" class="nt-form-control border-0 br-20"
-                               [(ngModel)]="user.password"
-                               required
-                               #password="ngForm"
-                               [class.is-invalid] = "(password.dirty && !password.valid)"
-                               [class.is-valid] = "password.dirty && password.valid"
-                               ngControl = "password"
-                        >
-                        <div [hidden] = "password.valid || password.pristine" class="invalid-feedback">Password field required</div>
-                        <div [hidden] = "user.password.length >= 6 || password.pristine" class="invalid-feedback">Password is too short</div>
-                    </div>
-                    <div class="form-wrapper">
-                        <label>Confirm Password</label>
-                        <input type="password" class="nt-form-control border-0 br-20"
-                               [(ngModel)]="passwordConfirmation"
-                               required
-                               #confirmedPassword="ngForm"
-                               ngControl = "confirmedPassword"
-                        >
-                        <div [hidden] = "user.password == passwordConfirmation || confirmedPassword.pristine" class="invalid-feedback">Passwords do not match</div>
-                    </div>
-
-                    <div class="px-1 py-2 row my-3" style="color: #05356e !important;">
-                        <div class="col-md-6 col-sm-12">
-                            <h5>Company's Info </h5>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>Company's Name</label>
-                            <input type="text" class="nt-form-control border-0 br-20"
-                                   [(ngModel)]="user.companyName"
-                                   required
-                                   #companyName="ngForm"
-                                   [class.is-invalid] = "(companyName.dirty && !companyName.valid)"
-                                   [class.is-valid] = "companyName.dirty && companyName.valid"
-                                   ngControl = "companyName"
-                            >
-                            <div [hidden] = "companyName.valid || companyName.pristine" class="invalid-feedback">Please enter company's name</div>
-                        </div>
-                        <div class="form-wrapper">
-                            <label>Company's Website</label>
-                            <input type="text" class="nt-form-control border-0 br-20"
-                                   [(ngModel)]="user.companyWebsite"
-                                   required
-                                   #companyWebsite="ngForm"
-                                   [class.is-invalid] = "(companyWebsite.dirty && !companyWebsite.valid)"
-                                   [class.is-valid] = "companyWebsite.dirty && companyWebsite.valid"
-                                   ngControl = "companyWebsite"
-                            >
-                            <div [hidden] = "companyWebsite.valid || companyWebsite.pristine" class="invalid-feedback">Please enter company's website</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-wrapper">
-                            <label>Location</label>
-                            <input type="text" class="nt-form-control border-0 br-20"
-                                   [(ngModel)]="user.companyAddress"
-                                   required
-                                   #companyAddress="ngForm"
-                                   [class.is-invalid] = "(companyAddress.dirty && !companyAddress.valid)"
-                                   [class.is-valid] = "companyAddress.dirty && companyAddress.valid"
-                                   ngControl = "companyAddress"
-                            >
-                            <div [hidden] = "companyAddress.valid || companyAddress.pristine" class="invalid-feedback">Please enter company's address</div>
-                        </div>
-                        <div class="form-wrapper">
-                            <label>Ghana Post Address</label>
-                            <input type="text" class="nt-form-control border-0 br-20"
-                                   [(ngModel)]="user.ghanaPostAddress"
-                                   required
-                                   #ghanaPostAddress="ngForm"
-                                   [class.is-invalid] = "(ghanaPostAddress.dirty && !ghanaPostAddress.valid)"
-                                   [class.is-valid] = "ghanaPostAddress.dirty && ghanaPostAddress.valid"
-                                   ngControl = "ghanaPostAddress"
-                            >
-                            <div [hidden] = "ghanaPostAddress.valid || ghanaPostAddress.pristine" class="invalid-feedback">Please enter Ghana Post Address</div>
-                        </div>
-                    </div>
-                    <div class="form-wrapper">
-                        <label>Email</label>
-                        <input type="email" class="nt-form-control border-0 br-20"
-                               [(ngModel)]="user.companyEmail"
-                               required
-                               #companyEmail="ngForm"
-                               [class.is-invalid] = "companyEmail.dirty && !companyEmail.valid"
-                               [class.is-valid] = "companyEmail.dirty && companyEmail.valid"
-                               ngControl = "companyEmail"
-                        >
-                        <div [hidden] = "companyEmail.valid || companyEmail.pristine" class="invalid-feedback">Please enter company's email</div>
-                    </div>
-                    <div class="form-wrapper">
-                        <label>
-                            Phone
-                            <span class="ml-2 fa fa-plus-circle text-muted ml-2 cursor-pointer my-auto" (click)="addPhone()"></span>
-                        </label>
-                        <input type="text" class="nt-form-control border-0 br-20"
-                               [(ngModel)]="phone"
-                               (keyup.enter)="addPhone()"
-                               #phoneNumber="ngForm"
-                               required
-                        >
-                        <div [hidden] = "companyPhoneNumbers.isNotEmpty || phoneNumber.pristine" class="invalid-feedback">Enter at least one phone no.</div>
-                        <div class="mt-1">
-                            <div class="col-auto">
-                                <material-chips class="row">
-                                    <material-chip (remove)="removePhone($i)"
-                                                   *ngFor="let companyPhoneNumber of companyPhoneNumbers; let $i = index"
-                                                   [value]="companyPhoneNumber" class="col-auto">
-                                        {{companyPhoneNumber}}
-                                    </material-chip>
-                                </material-chips>
+                <fieldset class="shadow border-0" style="border-radius: 20px; background: #fbffff;">
+                    <form class="p-4" novalidate>
+                        <h3 class="mt-2 mb-4">Sign Up</h3>
+                        <div class="px-1 py-2 row my-3" style="color: #05356e !important;">
+                            <div class="col-md-6 col-sm-12">
+                                <h5>Admins Info </h5>
                             </div>
                         </div>
-                        <!--<input type="text" class="nt-form-control border-0 br-20" [(ngModel)]="user.companyPhone">-->
-                    </div>
-                    <!--<div class="checkbox">
-                        <label>
-                            <input type="checkbox"> I accept the Terms of Use &amp; Privacy Policy.
-                            <span class="checkmark" style="margin-top: -4px"></span>
-                        </label>
-                    </div>-->
-                    <div class="form-wrapper">
-                        <material-checkbox class="mt-2" [(checked)]="user.termsAndConditions"></material-checkbox>
-                        I accept the Terms of Use &amp; Privacy Policy.
-                    </div>
-                    <button (click)="signup()" *ngIf="!isLoading">Signup Now</button>
-                    <button (click)="signup()" *ngIf="isLoading">
-                        <img src="img/mini-loader.gif" style="width: 20px; height: auto">
-                    </button>
-                </form>
-                <!--<div class="mb-2">
-                    <div class="display-custom text-center">
-                        <img src="img/postit-logo-new.png" alt="Postit-home" class="img-fluid">
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-6" style="border-right: 1px solid #ababab">
-                            <div class="text-muted">
-                                Market digitally with the all new
-                                Postit platform. <br> <hr width="100px">
+                        <div class="form-group">
+                            <div class="form-wrapper">
+                                <label>First Name</label>
+                                <input type="text" class="nt-form-control sh border-0 br-20"
+                                       [(ngModel)]="user.firstname"
+                                       required
+                                       #firstname="ngForm"
+                                       [class.is-invalid] = "firstname.dirty && !firstname.valid"
+                                       [class.is-valid] = "firstname.dirty && firstname.valid"
+                                       ngControl = "firstname"
+                                       placeholder="first.name"
+                                >
+                                <div [hidden] = "firstname.valid || firstname.pristine" class="invalid-feedback">Please enter firstname</div>
+                            </div>
+                            <div class="form-wrapper">
+                                <label>Last Name</label>
+                                <input type="text" class="nt-form-control sh border-0 br-20"
+                                       [(ngModel)]="user.lastname"
+                                       required
+                                       #lastname="ngForm"
+                                       [class.is-invalid] = "(lastname.dirty && !lastname.valid)"
+                                       [class.is-valid] = "lastname.dirty && lastname.valid"
+                                       ngControl = "lastname"
+                                       placeholder="last.name"
+                                >
+                                <div [hidden] = "lastname.valid || lastname.pristine" class="invalid-feedback">Please enter lastname</div>
+                            </div>
+                        </div>
+                        <div class="form-wrapper">
+                            <label>Username</label>
+                            <input type="text" class="nt-form-control sh border-0 br-20"
+                                   [(ngModel)]="user.username"
+                                   required
+                                   #username="ngForm"
+                                   [class.is-invalid] = "(username.dirty && !username.valid)"
+                                   [class.is-valid] = "username.dirty && username.valid"
+                                   ngControl = "username"
+                                   placeholder="user.name"
+                            >
+                            <div [hidden] = "username.valid || username.pristine" class="invalid-feedback">Please enter username</div>
+                        </div>
+                        <div class="form-wrapper">
+                            <label>Password</label>
+                            <input type="password" class="nt-form-control sh border-0 br-20"
+                                   [(ngModel)]="user.password"
+                                   required
+                                   #password="ngForm"
+                                   [class.is-invalid] = "(password.dirty && !password.valid)"
+                                   [class.is-valid] = "password.dirty && password.valid"
+                                   ngControl = "password"
+                                   placeholder="password"
+                            >
+                            <div [hidden] = "password.valid || password.pristine" class="invalid-feedback">Password field required</div>
+                            <div [hidden] = "user.password.length >= 6 || password.pristine" class="invalid-feedback">Password is too short</div>
+                        </div>
+                        <div class="form-wrapper">
+                            <label>Confirm Password</label>
+                            <input type="password" class="nt-form-control sh border-0 br-20"
+                                   [(ngModel)]="passwordConfirmation"
+                                   required
+                                   #confirmedPassword="ngForm"
+                                   ngControl = "confirmedPassword"
+                                   placeholder="confirm.password"
+                            >
+                            <div [hidden] = "user.password == passwordConfirmation || confirmedPassword.pristine" class="invalid-feedback">Passwords do not match</div>
+                        </div>
 
-                                <div class="row my-1 px-3 text-dark">
-                                    <span class="mx-auto cursor-pointer fab fa-facebook"></span>
-                                    <span class="mx-auto cursor-pointer fab fa-twitter"></span>
-                                    <span class="mx-auto cursor-pointer fab fa-instagram"></span>
-                                    <span class="mx-auto cursor-pointer fab fa-linkedin-in"></span>
+                        <div class="px-1 py-2 row my-3" style="color: #05356e !important;">
+                            <div class="col-md-6 col-sm-12">
+                                <h5>Company's Info </h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-wrapper">
+                                <label>Company's Name</label>
+                                <input type="text" class="nt-form-control sh border-0 br-20"
+                                       [(ngModel)]="user.companyName"
+                                       required
+                                       #companyName="ngForm"
+                                       [class.is-invalid] = "(companyName.dirty && !companyName.valid)"
+                                       [class.is-valid] = "companyName.dirty && companyName.valid"
+                                       ngControl = "companyName"
+                                       placeholder="company.name"
+                                >
+                                <div [hidden] = "companyName.valid || companyName.pristine" class="invalid-feedback">Please enter company's name</div>
+                            </div>
+                            <div class="form-wrapper">
+                                <label>Company's Website</label>
+                                <input type="text" class="nt-form-control sh border-0 br-20"
+                                       [(ngModel)]="user.companyWebsite"
+                                       required
+                                       #companyWebsite="ngForm"
+                                       [class.is-invalid] = "(companyWebsite.dirty && !companyWebsite.valid)"
+                                       [class.is-valid] = "companyWebsite.dirty && companyWebsite.valid"
+                                       ngControl = "companyWebsite"
+                                       placeholder="company.website"
+                                >
+                                <div [hidden] = "companyWebsite.valid || companyWebsite.pristine" class="invalid-feedback">Please enter company's website</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-wrapper">
+                                <label>Address</label>
+                                <input type="text" class="nt-form-control sh border-0 br-20"
+                                       [(ngModel)]="user.companyAddress"
+                                       required
+                                       #companyAddress="ngForm"
+                                       [class.is-invalid] = "(companyAddress.dirty && !companyAddress.valid)"
+                                       [class.is-valid] = "companyAddress.dirty && companyAddress.valid"
+                                       ngControl = "companyAddress"
+                                       placeholder="address"
+                                >
+                                <div [hidden] = "companyAddress.valid || companyAddress.pristine" class="invalid-feedback">Please enter company's address</div>
+                            </div>
+                            <div class="form-wrapper">
+                                <label>Country</label>
+                                <input type="text" class="nt-form-control sh border-0 br-20"
+                                       [(ngModel)]="user.ghanaPostAddress"
+                                       required
+                                       #ghanaPostAddress="ngForm"
+                                       [class.is-invalid] = "(ghanaPostAddress.dirty && !ghanaPostAddress.valid)"
+                                       [class.is-valid] = "ghanaPostAddress.dirty && ghanaPostAddress.valid"
+                                       ngControl = "ghanaPostAddress"
+                                       placeholder="country"
+                                >
+                                <div [hidden] = "ghanaPostAddress.valid || ghanaPostAddress.pristine" class="invalid-feedback">Please enter Ghana Post Address</div>
+                            </div>
+                        </div>
+                        <div class="form-wrapper">
+                            <label>Email</label>
+                            <input type="email" class="nt-form-control sh border-0 br-20"
+                                   [(ngModel)]="user.companyEmail"
+                                   required
+                                   #companyEmail="ngForm"
+                                   [class.is-invalid] = "companyEmail.dirty && !companyEmail.valid"
+                                   [class.is-valid] = "companyEmail.dirty && companyEmail.valid"
+                                   ngControl = "companyEmail"
+                                   placeholder="company.email"
+                            >
+                            <div [hidden] = "companyEmail.valid || companyEmail.pristine" class="invalid-feedback">Please enter company's email</div>
+                        </div>
+                        <div class="form-wrapper">
+                            <label>
+                                Phone
+                                <span class="ml-2 fa fa-plus-circle text-muted ml-2 cursor-pointer my-auto" (click)="addPhone()"></span>
+                            </label>
+                            <input type="text" class="nt-form-control sh border-0 br-20"
+                                   [(ngModel)]="phone"
+                                   (keyup.enter)="addPhone()"
+                                   #phoneNumber="ngForm"
+                                   required
+                                   placeholder="phone e.g 233509131631"
+                            >
+                            <div [hidden] = "companyPhoneNumbers.isNotEmpty || phoneNumber.pristine" class="invalid-feedback">Enter at least one phone no.</div>
+                            <div class="mt-1">
+                                <div class="col-auto">
+                                    <material-chips class="row">
+                                        <material-chip (remove)="removePhone($i)"
+                                                       *ngFor="let companyPhoneNumber of companyPhoneNumbers; let $i = index"
+                                                       [value]="companyPhoneNumber" class="col-auto">
+                                            {{companyPhoneNumber}}
+                                        </material-chip>
+                                    </material-chips>
                                 </div>
                             </div>
+                            <!--<input type="text" class="nt-form-control sh border-0 br-20" [(ngModel)]="user.companyPhone">-->
                         </div>
-                        <div class="col-6">
-                            <div class="text-muted">
-                                Don't be left out. Sign up now and grow your
-                                business.
-                                <button type="button" class="btn btn-block btn-light br-20 mt-2">About postit</button>
-                            </div>
+                        <!--<div class="checkbox">
+                            <label>
+                                <input type="checkbox"> I accept the Terms of Use &amp; Privacy Policy.
+                                <span class="checkmark" style="margin-top: -4px"></span>
+                            </label>
+                        </div>-->
+                        <div class="form-wrapper">
+                            <material-checkbox class="mt-2" [(checked)]="user.termsAndConditions"></material-checkbox>
+                            I accept the Terms of Use &amp; Privacy Policy.
                         </div>
-                    </div>
-                </div>-->
+                        <button (click)="signup()" *ngIf="!isLoading">Signup Now</button>
+                        <button (click)="signup()" *ngIf="isLoading">
+                            <img src="img/mini-loader.gif" style="width: 20px; height: auto">
+                        </button>
+                    </form>
+                </fieldset>
             </div>
         </div>
     </div>

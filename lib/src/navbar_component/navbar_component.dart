@@ -13,7 +13,7 @@ import 'dart:async';
       MaterialIconComponent,
       routerDirectives
     ],
-    exports: [Routes],
+    exports: [Routes, RoutePaths],
 )
 class NavbarComponent {
 //  Do something here
