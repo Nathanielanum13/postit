@@ -8,6 +8,14 @@ material-input {
     background: #2f2f2f;
     color: white;
 }
+.login-box {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url("img/login-img.jpg");
+
+    filter: brightness(1);
+}
 #alert {
     position: fixed;
     top: 20px;
@@ -381,5 +389,17 @@ h2 {
         transform: translate(-60%, 60%) rotate(360deg);
     }
 }
+.login-box {
+    background-image: none;
+}
 
+@media screen and (max-width: 567px) {
+    .login-box {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-image: url("img/login-img.jpg");
 
+        filter: brightness(1);
+    }
+}

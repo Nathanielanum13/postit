@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert.dart';
+import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert_component.dart';
 import 'package:angular_app/src/login_component/login_service/login_service.dart';
 import 'package:angular_app/src/routes.dart';
 import 'package:angular_components/angular_components.dart';
@@ -17,7 +19,8 @@ import 'package:http/http.dart';
     materialDirectives,
     routerDirectives,
     coreDirectives,
-    formDirectives
+    formDirectives,
+    AlertComponent,
   ],
   exports: [Routes, RoutePaths],
   providers: [
@@ -34,15 +37,13 @@ class LoginComponent{
   int statusCode = 400;
   String type = 'password';
   String message = 'Login failed';
+  Alert setAlert;
   Client _http;
 
   Login login = Login('', '');
 
   LoginComponent(this._router, this._loginService, this._http);
 
-  void dismissAlert() {
-    showAlert = false;
-  }
 
   void tryLogin() {
     if (login.username.isNotEmpty && login.password.isNotEmpty) {
@@ -68,16 +69,12 @@ class LoginComponent{
       isLoading = true;
       loginResponse = await _loginService.login(login.username, login.password);
       isLoading = false;
-      showAlert = true;
-      statusCode = loginResponse.statusCode;
-      message = checkMessage(loginResponse.message);
-      Timer(Duration(seconds: 5), dismissAlert);
+      setAlert = Alert(loginResponse.message, loginResponse.statusCode);
+      Timer(Duration(seconds: 5), resetAlert);
     } catch (e) {
       isLoading = false;
-      showAlert = true;
-      statusCode = loginResponse.statusCode;
-      message = checkMessage(loginResponse.message);
-      Timer(Duration(seconds: 5), dismissAlert);
+      setAlert = Alert(checkMessage(loginResponse.message), loginResponse.statusCode);
+      Timer(Duration(seconds: 5), resetAlert);
     }
 
     if (loginResponse.statusCode != 200) {
@@ -93,6 +90,10 @@ class LoginComponent{
     }
   }
 
+  void resetAlert() {
+    setAlert = null;
+  }
+
   Future<bool> valid(String token) async {
     var resp = await _http.post(env['VALIDATE_TOKEN_URL'], headers: {'Authorization': 'Bearer $token', 'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6'});
     if(resp.statusCode == 200) {
@@ -102,9 +103,6 @@ class LoginComponent{
   }
 
   String checkMessage(String m) {
-    if (m == '') {
-      m = 'Login failed';
-    }
-    return m;
+    return m == '' ? 'Login failed' : m;
   }
 }

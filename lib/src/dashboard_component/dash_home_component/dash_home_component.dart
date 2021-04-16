@@ -252,7 +252,6 @@ class DashHomeComponent implements OnInit, CanNavigate {
       await webSocket.close();
       print('socket closed!');
     } catch (e) {
-      print(e);
       return true;
     }
     return true;
