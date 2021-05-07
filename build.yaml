@@ -1,0 +1,14 @@
+targets:
+  $default:
+    sources:
+      include:
+        - lib/**
+        - web/**
+        - $package$
+    builders:
+      build_web_compilers|entrypoint:
+        release_options:
+          dart2js_args:
+            - -DbaseUrl=https://postit-prod-api.herokuapp.com
+            - -DbaseAuthHost=https://postit-prod-auth.herokuapp.com
+            - -DwebsocketUrl=wss://postit-prod-schedule-status.herokuapp.com
