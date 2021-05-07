@@ -1,14 +1,24 @@
-targets:
-  $default:
-    sources:
-      include:
-        - lib/**
-        - web/**
-        - $package$
-    builders:
-      build_web_compilers|entrypoint:
-        release_options:
-          dart2js_args:
-            - -DbaseUrl=https://postit-prod-api.herokuapp.com
-            - -DbaseAuthHost=https://postit-prod-auth.herokuapp.com
-            - -DwebsocketUrl=wss://postit-prod-schedule-status.herokuapp.com
+global_options:
+  build_web_compilers|ddc:
+    options:
+      environment:
+        prod: false
+  build_web_compilers|entrypoint:
+    release_options:
+      dart2js_args:
+        - -Dprod=true
+
+#targets:
+#  $default:
+#    sources:
+#      include:
+#        - lib/**
+#        - web/**
+#        - $package$
+#    builders:
+#      build_web_compilers|entrypoint:
+#        release_options:
+#          dart2js_args:
+#            - -DbaseUrl=https://postit-prod-api.herokuapp.com
+#            - -DbaseAuthHost=https://postit-prod-auth.herokuapp.com
+#            - -DwebsocketUrl=wss://postit-prod-schedule-status.herokuapp.com
