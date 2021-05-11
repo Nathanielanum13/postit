@@ -1,13 +1,12 @@
-//development
-// const base_url = 'http://localhost:5379';
-// const base_auth_url = 'http://localhost:3576';
-// const websocket_url = 'ws://localhost:3567';
+const isProd = bool.fromEnvironment('prod');
 
-//production
-const base_url = 'https://postit-prod-api.herokuapp.com';
-const base_auth_url = 'https://postit-prod-auth.herokuapp.com';
-const websocket_url = 'wss://postit-prod-schedule-status.herokuapp.com';
+const base_url = isProd ? 'https://postit-prod-api.herokuapp.com' : 'http://localhost:5379';
+const base_auth_url = isProd ? 'https://postit-prod-auth.herokuapp.com' : 'http://localhost:3576';
+const websocket_url = isProd ? 'wss://postit-prod-schedule-status.herokuapp.com' : 'ws://localhost:3567';
 
+/*const base_url = String.fromEnvironment('baseUrl', defaultValue: 'http://localhost:5379');
+const base_auth_url = String.fromEnvironment('baseAuthUrl', defaultValue: 'http://localhost:3576');
+const websocket_url = String.fromEnvironment('websocketUrl', defaultValue: 'ws://localhost:3567');*/
 
 Map env = const {
  'POST_URL': '$base_url/posts',

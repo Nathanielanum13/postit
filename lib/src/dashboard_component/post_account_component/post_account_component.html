@@ -144,7 +144,8 @@
         <form novalidate>
             <template [ngIf]="accountTabs[0]">
                 <div class="form-group">
-                    <a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with facebook</a>
+                    <!--<a [href]="loginLinkUrl" class="btn btn-outline-primary btn-block br-20">Login with facebook</a>-->
+                    <button type="button" (click)="loginWithFacebook()" class="btn btn-outline-primary btn-block br-20">Login with facebook</button>
                 </div>
             </template>
             <template [ngIf]="accountTabs[1]">

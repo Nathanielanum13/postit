@@ -139,6 +139,10 @@ class PostAccountComponent implements OnInit {
       btnState('enable');
     }
   }
+  void loginWithFacebook() {
+    var loginWithFacebookWindow = window.open(loginLinkUrl, 'facebookLoginWindow', 'width=800, height=600');
+
+  }
 
   void gotoFacebook() {
     var fbConfig = config['authentication']['facebook'];

@@ -7,14 +7,37 @@ import 'package:http/http.dart';
 import 'main.template.dart' as self;
 // import 'package:pwa/client.dart' as pwa;
 
+const isProd = bool.fromEnvironment('prod');
+
 @GenerateInjector([
+  routerHashModule,
+  ClassProvider(Client, useClass: BrowserClient),
+  ValueProvider.forToken(appBaseHref, '/')
+])
+final devInjector = self.devInjector$Injector;
+
+@GenerateInjector([
+  routerModule,
+  ClassProvider(Client, useClass: BrowserClient),
+  ValueProvider.forToken(appBaseHref, '/')
+])
+final prodInjector = self.prodInjector$Injector;
+
+/*@GenerateInjector([
   routerProviders,
   ClassProvider(Client, useClass: BrowserClient),
   ValueProvider.forToken(appBaseHref, '/'),
-])
-final InjectorFactory injector = self.injector$Injector;
+])*/
+/*final InjectorFactory injector = self.injector$Injector;*/
 
-void main() {
+/*void main() {
   // pwa.Client();
   runApp(postit.PostItAppComponentNgFactory, createInjector: injector);
+}*/
+
+void main() {
+  runApp(
+    postit.PostItAppComponentNgFactory,
+    createInjector: isProd ? prodInjector : devInjector,
+  );
 }

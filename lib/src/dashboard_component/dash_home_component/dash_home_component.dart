@@ -139,35 +139,35 @@ class DashHomeComponent implements OnInit, CanNavigate {
     const int secondsMod = 1;
 
     do {
-      do {
+      while (value >= weeksMod) {
         int rem = value % weeksMod;
         weeks += (value - rem) ~/ weeksMod;
         value = rem;
-      } while (value >= weeksMod);
+      }
 
-      do {
+      while (value >= daysMod) {
         int rem = value % daysMod;
         days += (value - rem) ~/ daysMod;
         value = rem;
-      } while (value >= daysMod);
+      }
 
-      do {
+      while (value >= hoursMod) {
         int rem = value % hoursMod;
         hours += (value - rem) ~/ hoursMod;
         value = rem;
-      } while (value >= hoursMod);
+      }
 
-      do {
+      while (value >= minutesMod) {
         int rem = value % minutesMod;
         minutes += (value - rem) ~/ minutesMod;
         value = rem;
-      } while (value >= minutesMod);
+      }
 
-      do {
+      while (value >= secondsMod) {
         int rem = value % secondsMod;
         seconds += (value - rem) ~/ secondsMod;
         value = rem;
-      } while (value >= secondsMod);
+      }
     } while (seconds > 0);
 
     // return '$weeks weeks, $days days, $hours hours, $minutes minutes and $seconds seconds';
