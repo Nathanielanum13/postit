@@ -2,6 +2,8 @@
 
 [See a quick screenshot demo of the app](DEMO.md)
 
+![Sidebar Dark](demo/postit-ui-sidebar-dark.png)
+
 ## Setup for Development
 
 Welcome to the example app used in the
