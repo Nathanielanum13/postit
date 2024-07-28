@@ -1,7 +1,7 @@
 const isProd = bool.fromEnvironment('prod');
 
-const base_url = isProd ? 'https://postit-prod-api.herokuapp.com' : 'http://localhost:5379';
-const base_auth_url = isProd ? 'https://postit-prod-auth.herokuapp.com' : 'http://localhost:3576';
+const base_url = isProd ? 'https://postit-prod-api.herokuapp.com' : 'https://add0-154-161-37-203.ngrok-free.app';
+const base_auth_url = isProd ? 'https://postit-prod-auth.herokuapp.com' : 'https://3d90-154-161-40-36.ngrok-free.app';
 const websocket_url = isProd ? 'wss://postit-prod-schedule-status.herokuapp.com' : 'ws://localhost:3567';
 
 /*const base_url = String.fromEnvironment('baseUrl', defaultValue: 'http://localhost:5379');

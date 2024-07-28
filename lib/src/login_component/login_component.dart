@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_app/src/dashboard_component/widgets/alert_component/alert.dart';
@@ -24,11 +25,11 @@ import 'package:http/http.dart';
   ],
   exports: [Routes, RoutePaths],
   providers: [
-    ClassProvider(LoginService), 
+    ClassProvider(LoginService),
     materialProviders,
   ],
 )
-class LoginComponent{
+class LoginComponent {
   Router _router;
   LoginService _loginService;
   bool isLoading = false;
@@ -43,7 +44,6 @@ class LoginComponent{
   Login login = Login('', '');
 
   LoginComponent(this._router, this._loginService, this._http);
-
 
   void tryLogin() {
     if (login.username.isNotEmpty && login.password.isNotEmpty) {
@@ -82,8 +82,23 @@ class LoginComponent{
     } else {
       bool isValid = await valid(window.sessionStorage['token']);
 
+    // window.sessionStorage["token"] = "token";
+    // window.sessionStorage["tenant-namespace"] = "tenant-namespace";
+    // window.sessionStorage["x-data"] = json.encode({ "admin_first_name": "Admin", "admin_last_name": "Super" });
+    // window.sessionStorage["x-user-preference-theme"] = "tenant-namespace";
+
+    // var post = {
+    //   'id': "1",
+    //   'post_message': "Postit is live",
+    //   'hash_tags': [],
+    //   'post_image': "",
+    //   'post_priority': true,
+    // };
+    // window.sessionStorage['1'] = json.encode(post);
+
       if(isValid) {
-      _router.navigate(RoutePaths.dashboard.toUrl());
+        _router.navigate(RoutePaths.dashboard.toUrl());
+        print(RoutePaths.dashboard.toUrl());
       } else {
         return;
       }
@@ -95,8 +110,11 @@ class LoginComponent{
   }
 
   Future<bool> valid(String token) async {
-    var resp = await _http.post(env['VALIDATE_TOKEN_URL'], headers: {'Authorization': 'Bearer $token', 'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6'});
-    if(resp.statusCode == 200) {
+    var resp = await _http.post(env['VALIDATE_TOKEN_URL'], headers: {
+      'Authorization': 'Bearer $token',
+      'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6'
+    });
+    if (resp.statusCode == 200) {
       return true;
     }
     return false;

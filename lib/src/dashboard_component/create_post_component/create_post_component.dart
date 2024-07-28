@@ -254,7 +254,6 @@ class CreatePostComponent implements OnInit, CanNavigate {
     }
   }
 
-
   Future<void> addPost() async {
     postMessage = postMessage.trim();
     if (postMessage.isEmpty) return null;
@@ -305,8 +304,8 @@ class CreatePostComponent implements OnInit, CanNavigate {
     try {
       isSending = true;
       checkLoadingState(true);
-      PostStandardResponse resp = await _getPostService.update(
-          _updatePostId, postMessage, postTags);
+      PostStandardResponse resp =
+          await _getPostService.update(_updatePostId, postMessage, postTags);
       checkLoadingState(false);
       isSending = false;
 
@@ -394,6 +393,7 @@ class CreatePostComponent implements OnInit, CanNavigate {
     for (int i = 0; i < ls.values.length; i++) {
       if (ls.keys.elementAt(i) == 'token' ||
           ls.keys.elementAt(i) == 'tenant-namespace' ||
+          ls.keys.elementAt(i) == 'x-user-preference-theme' ||
           ls.keys.elementAt(i) == 'x-data') {
         continue;
       } else {
@@ -483,13 +483,11 @@ class CreatePostComponent implements OnInit, CanNavigate {
     isDel = true;
     if (fileNames.isNotEmpty) {
       try {
-        final resp = await delete(
-            '${env['MEDIA_BATCH_UPLOAD_URL']}',
-            headers: {
-              'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
-              'tenant-namespace': '${window.sessionStorage['tenant-namespace']}',
-              'Authorization': 'Bearer ${window.sessionStorage['token']}'
-            });
+        final resp = await delete('${env['MEDIA_BATCH_UPLOAD_URL']}', headers: {
+          'trace-id': '1ab53b1b-f24c-40a1-93b7-3a03cddc05e6',
+          'tenant-namespace': '${window.sessionStorage['tenant-namespace']}',
+          'Authorization': 'Bearer ${window.sessionStorage['token']}'
+        });
         if (resp.statusCode == 200) {
           finalBool = true;
         }
@@ -505,7 +503,8 @@ class CreatePostComponent implements OnInit, CanNavigate {
   @override
   Future<bool> canNavigate() async {
     if (fileNames.isEmpty) return true;
-    bool isPermitted = window.confirm('Are you sure you want to exit? You would loose currently uploaded images');
+    bool isPermitted = window.confirm(
+        'Are you sure you want to exit? You would loose currently uploaded images');
     if (isPermitted) {
       return deleteFinalImages();
     }
