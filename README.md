@@ -1,3 +1,7 @@
+## Demo
+
+[See a quick screenshot demo of the app](DEMO.md)
+
 ## Setup for Development
 
 Welcome to the example app used in the
